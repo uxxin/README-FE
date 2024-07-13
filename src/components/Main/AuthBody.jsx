@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import logo from '../../assets/images/logo.svg';
 
 const StyledAuthBody = styled.div`
-  width: fit-content;
+  width: 16.0625rem;
+  height: 4.125rem;
+  flex-shrink: 0;
   margin: 14.44rem auto 0 auto;
 `;
 
