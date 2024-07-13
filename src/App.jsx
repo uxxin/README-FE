@@ -7,7 +7,6 @@ import Auth from './pages/Main/Auth';
 import Home from './pages/Main/Home';
 import CreateNoticeRoom from './pages/Main/CreateNoticeRoom';
 import NoticeRoomCreated from './pages/Main/NoticeRoomCreated';
-import NoticeRoom from './pages/Main/NoticeRoom';
 import MemberList from './pages/MemberList/MemberList';
 import Main from './pages/Notice/Main';
 import Details from './pages/Notice/Details';
@@ -31,7 +30,6 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
         <Route path="/notice-room-created" element={<NoticeRoomCreated />} />
-        {/* <Route path="/notice-room" element={<NoticeRoom />} /> */}
 
         {/* MemberList - 멤버 목록 */}
         <Route path="/member-list" element={<MemberList />} />
