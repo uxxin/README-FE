@@ -2,31 +2,32 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
-    "plugin:import/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+    'plugin:import/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:prettier/recommended',
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
-  parserOptions: { ecmaVersion: "latest", sourceType: "module" },
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: {
-    react: { version: "detact" },
-    "import/resolver": {
+    react: { version: 'detact' },
+    'import/resolver': {
       node: {
-        paths: ["src"],
-        extensions: [".js", ".jsx"],
+        paths: ['src'],
+        extensions: ['.js', '.jsx'],
       },
     },
   },
-  plugins: ["react-refresh"],
+  plugins: ['react-refresh', 'prettier'],
   rules: {
-    "react/jsx-no-target-blank": "off",
-    "react-refresh/only-export-components": [
-      "warn",
+    'react/jsx-no-target-blank': 'off',
+    'react-refresh/only-export-components': [
+      'warn',
       { allowConstantExport: true },
     ],
+    'prettier/prettier': 'error',
   },
 };
