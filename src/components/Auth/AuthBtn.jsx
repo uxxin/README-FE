@@ -2,18 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../CustomBtn';
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.81rem;
-  margin-bottom: 3.125rem;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 export const AuthBtn = () => {
   return (
     <Container>
@@ -22,14 +10,14 @@ export const AuthBtn = () => {
           props={{
             text: '로그인',
             border: 'none',
-            background: '#0011FF',
+            background: '#509BF7',
             link: '/sign-in',
           }}
         />
         <CustomBtn
           props={{
             text: '회원가입',
-            border: '0.5px solid #0011FF',
+            border: '0.5px solid #509BF7',
             background: '#FFFFFF',
             link: '/sign-up',
           }}
@@ -38,3 +26,16 @@ export const AuthBtn = () => {
     </Container>
   );
 };
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.81rem;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 15.69rem;
+  margin-bottom: 1.87rem;
+`;
