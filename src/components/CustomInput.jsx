@@ -38,7 +38,7 @@ const Input = styled.input`
   font-weight: 700;
   line-height: 100%; /* 1.125rem */
   letter-spacing: -0.0225rem;
-  color: #333;
+  color: #509bf7;
   ::placeholder {
     color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
   }
