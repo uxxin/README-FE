@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './pages/Auth/SignIn';
 import SignUp from './pages/Auth/SignUp';
-import Auth from './pages/Main/Auth';
 import Home from './pages/Main/Home';
 import CreateNoticeRoom from './pages/Main/CreateNoticeRoom';
 import NoticeRoomCreated from './pages/Main/NoticeRoomCreated';
@@ -22,11 +21,10 @@ function App() {
     <Router>
       <Routes>
         {/* Auth - 로그인&회원가입 */}
-        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
 
         {/* Main - 메인 */}
-        <Route path="/" element={<Auth />} />
         <Route path="/home" element={<Home />} />
         <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
         <Route path="/notice-room-created" element={<NoticeRoomCreated />} />

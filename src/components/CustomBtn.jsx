@@ -11,7 +11,7 @@ const StyledCustomBtn = styled.div`
   border-radius: 0.5rem;
   border: ${(props) => props.border};
   background: ${(props) => props.background};
-  color: ${(props) => (props.background === '#FFFFFF' ? '#0011FF' : '#FFFFFF')};
+  color: ${(props) => (props.background === '#FFFFFF' ? '#509BF7' : '#FFFFFF')};
 `;
 
 export const CustomBtn = ({ props }) => {
