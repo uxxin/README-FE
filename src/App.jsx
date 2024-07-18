@@ -5,15 +5,24 @@ import SignIn from './pages/Auth/SignIn';
 import SignUp from './pages/Auth/SignUp';
 import Home from './pages/Main/Home';
 import CreateNoticeRoom from './pages/Main/CreateNoticeRoom';
-import NoticeRoomCreated from './pages/Main/NoticeRoomCreated';
 import MemberList from './pages/MemberList/MemberList';
+import MyPage from './pages/MyPage/MyPage';
+import DefaultProfileEdit from './pages/MyPage/DefaultProfileEdit';
 import Main from './pages/Notice/Main';
 import Details from './pages/Notice/Details';
-import Join from './pages/Notice/Check/Join';
+import Mission from './pages/Notice/Check/Mission';
 import Quiz from './pages/Notice/Check/Quiz';
 import Results from './pages/Notice/Check/Results';
-import JoinType from './pages/Notice/Write/JoinType';
+import MissionType from './pages/Notice/Write/MissionType';
 import QuizType from './pages/Notice/Write/QuizType';
+import NoticeRoomProfileEdit from './pages/MyPage/NoticeRoomProfileEdit';
+import NoticeCheckRequests from './pages/Main/NoticeCheckRequests';
+import Penalty from './pages/Main/Penalty';
+import Search from './pages/Notice/Search';
+import RoomEdit from './pages/Notice/RoomEdit';
+import Invite from './pages/MemberList/Invite';
+import Profile from './pages/MemberList/Profile';
+import CheckRequests from './pages/Notice/CheckRequests';
 
 function App() {
   return (
@@ -24,22 +33,36 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
 
-        {/* Main - 메인 */}
+        {/* Home - 메인 */}
         <Route path="/home" element={<Home />} />
         <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
-        <Route path="/notice-room-created" element={<NoticeRoomCreated />} />
+        <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
+        <Route path="/penalty" element={<Penalty />} />
 
         {/* MemberList - 멤버 목록 */}
-        <Route path="/member-list" element={<MemberList />} />
+        <Route path="/member" element={<MemberList />} />
+        <Route path="/member/invite" element={<Invite />} />
+        <Route path="/member/profile" element={<Profile />} />
+
+        {/* MyPage - 마이페이지 */}
+        <Route path="/my-page" element={<MyPage />} />
+        <Route path="/my-page/default-edit" element={<DefaultProfileEdit />} />
+        <Route
+          path="/my-page/notice-edit"
+          element={<NoticeRoomProfileEdit />}
+        />
 
         {/* Notice - 공지 */}
         <Route path="/notice" element={<Main />} />
+        <Route path="/notice/search" element={<Search />} />
         <Route path="/notice/details" element={<Details />} />
-        <Route path="/notice/check-join" element={<Join />} />
+        <Route path="/notice/check-req" element={<CheckRequests />} />
+        <Route path="/notice/check-mission" element={<Mission />} />
         <Route path="/notice/check-quiz" element={<Quiz />} />
         <Route path="/notice/check-result" element={<Results />} />
-        <Route path="/notice/write-join" element={<JoinType />} />
+        <Route path="/notice/write-mission" element={<MissionType />} />
         <Route path="/notice/write-quiz" element={<QuizType />} />
+        <Route path="/notice/edit" element={<RoomEdit />} />
       </Routes>
     </Router>
     // </div>
