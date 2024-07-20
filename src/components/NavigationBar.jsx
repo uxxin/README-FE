@@ -59,12 +59,14 @@ export const NavigationBar = ({ props }) => {
             fill="#222222"
           />
           <Title>{props.title}</Title>
-          {props.isSearch && (
+          {props.isSearch ? (
             <StyledSearchButton
               src={SearchButton}
               onClick={handleSearchButtonClick}
               fill="#222222"
             />
+          ) : (
+            <StyledSearchButton src={SearchButton} fill="#FFFFFF" />
           )}
         </Container>
       )}
