@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as BackButton } from '../assets/images/back_button.svg';
 import { ReactComponent as SearchButton } from '../assets/images/search_button.svg';
-export const NavigationBar = ({ props }) => {
+
+export const Header = ({ props }) => {
   /*
   props = {
     title: '페이지 상단 노출 제목',
