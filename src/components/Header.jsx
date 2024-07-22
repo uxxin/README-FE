@@ -67,7 +67,7 @@ export const Header = ({ props }) => {
               fill="#222222"
             />
           ) : (
-            <StyledSearchButton src={SearchButton} fill="#FFFFFF" />
+            <div></div>
           )}
         </Container>
       )}
@@ -79,7 +79,7 @@ const Container = styled.div`
   display: flex;
   width: 26.875rem;
   height: 2.75rem;
-  padding: 0.625rem;
+  padding: 0.62rem;
   justify-content: center;
   align-items: center;
   gap: ${(props) => props.gap};
