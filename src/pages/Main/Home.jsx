@@ -3,6 +3,7 @@ import { Profile } from '../../components/Main/Profile';
 import { RecentNotices } from '../../components/Main/RecentNotices';
 import { OpendNoticeRoom } from '../../components/Main/OpendNoticeRoom';
 import { EnteredNoticeRoom } from '../../components/Main/EnteredNoticeRoom';
+import FixedNotice from '../../components/Main/FixedNotice';
 import styled from 'styled-components';
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
 
       <Scroll>
         <Profile />
-        <FixedNotice>고정 공지-컴포넌트로 만들기</FixedNotice>
+        <FixedNotice />
         <RecentNotices />
         <OpendNoticeRoom />
         <EnteredNoticeRoom />
@@ -26,18 +27,7 @@ const Home = () => {
 
 export default Home;
 
-const Logo = styled.div``;
-const FixedNotice = styled.div``;
-
-const Container = styled.div`
-  display: flex;
-  width: 430px;
-  padding: 10px 16px;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-`;
-const Navbar = styled.div`
+const Logo = styled.div`
   display: flex;
   width: 429px;
   height: 44px;
@@ -45,14 +35,44 @@ const Navbar = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border: 1px solid red; /* 디버깅용 테두리 */
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  text-align: center;
+
+  /* Pretendard/bold/18 */
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 18px */
+  letter-spacing: -0.36px;
 `;
-const Scroll = styled.div`
+
+const Container = styled.div`
   display: flex;
-  width: 430px;
-  padding: 10px 16px;
+  width: 26.875rem;
+  padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  border: 1px solid blue; /* 디버깅용 테두리 */
+  gap: 1.5rem;
+`;
+
+const Navbar = styled.div`
+  display: flex;
+  width: 26.6875rem;
+  height: 2.75rem;
+  padding: 0.8125rem 0;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border: 0.0625rem solid red;
+`;
+
+const Scroll = styled.div`
+  display: flex;
+  width: 26.875rem;
+  padding: 0.625rem 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  border: 0.0625rem solid blue;
 `;

@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import VerificationIcon from '../../assets/images/vertificationicon.svg';
+import { ReactComponent as VerificationIcon } from '../../assets/images/vertificationicon.svg';
+import { ReactComponent as PenaltyIcon } from '../../assets/images/penaltyicon.svg';
 
 export const Profile = () => {
+  const [profileImage, setProfileImage] = useState(
+    '/assets/images/defaultprofileimage.png',
+  );
+  const [name, setName] = useState('이름');
+  const [email, setEmail] = useState('이메일@gmail.com');
+
+  const handleImageChange = (e) => {
+    setProfileImage(e.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   return (
     <ProfileContainer>
       <InfoContainer>
-        <ProfileImage />
+        <ProfileImage src={profileImage} alt="Profile" />
         <PersonalInfo>
-          <Name>이름</Name>
-          <Email>이메일@gmail.com</Email>
+          <Name>{name}</Name>
+          <Email>{email}</Email>
         </PersonalInfo>
       </InfoContainer>
       <ButtonContainer>
         <VerificationButton>
-          <Icon src={VerificationIcon} alt="Verificationicon" />
-          확인요청내역
+          <StyledVerificationIcon />
+          확인 요청 내역
         </VerificationButton>
-        <PenaltyButton>페널티</PenaltyButton>
+        <PenaltyButton>
+          <StyledPenaltyIcon />
+          페널티
+        </PenaltyButton>
       </ButtonContainer>
     </ProfileContainer>
   );
@@ -25,26 +47,23 @@ export const Profile = () => {
 
 const ProfileContainer = styled.div`
   display: flex;
-  padding: 8px 0px;
+  padding: 0.5rem 0;
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  border: 1px solid red; /* 디버깅용 테두리 */
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 `;
 
-const ProfileImage = styled.div`
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  background:
-    url('/path-to-image') lightgray 50% / cover no-repeat,
-    #d9d9d9;
+const ProfileImage = styled.img`
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.5rem;
+  background: lightgray;
 `;
 
 const PersonalInfo = styled.div`
@@ -52,59 +71,81 @@ const PersonalInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0.625rem;
 `;
 
 const Name = styled.div`
   color: #000;
 
-  /* Pretendard/bold/18 */
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 100%; /* 18px */
-  letter-spacing: -0.36px;
+  line-height: 100%;
+  letter-spacing: -0.0225rem;
 `;
 
 const Email = styled.div`
-  color: var(--GrayScale-gray4, var(--Grayscale-Gray4, #bdbdbd));
+  color: var(--GrayScale-gray4, #bdbdbd);
 
-  /* Pretendard/regular/12 */
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 12px */
-  letter-spacing: -0.24px;
+  line-height: 100%;
+  letter-spacing: -0.015rem;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
 `;
 
 const VerificationButton = styled.button`
   display: flex;
-  padding: 8px;
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 0.125rem;
   border-radius: 999px;
-  border: 0.33px solid var(--GrayScale-gray4, #bdbdbd);
+  border: 0.021rem solid var(--GrayScale-gray4, #bdbdbd);
   background: var(--GrayScale-gray1, #f3f3f3);
+  color: var(--GrayScale-gray5, #888);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.015rem;
 `;
 
-const Icon = styled.button``;
+const StyledVerificationIcon = styled(VerificationIcon)`
+  width: 1rem;
+  height: 1rem;
+`;
 
 const PenaltyButton = styled.button`
   display: flex;
-  padding: 8px;
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 0.125rem;
   border-radius: 999px;
-  border: 0.33px solid var(--GrayScale-gray4, #bdbdbd);
+  border: 0.021rem solid var(--GrayScale-gray4, #bdbdbd);
   background: var(--GrayScale-gray1, #f3f3f3);
+  color: var(--GrayScale-gray5, #888);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.015rem;
+`;
+
+const StyledPenaltyIcon = styled(PenaltyIcon)`
+  width: 1rem;
+  height: 1rem;
 `;
