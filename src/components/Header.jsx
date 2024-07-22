@@ -9,7 +9,6 @@ export const Header = ({ props }) => {
   props = {
     title: '페이지 상단 노출 제목',
     isSearch: 검색 기능 필요시 true, 아니면 false
-    gap: 'page별 네비게이션 바 gap 입력. 단위 : rem',
   };
   */
 
@@ -53,21 +52,17 @@ export const Header = ({ props }) => {
           <StyledSearchButton src={SearchButton} fill="#509BF7" />
         </SearchContainer>
       ) : (
-        <Container gap={props.gap} onClick={handleContainerClick}>
-          <StyledBackButton
-            src={BackButton}
-            onClick={handleLeftButtonClick}
-            fill="#222222"
-          />
+        <Container onClick={handleContainerClick}>
+          <LeftButtonWrapper onClick={handleLeftButtonClick}>
+            <StyledBackButton fill="#222222" />
+          </LeftButtonWrapper>
           <Title>{props.title}</Title>
           {props.isSearch ? (
-            <StyledSearchButton
-              src={SearchButton}
-              onClick={handleSearchButtonClick}
-              fill="#222222"
-            />
+            <RightButtonWrapper onClick={handleSearchButtonClick}>
+              <StyledSearchButton fill="#222222" />
+            </RightButtonWrapper>
           ) : (
-            <div></div>
+            <RightButtonWrapper />
           )}
         </Container>
       )}
@@ -80,18 +75,30 @@ const Container = styled.div`
   width: 26.875rem;
   height: 2.75rem;
   padding: 0.62rem;
-  justify-content: center;
   align-items: center;
-  gap: ${(props) => props.gap};
-  flex-shrink: 0;
+  justify-content: center;
+  position: relative;
   background: var(--Basic-White, #fff);
   box-sizing: border-box;
+`;
+
+const LeftButtonWrapper = styled.div`
+  position: absolute;
+  left: 0.62rem;
+  display: flex;
+  align-items: center;
+`;
+
+const RightButtonWrapper = styled.div`
+  position: absolute;
+  right: 0.62rem;
+  display: flex;
+  align-items: center;
 `;
 
 const StyledBackButton = styled(BackButton)`
   width: 1.5rem;
   height: 1.5rem;
-  flex-shrink: 0;
 `;
 
 const Title = styled.div`
@@ -108,7 +115,6 @@ const Title = styled.div`
 const StyledSearchButton = styled(SearchButton)`
   width: 1.5rem;
   height: 1.5rem;
-  flex-shrink: 0;
 `;
 
 const SearchContainer = styled.div`
