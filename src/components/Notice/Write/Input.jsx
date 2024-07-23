@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-export const Input = () => {
+export const Input = ({ onInputChange }) => {
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const contentInputRef = useRef(null);
 
@@ -11,13 +12,25 @@ export const Input = () => {
     textarea.style.height = `${textarea.scrollHeight}px`;
   }, [content]);
 
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+    onInputChange(event.target.value, content);
+  };
+
   const handleContentChange = (event) => {
     setContent(event.target.value);
+    onInputChange(title, event.target.value);
   };
 
   return (
     <Container>
-      <TitleInput type="text" placeholder="제목을 입력하세요" maxLength={20} />
+      <TitleInput
+        type="text"
+        value={title}
+        onChange={handleTitleChange}
+        placeholder="제목을 입력하세요"
+        maxLength={20}
+      />
       <ContentInput
         ref={contentInputRef}
         value={content}
@@ -31,7 +44,6 @@ export const Input = () => {
 const Container = styled.div`
   display: flex;
   width: 100%;
-  min-height: 18.75rem;
   flex-direction: column;
   align-items: flex-start;
 `;
@@ -63,10 +75,11 @@ const TitleInput = styled.input`
 
 const ContentInput = styled.textarea`
   display: flex;
-  padding: 20px;
+  min-height: 16.125rem;
+  padding: 1.25rem;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0.625rem;
   align-self: stretch;
   background: var(--Basic-White, #fff);
   outline: none;
