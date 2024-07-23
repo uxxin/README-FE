@@ -12,7 +12,9 @@ const FixedNotice = () => {
       <NoticeContent>
         <NoticeTitle>공지 제목</NoticeTitle>
         <NoticeDate>
-          <div>시작 날짜-끝 날짜</div>
+          <Date>시작 날짜</Date>
+          <DateSeparator>-</DateSeparator>
+          <Date>끝날짜</Date>
         </NoticeDate>
       </NoticeContent>
       <DeleteButton>
@@ -63,7 +65,28 @@ const NoticeDate = styled.div`
   font-size: 14px;
   color: #666;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 0.25rem;
+`;
+
+const Date = styled.div`
+  font-family: Pretendard;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: -0.24px;
+  line-height: 12px;
+`;
+
+const DateSeparator = styled.span`
+  font-family: Pretendard;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
+  line-height: 12px;
 `;
 
 const DeleteButton = styled.button`
