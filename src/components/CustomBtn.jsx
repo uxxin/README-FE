@@ -31,4 +31,5 @@ const StyledCustomBtn = styled.div`
   border: ${(props) => props.border};
   background: ${(props) => props.background};
   color: ${(props) => (props.background === '#FFFFFF' ? '#509BF7' : '#FFFFFF')};
+  margin-bottom: 3.38rem;
 `;
