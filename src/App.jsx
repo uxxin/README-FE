@@ -23,6 +23,7 @@ import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
 import CheckRequests from './pages/Notice/CheckRequests';
+import Post from './pages/Notice/Write/Post';
 
 function App() {
   return (
@@ -60,8 +61,9 @@ function App() {
         <Route path="/notice/check-mission" element={<Mission />} />
         <Route path="/notice/check-quiz" element={<Quiz />} />
         <Route path="/notice/check-result" element={<Results />} />
-        <Route path="/notice/write-mission" element={<MissionType />} />
-        <Route path="/notice/write-quiz" element={<QuizType />} />
+        <Route path="/notice/write" element={<Post />} />
+        <Route path="/notice/write/mission" element={<MissionType />} />
+        <Route path="/notice/write/quiz" element={<QuizType />} />
         <Route path="/notice/edit" element={<RoomEdit />} />
       </Routes>
     </Router>
