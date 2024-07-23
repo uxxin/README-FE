@@ -9,6 +9,7 @@ export const Header = ({ props }) => {
   props = {
     title: '페이지 상단 노출 제목',
     isSearch: 검색 기능 필요시 true, 아니면 false
+    url: '바로 이전 페이지가 아닌 페이지로 이동할 때'
   };
   */
 
@@ -17,7 +18,9 @@ export const Header = ({ props }) => {
 
   const handleLeftButtonClick = (event) => {
     event.stopPropagation();
-    navigate(-1);
+    {
+      props.url ? navigate(props.url) : navigate(-1);
+    }
   };
   const handleSearchButtonClick = (event) => {
     event.stopPropagation();
@@ -74,7 +77,7 @@ const Container = styled.div`
   display: flex;
   width: 26.875rem;
   height: 2.75rem;
-  padding: 0.62rem;
+  padding: 0.625rem;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -121,7 +124,7 @@ const SearchContainer = styled.div`
   display: flex;
   width: 26.875rem;
   height: 2.75rem;
-  padding: 0.75rem 0.625rem;
+  padding: 0.75rem 0.62rem;
   justify-content: center;
   align-items: center;
   align-self: stretch;
@@ -136,7 +139,7 @@ const InputText = styled.input`
   display: flex;
   align-items: center;
   border: none;
-  width: 21.625rem;
+  width: 21.6rem;
   height: 1.1875rem;
   ::placeholder {
     overflow: hidden;
