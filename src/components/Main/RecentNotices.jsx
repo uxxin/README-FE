@@ -1,31 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import prevButtonSvg from '../../assets/images/prev_button.svg'; // 경로를 맞게 설정해 주세요
-import nextButtonSvg from '../../assets/images/next_button.svg'; // 다음 버튼 이미지 경로
+import prevButtonSvg from '../../assets/images/prev_button.svg';
+import nextButtonSvg from '../../assets/images/next_button.svg';
+
+const ITEMS_PER_PAGE = 5; //한 페이지에 5개씩 오도록
 
 export const RecentNotices = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 99;
+  const [totalNotices, setTotalNotices] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalNotices = async () => {
+      // 데이터 실제로 받아올 때 수정 필요
+      const response = await new Promise((resolve) => {
+        setTimeout(() => resolve(101), 1000); // 101개라고 가정
+      });
+      setTotalNotices(response);
+    };
+
+    fetchTotalNotices();
+  }, []);
+
+  const totalPages = Math.ceil(totalNotices / ITEMS_PER_PAGE);
 
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    setCurrentPage((prevPage) =>
+      prevPage - 1 < 1 ? totalPages : prevPage - 1,
+    );
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    setCurrentPage((prevPage) =>
+      prevPage + 1 > totalPages ? 1 : prevPage + 1,
+    );
   };
+
+  //공지방 이름, 내용, n분전 예시로- 변경 필요
+  const notices = Array.from({ length: totalNotices }, (_, index) => ({
+    name: `공지방 이름 ${index + 1}`,
+    text: `공지 내용 ${index + 1}`,
+    time: `${index + 1}분전`,
+  }));
+
+  const currentNotices = notices.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
+
+  // 마지막 페이지 빈 부분 개수
+  const emptyRows = ITEMS_PER_PAGE - currentNotices.length;
+
+  // 빈 부분도 추가해놓기
+  const displayedNotices = [
+    ...currentNotices,
+    ...Array.from({ length: emptyRows }, () => ({
+      name: '',
+      text: '',
+      time: '',
+    })),
+  ];
 
   return (
     <RecentNoticesSection>
       <RecentTitle>최근 공지</RecentTitle>
       <NoticesList>
-        {[...Array(5)].map((_, index) => (
-          <NoticeItem key={index}>
+        {displayedNotices.map((notice, index) => (
+          <NoticeItem
+            key={index}
+            isEmpty={!notice.name && !notice.text && !notice.time}
+          >
             <NoticeContent>
-              <NoticeName>공지방 이름</NoticeName>
-              <NoticeText>공지 내용</NoticeText>
+              <NoticeName>{notice.name}</NoticeName>
+              <NoticeText>{notice.text}</NoticeText>
             </NoticeContent>
-            <NoticeTime>n분전</NoticeTime>
+            <NoticeTime>{notice.time}</NoticeTime>
           </NoticeItem>
         ))}
         <Pagination>
@@ -35,9 +83,9 @@ export const RecentNotices = () => {
             alt="Previous"
           />
           <PageNumber>
-            <span>{currentPage}</span>
-            <span>/</span>
-            <span>{totalPages}</span>
+            <CurrentPage>{currentPage}</CurrentPage>
+            <Separator>/</Separator>
+            <TotalPages>{totalPages}</TotalPages>
           </PageNumber>
           <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
         </Pagination>
@@ -72,10 +120,11 @@ const NoticesList = styled.div`
 
 const NoticeItem = styled.div`
   display: flex;
-  padding: 12px 0px;
+  padding: 12px 0;
   align-items: center;
   align-self: stretch;
   border-bottom: 0.33px solid var(--Text-caption, #888);
+  height: ${(props) => (props.isEmpty ? '14px' : 'auto')};
 `;
 
 const NoticeContent = styled.div`
@@ -134,7 +183,7 @@ const NoticeTime = styled.div`
 
 const Pagination = styled.div`
   display: flex;
-  padding: 8px 0px;
+  padding: 8px 0;
   justify-content: center;
   align-items: center;
   gap: 22px;
@@ -145,6 +194,18 @@ const PageNumber = styled.div`
   align-items: center;
   gap: 2px;
   font-weight: 600;
+`;
+
+const CurrentPage = styled.span`
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+`;
+
+const Separator = styled.span`
+  color: var(--GrayScale-gray5, var(--Grayscale-Gray5, #888));
+`;
+
+const TotalPages = styled.span`
+  color: var(--GrayScale-gray5, var(--Grayscale-Gray5, #888));
 `;
 
 const NavButton = styled.img`

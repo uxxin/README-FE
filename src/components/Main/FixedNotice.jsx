@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import pinIcon from '../../assets/images/pinicon.svg';
 import deleteIcon from '../../assets/images/deleteicon.svg';
 
-const FixedNotice = () => {
+const FixedNotice = ({ onDelete }) => {
   return (
     <NoticeContainer>
       <PinButton>
@@ -17,7 +17,7 @@ const FixedNotice = () => {
           <Date>끝날짜</Date>
         </NoticeDate>
       </NoticeContent>
-      <DeleteButton>
+      <DeleteButton onClick={onDelete}>
         <img src={deleteIcon} alt="Delete Icon" />
       </DeleteButton>
     </NoticeContainer>

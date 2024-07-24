@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Profile } from '../../components/Main/Profile';
 import { RecentNotices } from '../../components/Main/RecentNotices';
 import { OpendNoticeRoom } from '../../components/Main/OpendNoticeRoom';
@@ -7,7 +7,12 @@ import FixedNotice from '../../components/Main/FixedNotice';
 import styled from 'styled-components';
 
 const Home = () => {
-  console.log('Home component rendered');
+  const [isFixedNoticeVisible, setIsFixedNoticeVisible] = useState(true);
+
+  const handleDeleteClick = () => {
+    setIsFixedNoticeVisible(false);
+  };
+
   return (
     <Container>
       <Navbar>
@@ -16,7 +21,7 @@ const Home = () => {
 
       <Scroll>
         <Profile />
-        <FixedNotice />
+        {isFixedNoticeVisible && <FixedNotice onDelete={handleDeleteClick} />}
         <RecentNotices />
         <OpendNoticeRoom />
         <EnteredNoticeRoom />
