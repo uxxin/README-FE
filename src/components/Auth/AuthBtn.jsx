@@ -11,7 +11,7 @@ export const AuthBtn = () => {
             text: '로그인',
             border: 'none',
             background: '#509BF7',
-            link: '/sign-in',
+            link: '/home',
           }}
         />
         <CustomBtn
@@ -27,15 +27,16 @@ export const AuthBtn = () => {
   );
 };
 
+
 const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.81rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.81rem;
 `;
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 15.69rem;
-  margin-bottom: 1.87rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15.69rem;
+    margin-bottom: 1.87rem;
 `;
