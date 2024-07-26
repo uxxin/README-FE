@@ -96,6 +96,37 @@ const ProfileContainer = styled.div`
     flex: 1 0 0;
     align-self: stretch;
 `
+const TextContainer = styled.div`
+      display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
+const ProfileName = styled.span`
+    align-self: stretch;
+    color: var(--Text-default, var(--Grayscale-Gray7, #222));
+
+    /* Pretendard/medium/16 */
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 1.2rem */
+    letter-spacing: -0.02rem;
+`
+
+const ProfileInfo = styled.span`
+    align-self: stretch;
+    color: var(--Text-caption, var(--Grayscale-Gray5, #888));
+
+    /* Pretendard/regular/12 */
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 0.75rem */
+    letter-spacing: -0.015rem;
+`
 
 const ImgContainer = styled.img`
     display: flex;
@@ -127,7 +158,7 @@ const YesButton = styled.button`
     flex: 1 0 0;
     border-right: 0.33px solid var(--Primary-light-active, #C9E0FD);
     background: var(--Primary-light, #F4F9FF);
-    border: 1px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
+    border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
     border-radius:  0.5rem 0rem 0rem 0.5rem;
 
     
@@ -141,7 +172,7 @@ const NoButton = styled.button`
     flex: 1 0 0;
     border-right: 0.33px solid var(--Primary-light-active, #C9E0FD);
     background: var(--Primary-light, #F4F9FF);
-    border: 1px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
+    border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
     border-radius: 0rem 0.5rem 0.5rem 0rem;
 
 `
@@ -162,6 +193,10 @@ export const CheckList = () =>{
             <BoxContainer>
                 <ProfileContainer>
                 <ImgContainer></ImgContainer>
+                <TextContainer>
+                <ProfileName>숩 </ProfileName>
+                <ProfileInfo> 감사합니다</ProfileInfo>
+                </TextContainer>
                 </ProfileContainer>
                 <ContentContainer> <SlideButton/>
                 </ContentContainer>
