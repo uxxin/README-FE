@@ -61,7 +61,7 @@ const MemberListBox = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-    width: 23.625rem;
+  width: 23.625rem;
   height: 2.75rem; 
   margin-bottom: 2%; 
   display: flex;

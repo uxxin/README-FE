@@ -23,6 +23,8 @@ import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
 import CheckRequests from './pages/Notice/CheckRequests';
+import CheckListPage from './pages/MemberList/CheckListPage';
+
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
         <Route path="/member" element={<MemberList />} />
         <Route path="/member/invite" element={<Invite />} />
         <Route path="/member/profile" element={<Profile />} />
+        <Route path="/member/checklist" element={<CheckListPage/>} />
 
         {/* MyPage - 마이페이지 */}
         <Route path="/my-page" element={<MyPage />} />

@@ -87,6 +87,7 @@ const ButtonContainer = styled.div`
   padding: 0 0.5rem; /* 버튼 컨테이너에 패딩 추가 */
 `;
 
+
 export const MemberInvite = () => {
   return (
     <Container>

@@ -65,9 +65,6 @@ const SecondModalContent = styled.div`
   border: 0.33px solid #C9E0FD;
 `;
 
-const DeportButton = styled.button`
-  
-`
 
 const CloseButton = styled.button`
   margin-top: 1rem;
@@ -97,7 +94,7 @@ const MemberModal = ({ isOpen, onClose, onProfileLinkClick }) => {
     setIsSecondModalOpen(false);
   };
 
-  const handleKickOutLinkClick = () => { //추방하기 버튼누르면 추방됨
+  const handleKickOutLinkClick = () => { 
     window.location.href = 'http://localhost:5173/member-profile';
   };
 
