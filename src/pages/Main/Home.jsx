@@ -79,5 +79,4 @@ const Scroll = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  border: 0.0625rem solid blue;
 `;

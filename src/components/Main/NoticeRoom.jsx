@@ -8,8 +8,11 @@ const NoticeRoom = ({ index }) => {
         <Time>몇분 전</Time>
       </TopSection>
       <BottomSection>
-        <ProfileImage src={`https://placekitten.com/44/44`} alt="Profile" />
-        <RoomName>입장한 공지방 이름</RoomName>
+        <ProfileImage
+          src="../../assets/images/defaultprofileimage.png"
+          alt="profile"
+        />
+        <RoomName>공지방 이름</RoomName>
         <UserName>공지방 닉네임</UserName>
       </BottomSection>
     </Container>
@@ -17,7 +20,7 @@ const NoticeRoom = ({ index }) => {
 };
 
 const Container = styled.div`
-  width: 124px;
+  width: calc((100% - 26px) / 3); // 13px * 2 = 26px
   height: 160px;
   display: flex;
   flex-direction: column;
@@ -30,9 +33,8 @@ const TopSection = styled.div`
   padding: 5px 7px;
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   border: 1px solid #509bf7;
   background: #509bf7;
 `;
@@ -50,19 +52,23 @@ const Time = styled.div`
 
 const BottomSection = styled.div`
   display: flex;
-  flex-direction: column;
   height: 138px;
   padding: 16px 8px;
+  flex-direction: column;
   align-items: center;
-  background: #fff;
-  border-radius: 8px;
+  align-self: stretch;
+  gap: 6px;
 `;
 
 const ProfileImage = styled.img`
+  display: flex;
   width: 44px;
   height: 44px;
+  justify-content: center;
+  align-items: center;
   border-radius: 12px;
-  margin-bottom: 6px;
+  font-size: 10px;
+  font-family: Pretendard;
 `;
 
 const RoomName = styled.div`
@@ -70,16 +76,18 @@ const RoomName = styled.div`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  color: #3c74b9;
-  text-align: center;
   text-overflow: ellipsis;
+  color: var(--Primary-dark, var(--Primary-Dark, #3c74b9));
+  text-align: center;
+
+  /* Pretendard/regular/14 */
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 14px; /* 100%를 14px로 명시적으로 지정 */
   letter-spacing: -0.28px;
-  margin-bottom: 6px;
+  max-height: 28px; /* 2줄 * 14px = 28px */
 `;
 
 const UserName = styled.div`
@@ -87,15 +95,18 @@ const UserName = styled.div`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  color: #888;
-  text-align: center;
   text-overflow: ellipsis;
+  color: var(--Text-caption, var(--Grayscale-Gray5, #888));
+  text-align: center;
+
+  /* Pretendard/regular/10 */
   font-family: Pretendard;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
-  line-height: 10px;
+  line-height: 10px; /* 100%를 10px로 명시적으로 지정 */
   letter-spacing: -0.2px;
+  max-height: 20px; /* 2줄 * 10px = 20px */
 `;
 
 export default NoticeRoom;

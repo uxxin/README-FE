@@ -1,32 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
 import nextButtonSvg from '../../assets/images/next_button.svg';
 
-const ITEMS_PER_PAGE = 5; //한 페이지에 5개씩 오도록
+const ITEMS_PER_PAGE = 5; // 한 페이지에 5개씩 표시
 
 export const RecentNotices = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalNotices, setTotalNotices] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [notices, setNotices] = useState([]);
 
   useEffect(() => {
-    const fetchTotalNotices = async () => {
-      // 데이터 실제로 받아올 때 수정 필요
-      const response = await new Promise((resolve) => {
-        setTimeout(() => resolve(101), 1000); // 101개라고 가정
-      });
-      setTotalNotices(response);
+    const fetchNotices = async () => {
+      try {
+        const response = await axios.get('/mock/RecentNoticeData.json');
+        const data = response.data;
+
+        setTotalPages(data.totalPage);
+        setNotices(data.recentPostList);
+      } catch (error) {
+        console.error('공지 데이터를 가져오는 중 오류 발생:', error);
+      }
     };
 
-    fetchTotalNotices();
+    fetchNotices();
   }, []);
 
-  const totalPages = Math.ceil(totalNotices / ITEMS_PER_PAGE);
-
   const handlePrevPage = () => {
-    setCurrentPage((prevPage) =>
-      prevPage - 1 < 1 ? totalPages : prevPage - 1,
-    );
+    setCurrentPage((prevPage) => {
+      if (prevPage > 1) {
+        return prevPage - 1;
+      }
+      return prevPage;
+    });
   };
 
   const handleNextPage = () => {
@@ -34,13 +41,6 @@ export const RecentNotices = () => {
       prevPage + 1 > totalPages ? 1 : prevPage + 1,
     );
   };
-
-  //공지방 이름, 내용, n분전 예시로- 변경 필요
-  const notices = Array.from({ length: totalNotices }, (_, index) => ({
-    name: `공지방 이름 ${index + 1}`,
-    text: `공지 내용 ${index + 1}`,
-    time: `${index + 1}분전`,
-  }));
 
   const currentNotices = notices.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -54,9 +54,9 @@ export const RecentNotices = () => {
   const displayedNotices = [
     ...currentNotices,
     ...Array.from({ length: emptyRows }, () => ({
-      name: '',
-      text: '',
-      time: '',
+      room_name: '',
+      title: '',
+      createdAt: '',
     })),
   ];
 
@@ -67,13 +67,13 @@ export const RecentNotices = () => {
         {displayedNotices.map((notice, index) => (
           <NoticeItem
             key={index}
-            isEmpty={!notice.name && !notice.text && !notice.time}
+            isEmpty={!notice.room_name && !notice.title && !notice.createdAt}
           >
             <NoticeContent>
-              <NoticeName>{notice.name}</NoticeName>
-              <NoticeText>{notice.text}</NoticeText>
+              <NoticeName>{notice.room_name}</NoticeName>
+              <NoticeText>{notice.title}</NoticeText>
             </NoticeContent>
-            <NoticeTime>{notice.time}</NoticeTime>
+            <NoticeTime>{notice.createdAt}</NoticeTime>
           </NoticeItem>
         ))}
         <Pagination>

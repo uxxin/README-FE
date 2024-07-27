@@ -1,20 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import pinIcon from '../../assets/images/pinicon.svg';
 import deleteIcon from '../../assets/images/deleteicon.svg';
 
 const FixedNotice = ({ onDelete }) => {
+  const [notice, setNotice] = useState({
+    postId: 1,
+    title: '공지글 제목',
+    startDate: '시작일',
+    endDate: '마감일',
+  });
+
+  useEffect(() => {
+    axios
+      .get('/mock/FixedData.json')
+      .then((response) => {
+        // 응답 데이터가 JSON 파일의 내용
+        setNotice(response.data);
+      })
+      .catch((error) => {
+        console.error('공지 데이터를 가져오는 중 오류 발생:', error);
+      });
+  }, []);
+
   return (
     <NoticeContainer>
       <PinButton>
         <img src={pinIcon} alt="Pin Icon" />
       </PinButton>
       <NoticeContent>
-        <NoticeTitle>공지 제목</NoticeTitle>
+        <NoticeTitle>{notice.title}</NoticeTitle>
         <NoticeDate>
-          <Date>시작 날짜</Date>
+          <Date>{notice.startDate}</Date>
           <DateSeparator>-</DateSeparator>
-          <Date>끝날짜</Date>
+          <Date>{notice.endDate}</Date>
         </NoticeDate>
       </NoticeContent>
       <DeleteButton onClick={onDelete}>
