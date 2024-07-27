@@ -35,7 +35,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 1rem */
   letter-spacing: -0.02rem;

@@ -144,7 +144,6 @@ const NoticeName = styled.div`
   text-overflow: ellipsis;
 
   font-size: 12px;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 12px */
   letter-spacing: -0.24px;
@@ -160,7 +159,6 @@ const NoticeText = styled.div`
   text-overflow: ellipsis;
 
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 14px */
   letter-spacing: -0.28px;
@@ -171,7 +169,6 @@ const NoticeTime = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
 
   font-size: 10px;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 10px */
   letter-spacing: -0.2px;

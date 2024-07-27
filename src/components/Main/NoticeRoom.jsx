@@ -43,7 +43,6 @@ const Time = styled.div`
   color: #fff;
   text-align: center;
   font-size: 12px;
-  font-style: normal;
   font-weight: 400;
   line-height: 12px;
   letter-spacing: -0.24px;
@@ -80,7 +79,6 @@ const RoomName = styled.div`
 
   /* Pretendard/regular/14 */
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
   line-height: 14px; /* 100%를 14px로 명시적으로 지정 */
   letter-spacing: -0.28px;
@@ -98,7 +96,6 @@ const UserName = styled.div`
 
   /* Pretendard/regular/10 */
   font-size: 10px;
-  font-style: normal;
   font-weight: 400;
   line-height: 10px; /* 100%를 10px로 명시적으로 지정 */
   letter-spacing: -0.2px;

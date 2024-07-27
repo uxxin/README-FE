@@ -88,7 +88,6 @@ const PersonalInfo = styled.div`
 const Name = styled.div`
   color: #000;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
@@ -97,7 +96,6 @@ const Name = styled.div`
 const Email = styled.div`
   color: var(--GrayScale-gray4, #bdbdbd);
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
@@ -121,7 +119,6 @@ const VerificationButton = styled.button`
   color: var(--GrayScale-gray5, #888);
   text-align: center;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
@@ -145,7 +142,6 @@ const PenaltyButton = styled.button`
   color: var(--GrayScale-gray5, #888);
   text-align: center;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;

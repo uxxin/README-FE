@@ -108,7 +108,6 @@ const Title = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
@@ -146,7 +145,6 @@ const InputText = styled.input`
     text-overflow: ellipsis;
 
     font-size: 1rem;
-    font-style: normal;
     font-weight: 500;
     line-height: 120%;
     letter-spacing: -0.02rem;

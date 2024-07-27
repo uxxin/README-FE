@@ -43,10 +43,7 @@ const Logo = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
 
-  /* Pretendard/bold/18 */
-  font-family: Pretendard;
   font-size: 18px;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 18px */
   letter-spacing: -0.36px;

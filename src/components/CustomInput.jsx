@@ -33,7 +33,6 @@ const Input = styled.input`
   outline: none;
   background: none;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 1.125rem */
   letter-spacing: -0.0225rem;
@@ -46,7 +45,6 @@ const Input = styled.input`
 const CharCount = styled.span`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
