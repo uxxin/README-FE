@@ -58,7 +58,6 @@ const CustomModal = ({ isOpen, onClose, buttons }) => {
           <ModalButton
             key={index} 
             onClick={button.onClick} 
-            backgroundColor={button.backgroundColor} 
             color={button.color}
           >
             {button.label}

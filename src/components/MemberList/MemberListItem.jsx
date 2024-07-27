@@ -174,8 +174,8 @@ export const MemberListItem = () => {
   }
 
   const modalButtons = [
-    { label: "프로필", onClick: handleProfileLinkClick, backgroundColor: "white", color: "black" },
-    { label: "추방하기", onClick: handleKickOutClick, backgroundColor: "white", color: "red" }
+    { label: "프로필", onClick: handleProfileLinkClick, color: "black" },
+    { label: "추방하기", onClick: handleKickOutClick,  color: "red" }
   ];
 
   return (
