@@ -19,7 +19,7 @@ export const Header = ({ props }) => {
   const handleLeftButtonClick = (event) => {
     event.stopPropagation();
     {
-      props.url ? navigate(props.url) : navigate(-1);
+      props.url ? navigate(props.url, { replace: true }) : navigate(-1);
     }
   };
   const handleSearchButtonClick = (event) => {
