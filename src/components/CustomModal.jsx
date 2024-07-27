@@ -17,41 +17,32 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background: transparent;
   padding: 1.5rem;
-  width: 122px;
-  height: 72px;
+  width: 7.625rem; 
+  height: 4.5rem; 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const ModalButtonTop = styled.button`
-  display: block;
-  margin-bottom: 0;
+
+const ModalButton = styled.button`
   padding: 0.5rem 1rem;
   background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
   color: ${({ color }) => color || 'black'};
-  border-radius: 5px 5px 0 0;
-  width: 122px;
-  height: 36px;
   border: 0.33px solid #BDBDBD;
   cursor: pointer;
-  z-index: 1;
+  width: 100%;
+  border-radius: ${({ isTop }) => (isTop ? '0.3125rem 0.3125rem 0 0' : '0 0 0.3125rem 0.3125rem')};
+  &:first-child {
+    border-radius: 5px 5px 0 0;
+  }
+  &:last-child {
+    border-radius: 0 0 5px 5px;
+  }
 `;
 
-const ModalButtonBottom = styled.button`
-  display: block;
-  margin-bottom: 0;
-  padding: 0.5rem 1rem;
-  background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
-  color: ${({ color }) => color || 'black'};
-  border-radius: 0 0 5px 5px;
-  width: 122px;
-  height: 36px;
-  border: 0.33px solid #BDBDBD;
-  cursor: pointer;
-  z-index: 1;
-`;
+
 
 const CustomModal = ({ isOpen, onClose, buttons }) => {
   if (!isOpen) return null;
@@ -64,25 +55,14 @@ const CustomModal = ({ isOpen, onClose, buttons }) => {
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={handleModalContentClick}>
         {buttons && buttons.map((button, index) => (
-          index === 0 ? (
-            <ModalButtonTop 
-              key={index} 
-              onClick={button.onClick} 
-              backgroundColor={button.backgroundColor} 
-              color={button.color}
-            >
-              {button.label}
-            </ModalButtonTop>
-          ) : (
-            <ModalButtonBottom 
-              key={index} 
-              onClick={button.onClick} 
-              backgroundColor={button.backgroundColor} 
-              color={button.color}
-            >
-              {button.label}
-            </ModalButtonBottom>
-          )
+          <ModalButton
+            key={index} 
+            onClick={button.onClick} 
+            backgroundColor={button.backgroundColor} 
+            color={button.color}
+          >
+            {button.label}
+          </ModalButton>
         ))}
       </ModalContent>
     </ModalOverlay>

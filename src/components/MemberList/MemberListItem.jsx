@@ -48,8 +48,7 @@ const MemberIcon = styled.div`
 `;
 
 const MemberListBox = styled.div`
-  width: 24.875rem; 
-  min-height: 10rem; 
+
   padding: 1rem 0.625rem; 
   margin-top: 2%;
   gap: 0.625rem; 
@@ -58,16 +57,18 @@ const MemberListBox = styled.div`
   border-color: #509BF7;
   box-sizing: border-box;
   opacity: 1; 
+  align-self: stretch;
+  flex-direction: column;
 `;
 
 const ButtonContainer = styled.div`
-  width: 23.625rem;
-  height: 2.75rem; 
-  margin-bottom: 2%; 
   display: flex;
-  align-items: center; 
   box-sizing: border-box;
   white-space: nowrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.625rem;
+  align-self: stretch;
 `;
 
 const ButtonText = styled.span`
@@ -93,6 +94,9 @@ const MemberAddBtn = styled.button`
   box-sizing: border-box;
   background: #F4F9FF;
   border: 0.02rem solid #C9E0FD; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MemberNameBtn = styled.img`
@@ -106,13 +110,52 @@ const MemberNameBtn = styled.img`
   margin-right:1.6rem; 
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+`;
+
+const SecondModalContent = styled.div`
+  background: white;
+  padding:19px, 0px, 0px, 0px;
+  width: 270px;
+  height:110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 0.33px solid #C9E0FD;
+`;
+
+
+const CloseButton = styled.button`
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 0.33px solid #BDBDBD;
+  width: 270px;
+`;
+
 export const MemberListItem = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
+
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -123,9 +166,12 @@ export const MemberListItem = () => {
   };
 
   const handleKickOutClick = () => {
-    alert("추방되었습니다.");
-    handleCloseModal();
+    setIsSecondModalOpen(true);
   };
+
+  const handleSecondModalClose = () =>{
+    setIsSecondModalOpen(false);
+  }
 
   const modalButtons = [
     { label: "프로필", onClick: handleProfileLinkClick, backgroundColor: "white", color: "black" },
@@ -156,6 +202,15 @@ export const MemberListItem = () => {
         onClose={handleCloseModal}
         buttons={modalButtons}
       />
+
+  {isSecondModalOpen && (
+          <ModalOverlay onClick={handleSecondModalClose}>
+            <SecondModalContent onClick={(e) => e.stopPropagation()}>
+              <p>추방하시겠습니까?</p>
+              <CloseButton onClick={handleSecondModalClose}>취소</CloseButton>
+            </SecondModalContent>
+          </ModalOverlay>
+        )}
     </Container>
   );
 };
