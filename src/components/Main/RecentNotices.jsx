@@ -101,7 +101,6 @@ const RecentNoticesSection = styled.section`
 const RecentTitle = styled.div`
   align-self: stretch;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-family: Pretendard;
   font-size: 1.25rem; /* 20px */
   font-weight: 700;
   line-height: 1.25rem; /* 20px */
@@ -144,9 +143,7 @@ const NoticeName = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
 
-  font-family: Pretendard;
   font-size: 0.75rem; /* 12px */
-  font-style: normal;
   font-weight: 400;
   line-height: 0.75rem; /* 12px */
   letter-spacing: -0.015rem; /* -0.24px */
@@ -161,9 +158,7 @@ const NoticeText = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
 
-  font-family: Pretendard;
   font-size: 0.875rem; /* 14px */
-  font-style: normal;
   font-weight: 400;
   line-height: 0.875rem; /* 14px */
   letter-spacing: -0.0175rem; /* -0.28px */
@@ -173,9 +168,7 @@ const NoticeTime = styled.div`
   margin-left: 0.25rem; /* 4px */
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
 
-  font-family: Pretendard;
   font-size: 0.625rem; /* 10px */
-  font-style: normal;
   font-weight: 400;
   line-height: 0.625rem; /* 10px */
   letter-spacing: -0.0125rem; /* -0.2px */

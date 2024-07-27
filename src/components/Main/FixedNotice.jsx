@@ -74,14 +74,12 @@ const NoticeContent = styled.div`
 `;
 
 const NoticeTitle = styled.div`
-  font-family: Pretendard;
   font-size: 1rem; /* 16px */
   font-weight: 700;
   color: #222;
 `;
 
 const NoticeDate = styled.div`
-  font-family: Pretendard;
   font-size: 0.875rem; /* 14px */
   color: #666;
   display: flex;
@@ -90,7 +88,6 @@ const NoticeDate = styled.div`
 `;
 
 const Date = styled.div`
-  font-family: Pretendard;
   font-size: 0.75rem; /* 12px */
   font-weight: 400;
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
@@ -102,7 +99,6 @@ const Date = styled.div`
 `;
 
 const DateSeparator = styled.span`
-  font-family: Pretendard;
   font-size: 0.75rem; /* 12px */
   font-weight: 400;
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));

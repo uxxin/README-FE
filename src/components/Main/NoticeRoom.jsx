@@ -42,9 +42,7 @@ const TopSection = styled.div`
 const Time = styled.div`
   color: #fff;
   text-align: center;
-  font-family: Pretendard;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 0.75rem;
   letter-spacing: -0.015rem;
@@ -68,7 +66,6 @@ const ProfileImage = styled.img`
   align-items: center;
   border-radius: 0.75rem;
   font-size: 0.625rem;
-  font-family: Pretendard;
 `;
 
 const RoomName = styled.div`
@@ -79,9 +76,7 @@ const RoomName = styled.div`
   text-overflow: ellipsis;
   color: var(--Primary-dark, var(--Primary-Dark, #3c74b9));
   text-align: center;
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 0.875rem;
   letter-spacing: -0.0175rem;
@@ -96,9 +91,7 @@ const UserName = styled.div`
   text-overflow: ellipsis;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-align: center;
-  font-family: Pretendard;
   font-size: 0.625rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 0.625rem;
   letter-spacing: -0.0125rem;
