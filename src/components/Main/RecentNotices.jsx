@@ -1,26 +1,95 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import prevButtonSvg from '../../assets/images/prev_button.svg';
+import nextButtonSvg from '../../assets/images/next_button.svg';
+
+const ITEMS_PER_PAGE = 5; // 한 페이지에 5개씩 표시
 
 export const RecentNotices = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [notices, setNotices] = useState([]);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const response = await axios.get('/mock/RecentNoticeData.json');
+        const data = response.data;
+
+        setTotalPages(data.totalPage);
+        setNotices(data.recentPostList);
+      } catch (error) {
+        console.error('공지 데이터를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => {
+      if (prevPage > 1) {
+        return prevPage - 1;
+      }
+      return prevPage;
+    });
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) =>
+      prevPage + 1 > totalPages ? 1 : prevPage + 1,
+    );
+  };
+
+  const currentNotices = notices.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
+
+  // 마지막 페이지 빈 부분 개수
+  const emptyRows = ITEMS_PER_PAGE - currentNotices.length;
+
+  // 빈 부분도 추가해놓기
+  const displayedNotices = [
+    ...currentNotices,
+    ...Array.from({ length: emptyRows }, () => ({
+      room_name: '',
+      title: '',
+      createdAt: '',
+    })),
+  ];
+
   return (
     <RecentNoticesSection>
       <RecentTitle>최근 공지</RecentTitle>
       <NoticesList>
-        {[...Array(5)].map((_, index) => (
-          <NoticeItem key={index}>
+        {displayedNotices.map((notice, index) => (
+          <NoticeItem
+            key={index}
+            isEmpty={!notice.room_name && !notice.title && !notice.createdAt}
+          >
             <NoticeContent>
-              <NoticeName>공지방 이름</NoticeName>
-              <NoticeText>공지 내용</NoticeText>
+              <NoticeName>{notice.room_name}</NoticeName>
+              <NoticeText>{notice.title}</NoticeText>
             </NoticeContent>
-            <NoticeTime>n분전</NoticeTime>
+            <NoticeTime>{notice.createdAt}</NoticeTime>
           </NoticeItem>
         ))}
+        <Pagination>
+          <NavButton
+            onClick={handlePrevPage}
+            src={prevButtonSvg}
+            alt="Previous"
+          />
+          <PageNumber>
+            <CurrentPage>{currentPage}</CurrentPage>
+            <Separator>/</Separator>
+            <TotalPages>{totalPages}</TotalPages>
+          </PageNumber>
+          <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
+        </Pagination>
       </NoticesList>
-      <Pagination>
-        <NavButton>◀</NavButton>
-        <PageNumber>1/99</PageNumber>
-        <NavButton>▶</NavButton>
-      </Pagination>
     </RecentNoticesSection>
   );
 };
@@ -45,28 +114,25 @@ const RecentTitle = styled.div`
 const NoticesList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px;
   border-top: 0.33px solid var(--Primary-normal, #509bf7);
   border-bottom: 0.33px solid var(--Primary-normal, #509bf7);
 `;
 
 const NoticeItem = styled.div`
   display: flex;
+  padding: 12px 0;
   align-items: center;
-  gap: 4px;
   align-self: stretch;
-  padding: 12px 0px 12px 0px;
   border-bottom: 0.33px solid var(--Text-caption, #888);
-  border: 0.0625rem solid red;
+  height: ${(props) => (props.isEmpty ? '14px' : 'auto')};
 `;
 
 const NoticeContent = styled.div`
   display: flex;
-  flex-direction: row;
+  padding-right: 4px;
   align-items: center;
   gap: 4px;
-  flex: 1;
+  flex: 1 0 0;
 `;
 
 const NoticeName = styled.div`
@@ -78,7 +144,6 @@ const NoticeName = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
 
-  /* Pretendard/regular/12 */
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
@@ -96,7 +161,6 @@ const NoticeText = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
 
-  /* Pretendard/regular/14 */
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -107,10 +171,8 @@ const NoticeText = styled.div`
 
 const NoticeTime = styled.div`
   margin-left: 4px;
-  white-space: nowrap; //여기 수정해야하나
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
 
-  /* Pretendard/regular/10 */
   font-family: Pretendard;
   font-size: 10px;
   font-style: normal;
@@ -121,19 +183,40 @@ const NoticeTime = styled.div`
 
 const Pagination = styled.div`
   display: flex;
-  align-items: center;
+  padding: 8px 0;
   justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
+  align-items: center;
+  gap: 22px;
 `;
 
-const PageNumber = styled.span`
+const PageNumber = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
   font-weight: 600;
 `;
 
-const NavButton = styled.button`
-  background: none;
-  border: none;
+const CurrentPage = styled.span`
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+`;
+
+const Separator = styled.span`
+  color: var(--GrayScale-gray5, var(--Grayscale-Gray5, #888));
+`;
+
+const TotalPages = styled.span`
+  color: var(--GrayScale-gray5, var(--Grayscale-Gray5, #888));
+`;
+
+const NavButton = styled.img`
+  width: 24px;
+  height: 24px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
 `;
 
