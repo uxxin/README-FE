@@ -102,42 +102,42 @@ const RecentTitle = styled.div`
   align-self: stretch;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   font-family: Pretendard;
-  font-size: 20px;
+  font-size: 1.25rem; /* 20px */
   font-weight: 700;
-  line-height: 100%; /* 20px */
-  letter-spacing: -0.4px;
+  line-height: 1.25rem; /* 20px */
+  letter-spacing: -0.025rem; /* -0.4px */
   margin: 0;
   padding: 0;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem; /* 10px */
 `;
 
 const NoticesList = styled.div`
   display: flex;
   flex-direction: column;
-  border-top: 0.33px solid var(--Primary-normal, #509bf7);
-  border-bottom: 0.33px solid var(--Primary-normal, #509bf7);
+  border-top: 0.0208rem solid var(--Primary-normal, #509bf7); /* 0.33px */
+  border-bottom: 0.0208rem solid var(--Primary-normal, #509bf7); /* 0.33px */
 `;
 
 const NoticeItem = styled.div`
   display: flex;
-  padding: 12px 0;
+  padding: 0.75rem 0; /* 12px */
   align-items: center;
   align-self: stretch;
-  border-bottom: 0.33px solid var(--Text-caption, #888);
-  height: ${(props) => (props.isEmpty ? '14px' : 'auto')};
+  border-bottom: 0.0208rem solid var(--Text-caption, #888); /* 0.33px */
+  height: ${(props) => (props.isEmpty ? '0.875rem' : 'auto')}; /* 14px */
 `;
 
 const NoticeContent = styled.div`
   display: flex;
-  padding-right: 4px;
+  padding-right: 0.25rem; /* 4px */
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem; /* 4px */
   flex: 1 0 0;
 `;
 
 const NoticeName = styled.div`
   display: -webkit-box;
-  width: 82px;
+  width: 5.125rem; /* 82px */
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
@@ -145,11 +145,11 @@ const NoticeName = styled.div`
   text-overflow: ellipsis;
 
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: 0.75rem; /* 12px */
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 12px */
-  letter-spacing: -0.24px;
+  line-height: 0.75rem; /* 12px */
+  letter-spacing: -0.015rem; /* -0.24px */
 `;
 
 const NoticeText = styled.div`
@@ -162,37 +162,37 @@ const NoticeText = styled.div`
   text-overflow: ellipsis;
 
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px */
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 14px */
-  letter-spacing: -0.28px;
+  line-height: 0.875rem; /* 14px */
+  letter-spacing: -0.0175rem; /* -0.28px */
 `;
 
 const NoticeTime = styled.div`
-  margin-left: 4px;
+  margin-left: 0.25rem; /* 4px */
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
 
   font-family: Pretendard;
-  font-size: 10px;
+  font-size: 0.625rem; /* 10px */
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 10px */
-  letter-spacing: -0.2px;
+  line-height: 0.625rem; /* 10px */
+  letter-spacing: -0.0125rem; /* -0.2px */
 `;
 
 const Pagination = styled.div`
   display: flex;
-  padding: 8px 0;
+  padding: 0.5rem 0; /* 8px */
   justify-content: center;
   align-items: center;
-  gap: 22px;
+  gap: 1.375rem; /* 22px */
 `;
 
 const PageNumber = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0.125rem; /* 2px */
   font-weight: 600;
 `;
 
@@ -209,13 +209,13 @@ const TotalPages = styled.span`
 `;
 
 const NavButton = styled.img`
-  width: 24px;
-  height: 24px;
-  padding: 8px;
+  width: 1.5rem; /* 24px */
+  height: 1.5rem; /* 24px */
+  padding: 0.5rem; /* 8px */
   justify-content: center;
   align-items: center;
   border-radius: 999px;
-  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  border: 0.0208rem solid var(--Primary-light-active, #c9e0fd); /* 0.33px */
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
 `;
