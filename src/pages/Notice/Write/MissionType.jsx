@@ -1,9 +1,9 @@
 import React from 'react';
 import { Header } from '../../../components/Header';
-import { ImgUpload } from '../../../components/Notice/Write/ImgUpload';
 import styled from 'styled-components';
+import ImgUpload from '../../../components/Notice/Write/ImgUpload';
 
-const QuizType = () => {
+const MissionType = () => {
   return (
     <div>
       <Header props={{ title: '공지 작성', isSearch: false }} />
@@ -21,4 +21,4 @@ const Container = styled.div`
   gap: 1rem;
 `;
 
-export default QuizType;
+export default MissionType;

@@ -1,14 +1,14 @@
 import React from 'react';
-import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
+import { CustomSearch } from '../../components/CustomSearch';
 import { NoticeItem } from '../../components/Notice/NoticeItem';
 
-const Main = () => {
+const Search = () => {
   return (
     <div>
-      <UnconfirmedNotice />
+      <CustomSearch />
       <NoticeItem />
     </div>
   );
 };
 
-export default Main;
+export default Search;

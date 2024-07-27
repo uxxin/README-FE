@@ -1,7 +1,14 @@
-import React from "react";
+import React from 'react';
+import { CustomSearch } from '../../components/CustomSearch';
+import { MemberListItem } from '../../components/MemberList/MemberListItem';
 
 const MemberList = () => {
-  return <div>MemberList</div>;
+  return (
+    <div>
+      <CustomSearch />
+      <MemberListItem />
+    </div>
+  );
 };
 
 export default MemberList;
