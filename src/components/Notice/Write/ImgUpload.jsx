@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import camera from '../../../assets/images/img_upload.svg';
 import imgDelete from '../../../assets/images/img_delete.svg';
@@ -19,7 +19,10 @@ export const ImgUpload = () => {
   const handleDelete = (imageToDelete) => {
     setImages(images.filter((image) => image !== imageToDelete));
   };
-
+  useEffect(() => {
+    const screenWidth = window.innerWidth;
+    console.log(screenWidth);
+  }, []);
   return (
     <UploadContainer>
       <Label>사진 ({images.length}/10)</Label>
@@ -56,8 +59,10 @@ export const ImgUpload = () => {
 const UploadContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 0.625rem;
+  max-width: 430px;
+  overflow-x: scroll;
+  padding: 0 1rem;
 `;
 
 const Label = styled.label`
@@ -72,8 +77,15 @@ const Label = styled.label`
 
 const ImagesContainer = styled.div`
   display: flex;
-  align-items: center;
   gap: 0.625rem;
+  overflow-x: scroll;
+
+  /* 스크롤바 숨기기 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE 및 Edge용 */
+  scrollbar-width: none; /* Firefox용 */
 `;
 
 const HiddenInput = styled.input`
@@ -82,8 +94,10 @@ const HiddenInput = styled.input`
 
 const CameraIcon = styled.div`
   display: flex;
-  width: 6.25rem;
-  height: 6.25rem;
+  min-width: 6.25rem;
+  min-height: 6.25rem;
+  max-width: 6.25rem;
+  max-height: 6.25rem;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
@@ -102,8 +116,10 @@ const CameraIcon = styled.div`
 
 const ImagePreview = styled.div`
   display: flex;
-  width: 6.25rem;
-  height: 6.25rem;
+  min-width: 6.25rem;
+  min-height: 6.25rem;
+  max-width: 6.25rem;
+  max-height: 6.25rem;
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
