@@ -33,12 +33,12 @@ export const EnteredNoticeRoom = () => {
 
 const EnteredTitle = styled.div`
   font-family: Pretendard;
-  font-size: 20px;
+  font-size: 1.25rem; /* 20px */
   font-weight: 700;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
-  line-height: 100%;
-  letter-spacing: -0.4px;
+  line-height: 1; /* 100% */
+  letter-spacing: -0.025rem; /* -0.4px */
   margin: 0;
   padding: 0;
 `;
@@ -47,7 +47,7 @@ const EnteredNoticeRoomSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0.625rem; /* 10px */
   align-self: stretch;
   width: 100%;
 `;
@@ -55,12 +55,12 @@ const EnteredNoticeRoomSection = styled.section`
 const NoticeRooms = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 11px;
+  gap: 0.6875rem; /* 11px */
   align-items: flex-start;
   align-content: flex-start;
   align-self: stretch;
   // Uncomment for debugging
-  // border: 0.0625rem solid red;
+  // border: 0.0625rem solid red; /* 1px */
 `;
 
 export default EnteredNoticeRoom;

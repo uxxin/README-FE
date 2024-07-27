@@ -37,7 +37,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 16px;
+  font-size: 1rem;
   font-family: Pretendard, sans-serif;
   color: #333;
 `;
