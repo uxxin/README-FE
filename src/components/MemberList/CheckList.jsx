@@ -174,7 +174,6 @@ const NoButton = styled.button`
     background: var(--Primary-light, #F4F9FF);
     border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
     border-radius: 0rem 0.5rem 0.5rem 0rem;
-
 `
 
 

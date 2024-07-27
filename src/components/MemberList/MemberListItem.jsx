@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import styled, { isStyledComponent } from 'styled-components';
-import { DotsIcon, Glassicon,HumanIcon, PlusIcon } from '../../assets/images/icons';
+import styled from 'styled-components';
+import { DotsIcon, HumanIcon, PlusIcon } from '../../assets/images/icons';
 import CustomInput from '../CustomInput';
-import MemberModal from './MemberModal';
+import CustomModal from '../CustomModal';
 import { Link } from 'react-router-dom';
 
 // 컨테이너 스타일
@@ -108,7 +108,6 @@ const MemberNameBtn = styled.img`
 
 export const MemberListItem = () => {
 
-  console.log("MemberListItem rendering");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -123,18 +122,25 @@ export const MemberListItem = () => {
     window.location.href = 'http://localhost:5173/member-profile';
   };
 
+  const handleKickOutClick = () => {
+    alert("추방되었습니다.");
+    handleCloseModal();
+  };
+
+  const modalButtons = [
+    { label: "프로필", onClick: handleProfileLinkClick, backgroundColor: "white", color: "black" },
+    { label: "추방하기", onClick: handleKickOutClick, backgroundColor: "white", color: "red" }
+  ];
+
   return (
     <Container>
       <CustomInput placeholder={"입력하세요"}></CustomInput>
-      {/*<ClickButton>
-        <Glassicon/>
-       </ClickButton>*/}
 
       <MemberIcon><HumanIcon /></MemberIcon>
       <MemberListBox>
         <ButtonContainer>
           <Link to='/member/invite'>
-          <MemberAddBtn><PlusIcon /></MemberAddBtn>
+            <MemberAddBtn><PlusIcon /></MemberAddBtn>
           </Link>
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
@@ -145,12 +151,11 @@ export const MemberListItem = () => {
         </ButtonContainer>
       </MemberListBox>
 
-      <MemberModal
+      <CustomModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onProfileLinkClick={handleProfileLinkClick}
+        buttons={modalButtons}
       />
     </Container>
   );
 };
-

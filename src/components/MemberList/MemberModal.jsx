@@ -1,3 +1,4 @@
+/*
 import React,{useState} from "react";
 import styled from "styled-components";
 
@@ -120,4 +121,4 @@ const MemberModal = ({ isOpen, onClose, onProfileLinkClick }) => {
 };
 
 
-export default MemberModal;
+export default MemberModal;*/
