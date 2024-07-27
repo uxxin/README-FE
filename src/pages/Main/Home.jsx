@@ -34,7 +34,6 @@ export default Home;
 
 const Logo = styled.div`
   display: flex;
-  width: 26.8125rem;
   height: 2.75rem;
   padding: 0.8125rem 0;
   justify-content: center;
@@ -51,7 +50,6 @@ const Logo = styled.div`
 
 const Container = styled.div`
   display: flex;
-  width: 26.875rem;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
@@ -60,7 +58,6 @@ const Container = styled.div`
 
 const Navbar = styled.div`
   display: flex;
-  width: 26.6875rem;
   height: 1.6875rem;
   padding: 0.8125rem 0;
   justify-content: center;
@@ -71,8 +68,6 @@ const Navbar = styled.div`
 
 const Scroll = styled.div`
   display: flex;
-  width: 26.875rem;
-  padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;

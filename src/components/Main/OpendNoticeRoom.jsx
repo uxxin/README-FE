@@ -64,7 +64,7 @@ const OpenedNoticeRoomSection = styled.section`
 const NoticeRooms = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6875rem; //디자인은 13px인데 그렇게 하면 줄바꿈->일단 11px로
+  gap: 0.8125rem;
   align-items: flex-start;
   align-content: flex-start;
   align-self: stretch;

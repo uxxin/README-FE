@@ -4,9 +4,7 @@ import styled from 'styled-components';
 const NoticeRoom = ({ index }) => {
   return (
     <Container>
-      <TopSection>
-        <Time>몇분 전</Time>
-      </TopSection>
+      <TopSection>몇분 전</TopSection>
       <BottomSection>
         <ProfileImage
           src="../../assets/images/defaultprofileimage.png"
@@ -20,10 +18,10 @@ const NoticeRoom = ({ index }) => {
 };
 
 const Container = styled.div`
-  width: calc((100% - 1.625rem) / 3);
-  height: 10rem;
   display: flex;
+  width: 7.75rem;
   flex-direction: column;
+  align-items: flex-start;
   border-radius: 0.5rem;
   border: 0.0208rem solid var(--Primary-normal, #509bf7);
 `;
@@ -35,16 +33,16 @@ const TopSection = styled.div`
   align-items: center;
   border-top-left-radius: 0.375rem;
   border-top-right-radius: 0.375rem;
-  border: 0.0625rem solid #509bf7;
-  background: #509bf7;
-`;
-
-const Time = styled.div`
-  color: #fff;
+  border: 1px solid var(--Primary-Normal, #509bf7);
+  background: var(--Primary-Normal, #509bf7);
+  flex-direction: column;
+  flex: 1 0 0;
+  align-self: stretch;
+  color: var(--Basic-White, var(--Basic-White, #fff));
   text-align: center;
   font-size: 0.75rem;
   font-weight: 400;
-  line-height: 0.75rem;
+  line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
 `;
 
