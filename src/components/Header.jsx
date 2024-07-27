@@ -75,7 +75,6 @@ export const Header = ({ props }) => {
 
 const Container = styled.div`
   display: flex;
-  width: 26.875rem;
   height: 2.75rem;
   padding: 0.625rem;
   align-items: center;
@@ -111,6 +110,7 @@ const Title = styled.div`
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
+  /* white-space: nowrap; */
 `;
 
 const StyledSearchButton = styled(SearchButton)`
