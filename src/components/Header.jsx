@@ -107,7 +107,6 @@ const StyledBackButton = styled(BackButton)`
 const Title = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
-  font-family: Pretendard;
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;
@@ -146,7 +145,6 @@ const InputText = styled.input`
     color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
     text-overflow: ellipsis;
 
-    font-family: Pretendard;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;

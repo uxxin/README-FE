@@ -42,7 +42,6 @@ const TopSection = styled.div`
 const Time = styled.div`
   color: #fff;
   text-align: center;
-  font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -68,7 +67,6 @@ const ProfileImage = styled.img`
   align-items: center;
   border-radius: 12px;
   font-size: 10px;
-  font-family: Pretendard;
 `;
 
 const RoomName = styled.div`
@@ -81,7 +79,6 @@ const RoomName = styled.div`
   text-align: center;
 
   /* Pretendard/regular/14 */
-  font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -100,7 +97,6 @@ const UserName = styled.div`
   text-align: center;
 
   /* Pretendard/regular/10 */
-  font-family: Pretendard;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;

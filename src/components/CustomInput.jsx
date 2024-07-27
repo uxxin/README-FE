@@ -32,7 +32,6 @@ const Input = styled.input`
   flex: 1;
   outline: none;
   background: none;
-  font-family: Pretendard;
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;
@@ -46,7 +45,6 @@ const Input = styled.input`
 
 const CharCount = styled.span`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
-  font-family: Pretendard;
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;

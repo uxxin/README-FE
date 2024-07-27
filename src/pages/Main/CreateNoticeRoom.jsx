@@ -38,7 +38,6 @@ const Container = styled.div`
 
 const Header = styled.div`
   font-size: 16px;
-  font-family: Pretendard, sans-serif;
   color: #333;
 `;
 
@@ -77,7 +76,6 @@ const OrganizationInfo = styled.div`
 
 const OrganizationInfoTitle = styled.div`
   color: #222;
-  font-family: Pretendard, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
 `;
@@ -92,7 +90,6 @@ const NoticeRoomSetting = styled.div`
 
 const NoticeRoomSettingTitle = styled.div`
   color: #222;
-  font-family: Pretendard, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
 `;

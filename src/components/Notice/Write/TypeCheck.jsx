@@ -34,7 +34,6 @@ const Container = styled.div`
   padding: 0.375rem 0.625rem;
   display: flex;
   align-items: center;
-  font-family: Pretendard;
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;

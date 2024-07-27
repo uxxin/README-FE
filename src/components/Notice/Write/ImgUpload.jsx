@@ -67,7 +67,6 @@ const UploadContainer = styled.div`
 
 const Label = styled.label`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-family: Pretendard;
   font-size: 1rem;
   font-style: normal;
   font-weight: 700;

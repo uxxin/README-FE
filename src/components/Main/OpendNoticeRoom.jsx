@@ -42,7 +42,6 @@ export const OpendNoticeRoom = () => {
 };
 
 const OpenedTitle = styled.div`
-  font-family: Pretendard;
   font-size: 20px;
   font-weight: 700;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
