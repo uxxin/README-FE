@@ -42,12 +42,12 @@ export const OpendNoticeRoom = () => {
 };
 
 const OpenedTitle = styled.div`
-  font-size: 20px;
+  font-size: 1.25rem; /* 20px */
   font-weight: 700;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
-  line-height: 100%;
-  letter-spacing: -0.4px;
+  line-height: 1.25rem; /* 100% -> 1.25rem */
+  letter-spacing: -0.025rem; /* -0.4px */
   margin: 0;
   padding: 0;
 `;
@@ -56,7 +56,7 @@ const OpenedNoticeRoomSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0.625rem; /* 10px */
   align-self: stretch;
   width: 100%;
 `;
@@ -64,7 +64,7 @@ const OpenedNoticeRoomSection = styled.section`
 const NoticeRooms = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 11px; //디자인은 13px인데 그렇게 하면 줄바꿈->일단 11px로
+  gap: 0.6875rem; //디자인은 13px인데 그렇게 하면 줄바꿈->일단 11px로
   align-items: flex-start;
   align-content: flex-start;
   align-self: stretch;
@@ -74,21 +74,21 @@ const NoticeRooms = styled.div`
 const AddNoticeRoom = styled.div`
   display: flex;
   width: calc(
-    (100% - 23px) / 3
+    (100% - 1.4375rem) / 3
   ); //이것도 원래 26px로 해야되는데 일단 맞추려고 23px로 해둠.
-  height: 160px;
+  height: 10rem; /* 160px */
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  border: 0.33px solid var(--Primary-normal, #509bf7);
+  border-radius: 0.5rem; /* 8px */
+  border: 0.0208rem solid var(--Primary-normal, #509bf7); /* 0.33px */
   background: var(--Basic-White, #fff);
   cursor: pointer;
   box-sizing: border-box;
 `;
 
 const AddButtonImage = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 1.5rem; /* 24px */
+  height: 1.5rem; /* 24px */
 `;
 
 export default OpendNoticeRoom;

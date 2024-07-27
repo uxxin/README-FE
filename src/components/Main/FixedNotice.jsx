@@ -48,20 +48,20 @@ export default FixedNotice;
 
 const NoticeContainer = styled.div`
   display: flex;
-  padding: 10px;
+  padding: 0.625rem; /* 10px */
   justify-content: center;
   align-items: flex-start;
-  gap: 8px;
+  gap: 0.5rem; /* 8px */
   align-self: stretch;
-  border-radius: 8px;
-  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  border-radius: 0.5rem; /* 8px */
+  border: 0.0208rem solid var(--Primary-light-active, #c9e0fd); /* 0.33px */
   background: var(--Primary-light, #f4f9ff);
 `;
 
 const PinButton = styled.button`
   background: none;
   border: none;
-  margin-right: 1rem;
+  margin-right: 1rem; /* No change */
   cursor: pointer;
 `;
 
@@ -70,39 +70,39 @@ const NoticeContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 0.5rem; /* 8px */
 `;
 
 const NoticeTitle = styled.div`
-  font-size: 16px;
+  font-size: 1rem; /* 16px */
   font-weight: 700;
   color: #222;
 `;
 
 const NoticeDate = styled.div`
-  font-size: 14px;
+  font-size: 0.875rem; /* 14px */
   color: #666;
   display: flex;
   flex-direction: row;
-  gap: 0.25rem;
+  gap: 0.25rem; /* 4px */
 `;
 
 const Date = styled.div`
-  font-size: 12px;
+  font-size: 0.75rem; /* 12px */
   font-weight: 400;
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  letter-spacing: -0.24px;
-  line-height: 12px;
+  letter-spacing: -0.015rem; /* -0.24px */
+  line-height: 0.75rem; /* 12px */
 `;
 
 const DateSeparator = styled.span`
-  font-size: 12px;
+  font-size: 0.75rem; /* 12px */
   font-weight: 400;
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
-  line-height: 12px;
+  line-height: 0.75rem; /* 12px */
 `;
 
 const DeleteButton = styled.button`

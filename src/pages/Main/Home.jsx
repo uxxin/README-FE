@@ -34,19 +34,19 @@ export default Home;
 
 const Logo = styled.div`
   display: flex;
-  width: 429px;
-  height: 44px;
-  padding: 13px 0px;
+  width: 26.8125rem;
+  height: 2.75rem;
+  padding: 0.8125rem 0;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
 
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
-  line-height: 100%; /* 18px */
-  letter-spacing: -0.36px;
+  line-height: 1.125rem;
+  letter-spacing: -0.0225rem;
 `;
 
 const Container = styled.div`
@@ -61,7 +61,7 @@ const Container = styled.div`
 const Navbar = styled.div`
   display: flex;
   width: 26.6875rem;
-  height: 2.75rem;
+  height: 1.6875rem;
   padding: 0.8125rem 0;
   justify-content: center;
   align-items: center;

@@ -20,52 +20,52 @@ const NoticeRoom = ({ index }) => {
 };
 
 const Container = styled.div`
-  width: calc((100% - 26px) / 3); // 13px * 2 = 26px
-  height: 160px;
+  width: calc((100% - 1.625rem) / 3);
+  height: 10rem;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
-  border: 0.33px solid var(--Primary-normal, #509bf7);
+  border-radius: 0.5rem;
+  border: 0.0208rem solid var(--Primary-normal, #509bf7);
 `;
 
 const TopSection = styled.div`
   display: flex;
-  padding: 5px 7px;
+  padding: 0.3125rem 0.4375rem;
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  border: 1px solid #509bf7;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  border: 0.0625rem solid #509bf7;
   background: #509bf7;
 `;
 
 const Time = styled.div`
   color: #fff;
   text-align: center;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 12px;
-  letter-spacing: -0.24px;
+  line-height: 0.75rem;
+  letter-spacing: -0.015rem;
 `;
 
 const BottomSection = styled.div`
   display: flex;
-  height: 138px;
-  padding: 16px 8px;
+  height: 8.625rem;
+  padding: 1rem 0.5rem;
   flex-direction: column;
   align-items: center;
   align-self: stretch;
-  gap: 6px;
+  gap: 0.375rem;
 `;
 
 const ProfileImage = styled.img`
   display: flex;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
-  font-size: 10px;
+  border-radius: 0.75rem;
+  font-size: 0.625rem;
 `;
 
 const RoomName = styled.div`
@@ -76,13 +76,11 @@ const RoomName = styled.div`
   text-overflow: ellipsis;
   color: var(--Primary-dark, var(--Primary-Dark, #3c74b9));
   text-align: center;
-
-  /* Pretendard/regular/14 */
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
-  line-height: 14px; /* 100%를 14px로 명시적으로 지정 */
-  letter-spacing: -0.28px;
-  max-height: 28px; /* 2줄 * 14px = 28px */
+  line-height: 0.875rem;
+  letter-spacing: -0.0175rem;
+  max-height: 1.75rem;
 `;
 
 const UserName = styled.div`
@@ -93,13 +91,11 @@ const UserName = styled.div`
   text-overflow: ellipsis;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-align: center;
-
-  /* Pretendard/regular/10 */
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 10px; /* 100%를 10px로 명시적으로 지정 */
-  letter-spacing: -0.2px;
-  max-height: 20px; /* 2줄 * 10px = 20px */
+  line-height: 0.625rem;
+  letter-spacing: -0.0125rem;
+  max-height: 1.25rem;
 `;
 
 export default NoticeRoom;
