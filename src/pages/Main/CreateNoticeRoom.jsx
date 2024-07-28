@@ -24,7 +24,6 @@ const CreateNoticeRoom = () => {
     </Container>
   );
 };
-
 export default CreateNoticeRoom;
 
 const Container = styled.div`

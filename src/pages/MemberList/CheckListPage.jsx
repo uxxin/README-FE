@@ -1,14 +1,14 @@
 import React from 'react';
-import { MemberProfile } from '../../components/MemberList/MemberProfile';
 import { Header } from '../../components/Header';
+import { CheckList } from '../../components/MemberList/CheckList';
 
-const Profile = () => {
+const CheckListPage = () => {
   return (
     <div>
     <Header props={{ title: '멤버초대하기', isSearch: true, gap: '1rem' }} />
-    <MemberProfile/>
+    <CheckList/>
     </div>
   )
 };
 
-export default Profile;
+export default CheckListPage;
