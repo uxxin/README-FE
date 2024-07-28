@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { CustomBtn } from "../CustomBtn";
 
+const TotalContainer = styled.div`
+  padding: 1rem;
+`
+
 const Container = styled.div`
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +25,7 @@ const AddContainer = styled.div`
   border: 0.02rem solid #509bf7;
   background: #f4f9ff;
   box-sizing: border-box;
-  padding-top: 0;
+
 `;
 
 const ContainerHead = styled.div`
@@ -44,14 +47,20 @@ const InfoContainer = styled.div`
   box-sizing: border-box;
   padding: 0 0.8125rem;
   bottom: 4px;
+  
 `;
 
 const TextContainer = styled.div`
   width: 100%;
   height: 2.1875rem;
-  margin-top: 0.625rem;
   color: black;
   box-sizing: border-box;
+  display: flex;
+  padding: 0.625rem;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+  white-space: nowrap;
 `;
 
 const TextColor = styled.span`
@@ -72,24 +81,25 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.81rem;
-  width: 23.625rem; /* InfoContainer와 동일한 너비로 설정 */
+  width: 23.625rem; 
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
-  padding: 0 0.8125rem; /* 패딩 추가 */
-  box-sizing: border-box; /* 패딩을 너비에 포함 */
+  padding: 0 0.8125rem; 
+  box-sizing: border-box; 
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%; /* 버튼이 컨테이너 너비에 맞게 설정 */
+  width: 100%; 
   display: flex;
-  justify-content: center; /* 버튼을 가운데 정렬 */
-  padding: 0 0.5rem; /* 버튼 컨테이너에 패딩 추가 */
+  justify-content: center; 
+  padding: 0 0.5rem;
 `;
 
 
 export const MemberInvite = () => {
   return (
+    <TotalContainer>
     <Container>
       <AddContainer>
         <ContainerHead>리드미</ContainerHead>
@@ -121,5 +131,6 @@ export const MemberInvite = () => {
        
       </ButtonWrapper>
     </Container>
+    </TotalContainer>
   );
 };
