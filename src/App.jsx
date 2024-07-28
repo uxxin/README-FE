@@ -23,12 +23,9 @@ import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
 import CheckRequests from './pages/Notice/CheckRequests';
-<<<<<<< HEAD
 import CheckListPage from './pages/MemberList/CheckListPage';
-
-=======
 import Post from './pages/Notice/Write/Post';
->>>>>>> 67f69f5dc3838ccc8ec7478af0913d845c8cea4c
+
 
 function App() {
   return (
