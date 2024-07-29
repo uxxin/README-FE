@@ -4,7 +4,7 @@ import { CustomBtn } from "../CustomBtn";
 
 // 컨테이너 스타일
 const Container = styled.div`
- padding: 0.625rem 0rem;
+  padding: 0.625rem 0rem;
   gap: 3.75rem; /* 60px */
   box-sizing: border-box;
   display: flex;

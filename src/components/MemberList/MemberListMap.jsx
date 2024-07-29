@@ -5,6 +5,9 @@ import axios from "axios";
 import { MemberListDetails } from "./MemberListDetails";
 import CustomModal from '../CustomModal';
 import styled from "styled-components";
+import { setGlobalKeys } from "./KeyStores";
+import { useDispatch } from "react-redux";
+import { setKeysCount } from "../../redux/KeySlice";
 
 
 const ModalOverlay = styled.div`
@@ -55,21 +58,22 @@ const CloseButton = styled.button`
 
 export const MemberListMap = () =>{
     const [memberList, setMemberList] = useState([]);
-
-  
+    const dispatch = useDispatch();
     
   useEffect(() => {
     const fetchMemberList = async () => {
       try {
         const response = await axios.get('/mock/ProfileData.json');
-        setMemberList(response.data); //이게 배열로 안묶으면 작동안함
+        setMemberList(response.data);
+        const keys = Object.keys(response.data);
+        dispatch(setKeysCount(keys.length)); // 상태 업데이트
+        console.log(`Keys set in MemberListMap: ${keys.length}`);
       } catch (error) {
         console.error('Error fetching setMemberList:', error);
       }
     };
-
     fetchMemberList();
-  }, []);
+  }, [dispatch]);
 
 
 

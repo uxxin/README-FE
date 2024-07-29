@@ -5,8 +5,8 @@ import { Header } from '../../components/Header';
 const Profile = () => {
   return (
     <div>
-    <Header props={{ title: '멤버초대하기', isSearch: true, gap: '1rem' }} />
-    <MemberProfile/>
+      <Header props={{ title: '멤버초대하기', isSearch: true, gap: '1rem' }} />
+      <MemberProfile/>
     </div>
   )
 };

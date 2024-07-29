@@ -6,6 +6,8 @@ import CustomModal from '../CustomModal';
 import { Link } from 'react-router-dom';
 import { MemberListDetails } from './MemberListDetails';
 import { MemberListMap } from './MemberListMap';
+import { getGlobalKeys } from './KeyStores';
+import { useSelector } from 'react-redux';
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -70,6 +72,7 @@ const ButtonContainer = styled.div`
   gap: 0.625rem;
   margin-bottom: 0.625rem;
   align-self: stretch;
+  margin-right: 0.8rem;
 `;
 
 
@@ -85,6 +88,7 @@ const ButtonText = styled.span`
   line-height: 1.2rem; 
   letter-spacing: -0.02em;
   text-align: center;
+  margin-left: 0.1rem; /* 버튼과 텍스트 사이의 간격을 조정 */
 `;
 
 const MemberAddBtn = styled.button`
@@ -162,6 +166,9 @@ export const MemberListItem = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
+  const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
+
+  console.log(`Current keys count in MemberListItem: ${keysCount}`);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -189,6 +196,7 @@ export const MemberListItem = (props) => {
     { label: "추방하기", onClick: handleKickOutClick, color: "red" }
   ];
 
+
   return (
     <Container>
       <CustomInput placeholder={"입력하세요"}></CustomInput>
@@ -196,6 +204,7 @@ export const MemberListItem = (props) => {
       
       <MemberIcon>
         <HumanIcon />
+       {keysCount}
       </MemberIcon>
       <MemberListBox>
         <ButtonContainer>

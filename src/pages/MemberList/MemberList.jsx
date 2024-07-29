@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { Header } from '../../components/Header';
-import { MemberListMap } from '../../components/MemberList/MemberListMap';
 import { MemberListItem } from '../../components/MemberList/MemberListItem';
 
 const MemberList = () => {

@@ -10,6 +10,7 @@ const ButtonContainer = styled.div`
   gap: 0.625rem;
   margin-bottom: 0.625rem;
   align-self: stretch;
+  margin-right: 0.8rem;
 `;
 
 const ButtonText = styled.span`
@@ -24,6 +25,7 @@ const ButtonText = styled.span`
   line-height: 1.2rem; 
   letter-spacing: -0.02em;
   text-align: center;
+  margin-left: 0.1rem;
 `;
 
 const MemberNameBtn = styled.img`
