@@ -1,26 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import CustomInput from '../../components/CustomInput'; // CustomInput의 경로에 맞게 수정
+import CustomInput from '../../components/CustomInput';
 
 const CreateNoticeRoom = () => {
   return (
     <Container>
       <Header>헤더 영역 불러오기</Header>
-      <Scroll>
-        <NoticeRoomProfileImage>Profile Image</NoticeRoomProfileImage>
-        <Info>
-          <OrganizationInfo>
-            <OrganizationInfoTitle>단체 정보</OrganizationInfoTitle>
-            <CustomInput placeholder="단체 대표자 이름" />
-          </OrganizationInfo>
-          <NoticeRoomSetting>
-            <NoticeRoomSettingTitle>공지방 설정</NoticeRoomSettingTitle>
-            <CustomInput placeholder="공지방 이름" />
-            <CustomInput placeholder="비밀번호" />
-            <CustomInput placeholder="패널티 개수" />
-          </NoticeRoomSetting>
-        </Info>
-      </Scroll>
+      <NoticeRoomProfileImage>Profile Image</NoticeRoomProfileImage>
+      <Info>
+        <OrganizationInfo>
+          <OrganizationInfoTitle>단체 정보</OrganizationInfoTitle>
+          <CustomInput placeholder="단체 대표자 이름" />
+        </OrganizationInfo>
+        <NoticeRoomSetting>
+          <NoticeRoomSettingTitle>공지방 설정</NoticeRoomSettingTitle>
+          <CustomInput placeholder="공지방 이름" />
+          <CustomInput placeholder="비밀번호" />
+          <CustomInput placeholder="패널티 개수" />
+        </NoticeRoomSetting>
+      </Info>
     </Container>
   );
 };
@@ -28,7 +26,7 @@ export default CreateNoticeRoom;
 
 const Container = styled.div`
   display: flex;
-  width: 26.875rem;
+  width: 100%;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
@@ -40,15 +38,15 @@ const Header = styled.div`
   color: #333;
 `;
 
-const Scroll = styled.div`
-  display: flex;
-  width: 26.875rem;
-  padding: 0.625rem 1rem;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  border: 0.0625rem solid blue;
-`;
+// const Scroll = styled.div`
+//   display: flex;
+//   width: 26.875rem;
+//   padding: 0.625rem 1rem;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 1.5rem;
+//   border: 0.0625rem solid blue;
+// `;
 
 const NoticeRoomProfileImage = styled.div`
   width: 8.75rem;
