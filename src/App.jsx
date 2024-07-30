@@ -45,7 +45,7 @@ function App() {
         {/* MemberList - 멤버 목록 */}
         <Route path="/member" element={<MemberList />} />
         <Route path="/member/invite" element={<Invite />} />
-        <Route path="/member/profile" element={<Profile />} />
+        <Route path="/member/profile/:nickname" element={<Profile />} />
         <Route path="/member/checklist" element={<CheckListPage/>} />
 
         {/* MyPage - 마이페이지 */}

@@ -8,6 +8,7 @@ import { MemberListDetails } from './MemberListDetails';
 import { MemberListMap } from './MemberListMap';
 import { getGlobalKeys } from './KeyStores';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -162,45 +163,18 @@ const CloseButton = styled.button`
 `;
 
 export const MemberListItem = (props) => {
-
+  const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
-
-  const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
-
-  console.log(`Current keys count in MemberListItem: ${keysCount}`);
-
+  
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleProfileLinkClick = () => {
-    window.location.href = 'http://localhost:5173/member-profile';
-  };
-
-  const handleKickOutClick = () => {
-    setIsSecondModalOpen(true);
-  };
-
-  const handleSecondModalClose = () =>{
-    setIsSecondModalOpen(false);
-  }
-
-  const modalButtons = [
-    { label: "프로필", onClick: handleProfileLinkClick, color: "black" },
-    { label: "추방하기", onClick: handleKickOutClick, color: "red" }
-  ];
-
-
   return (
     <Container>
       <CustomInput placeholder={"입력하세요"}></CustomInput>
-
       
       <MemberIcon>
         <HumanIcon />
@@ -223,23 +197,6 @@ export const MemberListItem = (props) => {
       </MemberListBox>
 
 
-      <CustomModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        buttons={modalButtons}
-      />
-
-  {isSecondModalOpen && (
-          <ModalOverlay onClick={handleSecondModalClose}>
-            <SecondModalContent onClick={(e) => e.stopPropagation()}>
-              <p>추방하시겠습니까?</p>
-              <ButtonWrapper>
-              <CloseButton onClick={handleSecondModalClose}>취소</CloseButton>
-              <CloseButton onClick={handleSecondModalClose}>확인</CloseButton>
-              </ButtonWrapper>
-            </SecondModalContent>
-          </ModalOverlay>
-        )}
     </Container>
   );
 };

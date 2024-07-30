@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { setGlobalKeys } from "./KeyStores";
 import { useDispatch } from "react-redux";
 import { setKeysCount } from "../../redux/KeySlice";
+import { useNavigate } from "react-router-dom";
 
 
 const ModalOverlay = styled.div`
@@ -59,6 +60,7 @@ const CloseButton = styled.button`
 export const MemberListMap = () =>{
     const [memberList, setMemberList] = useState([]);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
   useEffect(() => {
     const fetchMemberList = async () => {
@@ -79,9 +81,11 @@ export const MemberListMap = () =>{
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(null); // 추가
 
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (profile) => {
+    setSelectedProfile(profile); // 프로필을 상태로 저장
     setIsModalOpen(true);
   };
 
@@ -91,7 +95,19 @@ export const MemberListMap = () =>{
   };
 
   const handleProfileLinkClick = () => {
-    window.location.href = 'http://localhost:5173/member-profile';
+    if (selectedProfile) {
+      const encodedNickname = encodeURIComponent(selectedProfile.nickname);  //encode안하면 라우팅 안됨
+      console.log('Navigating to profile with nickname:', selectedProfile.nickname);
+      console.log('State being passed:', {
+        profile_image: selectedProfile.profile_image,
+        nickname: selectedProfile.nickname
+    });
+      navigate(`/member/profile/${encodedNickname}`, {
+        state: { profile_image: selectedProfile.profile_image, nickname: selectedProfile.nickname }
+      });
+    } else {
+      console.error('Selected profile is not defined');
+    }
   };
 
   const handleKickOutClick = () => {
@@ -116,7 +132,7 @@ export const MemberListMap = () =>{
               key={index}
               nickname={item.nickname}
               profile_image={item.profile_image}
-              onOpenModal={handleOpenModal}
+              onOpenModal={() => handleOpenModal(item)} 
             />
           );
         })}
