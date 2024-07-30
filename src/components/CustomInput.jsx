@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const CustomInput = ({ placeholder }) => {
-  const [inputValue, setInputValue] = useState('');
+const CustomInput = ({ placeholder, value, onChange, onBlur }) => {
+  // const [inputValue, setInputValue] = useState('');
+
+  // value={inputValue}
+  // onChange={(e) => setInputValue(e.target.value)}
 
   return (
     <Container>
       <Input
         type="text"
         placeholder={placeholder}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
         maxLength={20}
       />
-      <CharCount>({inputValue.length}/20)</CharCount>
+      <CharCount>({value.length}/20)</CharCount>
     </Container>
   );
 };

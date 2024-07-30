@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CustomInput from '../CustomInput';
 import styled from 'styled-components';
 
 export const LoginInput = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
   return (
     <Container>
-      <CustomInput placeholder="이메일" />
-      <CustomInput placeholder="비밀번호" />
+      <CustomInput
+        placeholder="이메일"
+        value={email}
+        onChange={e => setEmail(e.currentTarget.value)}
+      />
+      <CustomInput
+        placeholder="비밀번호"
+        value={password}
+        onChange={e => setPassword(e.currentTarget.value)}
+      />
     </Container>
   );
 };
