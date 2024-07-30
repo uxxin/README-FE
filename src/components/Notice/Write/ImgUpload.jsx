@@ -59,7 +59,6 @@ const UploadContainer = styled.div`
   gap: 0.625rem;
   max-width: 430px;
   overflow-x: scroll;
-  padding: 0 1rem;
 `;
 
 const Label = styled.label`
