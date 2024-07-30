@@ -15,7 +15,7 @@ const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        maxLength={20}
+        maxLength={charCount ? 20 : undefined}
       />
       {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
     </Container>
