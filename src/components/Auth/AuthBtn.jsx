@@ -17,28 +17,26 @@ export const AuthBtn = () => {
         <CustomBtn
           props={{
             text: '회원가입',
-            // border: '0.5px solid #509BF7',
-            border: 'none',
-            // background: '#FFFFFF',
-            background: '#509BF7',
+            border: '0.5px solid #509BF7',
+            // border: 'none',
+            background: '#FFFFFF',
+            // background: '#509BF7',
             link: '/sign-up',
           }}
         />
       </ButtonWrapper>
-</Container>
+    </Container>
   );
 };
 
-
 const ButtonWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.81rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.81rem;
 `;
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 15.69rem;
-    margin-bottom: 1.87rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15.69rem;
 `;

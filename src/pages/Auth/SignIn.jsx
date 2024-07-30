@@ -7,7 +7,7 @@ import { LoginInput } from '../../components/Auth/LoginInput';
 const StyledAuth = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  padding: 1.87rem 1rem;
 `;
 
 const Auth = () => {
