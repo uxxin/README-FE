@@ -17,13 +17,15 @@ export const AuthBtn = () => {
         <CustomBtn
           props={{
             text: '회원가입',
-            border: '0.5px solid #509BF7',
-            background: '#FFFFFF',
+            // border: '0.5px solid #509BF7',
+            border: 'none',
+            // background: '#FFFFFF',
+            background: '#509BF7',
             link: '/sign-up',
           }}
         />
       </ButtonWrapper>
-    </Container>
+</Container>
   );
 };
 
