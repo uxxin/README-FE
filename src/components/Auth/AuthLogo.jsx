@@ -10,5 +10,5 @@ const StyledLogo = styled.img`
   width: 16.0625rem;
   height: 4.125rem;
   flex-shrink: 0;
-  margin: 1.87rem auto 7rem auto;
+  margin: 0 auto 7rem auto;
 `;
