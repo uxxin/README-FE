@@ -22,14 +22,14 @@ export const CustomBtn = ({ props }) => {
 };
 
 const StyledCustomBtn = styled.div`
-    display: flex;
-    white-space: nowrap;
-    padding: 1rem 9.6875rem;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 0.5rem;
-    border: ${(props) => props.border};
-    background: ${(props) => props.background};
-    color: ${(props) => (props.background === '#FFFFFF' ? '#509BF7' : '#FFFFFF')};
+  display: flex;
+  white-space: nowrap;
+  padding: 1rem 9.6875rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  border: ${(props) => props.border};
+  background: ${(props) => props.background};
+  color: ${(props) => (props.background === '#FFFFFF' ? '#509BF7' : '#FFFFFF')};
 `;

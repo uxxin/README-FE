@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Profile } from '../../components/Main/Profile';
 import { RecentNotices } from '../../components/Main/RecentNotices';
 import { OpendNoticeRoom } from '../../components/Main/OpendNoticeRoom';
@@ -7,7 +7,12 @@ import FixedNotice from '../../components/Main/FixedNotice';
 import styled from 'styled-components';
 
 const Home = () => {
-  console.log('Home component rendered');
+  const [isFixedNoticeVisible, setIsFixedNoticeVisible] = useState(true);
+
+  const handleDeleteClick = () => {
+    setIsFixedNoticeVisible(false);
+  };
+
   return (
     <Container>
       <Navbar>
@@ -16,7 +21,7 @@ const Home = () => {
 
       <Scroll>
         <Profile />
-        <FixedNotice />
+        {isFixedNoticeVisible && <FixedNotice onDelete={handleDeleteClick} />}
         <RecentNotices />
         <OpendNoticeRoom />
         <EnteredNoticeRoom />
@@ -29,27 +34,22 @@ export default Home;
 
 const Logo = styled.div`
   display: flex;
-  width: 429px;
-  height: 44px;
-  padding: 13px 0px;
+  height: 2.75rem;
+  padding: 0.8125rem 0;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
 
-  /* Pretendard/bold/18 */
-  font-family: Pretendard;
-  font-size: 18px;
-  font-style: normal;
+  font-size: 1.125rem;
   font-weight: 700;
-  line-height: 100%; /* 18px */
-  letter-spacing: -0.36px;
+  line-height: 1.125rem;
+  letter-spacing: -0.0225rem;
 `;
 
 const Container = styled.div`
   display: flex;
-  width: 26.875rem;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
@@ -58,8 +58,8 @@ const Container = styled.div`
 
 const Navbar = styled.div`
   display: flex;
-  width: 26.6875rem;
-  height: 2.75rem;
+  width: 100%;
+  height: 1.6875rem;
   padding: 0.8125rem 0;
   justify-content: center;
   align-items: center;
@@ -69,10 +69,7 @@ const Navbar = styled.div`
 
 const Scroll = styled.div`
   display: flex;
-  width: 26.875rem;
-  padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  border: 0.0625rem solid blue;
 `;

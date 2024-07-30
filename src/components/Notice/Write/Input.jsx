@@ -58,9 +58,7 @@ const TitleInput = styled.input`
   overflow: hidden;
   color: var(--Basic-White, var(--Basic-White, #fff));
   text-overflow: ellipsis;
-  font-family: Pretendard;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 1.125rem */
   letter-spacing: -0.0225rem;
@@ -85,9 +83,7 @@ const ContentInput = styled.textarea`
   outline: none;
   border: 0.5px solid var(--Primary-normal, #509bf7);
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 1.2rem */
   letter-spacing: -0.02rem;

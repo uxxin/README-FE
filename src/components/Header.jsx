@@ -19,7 +19,7 @@ export const Header = ({ props }) => {
   const handleLeftButtonClick = (event) => {
     event.stopPropagation();
     {
-      props.url ? navigate(props.url) : navigate(-1);
+      props.url ? navigate(props.url, { replace: true }) : navigate(-1);
     }
   };
   const handleSearchButtonClick = (event) => {
@@ -75,7 +75,6 @@ export const Header = ({ props }) => {
 
 const Container = styled.div`
   display: flex;
-  width: 26.875rem;
   height: 2.75rem;
   padding: 0.625rem;
   align-items: center;
@@ -107,12 +106,11 @@ const StyledBackButton = styled(BackButton)`
 const Title = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
-  font-family: Pretendard;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
+  /* white-space: nowrap; */
 `;
 
 const StyledSearchButton = styled(SearchButton)`
@@ -146,9 +144,7 @@ const InputText = styled.input`
     color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
     text-overflow: ellipsis;
 
-    font-family: Pretendard;
     font-size: 1rem;
-    font-style: normal;
     font-weight: 500;
     line-height: 120%;
     letter-spacing: -0.02rem;
