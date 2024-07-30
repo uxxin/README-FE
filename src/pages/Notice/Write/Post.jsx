@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Header } from '../../../components/Header';
 import styled from 'styled-components';
 import TypeCheck from '../../../components/Notice/Write/TypeCheck';
-import { Input } from '../../../components/Notice/Write/Input';
+import { PostInput } from '../../../components/Notice/Write/PostInput';
 import { CustomBtn } from '../../../components/CustomBtn';
 
 const Post = () => {
@@ -24,7 +24,7 @@ const Post = () => {
       <Header props={{ title: '공지 작성', isSearch: false }} />
       <Container>
         <TypeCheck onTypeChange={handleTypeCheck} />
-        <Input onInputChange={handleInputChange} />
+        <PostInput onInputChange={handleInputChange} />
         <CustomBtn
           props={{
             text: '다음',
