@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CustomInput = ({ placeholder, value, onChange, onBlur }) => {
+const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
   // const [inputValue, setInputValue] = useState('');
 
   // value={inputValue}
@@ -17,7 +17,7 @@ const CustomInput = ({ placeholder, value, onChange, onBlur }) => {
         onBlur={onBlur}
         maxLength={20}
       />
-      <CharCount>({value.length}/20)</CharCount>
+      {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
     </Container>
   );
 };
@@ -52,7 +52,6 @@ const CharCount = styled.span`
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
-  margin-left: 0.25rem;
 `;
 
 export default CustomInput;
