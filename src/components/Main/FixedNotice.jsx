@@ -16,7 +16,6 @@ const FixedNotice = ({ onDelete }) => {
     axios
       .get('/mock/FixedData.json')
       .then((response) => {
-        // 응답 데이터가 JSON 파일의 내용
         setNotice(response.data);
       })
       .catch((error) => {
@@ -61,7 +60,6 @@ const NoticeContainer = styled.div`
 const PinButton = styled.button`
   background: none;
   border: none;
-  margin-right: 1rem; /* No change */
   cursor: pointer;
 `;
 

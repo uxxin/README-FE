@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "roomName": "6기 데모데이 공지방",
+    "nickName": "인하대-리우/송민혁-Server",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "5분 전"
+  },
+  {
+    "id": 2,
+    "roomName": "리드미 Server 공지방",
+    "nickName": "PM-송민혁",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "10분 전"
+  },
+  {
+    "id": 3,
+    "roomName": "Server-Front 공지방",
+    "nickName": "송민혁/Node파트장",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "10분 전"
+  },
+    {
+    "id": 4,
+    "roomName": "6기 데모데이 공지방",
+    "nickName": "인하대-리우/송민혁-Server",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "5분 전"
+  },
+  {
+    "id": 5,
+    "roomName": "인하대 운영진 공지방",
+    "nickName": "리우/송민혁",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "10분 전"
+  },
+    {
+    "id": 6,
+    "roomName": "오션지부 운영진 공지방",
+    "nickName": "인하대-리우/송민혁-Server",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "5분 전"
+  },
+  {
+    "id": 7,
+    "roomName": "웹 컨퍼런스 공지방",
+    "nickName": "인하대-리우/송민혁-Server",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "5분 전"
+  }
+]
