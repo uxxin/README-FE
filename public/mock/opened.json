@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "roomName": "UMC 6기 오션지부 공지방",
+    "nickName": "인하대-리우/송민혁-Server",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "5분 전"
+  },
+  {
+    "id": 2,
+    "roomName": "UMC 6기 인하대 공지방",
+    "nickName": "리우/송민혁",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "10분 전"
+  },
+  {
+    "id": 3,
+    "roomName": "인하대 운영진 공지방",
+    "nickName": "송민혁/Node파트장",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "time": "10분 전"
+  }
+]

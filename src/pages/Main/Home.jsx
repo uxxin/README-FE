@@ -58,6 +58,7 @@ const Container = styled.div`
 
 const Navbar = styled.div`
   display: flex;
+  width: 100%;
   height: 1.6875rem;
   padding: 0.8125rem 0;
   justify-content: center;
