@@ -36,7 +36,9 @@ const Input = styled.input`
   flex: 1;
   outline: none;
   background: none;
+  font-family: 'Pretendard';
   font-size: 1.125rem;
+  font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 1.125rem */
   letter-spacing: -0.0225rem;
