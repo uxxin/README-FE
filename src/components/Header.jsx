@@ -120,7 +120,6 @@ const StyledSearchButton = styled(SearchButton)`
 
 const SearchContainer = styled.div`
   display: flex;
-  width: 26.875rem;
   height: 2.75rem;
   padding: 0.75rem 0.62rem;
   justify-content: center;
@@ -137,8 +136,9 @@ const InputText = styled.input`
   display: flex;
   align-items: center;
   border: none;
-  width: 21.6rem;
+  width: 85%;
   height: 1.1875rem;
+  background: var(--Blue-light, #f4f9ff);
   ::placeholder {
     overflow: hidden;
     color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
@@ -149,7 +149,8 @@ const InputText = styled.input`
     line-height: 120%;
     letter-spacing: -0.02rem;
   }
-  :focus {
+  &:focus {
     color: var(--Text-default, var(--Grayscale-Gray7, #222));
+    outline: none;
   }
 `;
