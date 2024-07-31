@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+
 import styled from 'styled-components';
 
 const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: absolute;
   right: 0;
-  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,9 +13,6 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: transparent;
-  padding: 1.5rem;
-  width: 7.625rem;
-  height: 4.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +25,8 @@ const ModalButton = styled.button`
   color: ${({ color }) => color || 'black'};
   border: 0.33px solid #bdbdbd;
   cursor: pointer;
-  width: 100%;
+  width: 7.625rem;
+  height: 2.25rem;
   border-radius: ${({ isTop }) =>
     isTop ? '0.3125rem 0.3125rem 0 0' : '0 0 0.3125rem 0.3125rem'};
   &:first-child {
@@ -42,15 +38,34 @@ const ModalButton = styled.button`
 `;
 
 const CustomModal = ({ isOpen, onClose, buttons }) => {
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modalElement = modalRef.current;
+      const parentElement = modalElement ? modalElement.parentNode : null;
+      if (
+        !modalElement.contains(event.target) &&
+        !parentElement.contains(event.target)
+      ) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  const handleModalContentClick = (e) => {
-    e.stopPropagation();
-  };
-
   return (
-    <ModalOverlay onClick={onClose}>
-      <ModalContent onClick={handleModalContentClick}>
+    <ModalOverlay ref={modalRef}>
+      <ModalContent>
         {buttons &&
           buttons.map((button, index) => (
             <ModalButton
