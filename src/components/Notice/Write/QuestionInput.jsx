@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
-  // const [inputValue, setInputValue] = useState('');
-
-  // value={inputValue}
-  // onChange={(e) => setInputValue(e.target.value)}
+export const QuestionInput = ({ placeholder, charCount }) => {
+  const [inputValue, setInputValue] = useState('');
 
   return (
     <Container>
       <Input
         type="text"
         placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         maxLength={charCount ? 20 : undefined}
       />
-      {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
+      {charCount ? <CharCount>({inputValue.length}/20)</CharCount> : <></>}
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
+  padding: 0.5rem;
   align-items: center;
-  padding: 1.25rem 1.12rem;
+  flex: 1 0 0;
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
   background: var(--Primary-Light, #f4f9ff);
@@ -37,12 +34,12 @@ const Input = styled.input`
   outline: none;
   background: none;
   font-family: 'Pretendard';
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-style: normal;
-  font-weight: 700;
-  line-height: 100%; /* 1.125rem */
-  letter-spacing: -0.0225rem;
-  color: #509bf7;
+  font-weight: 500;
+  line-height: 120%; /* 1.2rem */
+  letter-spacing: -0.02rem;
+  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
   ::placeholder {
     color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
   }
@@ -55,5 +52,3 @@ const CharCount = styled.span`
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
 `;
-
-export default CustomInput;

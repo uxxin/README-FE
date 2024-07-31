@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CustomBtn } from "../CustomBtn";
 
 const TotalContainer = styled.div`
-  padding: 1rem;
+  padding-right: 1rem;
 `
 
 const Container = styled.div`
@@ -83,17 +83,13 @@ const ButtonWrapper = styled.div`
   gap: 0.81rem;
   width: 23.625rem; 
   align-items: center;
+  margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
-  padding: 0 0.8125rem; 
-  box-sizing: border-box; 
-`;
-
-const ButtonContainer = styled.div`
-  width: 100%; 
   display: flex;
-  justify-content: center; 
-  padding: 0 0.5rem;
+  flex-direction: column;
+  gap: 0.625rem;
+  box-sizing: border-box; 
 `;
 
 

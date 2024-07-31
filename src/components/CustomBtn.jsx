@@ -23,8 +23,8 @@ export const CustomBtn = ({ props }) => {
 
 const StyledCustomBtn = styled.div`
   display: flex;
+  height: 3.1875rem;
   white-space: nowrap;
-  padding: 1rem 9.6875rem;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;

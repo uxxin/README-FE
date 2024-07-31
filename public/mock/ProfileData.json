@@ -1,5 +1,11 @@
-{
+[{
   "nickname": "더기/양유진",
   "email": "duggy1114@gmail.com",
   "profile_image": "../src/assets/images/defaultprofileimage.png"
+},
+{
+  "nickname": "아미라/장희원",
+  "email": "abcd123@gmail.com",
+  "profile_image": "../src/assets/images/defaultprofileimage.png"
 }
+]

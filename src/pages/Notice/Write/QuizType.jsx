@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from '../../../components/Header';
 import { ImgUpload } from '../../../components/Notice/Write/ImgUpload';
 import styled from 'styled-components';
+import { Quiz } from '../../../components/Notice/Write/Quiz';
 
 const QuizType = () => {
   return (
@@ -9,6 +10,7 @@ const QuizType = () => {
       <Header props={{ title: '공지 작성', isSearch: false }} />
       <Container>
         <ImgUpload />
+        <Quiz />
       </Container>
     </div>
   );

@@ -5,12 +5,13 @@ import {SlideButton, CheckButton, XButton } from "../../assets/images/icons";
 const Container = styled.div`
     display: flex;
     width: 26.75rem;
+    padding-right: 1rem;
     padding: 0.625rem 1rem;
+    padding-right: 1rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.625rem;
 `
-
 
 const TotalContainer = styled.div`
     display: flex;
@@ -29,14 +30,13 @@ const MissionTogle = styled.div`
     align-items: center;
     align-self: stretch;
     border-radius: 0.5rem;
-
 `
 
 
 // BarLeftContainer 컴포넌트
 const BarLeftContainer = styled.div`
-    border-radius: 0.5rem 0 0 0.5rem; /* 8px 0px 0px 8px */
-    border: 1px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
+    border-radius: 0.5rem 0 0 0.5rem; 
+    border: 1px solid #BDBDBD;
     align-items: center;
     box-sizing: border-box;
     justify-content: center;
@@ -67,7 +67,7 @@ const BarRightContainer = styled.div`
 
 const CheckContainer = styled.div`
     display: flex;
-    width: 24.75rem;
+    width: 22rem;
     padding: 1.5rem 1.25rem;
     flex-direction: column;
     justify-content: center;
@@ -76,11 +76,12 @@ const CheckContainer = styled.div`
     border-radius: 0.5rem;
     border: 0.33px solid var(--Primary-light-active, #C9E0FD);
     background: var(--Primary-light, #F4F9FF);
-    margin-right: 0.02rem;
+    
 `
 
 const BoxContainer = styled.div`
     display: flex;
+    padding-right: 2rem;
     padding-bottom: 1rem;
     flex-direction: column;
     align-items: center;
@@ -138,8 +139,11 @@ const ImgContainer = styled.img`
 `
 
 const ContentContainer = styled.div`
-width: 24.875rem;
-height: 12.5rem;
+    width: 24.875rem;
+    height: 12.5rem;
+    justify-content: flex-end; //슬라이드버튼을 오른쪽 끝에 오게 만든다.
+    align-items: center; 
+    display: flex;
 `
 const SecondButtonContainer = styled.div`
     display: flex;
@@ -180,16 +184,15 @@ const NoButton = styled.button`
 export const CheckList = () =>{
     return(
         <div>
-           
-            <TotalContainer>
+             <Container>
+             <BoxContainer>    
+          
                 <MissionTogle>
                 <BarLeftContainer>대기</BarLeftContainer>
                 <BarRightContainer>승인완료</BarRightContainer>
                 </MissionTogle>
             <CheckContainer>확인요청내역 없음</CheckContainer>
-            </TotalContainer>
-            <Container>
-            <BoxContainer>
+           
                 <ProfileContainer>
                 <ImgContainer></ImgContainer>
                 <TextContainer>
