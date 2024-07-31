@@ -11,14 +11,16 @@ export const AuthBtn = () => {
             text: '로그인',
             border: 'none',
             background: '#509BF7',
-            link: '/sign-in',
+            link: '/home',
           }}
         />
         <CustomBtn
           props={{
             text: '회원가입',
             border: '0.5px solid #509BF7',
+            // border: 'none',
             background: '#FFFFFF',
+            // background: '#509BF7',
             link: '/sign-up',
           }}
         />
@@ -37,5 +39,4 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 15.69rem;
-  margin-bottom: 1.87rem;
 `;

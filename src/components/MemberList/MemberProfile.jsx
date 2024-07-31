@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { CustomBtn } from "../CustomBtn";
+import { useLocation} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // 컨테이너 스타일
 const Container = styled.div`
- padding: 0.625rem 0rem;
+  padding: 0.625rem 0rem;
   gap: 3.75rem; /* 60px */
   box-sizing: border-box;
   display: flex;
@@ -26,10 +28,10 @@ const ImgWrapper = styled.div`
 
 // 이미지 컨테이너 스타일
 const ImgContainer = styled.img`
-  width: 18.75rem; /* 300px */
-  height: 18.75rem; /* 300px */
+  width: 18.75rem; 
+  height: 18.75rem; 
   object-fit: cover;
-  border-radius: 0.9375rem; /* 15px */
+  border-radius: 0.9375rem; 
   box-sizing: border-box;
   display: block;
   margin: 0 auto;
@@ -39,11 +41,11 @@ const ImgContainer = styled.img`
 
 // 패널티 체크 스타일
 const PaneltyCheck = styled.div`
-  width: 18.75rem; /* 300px */
+  width: 18.75rem; 
   display: block;
   margin: 0 auto;
-  border-radius: 0.5rem; /* 8px */
-  border: 0.02rem solid #C9E0FD; /* 0.33px */
+  border-radius: 0.5rem;
+  border: 0.02rem solid #C9E0FD; 
   background: var(--Primary-Light, #F4F9FF);
   display: flex;
   width: 18.75rem;
@@ -57,9 +59,15 @@ const PaneltyCheck = styled.div`
 
 
 export const MemberProfile = () =>{
+  const { nickname } = useParams();  // URL에서 nickname을 가져옴
+  const location = useLocation();
+  const { profile_image = "" } = location.state;
+  const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
+
+
     return(
         <Container>
-         <ImgContainer src="https://image.bugsm.co.kr/album/images/500/40752/4075248.jpg" alt="Profile" /> 
+          <ImgContainer src={imageUrl} alt={`${nickname}'s profile`} />
          <PaneltyCheck>패널티</PaneltyCheck>
          <CustomBtn
             props={{

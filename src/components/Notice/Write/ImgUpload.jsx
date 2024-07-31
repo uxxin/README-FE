@@ -19,10 +19,7 @@ export const ImgUpload = () => {
   const handleDelete = (imageToDelete) => {
     setImages(images.filter((image) => image !== imageToDelete));
   };
-  useEffect(() => {
-    const screenWidth = window.innerWidth;
-    console.log(screenWidth);
-  }, []);
+
   return (
     <UploadContainer>
       <Label>사진 ({images.length}/10)</Label>
@@ -36,7 +33,7 @@ export const ImgUpload = () => {
               onChange={handleImageChange}
               id="fileInput"
             />
-            <CameraIcon onClick={handleClick} isFull={images.length >= 10}>
+            <CameraIcon onClick={handleClick}>
               <img src={camera} alt="Upload" />
             </CameraIcon>
           </>
@@ -62,7 +59,6 @@ const UploadContainer = styled.div`
   gap: 0.625rem;
   max-width: 430px;
   overflow-x: scroll;
-  padding: 0 1rem;
 `;
 
 const Label = styled.label`
@@ -99,11 +95,7 @@ const CameraIcon = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
-  border: 0.33px solid
-    ${({ isFull }) =>
-      isFull
-        ? '#var(--GrayScale-gray4, #BDBDBD)'
-        : 'var(--Primary-light-active, #c9e0fd)'};
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
   img {

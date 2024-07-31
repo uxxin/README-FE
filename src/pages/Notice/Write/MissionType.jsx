@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from '../../../components/Header';
 import styled from 'styled-components';
 import ImgUpload from '../../../components/Notice/Write/ImgUpload';
+import { Mission } from '../../../components/Notice/Write/Mission';
 
 const MissionType = () => {
   return (
@@ -9,6 +10,7 @@ const MissionType = () => {
       <Header props={{ title: '공지 작성', isSearch: false }} />
       <Container>
         <ImgUpload />
+        <Mission />
       </Container>
     </div>
   );

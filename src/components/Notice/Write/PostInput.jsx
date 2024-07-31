@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-export const Input = ({ onInputChange }) => {
+export const PostInput = ({ onInputChange }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const contentInputRef = useRef(null);

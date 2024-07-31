@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import React, { useRef, useState, useEffect } from 'react';
 
+=======
+import React from 'react';
+>>>>>>> 9cd2c3f0f0501f3de6706aaa4a438bd3111c8107
 import styled from 'styled-components';
 
 const ModalOverlay = styled.div`
@@ -13,6 +17,12 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: transparent;
+<<<<<<< HEAD
+=======
+  padding: 1.5rem;
+  width: 7.625rem;
+  height: 4.5rem;
+>>>>>>> 9cd2c3f0f0501f3de6706aaa4a438bd3111c8107
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,8 +35,12 @@ const ModalButton = styled.button`
   color: ${({ color }) => color || 'black'};
   border: 0.33px solid #bdbdbd;
   cursor: pointer;
+<<<<<<< HEAD
   width: 7.625rem;
   height: 2.25rem;
+=======
+  width: 100%;
+>>>>>>> 9cd2c3f0f0501f3de6706aaa4a438bd3111c8107
   border-radius: ${({ isTop }) =>
     isTop ? '0.3125rem 0.3125rem 0 0' : '0 0 0.3125rem 0.3125rem'};
   &:first-child {
@@ -64,8 +78,13 @@ const CustomModal = ({ isOpen, onClose, buttons }) => {
   if (!isOpen) return null;
 
   return (
+<<<<<<< HEAD
     <ModalOverlay ref={modalRef}>
       <ModalContent>
+=======
+    <ModalOverlay onClick={onClose}>
+      <ModalContent onClick={handleModalContentClick}>
+>>>>>>> 9cd2c3f0f0501f3de6706aaa4a438bd3111c8107
         {buttons &&
           buttons.map((button, index) => (
             <ModalButton
@@ -80,5 +99,8 @@ const CustomModal = ({ isOpen, onClose, buttons }) => {
     </ModalOverlay>
   );
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9cd2c3f0f0501f3de6706aaa4a438bd3111c8107
 export default CustomModal;

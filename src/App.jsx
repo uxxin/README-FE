@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './pages/Auth/SignIn';
@@ -25,9 +25,15 @@ import Profile from './pages/MemberList/Profile';
 import CheckRequests from './pages/Notice/CheckRequests';
 import CheckListPage from './pages/MemberList/CheckListPage';
 import Post from './pages/Notice/Write/Post';
+import { RestApi } from './api/RestApi.js';
 
 
 function App() {
+
+  useEffect(() => {
+    RestApi.instance.autoLogin().then(console.log)
+  }, []);
+
   return (
     // <div className="App">
     <Router>
@@ -45,7 +51,7 @@ function App() {
         {/* MemberList - 멤버 목록 */}
         <Route path="/member" element={<MemberList />} />
         <Route path="/member/invite" element={<Invite />} />
-        <Route path="/member/profile" element={<Profile />} />
+        <Route path="/member/profile/:nickname" element={<Profile />} />
         <Route path="/member/checklist" element={<CheckListPage/>} />
 
         {/* MyPage - 마이페이지 */}
