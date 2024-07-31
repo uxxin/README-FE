@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { MemberListItem } from '../../components/MemberList/MemberListItem';
 import { Header } from '../../components/Header';
+import { MemberListItem } from '../../components/MemberList/MemberListItem';
 
 const MemberList = () => {
   return (

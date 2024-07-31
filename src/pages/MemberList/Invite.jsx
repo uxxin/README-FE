@@ -5,8 +5,8 @@ import { MemberInvite } from '../../components/MemberList/MemberInvite';
 const Invite = () => {
   return(
     <div>
-    <Header props={{ title: '멤버초대하기', isSearch: true, gap: '1rem' }} />
-    <MemberInvite/>
+      <Header props={{ title: '멤버초대하기', isSearch: true, gap: '1rem' }} />
+      <MemberInvite/>
     </div>
     )
 };
