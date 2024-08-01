@@ -10,7 +10,7 @@ const StyledAuth = styled.div`
   padding: 1.87rem 1rem;
 `;
 
-const Auth = () => {
+const SignIn = () => {
   return (
     <StyledAuth>
       <AuthLogo />
@@ -20,4 +20,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default SignIn;
