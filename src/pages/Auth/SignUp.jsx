@@ -16,6 +16,8 @@ const passwordRegex =
 const SignUp = () => {
   const navigate = useNavigate();
 
+  const [signupCompleted, setSignupCompleted] = useState(false);
+
   const [step, setStep] = useState(1);
 
   const [name, setName] = useState('');
@@ -76,8 +78,8 @@ const SignUp = () => {
     if (password === "")
       return "비밀번호를 입력해주세요!"
     if (!passwordRegex.test(password))
-      return "비밀번호는 8-20자의 영소문자, 숫자, 특수문자를 모두 조합해서 입력해주세요!"
-
+      // return "비밀번호는 최소 8자 이상 영소문자, 숫자, 특수문자를 조합해 입력해주세요!"
+      return "비밀번호는 최소 8자 이상 입력해주세요."
     return null
   }, [password])
 
@@ -107,7 +109,7 @@ const SignUp = () => {
     const me = await RestApi.instance.user.me()
     console.log(me.data.result)
     // TODO: 컨텍스트에 me 를 쓸 것
-    navigate('/home');
+    setSignupCompleted(true);
   };
 
   // const formValid = useMemo(
@@ -133,129 +135,142 @@ const SignUp = () => {
 
   return (
     <SignUpContainer>
-      <Header props={{ title: '회원가입', isSearch: false }} />
-      <ProgressBar progress={(step / 4) * 100} />
+      {signupCompleted ? (
+        <>
+          <WelcomeMessage>
+            {`${name}님,\nRead.me에 오신 것을\n 환영합니다!`}
+          </WelcomeMessage>
+          <ButtonContainer>
+            <Button onClick={() => navigate('/home')}>로그인</Button>
+          </ButtonContainer>
+        </>
+      ) : (
+        <>
+          <Header props={{ title: '회원가입', isSearch: false }} />
+          <ProgressBar progress={(step / 4) * 100} />
 
-      {step === 1 && (
-        <>
-          <ContentContainer>
-            <Label>이름을 입력해주세요.</Label>
-            <InputWrapper>
-              <CustomInput
-                onBlur={() => setNameTouched(true)}
-                onChange={(event) => setName(event.target.value)}
-                placeholder="입력하세요."
-                value={name}
-              />
-              {nameInvalid && nameTouched && <ErrorMessage>{nameInvalid}</ErrorMessage>}
-            </InputWrapper>
-          </ContentContainer>
-          <ButtonContainer>
-            <Button
-              onClick={() => handleNextStep()}
-              disabled={!!nameInvalid}
-            >확인
-            </Button>
-          </ButtonContainer>
-        </>
-      )}
-      {step === 2 && (
-        <>
-          <ContentContainer>
-            <Label>닉네임을 입력해주세요.</Label>
-            <InputWrapper>
-              <CustomInput
-                onBlur={() => setNicknameTouched(true)}
-                onChange={(e) => setNickname(e.target.value)}
-                placeholder="입력하세요."
-                value={nickname}
-              />
-              {nicknameInValid && nickNameTouched && <ErrorMessage>{nicknameInValid}</ErrorMessage>}
-            </InputWrapper>
-          </ContentContainer>
-          <ButtonContainer>
-            <Button
-              onClick={() => handleNextStep()}
-              disabled={!!nicknameInValid}
-            >확인
-            </Button>
-          </ButtonContainer>
-        </>
-      )}
-      {step === 3 && (
-        <>
-          <ContentContainer>
-            <Label>이메일을 입력해주세요.</Label>
-            <InputWrapper>
-              <CustomInput
-                onBlur={() => setEmailTouched(true)}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="입력하세요."
-                value={email}
-              />
-              {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
-            </InputWrapper>
-            <Button
-              onClick={createCode}
-              disabled={!!emailInvalid}
-            >인증하기</Button>
+          {step === 1 && (
+            <>
+              <ContentContainer>
+                <Label>이름을 입력해주세요.</Label>
+                <InputWrapper>
+                  <CustomInput
+                    onBlur={() => setNameTouched(true)}
+                    onChange={(event) => setName(event.target.value)}
+                    placeholder="입력하세요."
+                    value={name}
+                  />
+                  {nameInvalid && nameTouched && <ErrorMessage>{nameInvalid}</ErrorMessage>}
+                </InputWrapper>
+              </ContentContainer>
+              <ButtonContainer>
+                <Button
+                  onClick={() => handleNextStep()}
+                  disabled={!!nameInvalid}
+                >확인
+                </Button>
+              </ButtonContainer>
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <ContentContainer>
+                <Label>닉네임을 입력해주세요.</Label>
+                <InputWrapper>
+                  <CustomInput
+                    onBlur={() => setNicknameTouched(true)}
+                    onChange={(e) => setNickname(e.target.value)}
+                    placeholder="입력하세요."
+                    value={nickname}
+                  />
+                  {nicknameInValid && nickNameTouched && <ErrorMessage>{nicknameInValid}</ErrorMessage>}
+                </InputWrapper>
+              </ContentContainer>
+              <ButtonContainer>
+                <Button
+                  onClick={() => handleNextStep()}
+                  disabled={!!nicknameInValid}
+                >확인
+                </Button>
+              </ButtonContainer>
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <ContentContainer>
+                <Label>이메일을 입력해주세요.</Label>
+                <InputWrapper>
+                  <CustomInput
+                    onBlur={() => setEmailTouched(true)}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="입력하세요."
+                    value={email}
+                  />
+                  {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
+                </InputWrapper>
+                <Button
+                  onClick={createCode}
+                  disabled={!!emailInvalid}
+                >인증하기</Button>
 
-            <Label>인증코드를 입력해주세요.</Label>
-            <InputWrapper>
-              <CustomInput
-                onBlur={() => setEmailConfirmTouched(true)}
-                onChange={(e) => setEmailConfirm(e.target.value)}
-                placeholder="입력하세요."
-                value={emailConfirm}
-              />
-              {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
-            </InputWrapper>
-            <Button
-              onClick={confirmCode}
-              disabled={!!emailInvalid}
-            >확인</Button>
-          </ContentContainer>
-          <ButtonContainer>
-            <Button
-              onClick={() => handleNextStep()}
-              disabled={!!emailInvalid}
-            >확인
-            </Button>
-          </ButtonContainer>
-        </>
-      )}
-      {step === 4 && (
-        <>
-          <ContentContainer>
-            <Label>비밀번호를 입력해주세요.</Label>
-            <InputWrapper>
-              <CustomInput
-                onBlur={() => setPasswordTouched(true)}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="비밀번호 확인 (최소 8자)"
-                value={password}
-              />
-              {passwordInvalid && passwordTouched && <ErrorMessage>{passwordInvalid}</ErrorMessage>}
-            </InputWrapper>
-            <InputWrapper>
-              <CustomInput
-                onBlur={() => setPasswordConfirmTouched(true)}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
-                placeholder="비밀번호 재확인"
-                value={passwordConfirm}
-              />
-              {passwordCheckInvalid && passwordConfirmTouched && <ErrorMessage>{passwordCheckInvalid}</ErrorMessage>}
-            </InputWrapper>
-          </ContentContainer>
-          <ButtonContainer>
-            <Button
-              onClick={() => handleCompleteSignUp()}
-              disabled={!!passwordInvalid || !!passwordCheckInvalid}
-            >
-              확인
-            </Button>
-          </ButtonContainer>
-          {/*비밀번호 disable 이게 맞나*/}
+                <Label>인증코드를 입력해주세요.</Label>
+                <InputWrapper>
+                  <CustomInput
+                    onBlur={() => setEmailConfirmTouched(true)}
+                    onChange={(e) => setEmailConfirm(e.target.value)}
+                    placeholder="입력하세요."
+                    value={emailConfirm}
+                  />
+                  {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
+                </InputWrapper>
+                <Button
+                  onClick={confirmCode}
+                  disabled={!!emailInvalid}
+                >확인</Button>
+              </ContentContainer>
+              <ButtonContainer>
+                <Button
+                  onClick={() => handleNextStep()}
+                  disabled={!!emailInvalid}
+                >확인
+                </Button>
+              </ButtonContainer>
+            </>
+          )}
+          {step === 4 && (
+            <>
+              <ContentContainer>
+                <Label>비밀번호를 입력해주세요.</Label>
+                <InputWrapper>
+                  <CustomInput
+                    onBlur={() => setPasswordTouched(true)}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="비밀번호 확인 (최소 8자)"
+                    value={password}
+                  />
+                  {passwordInvalid && passwordTouched && <ErrorMessage>{passwordInvalid}</ErrorMessage>}
+                </InputWrapper>
+                <InputWrapper>
+                  <CustomInput
+                    onBlur={() => setPasswordConfirmTouched(true)}
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                    placeholder="비밀번호 재확인"
+                    value={passwordConfirm}
+                  />
+                  {passwordCheckInvalid && passwordConfirmTouched && <ErrorMessage>{passwordCheckInvalid}</ErrorMessage>}
+                </InputWrapper>
+              </ContentContainer>
+              <ButtonContainer>
+                <Button
+                  onClick={() => handleCompleteSignUp()}
+                  disabled={!!passwordInvalid || !!passwordCheckInvalid}
+                >
+                  확인
+                </Button>
+              </ButtonContainer>
+              {/*비밀번호 disable 이게 맞나*/}
+            </>
+          )}
         </>
       )}
     </SignUpContainer>
@@ -264,7 +279,7 @@ const SignUp = () => {
 
 const ErrorMessage = styled.div`
   position: absolute;
-  bottom: -20px; /* Adjust this value as needed */
+  bottom: -20px;
   width: 100%;
   color: red;
   text-align: start;
@@ -328,9 +343,16 @@ const ButtonContainer = styled.div`
 
 const InputWrapper = styled.div`
   position: relative;
-  //display: flex;
-  //align-items: center;
-  //gap: 0.44rem;
+  width: 100%;
+`;
+
+const WelcomeMessage = styled.div`
+  font-family: Pretendard;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 100%;
+  margin-top: 60px;
+  white-space: pre-line;
 `;
 
 export default SignUp;
