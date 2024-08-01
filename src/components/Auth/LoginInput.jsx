@@ -29,4 +29,5 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  position: relative;
 `;

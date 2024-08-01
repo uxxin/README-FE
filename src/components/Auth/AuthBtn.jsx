@@ -38,6 +38,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 15.69rem;
+    
+    position: absolute;
+    bottom: 3.37rem;
+    width: 24.8125rem;
 `;
 
 const NotAuth = styled.div`
