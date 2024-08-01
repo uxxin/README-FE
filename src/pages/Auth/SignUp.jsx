@@ -289,6 +289,9 @@ const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+    position: relative;
+    min-height: 100vh; /* Ensure it takes full height of the viewport */
 `;
 
 const Label = styled.div`
@@ -310,7 +313,6 @@ const ContentContainer = styled.div`
     align-items: stretch;
     gap: 1.875rem;
     box-sizing: border-box;
-    
     position: relative;
 `;
 
@@ -338,7 +340,8 @@ const ButtonContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 15.69rem;
+    position: absolute;
+    bottom: 3.37rem;
 `;
 
 const InputWrapper = styled.div`
