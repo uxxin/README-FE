@@ -140,86 +140,95 @@ const SignUp = () => {
         <>
           <ContentContainer>
             <Label>이름을 입력해주세요.</Label>
-            <CustomInput
-              onBlur={() => setNameTouched(true)}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="입력하세요."
-              value={name}
-            />
-            {nameInvalid && nameTouched && <ErrorMessage>{nameInvalid}</ErrorMessage>}
+            <InputWrapper>
+              <CustomInput
+                onBlur={() => setNameTouched(true)}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="입력하세요."
+                value={name}
+              />
+              {nameInvalid && nameTouched && <ErrorMessage>{nameInvalid}</ErrorMessage>}
+            </InputWrapper>
           </ContentContainer>
-          <Button
-            onClick={() => handleNextStep()}
-            disabled={!!nameInvalid}
+          <ButtonContainer>
+            <Button
+              onClick={() => handleNextStep()}
+              disabled={!!nameInvalid}
             >확인
-          </Button>
+            </Button>
+          </ButtonContainer>
         </>
       )}
       {step === 2 && (
         <>
           <ContentContainer>
             <Label>닉네임을 입력해주세요.</Label>
-            <CustomInput
-              onBlur={() => setNicknameTouched(true)}
-              onChange={(e) => setNickname(e.target.value)}
-              placeholder="입력하세요."
-              value={nickname}
-            />
-            {nicknameInValid && nickNameTouched && <ErrorMessage>{nicknameInValid}</ErrorMessage>}
+            <InputWrapper>
+              <CustomInput
+                onBlur={() => setNicknameTouched(true)}
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder="입력하세요."
+                value={nickname}
+              />
+              {nicknameInValid && nickNameTouched && <ErrorMessage>{nicknameInValid}</ErrorMessage>}
+            </InputWrapper>
           </ContentContainer>
-          <Button
-            onClick={() => handleNextStep()}
-            disabled={!!nicknameInValid}
-          >확인
-          </Button>
+          <ButtonContainer>
+            <Button
+              onClick={() => handleNextStep()}
+              disabled={!!nicknameInValid}
+            >확인
+            </Button>
+          </ButtonContainer>
         </>
       )}
       {step === 3 && (
         <>
           <ContentContainer>
             <Label>이메일을 입력해주세요.</Label>
-            <CustomInput
-              onBlur={() => setEmailTouched(true)}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="입력하세요."
-              value={email}
-            />
-            {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
-            {/*이거 인증하기버튼*/}
+            <InputWrapper>
+              <CustomInput
+                onBlur={() => setEmailTouched(true)}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="입력하세요."
+                value={email}
+              />
+              {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
+            </InputWrapper>
             <Button
               onClick={createCode}
               disabled={!!emailInvalid}
-            >
-              인증코드 전송
-            </Button>
+            >인증하기</Button>
 
             <Label>인증코드를 입력해주세요.</Label>
-            <CustomInput
-              onBlur={() => setEmailConfirmTouched(true)}
-              onChange={(e) => setEmailConfirm(e.target.value)}
-              placeholder="입력하세요."
-              value={emailConfirm}
-            />
-            {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
+            <InputWrapper>
+              <CustomInput
+                onBlur={() => setEmailConfirmTouched(true)}
+                onChange={(e) => setEmailConfirm(e.target.value)}
+                placeholder="입력하세요."
+                value={emailConfirm}
+              />
+              {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
+            </InputWrapper>
             <Button
               onClick={confirmCode}
               disabled={!!emailInvalid}
-            >
-              인증코드 확인
-            </Button>
+            >확인</Button>
           </ContentContainer>
-          <Button
-            onClick={() => handleNextStep()}
-            disabled={!!emailInvalid}
-          >
-            확인
-          </Button>
+          <ButtonContainer>
+            <Button
+              onClick={() => handleNextStep()}
+              disabled={!!emailInvalid}
+            >확인
+            </Button>
+          </ButtonContainer>
         </>
       )}
       {step === 4 && (
         <>
           <ContentContainer>
             <Label>비밀번호를 입력해주세요.</Label>
+            <InputWrapper>
               <CustomInput
                 onBlur={() => setPasswordTouched(true)}
                 onChange={(e) => setPassword(e.target.value)}
@@ -227,6 +236,8 @@ const SignUp = () => {
                 value={password}
               />
               {passwordInvalid && passwordTouched && <ErrorMessage>{passwordInvalid}</ErrorMessage>}
+            </InputWrapper>
+            <InputWrapper>
               <CustomInput
                 onBlur={() => setPasswordConfirmTouched(true)}
                 onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -234,13 +245,16 @@ const SignUp = () => {
                 value={passwordConfirm}
               />
               {passwordCheckInvalid && passwordConfirmTouched && <ErrorMessage>{passwordCheckInvalid}</ErrorMessage>}
+            </InputWrapper>
           </ContentContainer>
-          <Button
-            onClick={() => handleCompleteSignUp()}
-            disabled={!!passwordInvalid || !!passwordCheckInvalid}
-          >
-            확인
-          </Button>
+          <ButtonContainer>
+            <Button
+              onClick={() => handleCompleteSignUp()}
+              disabled={!!passwordInvalid || !!passwordCheckInvalid}
+            >
+              확인
+            </Button>
+          </ButtonContainer>
           {/*비밀번호 disable 이게 맞나*/}
         </>
       )}
@@ -248,22 +262,12 @@ const SignUp = () => {
   );
 };
 
-
 const ErrorMessage = styled.div`
+  position: absolute;
+  bottom: -20px; /* Adjust this value as needed */
   width: 100%;
   color: red;
-  margin-bottom: 10px;
   text-align: start;
-`;
-
-const ContentContainer = styled.div`
-    display: flex;
-    width: 26.875rem;
-    margin-top: 60px;
-    padding: 0 1rem;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.875rem;
 `;
 
 const SignUpContainer = styled.div`
@@ -282,9 +286,21 @@ const Label = styled.div`
     letter-spacing: -0.03rem;
 `;
 
+const ContentContainer = styled.div`
+    display: flex;
+    width: 26.8125rem;
+    margin-top: 60px;
+    padding: 0 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.875rem;
+    box-sizing: border-box;
+    
+    position: relative;
+`;
+
 const Button = styled.button`
     display: flex;
-    padding: 1rem 9.6875rem;
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
@@ -292,11 +308,29 @@ const Button = styled.button`
     border: none;
     background: #509BF7;
     color: white;
+    height: 3.1875rem;
+    width: 24.875rem;
+    padding: 1rem 0;
+    
 
     &:disabled {
         background: #BDBDBD;
         color: #509BF7;
     }
+`;
+
+const ButtonContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15.69rem;
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  //display: flex;
+  //align-items: center;
+  //gap: 0.44rem;
 `;
 
 export default SignUp;
