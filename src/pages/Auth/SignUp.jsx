@@ -138,7 +138,7 @@ const SignUp = () => {
       {signupCompleted ? (
         <>
           <WelcomeMessage>
-            {`${name}님,\nRead.me에 오신 것을\n 환영합니다!`}
+            {`${name} 님 \nRead.me에 오신 것을\n 환영합니다!`}
           </WelcomeMessage>
           <ButtonContainer>
             <Button onClick={() => navigate('/home')}>로그인</Button>
@@ -351,11 +351,13 @@ const InputWrapper = styled.div`
 
 const WelcomeMessage = styled.div`
   font-family: Pretendard;
-  font-size: 1.5rem;
+  font-size: 2.25rem;
   font-weight: 700;
   line-height: 100%;
-  margin-top: 60px;
+  margin: 6.38rem 5.87rem 23.56rem 1.06rem;
   white-space: pre-line;
+  font-style: normal;
+  letter-spacing: -0.045rem;
 `;
 
 export default SignUp;
