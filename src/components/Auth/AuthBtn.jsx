@@ -14,13 +14,12 @@ export const AuthBtn = () => {
             link: '/home',
           }}
         />
+        <NotAuth>아직 회원이 아니신가요?</NotAuth>
         <CustomBtn
           props={{
             text: '회원가입',
             border: '0.5px solid #509BF7',
-            // border: 'none',
             background: '#FFFFFF',
-            // background: '#509BF7',
             link: '/sign-up',
           }}
         />
@@ -32,11 +31,20 @@ export const AuthBtn = () => {
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.81rem;
+  //gap: 0.81rem;
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 15.69rem;
+`;
+
+const NotAuth = styled.div`
+    align-self: stretch;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: -0.0175rem;
+    margin-top: 0.81rem;
 `;
