@@ -2,11 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
-  // const [inputValue, setInputValue] = useState('');
-
-  // value={inputValue}
-  // onChange={(e) => setInputValue(e.target.value)}
-
   return (
     <Container>
       <Input
