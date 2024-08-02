@@ -159,6 +159,7 @@ const SignUp = () => {
                     onChange={(event) => setName(event.target.value)}
                     placeholder="입력하세요."
                     value={name}
+                    charCount={true}
                   />
                   {nameInvalid && nameTouched && <ErrorMessage>{nameInvalid}</ErrorMessage>}
                 </InputWrapper>
@@ -182,6 +183,7 @@ const SignUp = () => {
                     onChange={(e) => setNickname(e.target.value)}
                     placeholder="입력하세요."
                     value={nickname}
+                    charCount={true}
                   />
                   {nicknameInValid && nickNameTouched && <ErrorMessage>{nicknameInValid}</ErrorMessage>}
                 </InputWrapper>
@@ -199,34 +201,34 @@ const SignUp = () => {
             <>
               <ContentContainer>
                 <Label>이메일을 입력해주세요.</Label>
-                <InputWrapper>
+                <InputWrapperWithButton>
                   <CustomInput
                     onBlur={() => setEmailTouched(true)}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="입력하세요."
                     value={email}
                   />
-                  {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
-                </InputWrapper>
-                <Button
-                  onClick={createCode}
-                  disabled={!!emailInvalid}
-                >인증하기</Button>
+                  <Button
+                    onClick={createCode}
+                    disabled={!!emailInvalid}
+                  >인증하기</Button>
+                </InputWrapperWithButton>
+                {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
 
                 <Label>인증코드를 입력해주세요.</Label>
-                <InputWrapper>
+                <InputWrapperWithButton>
                   <CustomInput
                     onBlur={() => setEmailConfirmTouched(true)}
                     onChange={(e) => setEmailConfirm(e.target.value)}
                     placeholder="입력하세요."
                     value={emailConfirm}
                   />
-                  {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
-                </InputWrapper>
-                <Button
-                  onClick={confirmCode}
-                  disabled={!!emailInvalid}
-                >확인</Button>
+                  <Button
+                    onClick={confirmCode}
+                    disabled={!!emailConfirmInvalid}
+                  >확인</Button>
+                </InputWrapperWithButton>
+                {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
               </ContentContainer>
               <ButtonContainer>
                 <Button
@@ -247,6 +249,7 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="비밀번호 확인 (최소 8자)"
                     value={password}
+                    charCount={true}
                   />
                   {passwordInvalid && passwordTouched && <ErrorMessage>{passwordInvalid}</ErrorMessage>}
                 </InputWrapper>
@@ -256,6 +259,7 @@ const SignUp = () => {
                     onChange={(e) => setPasswordConfirm(e.target.value)}
                     placeholder="비밀번호 재확인"
                     value={passwordConfirm}
+                    charCount={true}
                   />
                   {passwordCheckInvalid && passwordConfirmTouched && <ErrorMessage>{passwordCheckInvalid}</ErrorMessage>}
                 </InputWrapper>
@@ -280,6 +284,7 @@ const SignUp = () => {
 const ErrorMessage = styled.div`
   position: absolute;
   bottom: -20px;
+  margin-top: 0;
   width: 100%;
   color: red;
   text-align: start;
@@ -307,7 +312,7 @@ const Label = styled.div`
 const ContentContainer = styled.div`
     display: flex;
     width: 26.8125rem;
-    margin-top: 60px;
+    margin-top: 3.75rem;
     padding: 0 1rem;
     flex-direction: column;
     align-items: stretch;
@@ -358,6 +363,14 @@ const WelcomeMessage = styled.div`
   white-space: pre-line;
   font-style: normal;
   letter-spacing: -0.045rem;
+`;
+
+const InputWrapperWithButton = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.44rem;
+  width: 100%;
+  //height: 100%;
 `;
 
 export default SignUp;
