@@ -69,5 +69,4 @@ const NotAuth = styled.div`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0175rem;
-  margin-top: 0.81rem;
 `;
