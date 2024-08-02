@@ -212,8 +212,8 @@ const SignUp = () => {
                     onClick={createCode}
                     disabled={!!emailInvalid}
                   >인증하기</EmailButton>
+                  {emailInvalid && emailTouched && <EmailErrorMessage>{emailInvalid}</EmailErrorMessage>}
                 </InputWrapperWithButton>
-                {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
 
                 <Label>인증코드를 입력해주세요.</Label>
                 <InputWrapperWithButton>
@@ -227,8 +227,8 @@ const SignUp = () => {
                     onClick={confirmCode}
                     disabled={!!emailConfirmInvalid}
                   >확인</EmailButton>
+                  {emailConfirmInvalid && emailConfirmTouched && <EmailErrorMessage>{emailConfirmInvalid}</EmailErrorMessage>}
                 </InputWrapperWithButton>
-                {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
               </ContentContainer>
               <ButtonContainer>
                 <Button
@@ -285,6 +285,14 @@ const ErrorMessage = styled.div`
   position: absolute;
   bottom: -20px;
   margin-top: 0;
+  width: 100%;
+  color: red;
+  text-align: start;
+`;
+
+const EmailErrorMessage = styled.div`
+  position: absolute;
+  margin-top: 6rem;
   width: 100%;
   color: red;
   text-align: start;
@@ -389,6 +397,7 @@ const InputWrapperWithButton = styled.div`
   align-items: center;
   gap: 0.44rem;
   width: 100%;
+  margin-bottom: 1.5rem;
 `;
 
 export default SignUp;
