@@ -19,6 +19,7 @@ const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
 
 const Container = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
   padding: 1.25rem 1.12rem;
   border-radius: 0.5rem;
