@@ -208,10 +208,10 @@ const SignUp = () => {
                     placeholder="입력하세요."
                     value={email}
                   />
-                  <Button
+                  <EmailButton
                     onClick={createCode}
                     disabled={!!emailInvalid}
-                  >인증하기</Button>
+                  >인증하기</EmailButton>
                 </InputWrapperWithButton>
                 {emailInvalid && emailTouched && <ErrorMessage>{emailInvalid}</ErrorMessage>}
 
@@ -223,10 +223,10 @@ const SignUp = () => {
                     placeholder="입력하세요."
                     value={emailConfirm}
                   />
-                  <Button
+                  <EmailButton
                     onClick={confirmCode}
                     disabled={!!emailConfirmInvalid}
-                  >확인</Button>
+                  >확인</EmailButton>
                 </InputWrapperWithButton>
                 {emailConfirmInvalid && emailConfirmTouched && <ErrorMessage>{emailConfirmInvalid}</ErrorMessage>}
               </ContentContainer>
@@ -337,7 +337,26 @@ const Button = styled.button`
 
     &:disabled {
         background: #BDBDBD;
-        color: #509BF7;
+        color: #FFFFFF;
+    }
+`;
+
+const EmailButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 0.5rem;
+    border: none;
+    background: #509BF7;
+    color: white;
+    height: 3.625rem;
+    width: 3.625rem;
+    padding: 1rem 0;
+
+    &:disabled {
+        background: #BDBDBD;
+        color: #FFFFFF;
     }
 `;
 
@@ -370,7 +389,6 @@ const InputWrapperWithButton = styled.div`
   align-items: center;
   gap: 0.44rem;
   width: 100%;
-  //height: 100%;
 `;
 
 export default SignUp;
