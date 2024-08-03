@@ -3,23 +3,43 @@ import styled from 'styled-components';
 import { QuestionInput } from './QuestionInput';
 import help from '../../../assets/images/help_icon.svg';
 
-export const Mission = () => {
+export const Mission = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  question,
+  setQuestion,
+}) => {
   return (
     <Container>
       <Section>
         <Title>시작 기한</Title>
-        <QuestionInput placeholder="YY.MM.DD HH:MM" />
+        <QuestionInput
+          placeholder="YY.MM.DD HH:MM"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
       </Section>
       <Section>
         <Title>마감 기한</Title>
-        <QuestionInput placeholder="YY.MM.DD HH:MM" />
+        <QuestionInput
+          placeholder="YY.MM.DD HH:MM"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
       </Section>
       <Section>
         <Title>
           미션
           <Help src={help} />
         </Title>
-        <QuestionInput placeholder="미션을 입력하세요" charCount={true} />
+        <QuestionInput
+          placeholder="미션을 입력하세요"
+          charCount={true}
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+        />
       </Section>
     </Container>
   );
