@@ -1,14 +1,13 @@
 import React from "react";
 import { useEffect,useState } from "react";
-import { MemberListItem } from "./MemberListItem";
 import axios from "axios";
 import { MemberListDetails } from "./MemberListDetails";
 import CustomModal from '../CustomModal';
 import styled from "styled-components";
-import { setGlobalKeys } from "./KeyStores";
 import { useDispatch } from "react-redux";
-import { setKeysCount } from "../../redux/KeySlice";
+import { setKeysCount, removeMember } from "../../redux/KeySlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const ModalOverlay = styled.div`
@@ -22,6 +21,10 @@ const ModalOverlay = styled.div`
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
 `;
+
+const ShowMoreIconContainer = styled.div`
+  position: relative;
+`
 
 const SecondModalContent = styled.div`
   display: flex;
@@ -56,39 +59,36 @@ const CloseButton = styled.button`
   border: 0.33px solid var(--Primary-light-active,#888888);
 `;
 
+export const MemberListMap = ({members}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+ // const { members } = useSelector(state => state.keys);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(null);
 
-export const MemberListMap = () =>{
-    const [memberList, setMemberList] = useState([]);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    
+  console.log('넘어오는 프롭스:', members); // 확인용
+/*
   useEffect(() => {
     const fetchMemberList = async () => {
       try {
         const response = await axios.get('/mock/ProfileData.json');
-        setMemberList(response.data);
-        const keys = Object.keys(response.data);
-        dispatch(setKeysCount(keys.length)); // 상태 업데이트
-        console.log(`Keys set in MemberListMap: ${keys.length}`);
+        const memberData = response.data;
+
+        dispatch(setKeysCount({ count: memberData.length, members: memberData }));
+        console.log(`Keys set in MemberListMap: ${memberData.length}`);
       } catch (error) {
-        console.error('Error fetching setMemberList:', error);
+        console.error('Error fetching member list:', error);
       }
     };
     fetchMemberList();
   }, [dispatch]);
-
-
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
-  const [selectedProfile, setSelectedProfile] = useState(null); // 추가
-
+  */
 
   const handleOpenModal = (profile) => {
-    setSelectedProfile(profile); // 프로필을 상태로 저장
+    setSelectedProfile(profile);
     setIsModalOpen(true);
   };
-
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -96,14 +96,12 @@ export const MemberListMap = () =>{
 
   const handleProfileLinkClick = () => {
     if (selectedProfile) {
-      const encodedNickname = encodeURIComponent(selectedProfile.nickname);  //encode안하면 라우팅 안됨
-      console.log('Navigating to profile with nickname:', selectedProfile.nickname);
-      console.log('State being passed:', {
-        profile_image: selectedProfile.profile_image,
-        nickname: selectedProfile.nickname
-    });
+      const encodedNickname = encodeURIComponent(selectedProfile.nickname);
       navigate(`/member/profile/${encodedNickname}`, {
-        state: { profile_image: selectedProfile.profile_image, nickname: selectedProfile.nickname }
+        state: {
+          profile_image: selectedProfile.profile_image,
+          nickname: selectedProfile.nickname
+        }
       });
     } else {
       console.error('Selected profile is not defined');
@@ -114,45 +112,56 @@ export const MemberListMap = () =>{
     setIsSecondModalOpen(true);
   };
 
-  const handleSecondModalClose = () =>{
+  const handleSecondModalClose = () => {
     setIsSecondModalOpen(false);
-  }
+  };
+
+  const handleConfirmKickOut = () => {
+    if (selectedProfile) {
+      console.log("추방할 리스트:",selectedProfile.nickname)
+      dispatch(removeMember(selectedProfile.nickname));
+      setIsSecondModalOpen(false);
+      setIsModalOpen(false);
+    }
+  };
 
   const modalButtons = [
     { label: "프로필", onClick: handleProfileLinkClick, color: "black" },
     { label: "추방하기", onClick: handleKickOutClick, color: "red" }
   ];
 
+  console.log('필터링된 멤버:', members);
+
   return (
     <div>
-      {memberList.length > 0 &&
-        memberList.map((item, index) => {
-          return (
+      <ShowMoreIconContainer>
+        {members.length > 0 &&
+          members.map((item, index) => (
             <MemberListDetails
               key={index}
               nickname={item.nickname}
               profile_image={item.profile_image}
-              onOpenModal={() => handleOpenModal(item)} 
+              onOpenModal={() => handleOpenModal(item)}
             />
-          );
-        })}
+          ))}
         <CustomModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        buttons={modalButtons}
-      />
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          buttons={modalButtons}
+        />
+      </ShowMoreIconContainer>
 
-  {isSecondModalOpen && (
-          <ModalOverlay onClick={handleSecondModalClose}>
-            <SecondModalContent onClick={(e) => e.stopPropagation()}>
-              <p>추방하시겠습니까?</p>
-              <ButtonWrapper>
+      {isSecondModalOpen && (
+        <ModalOverlay onClick={handleSecondModalClose}>
+          <SecondModalContent onClick={(e) => e.stopPropagation()}>
+            <p>추방하시겠습니까?</p>
+            <ButtonWrapper>
               <CloseButton onClick={handleSecondModalClose}>취소</CloseButton>
-              <CloseButton onClick={handleSecondModalClose}>확인</CloseButton>
-              </ButtonWrapper>
-            </SecondModalContent>
-          </ModalOverlay>
-        )}
+              <CloseButton onClick={handleConfirmKickOut}>확인</CloseButton>
+            </ButtonWrapper>
+          </SecondModalContent>
+        </ModalOverlay>
+      )}
     </div>
   );
 };

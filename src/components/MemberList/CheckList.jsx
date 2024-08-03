@@ -32,8 +32,6 @@ const MissionTogle = styled.div`
     border-radius: 0.5rem;
 `
 
-
-// BarLeftContainer 컴포넌트
 const BarLeftContainer = styled.div`
     border-radius: 0.5rem 0 0 0.5rem; 
     border: 1px solid #BDBDBD;
@@ -52,7 +50,6 @@ const BarLeftContainer = styled.div`
     
 `;
 
-// BarRightContainer 컴포넌트
 const BarRightContainer = styled.div`
     display: flex;
     padding: 0.75rem 4.125rem;
