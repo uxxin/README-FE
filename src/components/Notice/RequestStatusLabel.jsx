@@ -37,7 +37,7 @@ export const RequestStatusLabel = ({ requestStatus }) => {
 
 const Label = styled.div`
   display: flex;
-  width: 100%;
+  width: 3.75rem;
   padding: 0.375rem 0.625rem;
   justify-content: center;
   align-items: center;

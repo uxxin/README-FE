@@ -59,15 +59,16 @@ const CloseButton = styled.button`
   border: 0.33px solid var(--Primary-light-active,#888888);
 `;
 
-export const MemberListMap = () => {
+export const MemberListMap = ({members}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { members } = useSelector(state => state.keys);
-
+ // const { members } = useSelector(state => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
 
+  console.log('넘어오는 프롭스:', members); // 확인용
+/*
   useEffect(() => {
     const fetchMemberList = async () => {
       try {
@@ -82,6 +83,7 @@ export const MemberListMap = () => {
     };
     fetchMemberList();
   }, [dispatch]);
+  */
 
   const handleOpenModal = (profile) => {
     setSelectedProfile(profile);
@@ -116,6 +118,7 @@ export const MemberListMap = () => {
 
   const handleConfirmKickOut = () => {
     if (selectedProfile) {
+      console.log("추방할 리스트:",selectedProfile.nickname)
       dispatch(removeMember(selectedProfile.nickname));
       setIsSecondModalOpen(false);
       setIsModalOpen(false);
@@ -126,6 +129,8 @@ export const MemberListMap = () => {
     { label: "프로필", onClick: handleProfileLinkClick, color: "black" },
     { label: "추방하기", onClick: handleKickOutClick, color: "red" }
   ];
+
+  console.log('필터링된 멤버:', members);
 
   return (
     <div>

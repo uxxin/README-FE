@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const CustomBtn = ({ props }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    if (props.background === '#509BF7') {
+    if (props.background !== '##BDBDBD') {
       navigate(props.link);
     }
   };
@@ -23,6 +23,7 @@ export const CustomBtn = ({ props }) => {
 
 const StyledCustomBtn = styled.div`
   display: flex;
+  width: 100%;
   height: 3.1875rem;
   white-space: nowrap;
   justify-content: center;

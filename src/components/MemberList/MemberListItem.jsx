@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { DotsIcon, HumanIcon, PlusIcon } from '../../assets/images/icons';
 import CustomInput from '../CustomInput';
 import { Link } from 'react-router-dom';
 import { MemberListMap } from './MemberListMap';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { Debounce } from '../Debounce';
+import { useDispatch } from 'react-redux';
+import { setKeysCount } from '../../redux/KeySlice';
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -79,18 +83,72 @@ const MemberAddBtn = styled.button`
 
 export const MemberListItem = (props) => {
   const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
+  const { members } = useSelector(state => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const [state,setState] = useState({
+    search:"",
+    results:[],
+    allMembers:[]
+  })
+
+  const debouncedSearch = Debounce(state.search,300);
+
+  useEffect(() => {
+    if (members.length > 0) {
+      setState(prevState => ({ ...prevState, results: members, allMembers: members }));
+    }
+  }, [members]);
+
+    useEffect(() => {
+    const fetchMemberList = async () => {
+      try {
+        const response = await axios.get('/mock/ProfileData.json');
+        const memberData = response.data;
+        setState(prevState => ({ ...prevState, results: memberData, allMembers: memberData }));
+        dispatch(setKeysCount({ count: memberData.length, members: memberData }));
+      } catch (error) {
+        console.error('Error fetching member list:', error);
+      }
+    };
+    fetchMemberList();
+  }, [dispatch]);
 
   
+  console.log("keyscount",keysCount)
+  
+
+
+
+// 검색어에 따라 필터링
+useEffect(() => {
+  console.log('Debounced search:', debouncedSearch);
+  if (debouncedSearch.trim() !== "") {
+    const filteredResults = state.allMembers.filter(member =>
+      member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase())
+    );
+    console.log('Filtered results:', filteredResults);
+    setState(prevState => ({ ...prevState, results: filteredResults }));
+  } else {
+    setState(prevState => ({ ...prevState, results: state.allMembers }));
+  }
+}, [debouncedSearch, state.allMembers]);
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
+  const handleInput = (e) =>{
+    setState(prevState=>({...prevState,search:e.target.value}));
+  }
+
+  console.log("필터링된 사람:ListItem",state.results)
+
 
   return (
     <Container>
-      <CustomInput placeholder={"입력하세요"}></CustomInput>
-      
+      <CustomInput placeholder={"입력하세요"} onChange={handleInput}></CustomInput>
       <MemberIcon>
         <HumanIcon />
        {keysCount}
@@ -104,11 +162,14 @@ export const MemberListItem = (props) => {
           </Link>
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
-        <MemberListMap
-          profile_image={props.profile_image}
-          nickname={props.nickname}
-          onOpenModal={handleOpenModal}
-        />
+        {state.results.length > 0 ? (
+          <MemberListMap
+            members={state.results}
+            onOpenModal={handleOpenModal}
+          />
+        ) : (
+          <p>No members found</p>
+        )}
       </MemberListBox>
 
 
