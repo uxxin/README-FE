@@ -5,6 +5,7 @@ import { QuizFormatLabel } from './QuizFormatLabel';
 import { RequestStatusLabel } from './RequestStatusLabel';
 import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
+import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
 
 export const ManagerNoticePreview = ({ props }) => {
@@ -14,12 +15,16 @@ export const ManagerNoticePreview = ({ props }) => {
   const shareAddress = () => {
     console.log('주소 공유');
   };
-  const fixNotice = () => {
-    console.log('공지 고정');
+  const correctNotice = () => {
+    console.log('수정');
+  };
+  const deleteNotice = () => {
+    console.log('삭제');
   };
   const modalButtons = [
     { label: '주소 공유', onClick: shareAddress, color: '#222222' },
-    { label: '메인에 고정', onClick: fixNotice, color: '#222222' },
+    { label: '수정', onClick: correctNotice, color: '#222222' },
+    { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -33,6 +38,11 @@ export const ManagerNoticePreview = ({ props }) => {
             ></RequestStatusLabel>
           </TopLeftSide>
           <TopRightSide>
+            <UncheckedContainer>
+              미확인
+              <StyledUncheckedPeople />
+              {props.peopleCount > 99 ? '99+' : props.peopleCount}
+            </UncheckedContainer>
             <CommentIconContainer>
               <StyledCommentIcon />
               {props.commentCount > 99 ? '99+' : props.commentCount}
@@ -102,6 +112,24 @@ const TopRightSide = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
+`;
+const UncheckedContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: stretch;
+  color: var(--Text-caption, var(--Grayscale-Gray5, #888));
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
+`;
+const StyledUncheckedPeople = styled(UncheckedPeople)`
+  width: 0.75rem;
+  height: 0.75rem;
 `;
 const CommentIconContainer = styled.div`
   display: flex;

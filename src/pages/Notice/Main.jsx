@@ -61,6 +61,7 @@ const Main = () => {
     title: '공지 제목입니다.',
     content: '내용 테스트 내용 테스트',
     thumbnailUrl: '../../assets/images/notice_thumbnail.png',
+    peopleCount: 100,
   };
 
   const previewProps2 = {
