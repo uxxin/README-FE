@@ -2,14 +2,16 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SpinButton } from '../../assets/images/spin_icon.svg';
 import { UnconfirmedNoticeItem } from '../Notice/UnconfirmedNoticeItem';
+import { useSelector } from 'react-redux';
+import { setIsRotated } from '../../redux/Notice/NoticeActions';
 
-export const UnconfirmedNotice = () => {
-  const [isRotated, setIsRotated] = useState(true);
+export const UnconfirmedNotice = ({ dispatch }) => {
+  const isRotated = useSelector((state) => state.notice.isRotated);
   const [maxHeight, setMaxHeight] = useState('0');
   const containerRef = useRef(null);
 
   const handleButtonClick = () => {
-    setIsRotated(!isRotated);
+    dispatch(setIsRotated(!isRotated));
   };
 
   useEffect(() => {

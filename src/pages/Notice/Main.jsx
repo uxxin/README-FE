@@ -87,7 +87,7 @@ const Main = () => {
             <ManagerNoticePreview props={previewProps} />
           ) : (
             <>
-              <UnconfirmedNotice />
+              <UnconfirmedNotice dispatch={dispatch} />
               <NoticePreview props={previewProps} />
               <NoticePreview props={previewProps2} />
               <NoticePreview props={previewProps} />

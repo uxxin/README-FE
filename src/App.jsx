@@ -29,6 +29,7 @@ import CheckRequests from './pages/Notice/CheckRequests';
 import CheckListPage from './pages/MemberList/CheckListPage';
 import Post from './pages/Notice/Write/Post';
 import { RestApi } from './api/RestApi.js';
+import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
 
 function App() {
   useEffect(() => {
@@ -48,6 +49,10 @@ function App() {
             {/* Home - 메인 */}
             <Route path="/home" element={<Home />} />
             <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
+            <Route
+              path="/create-notice-room/success"
+              element={<CreateNoticeRoomSuccess />}
+            />
             <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
             <Route path="/penalty" element={<Penalty />} />
 

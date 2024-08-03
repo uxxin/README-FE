@@ -17,7 +17,7 @@ export const Profile = () => {
     axios
       .get('/mock/ProfileData.json')
       .then((response) => {
-        const data = response.data;
+        const data = response.data[0]; // 첫 번째 프로필 데이터 가져오기
         setName(data.nickname);
         setEmail(data.email);
         setProfileImage(data.profile_image);
