@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-export const QuestionInput = ({ placeholder, charCount }) => {
-  const [inputValue, setInputValue] = useState('');
-
+export const QuestionInput = ({ placeholder, value, onChange, charCount }) => {
   return (
     <Container>
       <Input
         type="text"
         placeholder={placeholder}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={value}
+        onChange={onChange}
         maxLength={charCount ? 20 : undefined}
       />
-      {charCount ? <CharCount>({inputValue.length}/20)</CharCount> : <></>}
+      {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
     </Container>
   );
 };

@@ -3,27 +3,54 @@ import styled from 'styled-components';
 import { QuestionInput } from './QuestionInput';
 import help from '../../../assets/images/help_icon.svg';
 
-export const Quiz = () => {
+export const Quiz = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  question,
+  setQuestion,
+  answer,
+  setAnswer,
+}) => {
   return (
     <Container>
       <Section>
         <Title>시작 기한</Title>
-        <QuestionInput placeholder="YY.MM.DD HH:MM" />
+        <QuestionInput
+          placeholder="YY.MM.DD HH:MM"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
       </Section>
       <Section>
         <Title>마감 기한</Title>
-        <QuestionInput placeholder="YY.MM.DD HH:MM" />
+        <QuestionInput
+          placeholder="YY.MM.DD HH:MM"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
       </Section>
       <Section>
         <Title>
           퀴즈
           <Help src={help} />
         </Title>
-        <QuestionInput placeholder="퀴즈를 입력하세요" charCount={true} />
+        <QuestionInput
+          placeholder="퀴즈를 입력하세요"
+          charCount={true}
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+        />
       </Section>
       <Section>
         <Title>정답</Title>
-        <QuestionInput placeholder="정답을 입력하세요" charCount={true} />
+        <QuestionInput
+          placeholder="정답을 입력하세요"
+          charCount={true}
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+        />
       </Section>
     </Container>
   );

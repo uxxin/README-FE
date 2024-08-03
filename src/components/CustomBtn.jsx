@@ -23,6 +23,7 @@ export const CustomBtn = ({ props }) => {
 
 const StyledCustomBtn = styled.div`
   display: flex;
+  width: 100%;
   height: 3.1875rem;
   white-space: nowrap;
   justify-content: center;
