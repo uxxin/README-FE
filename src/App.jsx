@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import { store, persistor } from './redux/Store';
 import SignIn from './pages/Auth/SignIn';
 import SignUp from './pages/Auth/SignUp';
 import Home from './pages/Main/Home';
@@ -34,52 +37,59 @@ function App() {
   }, []);
 
   return (
-    // <div className="App">
-    <Router>
-      <Routes>
-        {/* Auth - 로그인&회원가입 */}
-        <Route path="/" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+    //<div className="App">
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <Routes>
+            {/* Auth - 로그인&회원가입 */}
+            <Route path="/" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
 
-        {/* Home - 메인 */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
-        <Route
-          path="/create-notice-room/success"
-          element={<CreateNoticeRoomSuccess />}
-        />
-        <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
-        <Route path="/penalty" element={<Penalty />} />
+            {/* Home - 메인 */}
+            <Route path="/home" element={<Home />} />
+            <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
+            <Route
+              path="/create-notice-room/success"
+              element={<CreateNoticeRoomSuccess />}
+            />
+            <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
+            <Route path="/penalty" element={<Penalty />} />
 
-        {/* MemberList - 멤버 목록 */}
-        <Route path="/member" element={<MemberList />} />
-        <Route path="/member/invite" element={<Invite />} />
-        <Route path="/member/profile/:nickname" element={<Profile />} />
-        <Route path="/member/checklist" element={<CheckListPage />} />
+            {/* MemberList - 멤버 목록 */}
+            <Route path="/member" element={<MemberList />} />
+            <Route path="/member/invite" element={<Invite />} />
+            <Route path="/member/profile/:nickname" element={<Profile />} />
+            <Route path="/member/checklist" element={<CheckListPage />} />
 
-        {/* MyPage - 마이페이지 */}
-        <Route path="/my-page" element={<MyPage />} />
-        <Route path="/my-page/default-edit" element={<DefaultProfileEdit />} />
-        <Route
-          path="/my-page/notice-edit"
-          element={<NoticeRoomProfileEdit />}
-        />
+            {/* MyPage - 마이페이지 */}
+            <Route path="/my-page" element={<MyPage />} />
+            <Route
+              path="/my-page/default-edit"
+              element={<DefaultProfileEdit />}
+            />
+            <Route
+              path="/my-page/notice-edit"
+              element={<NoticeRoomProfileEdit />}
+            />
 
-        {/* Notice - 공지 */}
-        <Route path="/notice" element={<Main />} />
-        <Route path="/notice/search" element={<Search />} />
-        <Route path="/notice/details" element={<Details />} />
-        <Route path="/notice/check-req" element={<CheckRequests />} />
-        <Route path="/notice/check-mission" element={<Mission />} />
-        <Route path="/notice/check-quiz" element={<Quiz />} />
-        <Route path="/notice/check-result" element={<Results />} />
-        <Route path="/notice/write" element={<Post />} />
-        <Route path="/notice/write/mission" element={<MissionType />} />
-        <Route path="/notice/write/quiz" element={<QuizType />} />
-        <Route path="/notice/edit" element={<RoomEdit />} />
-      </Routes>
-    </Router>
-    // </div>
+            {/* Notice - 공지 */}
+            <Route path="/notice" element={<Main />} />
+            <Route path="/notice/search" element={<Search />} />
+            <Route path="/notice/details" element={<Details />} />
+            <Route path="/notice/check-req" element={<CheckRequests />} />
+            <Route path="/notice/check-mission" element={<Mission />} />
+            <Route path="/notice/check-quiz" element={<Quiz />} />
+            <Route path="/notice/check-result" element={<Results />} />
+            <Route path="/notice/write" element={<Post />} />
+            <Route path="/notice/write/mission" element={<MissionType />} />
+            <Route path="/notice/write/quiz" element={<QuizType />} />
+            <Route path="/notice/edit" element={<RoomEdit />} />
+          </Routes>
+        </Router>
+      </PersistGate>
+    </Provider>
+    //</div>
   );
 }
 
