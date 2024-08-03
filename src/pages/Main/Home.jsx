@@ -64,7 +64,7 @@ const Navbar = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border: 0.0625rem solid red;
+  //border: 0.0625rem solid red;
 `;
 
 const Scroll = styled.div`
