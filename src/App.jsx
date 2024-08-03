@@ -26,12 +26,11 @@ import CheckRequests from './pages/Notice/CheckRequests';
 import CheckListPage from './pages/MemberList/CheckListPage';
 import Post from './pages/Notice/Write/Post';
 import { RestApi } from './api/RestApi.js';
-
+import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
 
 function App() {
-
   useEffect(() => {
-    RestApi.instance.autoLogin().then(console.log)
+    RestApi.instance.autoLogin().then(console.log);
   }, []);
 
   return (
@@ -45,6 +44,10 @@ function App() {
         {/* Home - 메인 */}
         <Route path="/home" element={<Home />} />
         <Route path="/create-notice-room" element={<CreateNoticeRoom />} />
+        <Route
+          path="/create-notice-room/success"
+          element={<CreateNoticeRoomSuccess />}
+        />
         <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
         <Route path="/penalty" element={<Penalty />} />
 
@@ -52,7 +55,7 @@ function App() {
         <Route path="/member" element={<MemberList />} />
         <Route path="/member/invite" element={<Invite />} />
         <Route path="/member/profile/:nickname" element={<Profile />} />
-        <Route path="/member/checklist" element={<CheckListPage/>} />
+        <Route path="/member/checklist" element={<CheckListPage />} />
 
         {/* MyPage - 마이페이지 */}
         <Route path="/my-page" element={<MyPage />} />
