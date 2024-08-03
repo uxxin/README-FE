@@ -1,5 +1,6 @@
 export const SET_SHOW_DIVS = 'SET_SHOW_DIVS';
 export const SET_FLIPPED = 'SET_FLIPPED';
+export const SET_ISROTATED = 'SET_ISROTATED';
 
 export const setShowDivs = (showDivs) => ({
   type: SET_SHOW_DIVS,
@@ -9,4 +10,9 @@ export const setShowDivs = (showDivs) => ({
 export const setFlipped = (isFlipped) => ({
   type: SET_FLIPPED,
   payload: isFlipped,
+});
+
+export const setIsRotated = (isRotated) => ({
+  type: SET_ISROTATED,
+  payload: isRotated,
 });
