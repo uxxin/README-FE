@@ -6,72 +6,69 @@ import exampleProfileImage from '../../assets/images/exampleimage.png';
 import { Header } from '../../components/Header';
 
 const CreateNoticeRoomSuccess = () => {
-  const location = useLocation(); // 현재 위치 객체를 가져옵니다.
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 라우팅 기능을 추가합니다.
+  const location = useLocation();
 
   // location.state에서 전달된 데이터 가져오기
-  const { leaderName, roomName, password, image } = location.state || {};
-
-  const handleNoticeRoomClick = () => {
-    navigate('/notice');
-  };
-
-  const handleMainClick = () => {
-    navigate('/main');
-  };
+  const { room_image, admin_nickname, room_name, room_password } =
+    location.state || {};
 
   return (
-    <Container>
+    <>
       <Header
         props={{
-          title: '공지방 생성 성공',
+          title: '',
           isSearch: false, // 검색 기능이 필요 없는 경우
-          url: '/create-notice-room', // 이전 페이지로 돌아가는 기능
+          url: '/create-notice-room', // 이전 페이지
         }}
       />
-      <InfoBox>
-        <TopSection>리드미 완성🎉</TopSection>
-        <InfoSection>
-          <ProfileImage src={image || exampleProfileImage} alt="Profile" />
-          <Info>
-            <InfoSet>
-              <InfoLabel>초대 URL:</InfoLabel>
-              <InfoValue>http://example.com</InfoValue>
-            </InfoSet>
-            <InfoSet>
-              <InfoLabel>공지방 이름:</InfoLabel>
-              <InfoValue>{roomName}</InfoValue>
-            </InfoSet>
-            <InfoSet>
-              <InfoLabel>비밀번호:</InfoLabel>
-              <InfoValue>{password}</InfoValue>
-            </InfoSet>
-            <InfoSet>
-              <InfoLabel>대표자:</InfoLabel>
-              <InfoValue>{leaderName}</InfoValue>
-            </InfoSet>
-          </Info>
-        </InfoSection>
-      </InfoBox>
-      <ButtonContainer>
-        <CustomBtn
-          props={{
-            text: '공지방으로 이동',
-            background: '#FFFFFF',
-            border: '0.5px solid #509BF7',
-            onClick: handleNoticeRoomClick,
-          }}
-        />
-        <CustomBtn
-          props={{
-            text: '메인으로 이동',
-            background: '#FFFFFF',
-            border: '0.5px solid #509BF7',
-            onClick: handleMainClick,
-          }}
-        />
-      </ButtonContainer>
-    </Container>
+      <Container>
+        <InfoBox>
+          <TopSection>리드미 완성🎉</TopSection>
+          <InfoSection>
+            <ProfileImage
+              src={room_image || exampleProfileImage}
+              alt="Profile"
+            />
+            <Info>
+              <InfoSet>
+                <InfoLabel>초대 URL:</InfoLabel>
+                <InfoValue>http://example.com</InfoValue>
+              </InfoSet>
+              <InfoSet>
+                <InfoLabel>공지방 이름:</InfoLabel>
+                <InfoValue>{room_name}</InfoValue>
+              </InfoSet>
+              <InfoSet>
+                <InfoLabel>비밀번호:</InfoLabel>
+                <InfoValue>{room_password}</InfoValue>
+              </InfoSet>
+              <InfoSet>
+                <InfoLabel>대표자:</InfoLabel>
+                <InfoValue>{admin_nickname}</InfoValue>
+              </InfoSet>
+            </Info>
+          </InfoSection>
+        </InfoBox>
+        <ButtonContainer>
+          <CustomBtn
+            props={{
+              text: '공지방으로 이동',
+              background: '#509BF7',
+              border: 'none',
+              link: '/notice',
+            }}
+          />
+          <CustomBtn
+            props={{
+              text: '메인으로 이동',
+              background: '#FFFFFF',
+              border: '0.5px solid #509BF7',
+              link: '/home',
+            }}
+          />
+        </ButtonContainer>
+      </Container>
+    </>
   );
 };
 
@@ -82,11 +79,6 @@ const Container = styled.div`
   padding: 0 1rem;
 `;
 
-// const Header = styled.div`
-//   text-align: center;
-//   padding: 1rem 0;
-// `;
-
 const InfoBox = styled.div`
   display: flex;
   width: 100%;
@@ -95,6 +87,7 @@ const InfoBox = styled.div`
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-normal, #509bf7);
   margin-top: 10px;
+  margin-bottom: 6rem;
 `;
 
 const TopSection = styled.div`
@@ -171,13 +164,13 @@ const InfoSet = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
+  //position: fixed;
+  //bottom: 20px;
+  //left: 50%;
+  //transform: translateX(-50%);
 `;
 
 export default CreateNoticeRoomSuccess;
