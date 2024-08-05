@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ProgressBar from '../../components/Auth/ProgressBar';
 import { useNavigate } from 'react-router-dom';
 import { RestApi } from '../../api/RestApi.js';
+import { useUserContext } from '../../contexts/UserContext.jsx';
 
 const nameRegex = /^[가-힣a-zA-Z\s]+$/;
 const nickNameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{1,20}$/;
@@ -15,6 +16,8 @@ const passwordRegex =
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const user = useUserContext();
 
   const [signupCompleted, setSignupCompleted] = useState(false);
 
@@ -100,10 +103,13 @@ const SignUp = () => {
       password,
     );
     console.log(response.data);
-    RestApi.instance.applyJwt(response.data.result.accessToken);
-    const me = await RestApi.instance.user.me();
-    console.log(me.data.result);
-    // TODO: 컨텍스트에 me 를 쓸 것
+
+    // 혹은 직접 me 를 날려서 UserContext 에 setUser 해도 됨
+    user.login(email, password);
+
+    // const me = await RestApi.instance.user.me();
+    // console.log(me.data.result);
+
     setSignupCompleted(true);
   };
 
