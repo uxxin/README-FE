@@ -9,7 +9,7 @@ import { RestApi } from '../../api/RestApi.js';
 const nameRegex = /^[가-힣a-zA-Z\s]+$/;
 const nickNameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{1,20}$/;
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-const emailConfirmRegex  = /^[a-z0-9]+$/;
+const emailConfirmRegex = /^[a-z0-9]+$/;
 const passwordRegex =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@!%*#?&])[A-Za-z\d$@!%*#?&]{8,20}$/;
 
@@ -27,87 +27,82 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const [nameTouched, setNameTouched] = useState(null)
-  const [nickNameTouched, setNicknameTouched] = useState(null)
-  const [emailTouched, setEmailTouched] = useState(null)
-  const [emailConfirmTouched, setEmailConfirmTouched] = useState(null)
-  const [passwordTouched, setPasswordTouched] = useState(null)
-  const [passwordConfirmTouched, setPasswordConfirmTouched] = useState(null)
+  const [nameTouched, setNameTouched] = useState(null);
+  const [nickNameTouched, setNicknameTouched] = useState(null);
+  const [emailTouched, setEmailTouched] = useState(null);
+  const [emailConfirmTouched, setEmailConfirmTouched] = useState(null);
+  const [passwordTouched, setPasswordTouched] = useState(null);
+  const [passwordConfirmTouched, setPasswordConfirmTouched] = useState(null);
 
   const handleNextStep = () => {
-    setStep(prevState => Math.min(prevState + 1, 4))
+    setStep((prevState) => Math.min(prevState + 1, 4));
   };
 
   const nameInvalid = useMemo(() => {
-    if (name === "")
-      return "이름을 입력해주세요!"
-    if (!nameRegex.test(name))
-      return "올바른 이름을 입력해주세요!"
+    if (name === '') return '이름을 입력해주세요!';
+    if (!nameRegex.test(name)) return '올바른 이름을 입력해주세요!';
 
-    return null
-  }, [name])
+    return null;
+  }, [name]);
 
-  const nicknameInValid = useMemo( () => {
-    if (nickname === "")
-      return "닉네임을 입력해주세요!"
-    if (!nickNameRegex.test(nickname))
-      return "올바른 아이디를 입력해주세요!"
+  const nicknameInValid = useMemo(() => {
+    if (nickname === '') return '닉네임을 입력해주세요!';
+    if (!nickNameRegex.test(nickname)) return '올바른 아이디를 입력해주세요!';
 
-    return null
-  }, [nickname])
+    return null;
+  }, [nickname]);
 
   const emailInvalid = useMemo(() => {
-    if (email === "")
-      return "이메일을 입력해주세요!"
-    if (!emailRegex.test(email))
-      return "올바른 이메일 형식을 입력해주세요!"
+    if (email === '') return '이메일을 입력해주세요!';
+    if (!emailRegex.test(email)) return '올바른 이메일 형식을 입력해주세요!';
 
-    return null
-  }, [email])
+    return null;
+  }, [email]);
 
   const emailConfirmInvalid = useMemo(() => {
-    if (emailConfirm === "")
-      return "인증코드를 입력해주세요!"
+    if (emailConfirm === '') return '인증코드를 입력해주세요!';
     if (!emailConfirmRegex.test(emailConfirm))
-      return "유효한 인증코드를 입력해주세요!"
+      return '유효한 인증코드를 입력해주세요!';
     // 이메일 인증코드 확인 로직 추가하기
-    return null
-  }, [emailConfirm])
+    return null;
+  }, [emailConfirm]);
 
   const passwordInvalid = useMemo(() => {
-    if (password === "")
-      return "비밀번호를 입력해주세요!"
+    if (password === '') return '비밀번호를 입력해주세요!';
     if (!passwordRegex.test(password))
       // return "비밀번호는 최소 8자 이상 영소문자, 숫자, 특수문자를 조합해 입력해주세요!"
-      return "비밀번호는 최소 8자 이상 입력해주세요."
-    return null
-  }, [password])
+      return '비밀번호는 최소 8자 이상 입력해주세요.';
+    return null;
+  }, [password]);
 
   const passwordCheckInvalid = useMemo(() => {
-    if (passwordConfirm === "")
-      return "비밀번호를 입력해주세요!"
-    if (password !== passwordConfirm)
-      return "비밀번호가 일치하지 않습니다!"
+    if (passwordConfirm === '') return '비밀번호를 입력해주세요!';
+    if (password !== passwordConfirm) return '비밀번호가 일치하지 않습니다!';
 
-    return null
-  }, [password, passwordConfirm])
+    return null;
+  }, [password, passwordConfirm]);
 
   const createCode = async () => {
-    await RestApi.instance.user.createCode(email)
+    await RestApi.instance.user.createCode(email);
     // TODO: 상태 설정
-  }
+  };
 
   const confirmCode = async () => {
-    await RestApi.instance.user.confirmCode(email, emailConfirm)
+    await RestApi.instance.user.confirmCode(email, emailConfirm);
     // TODO: 상태 설정
-  }
+  };
 
   const handleCompleteSignUp = async () => {
-    const response = await RestApi.instance.user.signup(name, nickname, email, password)
-    console.log(response.data)
-    RestApi.instance.applyJwt(response.data.result.accessToken)
-    const me = await RestApi.instance.user.me()
-    console.log(me.data.result)
+    const response = await RestApi.instance.user.signup(
+      name,
+      nickname,
+      email,
+      password,
+    );
+    console.log(response.data);
+    RestApi.instance.applyJwt(response.data.result.accessToken);
+    const me = await RestApi.instance.user.me();
+    console.log(me.data.result);
     // TODO: 컨텍스트에 me 를 쓸 것
     setSignupCompleted(true);
   };
@@ -141,7 +136,7 @@ const SignUp = () => {
         {signupCompleted ? (
           <>
             <WelcomeMessage>
-              {`${name} 님 \nRead.me에 오신 것을\n 환영합니다!`}
+              {`${nickname} 님 \nRead.me에 오신 것을\n 환영합니다!`}
             </WelcomeMessage>
             <ButtonContainer>
               <Button onClick={() => navigate('/home')}>로그인</Button>
@@ -163,14 +158,17 @@ const SignUp = () => {
                       value={name}
                       charCount={true}
                     />
-                    {nameInvalid && nameTouched && <ErrorMessage>{nameInvalid}</ErrorMessage>}
+                    {nameInvalid && nameTouched && (
+                      <ErrorMessage>{nameInvalid}</ErrorMessage>
+                    )}
                   </InputWrapper>
                 </ContentContainer>
                 <ButtonContainer>
                   <Button
                     onClick={() => handleNextStep()}
                     disabled={!!nameInvalid}
-                  >확인
+                  >
+                    확인
                   </Button>
                 </ButtonContainer>
               </>
@@ -187,14 +185,17 @@ const SignUp = () => {
                       value={nickname}
                       charCount={true}
                     />
-                    {nicknameInValid && nickNameTouched && <ErrorMessage>{nicknameInValid}</ErrorMessage>}
+                    {nicknameInValid && nickNameTouched && (
+                      <ErrorMessage>{nicknameInValid}</ErrorMessage>
+                    )}
                   </InputWrapper>
                 </ContentContainer>
                 <ButtonContainer>
                   <Button
                     onClick={() => handleNextStep()}
                     disabled={!!nicknameInValid}
-                  >확인
+                  >
+                    확인
                   </Button>
                 </ButtonContainer>
               </>
@@ -210,11 +211,12 @@ const SignUp = () => {
                       placeholder="입력하세요."
                       value={email}
                     />
-                    <EmailButton
-                      onClick={createCode}
-                      disabled={!!emailInvalid}
-                    >인증하기</EmailButton>
-                    {emailInvalid && emailTouched && <EmailErrorMessage>{emailInvalid}</EmailErrorMessage>}
+                    <EmailButton onClick={createCode} disabled={!!emailInvalid}>
+                      인증하기
+                    </EmailButton>
+                    {emailInvalid && emailTouched && (
+                      <EmailErrorMessage>{emailInvalid}</EmailErrorMessage>
+                    )}
                   </InputWrapperWithButton>
 
                   <Label>인증코드를 입력해주세요.</Label>
@@ -228,15 +230,22 @@ const SignUp = () => {
                     <EmailButton
                       onClick={confirmCode}
                       disabled={!!emailConfirmInvalid}
-                    >확인</EmailButton>
-                    {emailConfirmInvalid && emailConfirmTouched && <EmailErrorMessage>{emailConfirmInvalid}</EmailErrorMessage>}
+                    >
+                      확인
+                    </EmailButton>
+                    {emailConfirmInvalid && emailConfirmTouched && (
+                      <EmailErrorMessage>
+                        {emailConfirmInvalid}
+                      </EmailErrorMessage>
+                    )}
                   </InputWrapperWithButton>
                 </ContentContainer>
                 <ButtonContainer>
                   <Button
                     onClick={() => handleNextStep()}
                     disabled={!!emailInvalid}
-                  >확인
+                  >
+                    확인
                   </Button>
                 </ButtonContainer>
               </>
@@ -253,7 +262,9 @@ const SignUp = () => {
                       value={password}
                       charCount={true}
                     />
-                    {passwordInvalid && passwordTouched && <ErrorMessage>{passwordInvalid}</ErrorMessage>}
+                    {passwordInvalid && passwordTouched && (
+                      <ErrorMessage>{passwordInvalid}</ErrorMessage>
+                    )}
                   </InputWrapper>
                   <InputWrapper>
                     <CustomInput
@@ -263,7 +274,9 @@ const SignUp = () => {
                       value={passwordConfirm}
                       charCount={true}
                     />
-                    {passwordCheckInvalid && passwordConfirmTouched && <ErrorMessage>{passwordCheckInvalid}</ErrorMessage>}
+                    {passwordCheckInvalid && passwordConfirmTouched && (
+                      <ErrorMessage>{passwordCheckInvalid}</ErrorMessage>
+                    )}
                   </InputWrapper>
                 </ContentContainer>
                 <ButtonContainer>
@@ -306,77 +319,76 @@ const SignUpContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-    position: relative;
-    min-height: 95vh;
+  position: relative;
+  min-height: 95vh;
 `;
 
 const Label = styled.div`
-    font-family: Pretendard;
-    align-self: stretch;
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 100%; /* 1.5rem */
-    letter-spacing: -0.03rem;
+  font-family: Pretendard;
+  align-self: stretch;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 1.5rem */
+  letter-spacing: -0.03rem;
 `;
 
 const ContentContainer = styled.div`
-    display: flex;
-    width: 26.8125rem;
-    margin-top: 3.75rem;
-    padding: 0 1rem;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.875rem;
-    box-sizing: border-box;
-    position: relative;
+  display: flex;
+  width: 26.8125rem;
+  margin-top: 3.75rem;
+  padding: 0 1rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.875rem;
+  box-sizing: border-box;
+  position: relative;
 `;
 
 const Button = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 0.5rem;
-    border: none;
-    background: #509BF7;
-    color: white;
-    height: 3.1875rem;
-    width: 24.875rem;
-    padding: 1rem 0;
-    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #509bf7;
+  color: white;
+  height: 3.1875rem;
+  width: 24.875rem;
+  padding: 1rem 0;
 
-    &:disabled {
-        background: #BDBDBD;
-        color: #FFFFFF;
-    }
+  &:disabled {
+    background: #bdbdbd;
+    color: #ffffff;
+  }
 `;
 
 const EmailButton = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 0.5rem;
-    border: none;
-    background: #509BF7;
-    color: white;
-    height: 3.625rem;
-    width: 3.625rem;
-    padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #509bf7;
+  color: white;
+  height: 3.625rem;
+  width: 3.625rem;
+  padding: 1rem 0;
 
-    &:disabled {
-        background: #BDBDBD;
-        color: #FFFFFF;
-    }
+  &:disabled {
+    background: #bdbdbd;
+    color: #ffffff;
+  }
 `;
 
 const ButtonContainer = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    bottom: 3.37rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 3.37rem;
 `;
 
 const InputWrapper = styled.div`
