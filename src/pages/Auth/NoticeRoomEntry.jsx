@@ -63,7 +63,7 @@ const NoticeRoomEntry = () => {
           </InputWrapper>
         </NicknameWrapper>
         <ButtonContainer>
-          <Button onClick={() => navigate('/home')}>입장하기</Button>
+          <Button onClick={() => navigate('/notice')}>입장하기</Button>
         </ButtonContainer>
       </InputPlusContainer>
     </>
