@@ -118,10 +118,12 @@ const Main = () => {
             <ManagerNoticePreview props={previewProps} />
           ) : (
             <>
-              <UnconfirmedNotice
-                dispatch={dispatch}
-                postData={unconfirmedNoticeData}
-              />
+              {unconfirmedNoticeData.length > 0 && (
+                <UnconfirmedNotice
+                  dispatch={dispatch}
+                  postData={unconfirmedNoticeData}
+                />
+              )}
               {noticeData.map((post, index) => (
                 <NoticePreview postData={post} />
               ))}
