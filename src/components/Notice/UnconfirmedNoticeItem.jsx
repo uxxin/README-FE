@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-export const UnconfirmedNoticeItem = () => {
+export const UnconfirmedNoticeItem = ({ postData }) => {
   return (
     <Container>
       <TextContainer>
-        <RoomName>example room 1</RoomName>
-        <NoticeTitle>Notice Title 1</NoticeTitle>
+        <RoomName>{postData.roomName}</RoomName>
+        <NoticeTitle>{postData.postTitle}</NoticeTitle>
       </TextContainer>
-      <NoticedTime>n분 전</NoticedTime>
+      <NoticedTime>{postData.updatedAtBefore}</NoticedTime>
     </Container>
   );
 };

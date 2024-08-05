@@ -6,7 +6,7 @@ import { RequestStatusLabel } from './RequestStatusLabel';
 import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import CustomModal from '../CustomModal';
-export const NoticePreview = ({ props }) => {
+export const NoticePreview = ({ postData }) => {
   const modalClose = () => {
     setIsOpen(false);
   };
@@ -26,15 +26,15 @@ export const NoticePreview = ({ props }) => {
       <Container>
         <TopContainer>
           <TopLeftSide>
-            <QuizFormatLabel quizFormat={props.quizFormat}></QuizFormatLabel>
+            <QuizFormatLabel quizFormat={postData.postType}></QuizFormatLabel>
             <RequestStatusLabel
-              requestStatus={props.requestStatus}
+              requestStatus={postData.submitState}
             ></RequestStatusLabel>
           </TopLeftSide>
           <TopRightSide>
             <CommentIconContainer>
               <StyledCommentIcon />
-              {props.commentCount > 99 ? '99+' : props.commentCount}
+              {postData.commentCount > 99 ? '99+' : postData.commentCount}
             </CommentIconContainer>
             <ShowmoreIconContainer>
               <StyledShowmoreIcon
@@ -51,15 +51,15 @@ export const NoticePreview = ({ props }) => {
             </ShowmoreIconContainer>
           </TopRightSide>
         </TopContainer>
-        {props.title}
+        {postData.postTitle}
         <DeadlineContainer>
           <DeadlineText>
-            {props.startDate} - {props.lastDate}
+            {postData.startDate} - {postData.endDate}
           </DeadlineText>
         </DeadlineContainer>
         <BottomContainer>
-          <NoticeContent>{props.content}</NoticeContent>
-          <Thumbnail src="src\assets\images\defaultprofileimage.png" />
+          <NoticeContent>{postData.postBody}</NoticeContent>
+          <Thumbnail src={postData.postImage} />
         </BottomContainer>
       </Container>
     </>

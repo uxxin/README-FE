@@ -2,22 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 
 const STATUS_STYLES = {
-  complete: {
+  COMPLETE: {
     background: 'var(--system-success-light, #E3F2EF)',
     color: 'var(--system-success, var(--System-Success, #00A881))',
     text: '승인',
   },
-  pending: {
-    background: '#e9e9e9',
-    color: '#999999',
+  PENDING: {
+    background: 'var(--GrayScale-gray2, #E9E9E9)',
+    color: 'var(--Text-default, var(--Grayscale-Gray7, #222))',
     text: '검토중',
   },
-  reject: {
+  REJECT: {
     background: 'var(--system-danger-light, #FDD8DB)',
     color: 'var(--system-danger, var(--System-Danger, #F5535E))',
     text: '거절',
   },
-  notComplete: {
+  NOT_COMPLETE: {
     background: 'var(--GrayScale-gray2, #E9E9E9)',
     color: 'var(--Text-caption, var(--Grayscale-Gray5, #888))',
     text: '미제출',

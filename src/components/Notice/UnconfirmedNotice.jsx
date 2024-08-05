@@ -5,7 +5,7 @@ import { UnconfirmedNoticeItem } from '../Notice/UnconfirmedNoticeItem';
 import { useSelector } from 'react-redux';
 import { setIsRotated } from '../../redux/Notice/NoticeActions';
 
-export const UnconfirmedNotice = ({ dispatch }) => {
+export const UnconfirmedNotice = ({ dispatch, postData }) => {
   const isRotated = useSelector((state) => state.notice.isRotated);
   const [maxHeight, setMaxHeight] = useState('0');
   const containerRef = useRef(null);
@@ -32,9 +32,13 @@ export const UnconfirmedNotice = ({ dispatch }) => {
         isRotated={isRotated}
         maxHeight={maxHeight}
       >
-        <UnconfirmedNoticeItem />
-        <UnconfirmedNoticeItem />
-        <UnconfirmedNoticeItem />
+        {postData.length > 0 ? (
+          postData.map((post, index) => (
+            <UnconfirmedNoticeItem postData={post} />
+          ))
+        ) : (
+          <AllNoticeConfirmed>모든 공지를 확인했습니다 ☺️</AllNoticeConfirmed>
+        )}
       </UnconfirmedNoticeContainer>
     </Container>
   );
@@ -84,4 +88,22 @@ const UnconfirmedNoticeContainer = styled.div`
   transition:
     max-height 0.5s ease,
     opacity 0.3s ease;
+`;
+
+const AllNoticeConfirmed = styled.div`
+  display: flex;
+  padding: 0.75rem 0rem;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: stretch;
+  overflow: hidden;
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  text-overflow: ellipsis;
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
+  border-bottom: 0.33px solid var(--GrayScale-gray5, #888);
 `;
