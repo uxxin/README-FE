@@ -30,6 +30,7 @@ import CheckListPage from './pages/MemberList/CheckListPage';
 import Post from './pages/Notice/Write/Post';
 import { RestApi } from './api/RestApi.js';
 import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
+import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 
 function App() {
   useEffect(() => {
@@ -54,6 +55,11 @@ function App() {
               element={<CreateNoticeRoomSuccess />}
             />
             <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
+            <Route
+              path="/notice-check-req/default"
+              element={<RoomMissionRequests />}
+            />
+            {/* 여기 라우팅 주소 default에서 각 roomid로 수정해야함!!! */}
             <Route path="/penalty" element={<Penalty />} />
 
             {/* MemberList - 멤버 목록 */}

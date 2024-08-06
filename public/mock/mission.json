@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "roomName": "6기 데모데이 공지방",
+    "nickName": "인하대-리우/송민혁-Server",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "coment": "아아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"
+  },
+  {
+    "id": 2,
+    "roomName": "인하대 umc 공지방",
+    "nickName": "리우/송민혁-회장",
+    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "coment": "아아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"
+  }
+]
