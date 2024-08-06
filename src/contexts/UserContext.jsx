@@ -22,7 +22,10 @@ export const UserContextProvider = (props) => {
   }, []);
 
   useEffect(() => {
-    RestApi.instance.autoLogin().then(setUser);
+    RestApi.instance
+      .autoLogin()
+      .then(setUser)
+      .finally(() => setUser(null));
   }, []);
 
   const ContextValue = {
