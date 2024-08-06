@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {SlideButton, CheckButton, XButton } from "../../assets/images/icons";
-import { CheckListMap } from "./CheckListMap";
-import { useState,useEffect } from "react";
-import axios from "axios";
-import { check } from "prettier";
+import { useEffect } from "react";
+import { SlideButton, CheckButton, XButton } from "../../assets/images/icons";
 
 
 const Container = styled.div`
@@ -182,66 +179,25 @@ const NoButton = styled.button`
     border-radius: 0rem 0.5rem 0.5rem 0rem;
 `
 
-export const CheckList = () =>{
-    const [checklist,setCheckList] = useState([]);
-
-    
-    useEffect(() => {
-        axios
-            .get('/mock/CheckList.json')
-            .then((response) => {
-                setCheckList(response.data);
-                console.log('Fetched data:', response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
-
-    console.log("리스트 값:",checklist)
+export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
+    console.log('CheckListMap rendered');
+    const { nickname, profile_image } = user_info;
 
 
-    return(
+    return (
         <div>
-             <Container>
-             <BoxContainer>    
-          
-                <MissionTogle>
-                <BarLeftContainer>대기</BarLeftContainer>
-                <BarRightContainer>승인완료</BarRightContainer>
-                </MissionTogle>
-            <CheckContainer>확인요청내역 없음</CheckContainer>
-
-            {checklist && checklist.length > 0 &&
-                    checklist.map((item) => (
-                        <CheckListMap
-                            key={item.submit_id} 
-                            submit_id={item.submit_id}
-                            user_info={item.user_info}
-                            content={item.content}
-                            image_URL={item.image_URL}
-                        />
-                    ))
-                }
-            {/*
-                <ProfileContainer>
-                <ImgContainer></ImgContainer>
+            <ProfileContainer>
+                <ImgContainer src={profile_image} alt="Profile" />
                 <TextContainer>
-                <ProfileName>숩 </ProfileName>
-                <ProfileInfo> 감사합니다</ProfileInfo>
+                    <ProfileName>{nickname}</ProfileName>
+                    <ProfileInfo>{content}</ProfileInfo>
                 </TextContainer>
-                </ProfileContainer>
-                <ContentContainer> <SlideButton/>
-                </ContentContainer>
-                <SecondButtonContainer>
+            </ProfileContainer>
+            <ContentContainer> <SlideButton/> </ContentContainer>
+            <SecondButtonContainer>
                 <YesButton><CheckButton/>수락</YesButton>
                 <NoButton><XButton/>거절</NoButton>
-                </SecondButtonContainer>
-            */}
-            </BoxContainer>
-            </Container>
-      
-
+            </SecondButtonContainer>
         </div>
-    )
-}
+    );
+};

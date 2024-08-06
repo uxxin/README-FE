@@ -180,7 +180,7 @@ export const MemberListMap = ({members}) => {
           onClose={handleCloseModal}
           buttons={modalButtons}
         />
-             </ShowMoreIconContainer>
+      </ShowMoreIconContainer>
        
       <ButtonContainer>
           <Link to="/member/invite">
