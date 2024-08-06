@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Header } from '../../components/Header';
 import CustomInput from '../../components/CustomInput';
 import styled from 'styled-components';
 import ProgressBar from '../../components/Auth/ProgressBar';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../../contexts/UserContext.jsx';
+import { confirmCode, createCode, signup } from '../../api/user.js';
 
 const nameRegex = /^[가-힣a-zA-Z\s]+$/;
 const nickNameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{1,20}$/;
@@ -16,7 +16,7 @@ const passwordRegex =
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const user = useUserContext();
+  const [user, setUser] = useState('');
 
   const [signupCompleted, setSignupCompleted] = useState(false);
 
@@ -65,7 +65,6 @@ const SignUp = () => {
     if (emailConfirm === '') return '인증코드를 입력해주세요!';
     if (!emailConfirmRegex.test(emailConfirm))
       return '유효한 인증코드를 입력해주세요!';
-    // 이메일 인증코드 확인 로직 추가하기
     return null;
   }, [emailConfirm]);
 
@@ -84,33 +83,24 @@ const SignUp = () => {
     return null;
   }, [password, passwordConfirm]);
 
-  // const createCode = async () => {
-  //   await RestApi.instance.user.createCode(email);
-  //   // TODO: 상태 설정
-  // };
-  //
-  // const confirmCode = async () => {
-  //   await RestApi.instance.user.confirmCode(email, emailConfirm);
-  //   // TODO: 상태 설정
-  // };
+  useEffect(() => {
+    if (signupCompleted) {
+      const timer = setTimeout(() => {
+        navigate('/home');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [signupCompleted, navigate]);
 
-  // const handleCompleteSignUp = async () => {
-  //   const response = await RestApi.instance.user.signup(
-  //     name,
-  //     nickname,
-  //     email,
-  //     password,
-  //   );
-  //   console.log(response.data);
-  //
-  //   // 혹은 직접 me 를 날려서 UserContext 에 setUser 해도 됨
-  //   user.login(email, password);
-  //
-  //   // const me = await RestApi.instance.user.me();
-  //   // console.log(me.data.result);
-  //
-  //   setSignupCompleted(true);
-  // };
+  const handleCompleteSignUp = async () => {
+    const response = await signup(name, nickname, email, password);
+
+    console.log(response);
+    localStorage.setItem('token', response.data.result.accessToken);
+    setUser(response.data.result.nickname);
+
+    setSignupCompleted(true);
+  };
 
   // const formValid = useMemo(
   //   () => !nameInvalid && !idInValid && !emailInvalid && !ageInvalid && !passwordInvalid && !passwordCheckInvalid,
@@ -137,15 +127,14 @@ const SignUp = () => {
     <>
       <Header props={{ title: '회원가입', isSearch: false }} />
       <SignUpContainer>
-        {/*<Header props={{ title: '회원가입', isSearch: false }} />*/}
         {signupCompleted ? (
           <>
             <WelcomeMessage>
-              {`${nickname} 님 \nRead.me에 오신 것을\n 환영합니다!`}
+              {`${user} 님 \nRead.me에 오신 것을\n 환영합니다!`}
             </WelcomeMessage>
-            <ButtonContainer>
-              <Button onClick={() => navigate('/home')}>로그인</Button>
-            </ButtonContainer>
+            {/*<ButtonContainer>*/}
+            {/*  <Button onClick={() => navigate('/home')}>로그인</Button>*/}
+            {/*</ButtonContainer>*/}
           </>
         ) : (
           <>
