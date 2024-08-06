@@ -82,6 +82,15 @@ const SignUp = () => {
     return null;
   }, [password, passwordConfirm]);
 
+  const handleCompleteSignUp = async () => {
+    const response = await signup(name, nickname, email, password);
+    console.log(response);
+
+    localStorage.setItem('token', response.data.result.accessToken);
+    setUser(response.data.result.nickname);
+    setSignupCompleted(true);
+  };
+
   useEffect(() => {
     if (signupCompleted) {
       const timer = setTimeout(() => {
@@ -90,16 +99,6 @@ const SignUp = () => {
       return () => clearTimeout(timer);
     }
   }, [signupCompleted, navigate]);
-
-  const handleCompleteSignUp = async () => {
-    const response = await signup(name, nickname, email, password);
-
-    console.log(response);
-    localStorage.setItem('token', response.data.result.accessToken);
-    setUser(response.data.result.nickname);
-
-    setSignupCompleted(true);
-  };
 
   // const formValid = useMemo(
   //   () => !nameInvalid && !idInValid && !emailInvalid && !ageInvalid && !passwordInvalid && !passwordCheckInvalid,
@@ -131,9 +130,6 @@ const SignUp = () => {
             <WelcomeMessage>
               {`${user} 님 \nRead.me에 오신 것을\n 환영합니다!`}
             </WelcomeMessage>
-            {/*<ButtonContainer>*/}
-            {/*  <Button onClick={() => navigate('/home')}>로그인</Button>*/}
-            {/*</ButtonContainer>*/}
           </>
         ) : (
           <>
@@ -204,7 +200,10 @@ const SignUp = () => {
                       placeholder="입력하세요."
                       value={email}
                     />
-                    <EmailButton onClick={createCode} disabled={!!emailInvalid}>
+                    <EmailButton
+                      onClick={() => createCode(email)}
+                      disabled={!!emailInvalid}
+                    >
                       인증하기
                     </EmailButton>
                     {emailInvalid && emailTouched && (
@@ -221,7 +220,7 @@ const SignUp = () => {
                       value={emailConfirm}
                     />
                     <EmailButton
-                      onClick={confirmCode}
+                      onClick={() => confirmCode(email, emailConfirm)}
                       disabled={!!emailConfirmInvalid}
                     >
                       확인
@@ -280,7 +279,6 @@ const SignUp = () => {
                     확인
                   </Button>
                 </ButtonContainer>
-                {/*비밀번호 disable 이게 맞나*/}
               </>
             )}
           </>
@@ -292,7 +290,7 @@ const SignUp = () => {
 
 const ErrorMessage = styled.div`
   position: absolute;
-  bottom: -20px;
+  bottom: -35px;
   margin-top: 0;
   width: 100%;
   color: red;
@@ -317,10 +315,8 @@ const SignUpContainer = styled.div`
 `;
 
 const Label = styled.div`
-  font-family: Pretendard;
   align-self: stretch;
   font-size: 1.5rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 1.5rem */
   letter-spacing: -0.03rem;
@@ -381,7 +377,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 3.37rem;
+  bottom: 3.38rem;
 `;
 
 const InputWrapper = styled.div`
@@ -390,13 +386,11 @@ const InputWrapper = styled.div`
 `;
 
 const WelcomeMessage = styled.div`
-  font-family: Pretendard;
   font-size: 2.25rem;
   font-weight: 700;
   line-height: 100%;
   margin: 6.38rem 5.87rem 23.56rem 1.06rem;
   white-space: pre-line;
-  font-style: normal;
   letter-spacing: -0.045rem;
 `;
 
