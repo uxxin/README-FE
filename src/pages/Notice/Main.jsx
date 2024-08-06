@@ -39,7 +39,7 @@ const Main = () => {
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
-  const [isManager, setIsManager] = useState(true);
+  const [isManager, setIsManager] = useState(false);
   const dispatch = useDispatch();
 
   const handleFloatingButtonClick = () => {
@@ -54,25 +54,32 @@ const Main = () => {
 
   const previewProps = {
     quizFormat: 'Mission',
-    commentCount: 100,
     requestStatus: 'complete',
+    isRequestStatus: true,
+    isComment: true,
+    commentCount: 100,
+    isShowmore: true,
+    startDate: '20.10.22 17:41',
+    lastDate: '20.10.22 18:41',
+    title: '공지 제목입니다.',
+    content: '내용 테스트 내용 테스트',
+    thumbnailUrl: '../../assets/images/notice_thumbnail.png',
+  };
+
+  const previewProps2 = {
+    isManager: isManager,
+    quizFormat: 'Mission',
+    requestStatus: 'complete',
+    isRequestStatus: true,
+    isComment: true,
+    commentCount: 100,
+    isShowmore: true,
     startDate: '20.10.22 17:41',
     lastDate: '20.10.22 18:41',
     title: '공지 제목입니다.',
     content: '내용 테스트 내용 테스트',
     thumbnailUrl: '../../assets/images/notice_thumbnail.png',
     peopleCount: 100,
-  };
-
-  const previewProps2 = {
-    quizFormat: 'Quiz',
-    commentCount: 99,
-    requestStatus: 'pending',
-    startDate: '20.10.22 17:41',
-    lastDate: '20.10.22 18:41',
-    title: '공지 제목입니다.',
-    content: '내용 테스트 내용 테스트',
-    thumbnailUrl: '../../assets/images/notice_thumbnail.png',
   };
 
   return (
@@ -85,7 +92,7 @@ const Main = () => {
       ) : (
         <Notice>
           {isManager ? (
-            <ManagerNoticePreview props={previewProps} />
+            <ManagerNoticePreview props={previewProps2} />
           ) : (
             <>
               <UnconfirmedNotice dispatch={dispatch} />

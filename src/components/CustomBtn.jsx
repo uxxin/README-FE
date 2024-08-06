@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const CustomBtn = ({ props }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    if (props.background !== '##BDBDBD') {
+    if (props.background !== '#BDBDBD') {
       navigate(props.link);
     }
   };
