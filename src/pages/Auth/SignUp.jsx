@@ -71,7 +71,6 @@ const SignUp = () => {
   const passwordInvalid = useMemo(() => {
     if (password === '') return '비밀번호를 입력해주세요!';
     if (!passwordRegex.test(password))
-      // return "비밀번호는 최소 8자 이상 영소문자, 숫자, 특수문자를 조합해 입력해주세요!"
       return '비밀번호는 최소 8자 이상 입력해주세요.';
     return null;
   }, [password]);
@@ -297,6 +296,7 @@ const ErrorMessage = styled.div`
   margin-top: 0;
   width: 100%;
   color: red;
+  margin-bottom: 10px;
   text-align: start;
 `;
 
@@ -312,7 +312,6 @@ const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   position: relative;
   min-height: 95vh;
 `;

@@ -157,9 +157,7 @@ const NoNotice = styled.div`
   background: var(--Primary-light, #f4f9ff);
   color: #000;
 
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;

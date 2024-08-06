@@ -88,9 +88,7 @@ const Container = styled.div`
   border: 0.33px solid var(--Blue-light-active, #c9e0fd);
   background: var(--Blue-light, #f4f9ff);
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-family: Pretendard;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
@@ -120,9 +118,7 @@ const UncheckedContainer = styled.div`
   gap: 0.25rem;
   align-self: stretch;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0175rem;
@@ -136,9 +132,7 @@ const CommentIconContainer = styled.div`
   align-items: center;
   gap: 0.3125rem;
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0175rem;
@@ -172,9 +166,7 @@ const DeadlineText = styled.div`
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
   text-overflow: ellipsis;
 
-  font-family: Pretendard;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
@@ -194,9 +186,7 @@ const NoticeContent = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;
