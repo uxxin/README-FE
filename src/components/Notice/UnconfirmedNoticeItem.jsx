@@ -38,9 +38,7 @@ const RoomName = styled.div`
   overflow: hidden;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
-  font-family: Pretendard;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
@@ -55,9 +53,7 @@ const NoticeTitle = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
 
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0175rem;
@@ -65,9 +61,7 @@ const NoticeTitle = styled.div`
 
 const NoticedTime = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
-  font-family: Pretendard;
   font-size: 0.625rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0125rem;

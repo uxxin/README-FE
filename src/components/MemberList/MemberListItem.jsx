@@ -63,7 +63,7 @@ const ButtonText = styled.span`
   font-weight: 500;
   line-height: 1.2rem; 
   letter-spacing: -0.02em;
-  text-align: center;
+  text-align: start; 
   margin-left: 0.1rem; /* 버튼과 텍스트 사이의 간격을 조정 */
 `;
 
@@ -81,6 +81,35 @@ const MemberAddBtn = styled.button`
   align-items: center;
 `;
 
+const TextColor = styled.p`
+  //styleName: Pretendard/bold/20;
+font-family: Pretendard;
+font-size: 20px;
+font-weight: 700;
+line-height: 20px;
+letter-spacing: -0.02em;
+text-align: center;
+color: #509BF7;
+
+`
+
+const CountColor = styled.span`
+  //styleName: Pretendard/regular/14;
+font-family: Pretendard;
+font-size: 14px;
+font-weight: 400;
+line-height: 14px;
+letter-spacing: -0.02em;
+text-align: left;
+color: #888888;
+`
+
+
+const ShowMoreIconContainer = styled.div`
+  position: relative;
+`
+
+
 export const MemberListItem = (props) => {
   const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
   const { members } = useSelector(state => state.keys);
@@ -96,7 +125,7 @@ export const MemberListItem = (props) => {
   const debouncedSearch = Debounce(state.search,300);
 
   useEffect(() => {
-    if (members.length > 0) {
+    if (members.length >= 0) {
       setState(prevState => ({ ...prevState, results: members, allMembers: members }));
     }
   }, [members]);
@@ -151,7 +180,7 @@ useEffect(() => {
       <CustomInput placeholder={"입력하세요"} onChange={handleInput}></CustomInput>
       <MemberIcon>
         <HumanIcon />
-       {keysCount}
+      <CountColor> {keysCount+1} </CountColor>
       </MemberIcon>
       <MemberListBox>
         <ButtonContainer>
@@ -162,14 +191,27 @@ useEffect(() => {
           </Link>
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
+        <ButtonContainer>
+            <MemberAddBtn>
+            </MemberAddBtn>
+          <ButtonText>본인</ButtonText>
+        </ButtonContainer>
+ 
         {state.results.length > 0 ? (
           <MemberListMap
             members={state.results}
+            
             onOpenModal={handleOpenModal}
           />
+           
         ) : (
-          <p>No members found</p>
+          members.length === 0 ? (
+            <TextColor>아무도 없어요!</TextColor>
+          ) : (
+            <TextColor>검색한 결과가 없어요!</TextColor>
+          )
         )}
+       
       </MemberListBox>
 
 

@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { setKeysCount, removeMember } from "../../redux/KeySlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { PlusIcon } from "../../assets/images/icons";
+import { Link } from "react-router-dom";
 
 
 const ModalOverlay = styled.div`
@@ -59,6 +61,48 @@ const CloseButton = styled.button`
   border: 0.33px solid var(--Primary-light-active,#888888);
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  white-space: nowrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.625rem;
+  align-self: stretch;
+  margin-right: 0.8rem;
+`;
+
+
+const ButtonText = styled.span`
+  width: 5.3125rem; 
+  height: 1.1875rem; 
+  gap: 0;
+  opacity: 1; 
+  box-sizing: border-box;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2rem; 
+  letter-spacing: -0.02em;
+  text-align: start; 
+  margin-left: 0.1rem; /* 버튼과 텍스트 사이의 간격을 조정 */
+`;
+
+const MemberAddBtn = styled.button`
+  width: 2.75rem;
+  height: 2.75rem; 
+  margin-right:1.6rem; 
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  background: #F4F9FF;
+  border: 0.02rem solid #C9E0FD; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+
 export const MemberListMap = ({members}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,22 +112,6 @@ export const MemberListMap = ({members}) => {
   const [selectedProfile, setSelectedProfile] = useState(null);
 
   console.log('넘어오는 프롭스:', members); // 확인용
-/*
-  useEffect(() => {
-    const fetchMemberList = async () => {
-      try {
-        const response = await axios.get('/mock/ProfileData.json');
-        const memberData = response.data;
-
-        dispatch(setKeysCount({ count: memberData.length, members: memberData }));
-        console.log(`Keys set in MemberListMap: ${memberData.length}`);
-      } catch (error) {
-        console.error('Error fetching member list:', error);
-      }
-    };
-    fetchMemberList();
-  }, [dispatch]);
-  */
 
   const handleOpenModal = (profile) => {
     setSelectedProfile(profile);
@@ -134,7 +162,7 @@ export const MemberListMap = ({members}) => {
 
   return (
     <div>
-      <ShowMoreIconContainer>
+            
         {members.length > 0 &&
           members.map((item, index) => (
             <MemberListDetails
@@ -142,14 +170,26 @@ export const MemberListMap = ({members}) => {
               nickname={item.nickname}
               profile_image={item.profile_image}
               onOpenModal={() => handleOpenModal(item)}
+              
             />
           ))}
+     
+     <ShowMoreIconContainer>
         <CustomModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           buttons={modalButtons}
         />
       </ShowMoreIconContainer>
+       
+      <ButtonContainer>
+          <Link to="/member/invite">
+            <MemberAddBtn>
+              <PlusIcon />
+            </MemberAddBtn>
+          </Link>
+          <ButtonText>멤버초대하기</ButtonText>
+        </ButtonContainer>
 
       {isSecondModalOpen && (
         <ModalOverlay onClick={handleSecondModalClose}>
