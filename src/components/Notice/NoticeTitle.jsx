@@ -7,7 +7,7 @@ import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_ic
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
 
-export const NoticeTitle = ({ props }) => {
+export const NoticeTitle = ({ props, preview }) => {
   const [isOpen, setIsOpen] = useState(false);
   const modalClose = () => {
     setIsOpen(false);
@@ -33,15 +33,16 @@ export const NoticeTitle = ({ props }) => {
     { label: '수정', onClick: correctNotice, color: '#222222' },
     { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
+  console.log(preview);
 
   return (
     <Container>
       <TopContainer>
         <TopLeftSide>
-          <QuizFormatLabel quizFormat={props.quizFormat}></QuizFormatLabel>
-          {props.isRequestStatus ? (
+          <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
+          {props.submitState ? (
             <RequestStatusLabel
-              requestStatus={props.requestStatus}
+              requestStatus={props.submitState}
             ></RequestStatusLabel>
           ) : (
             <></>
@@ -57,7 +58,7 @@ export const NoticeTitle = ({ props }) => {
           ) : (
             <></>
           )}
-          {props.isComment ? (
+          {props.commentCount ? (
             <CommentIconContainer>
               <StyledCommentIcon />
               {props.commentCount > 99 ? '99+' : props.commentCount}
@@ -65,7 +66,9 @@ export const NoticeTitle = ({ props }) => {
           ) : (
             <></>
           )}
-          {props.isShowmore ? (
+          {preview ? (
+            <></>
+          ) : (
             <ShowmoreIconContainer>
               <StyledShowmoreIcon
                 onClick={(e) => {
@@ -87,15 +90,13 @@ export const NoticeTitle = ({ props }) => {
                 />
               )}
             </ShowmoreIconContainer>
-          ) : (
-            <></>
           )}
         </TopRightSide>
       </TopContainer>
-      {props.title}
+      {props.postTitle}
       <DeadlineContainer>
         <DeadlineText>
-          {props.startDate} - {props.lastDate}
+          {props.startDate} - {props.endDate}
         </DeadlineText>
       </DeadlineContainer>
     </Container>

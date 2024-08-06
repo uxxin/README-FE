@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const QuizFormatLabel = ({ quizFormat }) => {
+export const QuizFormatLabel = ({ postType }) => {
   return (
     <>
-      {quizFormat == 'Mission' ? (
+      {postType == 'Mission' ? (
         <MissionLabel>미션</MissionLabel>
       ) : (
         <QuizLabel>퀴즈</QuizLabel>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const STATUS_STYLES = {
-  complete: {
+  COMPLETE: {
     background: 'var(--system-success-light, #E3F2EF)',
     color: 'var(--system-success, var(--System-Success, #00A881))',
     text: '승인',
@@ -17,16 +17,15 @@ const STATUS_STYLES = {
     color: 'var(--system-danger, var(--System-Danger, #F5535E))',
     text: '거절',
   },
-  notComplete: {
+  NOT_COMPLETE: {
     background: 'var(--GrayScale-gray2, #E9E9E9)',
     color: 'var(--Text-caption, var(--Grayscale-Gray5, #888))',
     text: '미제출',
   },
 };
 
-export const RequestStatusLabel = ({ requestStatus }) => {
-  const { background, color, text } =
-    STATUS_STYLES[requestStatus] || STATUS_STYLES.pending;
+export const RequestStatusLabel = (submitState) => {
+  const { background, color, text } = STATUS_STYLES[submitState.requestStatus];
 
   return (
     <Label background={background} color={color}>
