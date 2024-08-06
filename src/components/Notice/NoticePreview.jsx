@@ -5,10 +5,14 @@ export const NoticePreview = ({ props }) => {
   return (
     <>
       <Container>
-        <NoticeTitle props={props}></NoticeTitle>
+        <NoticeTitle props={props} />
         <NoticeContainer>
-          <NoticeContent>{props.content}</NoticeContent>
-          <Thumbnail src="src\assets\images\defaultprofileimage.png" />
+          <NoticeContent>{props.postBody}</NoticeContent>
+          {props.postImage !== null ? (
+            <Thumbnail src={props.postImage} />
+          ) : (
+            <></>
+          )}
         </NoticeContainer>
       </Container>
     </>

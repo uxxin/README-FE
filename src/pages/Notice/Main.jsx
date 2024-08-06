@@ -52,98 +52,92 @@ const Main = () => {
     isSearch: true,
   };
 
-  const previewProps = {
-    quizFormat: 'Mission',
-    requestStatus: 'complete',
-    isRequestStatus: true,
-    isComment: true,
-    commentCount: 100,
-    isShowmore: true,
-    startDate: '20.10.22 17:41',
-    lastDate: '20.10.22 18:41',
-    title: '공지 제목입니다.',
-    content: '내용 테스트 내용 테스트',
-    thumbnailUrl: '../../assets/images/notice_thumbnail.png',
-  };
-
-  const previewProps2 = {
-    isManager: isManager,
-    quizFormat: 'Mission',
-    requestStatus: 'complete',
-    isRequestStatus: true,
-    isComment: true,
-    commentCount: 100,
-    isShowmore: true,
-    startDate: '20.10.22 17:41',
-    lastDate: '20.10.22 18:41',
-    title: '공지 제목입니다.',
-    content: '내용 테스트 내용 테스트',
-    thumbnailUrl: '../../assets/images/notice_thumbnail.png',
-    peopleCount: 100,
-  };
+  const postData = [
+    {
+      postId: 3,
+      postType: 'Quiz',
+      postTitle: 'test3',
+      postBody: 'testcontent3',
+      postImage: '../../assets/images/notice_thumbnail.png',
+      startDate: '24. 7. 27. 19:05',
+      endDate: '24. 7. 27. 19:05',
+      commentCount: 1,
+      submitState: 'NOT_COMPLETE',
+    },
+    {
+      postId: 2,
+      postType: 'Mission',
+      postTitle: 'test2',
+      postBody: 'testcontent2',
+      postImage: null,
+      startDate: '24. 7. 27. 19:01',
+      endDate: '24. 7. 27. 19:01',
+      commentCount: 0,
+      submitState: 'NOT_COMPLETE',
+    },
+    {
+      postId: 1,
+      postType: 'Quiz',
+      postTitle: 'TEST',
+      postBody: 'TESTCONTENT',
+      postImage: 'url11.com',
+      startDate: '24. 7. 25. 04:24',
+      endDate: '24. 7. 25. 05:24',
+      commentCount: 5,
+      submitState: 'COMPLETE',
+    },
+  ];
 
   return (
-    <MainContainer>
+    <>
       <Header props={navigationProps}></Header>
-      {isNoticeNull ? (
-        <NoNoticeContainer>
+
+      <MainContainer>
+        {postData.length > 0 ? <UnconfirmedNotice dispatch={dispatch} /> : null}
+        {postData.length > 0 ? (
+          postData.map((data) => (
+            <NoticePreview props={data} key={data.postId} />
+          ))
+        ) : (
           <NoNotice>공지가 없습니다.</NoNotice>
-        </NoNoticeContainer>
-      ) : (
-        <Notice>
-          {isManager ? (
-            <ManagerNoticePreview props={previewProps2} />
-          ) : (
-            <>
-              <UnconfirmedNotice dispatch={dispatch} />
-              <NoticePreview props={previewProps} />
-              <NoticePreview props={previewProps2} />
-              <NoticePreview props={previewProps} />
-            </>
-          )}
-        </Notice>
-      )}
-      {isManager && (
-        <FloatingButtonContainer>
-          <FloatingDivContainer showDivs={showDivs}>
-            <StyledLink to="edit" showDivs={showDivs}>
-              <FloatingDiv color="var(--system-warning, #F57D14)">
-                <StyledEdit />
-              </FloatingDiv>
-            </StyledLink>
-            <StyledLink to="/member" showDivs={showDivs}>
-              <FloatingDiv color="var(--Primary-dark, #3C74B9)">
-                <StyledMemberList />
-              </FloatingDiv>
-            </StyledLink>
-            <StyledLink to="check-req" showDivs={showDivs}>
-              <FloatingDiv color="var(--Primary-dark, #3C74B9)">
-                <StyledRequestList />
-              </FloatingDiv>
-            </StyledLink>
-            <StyledLink to="write" showDivs={showDivs}>
-              <FloatingDiv color="var(--Primary-dark, #3C74B9)">
-                <StyledWrite />
-              </FloatingDiv>
-            </StyledLink>
-          </FloatingDivContainer>
-          <FloatingButton onClick={handleFloatingButtonClick}>
-            <StyledArrow flipped={isFlipped} />
-          </FloatingButton>
-        </FloatingButtonContainer>
-      )}
-    </MainContainer>
+        )}
+        {isManager && (
+          <FloatingButtonContainer>
+            <FloatingDivContainer showDivs={showDivs}>
+              <StyledLink to="edit" showDivs={showDivs}>
+                <FloatingDiv color="var(--system-warning, #F57D14)">
+                  <StyledEdit />
+                </FloatingDiv>
+              </StyledLink>
+              <StyledLink to="/member" showDivs={showDivs}>
+                <FloatingDiv color="var(--Primary-dark, #3C74B9)">
+                  <StyledMemberList />
+                </FloatingDiv>
+              </StyledLink>
+              <StyledLink to="check-req" showDivs={showDivs}>
+                <FloatingDiv color="var(--Primary-dark, #3C74B9)">
+                  <StyledRequestList />
+                </FloatingDiv>
+              </StyledLink>
+              <StyledLink to="write" showDivs={showDivs}>
+                <FloatingDiv color="var(--Primary-dark, #3C74B9)">
+                  <StyledWrite />
+                </FloatingDiv>
+              </StyledLink>
+            </FloatingDivContainer>
+            <FloatingButton onClick={handleFloatingButtonClick}>
+              <StyledArrow flipped={isFlipped} />
+            </FloatingButton>
+          </FloatingButtonContainer>
+        )}
+      </MainContainer>
+    </>
   );
 };
 
 export default Main;
 
 const MainContainer = styled.div`
-  height: 100%;
-  position: relative;
-`;
-
-const NoNoticeContainer = styled.div`
   display: flex;
   padding: 0.625rem 1rem;
   flex-direction: column;
@@ -154,19 +148,19 @@ const NoNoticeContainer = styled.div`
 
 const NoNotice = styled.div`
   display: flex;
-  padding: 1.5rem 1.25rem;
+  width: 100%;
+  height: 4.1875rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
   border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
-  background: var(--Primary-light, #f4f9ff);
-  color: #000;
-
+  border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
+  background: var(--Primary-Light, #f4f9ff);
+  color: var(--Basic-Black, #000);
   font-size: 1rem;
   font-weight: 500;
-  line-height: 120%;
+  line-height: 120%; /* 1.2rem */
   letter-spacing: -0.02rem;
 `;
 
