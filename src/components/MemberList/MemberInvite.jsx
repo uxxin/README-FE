@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { CustomBtn } from "../CustomBtn";
+import React from 'react';
+import styled from 'styled-components';
+import { CustomBtn } from '../CustomBtn';
 
 const TotalContainer = styled.div`
   padding-right: 1rem;
-`
+`;
 
 const Container = styled.div`
   padding: 1rem;
@@ -25,7 +25,6 @@ const AddContainer = styled.div`
   border: 0.02rem solid #509bf7;
   background: #f4f9ff;
   box-sizing: border-box;
-
 `;
 
 const ContainerHead = styled.div`
@@ -47,7 +46,6 @@ const InfoContainer = styled.div`
   box-sizing: border-box;
   padding: 0 0.8125rem;
   bottom: 4px;
-  
 `;
 
 const TextContainer = styled.div`
@@ -68,7 +66,6 @@ const TextColor = styled.span`
   height: 1rem;
   gap: 0;
   opacity: 1;
-  font-family: Pretendard;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1rem;
@@ -81,7 +78,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.81rem;
-  width: 23.625rem; 
+  width: 23.625rem;
   align-items: center;
   margin-left: 1rem;
   margin-top: 1rem;
@@ -89,24 +86,31 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 `;
-
 
 export const MemberInvite = () => {
   return (
     <TotalContainer>
-    <Container>
-      <AddContainer>
-        <ContainerHead>리드미</ContainerHead>
-        <InfoContainer>
-          <TextContainer><TextColor>초대 url</TextColor></TextContainer>
-          <TextContainer><TextColor>공지방 이름</TextColor></TextContainer>
-          <TextContainer><TextColor>비밀번호</TextColor></TextContainer>
-          <TextContainer><TextColor>대표자</TextColor></TextContainer>
-        </InfoContainer>
-      </AddContainer>
-           <ButtonWrapper>
+      <Container>
+        <AddContainer>
+          <ContainerHead>리드미</ContainerHead>
+          <InfoContainer>
+            <TextContainer>
+              <TextColor>초대 url</TextColor>
+            </TextContainer>
+            <TextContainer>
+              <TextColor>공지방 이름</TextColor>
+            </TextContainer>
+            <TextContainer>
+              <TextColor>비밀번호</TextColor>
+            </TextContainer>
+            <TextContainer>
+              <TextColor>대표자</TextColor>
+            </TextContainer>
+          </InfoContainer>
+        </AddContainer>
+        <ButtonWrapper>
           <CustomBtn
             props={{
               text: '멤버목록으로 이동',
@@ -115,7 +119,7 @@ export const MemberInvite = () => {
               link: '/sign-in',
             }}
           />
-   
+
           <CustomBtn
             props={{
               text: '공지방으로 이동',
@@ -124,9 +128,8 @@ export const MemberInvite = () => {
               link: '/sign-up',
             }}
           />
-       
-      </ButtonWrapper>
-    </Container>
+        </ButtonWrapper>
+      </Container>
     </TotalContainer>
   );
 };

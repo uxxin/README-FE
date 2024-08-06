@@ -1,0 +1,8 @@
+{
+		 "admin_nickname" : "단체 대표자(관리자) 이름" , 
+		 "room_name" : "리드미" , 
+		 "room_password" : "1234" , 
+		 "room_image" : "www.s3.~~~" ,
+		 "max_penalty" : 3,
+		 "id" : 34
+ }
