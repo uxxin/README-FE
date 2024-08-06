@@ -2,18 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const CustomBtn = ({ props }) => {
+export const EditRoomCustomBtn = ({ props }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    if (props.background !== '#BDBDBD') {
-      navigate(props.link);
-    }
+    navigate(props.link);
   };
 
   return (
     <StyledCustomBtn
       border={props.border}
       background={props.background}
+      color={props.color}
       onClick={handleClick}
     >
       {props.text}
@@ -32,5 +31,5 @@ const StyledCustomBtn = styled.div`
   border-radius: 0.5rem;
   border: ${(props) => props.border};
   background: ${(props) => props.background};
-  color: ${(props) => (props.background === '#FFFFFF' ? '#509BF7' : '#FFFFFF')};
+  color: ${(props) => props.color};
 `;

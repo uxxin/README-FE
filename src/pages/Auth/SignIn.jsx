@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { AuthLogo } from '../../components/Auth/AuthLogo';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput.jsx';
-import { useUserContext } from '../../contexts/UserContext.jsx';
 import { useNavigate } from 'react-router-dom';
+
+import { login } from '../../api/user.js';
 
 const SignIn = () => {
   const navigate = useNavigate();
 
-  const user = useUserContext();
+  const [user, setUser] = useState(undefined);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +34,7 @@ const SignIn = () => {
       <ButtonWrapper>
         <SignInButton
           onClick={async () => {
-            await user.login(email, password);
+            setUser(login(email, password));
             navigate('/home');
           }}
         >

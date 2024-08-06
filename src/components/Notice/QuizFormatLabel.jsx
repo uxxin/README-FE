@@ -15,7 +15,7 @@ export const QuizFormatLabel = ({ quizFormat }) => {
 
 const MissionLabel = styled.div`
   display: flex;
-  width: 100%;
+  width: 3.75rem;
   padding: 0.375rem 0.625rem;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,7 @@ const MissionLabel = styled.div`
 `;
 const QuizLabel = styled.div`
   display: flex;
-  width: 100%;
+  width: 3.75rem;
   padding: 0.375rem 0.625rem;
   justify-content: center;
   align-items: center;

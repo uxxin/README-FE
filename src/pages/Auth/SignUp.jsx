@@ -4,7 +4,6 @@ import CustomInput from '../../components/CustomInput';
 import styled from 'styled-components';
 import ProgressBar from '../../components/Auth/ProgressBar';
 import { useNavigate } from 'react-router-dom';
-import { RestApi } from '../../api/RestApi.js';
 import { useUserContext } from '../../contexts/UserContext.jsx';
 
 const nameRegex = /^[가-힣a-zA-Z\s]+$/;
@@ -85,33 +84,33 @@ const SignUp = () => {
     return null;
   }, [password, passwordConfirm]);
 
-  const createCode = async () => {
-    await RestApi.instance.user.createCode(email);
-    // TODO: 상태 설정
-  };
+  // const createCode = async () => {
+  //   await RestApi.instance.user.createCode(email);
+  //   // TODO: 상태 설정
+  // };
+  //
+  // const confirmCode = async () => {
+  //   await RestApi.instance.user.confirmCode(email, emailConfirm);
+  //   // TODO: 상태 설정
+  // };
 
-  const confirmCode = async () => {
-    await RestApi.instance.user.confirmCode(email, emailConfirm);
-    // TODO: 상태 설정
-  };
-
-  const handleCompleteSignUp = async () => {
-    const response = await RestApi.instance.user.signup(
-      name,
-      nickname,
-      email,
-      password,
-    );
-    console.log(response.data);
-
-    // 혹은 직접 me 를 날려서 UserContext 에 setUser 해도 됨
-    user.login(email, password);
-
-    // const me = await RestApi.instance.user.me();
-    // console.log(me.data.result);
-
-    setSignupCompleted(true);
-  };
+  // const handleCompleteSignUp = async () => {
+  //   const response = await RestApi.instance.user.signup(
+  //     name,
+  //     nickname,
+  //     email,
+  //     password,
+  //   );
+  //   console.log(response.data);
+  //
+  //   // 혹은 직접 me 를 날려서 UserContext 에 setUser 해도 됨
+  //   user.login(email, password);
+  //
+  //   // const me = await RestApi.instance.user.me();
+  //   // console.log(me.data.result);
+  //
+  //   setSignupCompleted(true);
+  // };
 
   // const formValid = useMemo(
   //   () => !nameInvalid && !idInValid && !emailInvalid && !ageInvalid && !passwordInvalid && !passwordCheckInvalid,

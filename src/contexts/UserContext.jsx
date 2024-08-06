@@ -1,6 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { RestApi } from '../api/RestApi.js';
-import { PostAxiosInstance } from '../api/axios.method.js';
+import React, { useCallback, useContext, useState } from 'react';
+import { PostAxiosInstance } from '../axios/axios.method.js';
 
 const UserContext = React.createContext(null);
 export const useUserContext = () => useContext(UserContext);
@@ -17,31 +16,9 @@ export const UserContextProvider = (props) => {
     setUser(user);
   }, []);
 
-  // const login = useCallback(async (email, password) => {
-  //   const user = await RestApi.instance.login(email, password);
-  //   setUser(user);
-  // }, []);
-
-  const logout = useCallback(async () => {
-    await RestApi.instance.logout();
-  }, []);
-
-  const fetch = useCallback(async () => {
-    setUser(await RestApi.instance.user.me());
-  }, []);
-
-  useEffect(() => {
-    RestApi.instance
-      .autoLogin()
-      .then(setUser)
-      .finally(() => setUser(null));
-  }, []);
-
   const ContextValue = {
     user,
     login,
-    logout,
-    fetch,
   };
 
   return (
