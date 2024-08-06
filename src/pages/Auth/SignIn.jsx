@@ -30,16 +30,20 @@ const SignIn = () => {
           charCount={true}
         />
       </InputContainer>
-      <SignInButton
-        onClick={async () => {
-          await user.login(email, password);
-          navigate('/home');
-        }}
-      >
-        로그인
-      </SignInButton>
-      <NotAuth>아직 회원이 아니신가요?</NotAuth>
-      <SignupButton onClick={() => navigate('/sign-up')}>회원가입</SignupButton>
+      <ButtonWrapper>
+        <SignInButton
+          onClick={async () => {
+            await user.login(email, password);
+            navigate('/home');
+          }}
+        >
+          로그인
+        </SignInButton>
+        <NotAuth>아직 회원이 아니신가요?</NotAuth>
+        <SignupButton onClick={() => navigate('/sign-up')}>
+          회원가입
+        </SignupButton>
+      </ButtonWrapper>
     </Root>
   );
 };
@@ -86,6 +90,13 @@ const NotAuth = styled.div`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0175rem;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  position: fixed;
+  max-width: 397px;
+  bottom: 3.37rem;
 `;
 
 export default SignIn;
