@@ -8,7 +8,6 @@ const keysSlice = createSlice({
   },
   reducers: {
     setKeysCount: (state, action) => {
-      // action.payload가 { count, members } 객체라고 가정
       state.count = action.payload.count; // 숫자로 설정
       state.members = action.payload.members; // 배열로 설정
     },

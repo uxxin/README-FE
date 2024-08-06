@@ -23,8 +23,8 @@ const ButtonText = styled.span`
   font-weight: 500;
   line-height: 1.2rem;
   letter-spacing: -0.02em;
-  text-align: center;
-  margin-left: 0.1rem;
+  text-align: start; 
+  margin-left: 0.05rem;
 `;
 
 const MemberNameBtn = styled.img`
