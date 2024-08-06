@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
+const CustomInput = ({
+  placeholder,
+  value,
+  onChange,
+  onBlur,
+  charCount,
+  type = 'text',
+}) => {
   return (
     <Container>
       <Input
-        type="text"
+        type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
