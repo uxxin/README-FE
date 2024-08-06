@@ -66,6 +66,7 @@ const SignUp = () => {
     if (!emailConfirmRegex.test(emailConfirm))
       return '유효한 인증코드를 입력해주세요!';
     return null;
+    // TODO 에러메세지 조건추가 => 인증코드 일치할 때 (인증되었습니다!)
   }, [emailConfirm]);
 
   const passwordInvalid = useMemo(() => {
@@ -199,10 +200,13 @@ const SignUp = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="입력하세요."
                       value={email}
+                      // TODO disable 조건추가 => 인증메일 전송되었을때
                     />
                     <EmailButton
                       onClick={() => createCode(email)}
                       disabled={!!emailInvalid}
+                      // TODO disable 조건추가 => 인증메일 전송되었을때
+                      // TODO 버튼 전송완료로 바꾸기 및 색 배꾸기
                     >
                       인증하기
                     </EmailButton>
@@ -222,6 +226,7 @@ const SignUp = () => {
                     <EmailButton
                       onClick={() => confirmCode(email, emailConfirm)}
                       disabled={!!emailConfirmInvalid}
+                      // TODO disable 조건추가 => 위 두개 다 안하면 disable
                     >
                       확인
                     </EmailButton>
@@ -235,7 +240,7 @@ const SignUp = () => {
                 <ButtonContainer>
                   <Button
                     onClick={() => handleNextStep()}
-                    disabled={!!emailInvalid}
+                    disabled={!!emailConfirmInvalid}
                   >
                     확인
                   </Button>
@@ -248,6 +253,7 @@ const SignUp = () => {
                   <Label>비밀번호를 입력해주세요.</Label>
                   <InputWrapper>
                     <CustomInput
+                      type="password"
                       onBlur={() => setPasswordTouched(true)}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="비밀번호 확인 (최소 8자)"
@@ -260,6 +266,7 @@ const SignUp = () => {
                   </InputWrapper>
                   <InputWrapper>
                     <CustomInput
+                      type="password"
                       onBlur={() => setPasswordConfirmTouched(true)}
                       onChange={(e) => setPasswordConfirm(e.target.value)}
                       placeholder="비밀번호 재확인"

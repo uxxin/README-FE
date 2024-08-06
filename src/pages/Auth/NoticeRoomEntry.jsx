@@ -265,3 +265,5 @@ const ButtonContainer = styled.div`
 `;
 
 export default NoticeRoomEntry;
+
+// TODO 공지방 정보조회, 비밀번호 확인, 닉네임 중복확인, 입장(닉네임 가지고) API 4개
