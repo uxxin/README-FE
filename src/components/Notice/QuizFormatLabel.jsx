@@ -23,9 +23,7 @@ const MissionLabel = styled.div`
   border-radius: 62.4375rem;
   background: var(--Blue-normal, #509bf7);
   color: var(--Basic-White, var(--Basic-White, #fff));
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0175rem;
@@ -41,9 +39,7 @@ const QuizLabel = styled.div`
   border: 2px solid var(--Blue-normal, #509bf7);
   background: var(--Basic-White, #fff);
   color: var(--Blue-normal, var(--Primary-Normal, #509bf7));
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0175rem;
