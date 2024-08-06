@@ -23,12 +23,12 @@ export const confirmCode = async (email, code) => {
   return response;
 };
 
-export const signup = async (email, password, name, code) => {
+export const signup = async (name, nickname, email, password) => {
   const response = await PostAxiosInstance('/user/signup', {
+    name: name,
+    nickname: nickname,
     email: email,
     password: password,
-    name: name,
-    code: code,
   });
   return response;
 };
