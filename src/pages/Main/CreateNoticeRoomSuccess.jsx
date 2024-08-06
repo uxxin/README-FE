@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { CustomBtn } from '../../components/CustomBtn';
@@ -9,8 +9,11 @@ const CreateNoticeRoomSuccess = () => {
   const location = useLocation();
 
   // location.state에서 전달된 데이터 가져오기
-  const { room_image, admin_nickname, room_name, room_password } =
-    location.state || {};
+  const requestData = location.state || {};
+
+  useEffect(() => {
+    console.log(location.state);
+  }, [requestData]);
 
   return (
     <>
@@ -26,7 +29,7 @@ const CreateNoticeRoomSuccess = () => {
           <TopSection>리드미 완성🎉</TopSection>
           <InfoSection>
             <ProfileImage
-              src={room_image || exampleProfileImage}
+              src={requestData.room_image || exampleProfileImage}
               alt="Profile"
             />
             <Info>
@@ -36,15 +39,15 @@ const CreateNoticeRoomSuccess = () => {
               </InfoSet>
               <InfoSet>
                 <InfoLabel>공지방 이름:</InfoLabel>
-                <InfoValue>{room_name}</InfoValue>
+                <InfoValue>{requestData.room_name}</InfoValue>
               </InfoSet>
               <InfoSet>
                 <InfoLabel>비밀번호:</InfoLabel>
-                <InfoValue>{room_password}</InfoValue>
+                <InfoValue>{requestData.room_password}</InfoValue>
               </InfoSet>
               <InfoSet>
                 <InfoLabel>대표자:</InfoLabel>
-                <InfoValue>{admin_nickname}</InfoValue>
+                <InfoValue>{requestData.admin_nickname}</InfoValue>
               </InfoSet>
             </Info>
           </InfoSection>

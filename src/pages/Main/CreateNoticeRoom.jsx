@@ -31,18 +31,26 @@ const CreateNoticeRoom = () => {
     input.click();
   };
 
-  const handleCreateClick = async () => {
+  const handleCreateClick = () => {
     if (isFormValid) {
-      const requestData = {
-        room_image: image,
-        admin_nickname: leaderName,
-        room_name: roomName,
-        room_password: password,
-        max_penalty: penaltyCount,
-      };
+      // const requestData = {
+      //   room_image: image,
+      //   admin_nickname: leaderName,
+      //   room_name: roomName,
+      //   room_password: password,
+      //   max_penalty: penaltyCount,
+      // };
+
+      // console.log(requestData);
 
       navigate('/create-notice-room/success', {
-        state: requestData,
+        state: {
+          room_image: image,
+          admin_nickname: leaderName,
+          room_name: roomName,
+          room_password: password,
+          max_penalty: penaltyCount,
+        },
       });
 
       //API 연결시
