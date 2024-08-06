@@ -13,8 +13,6 @@ import MyPage from './pages/MyPage/MyPage';
 import DefaultProfileEdit from './pages/MyPage/DefaultProfileEdit';
 import Main from './pages/Notice/Main';
 import Details from './pages/Notice/Details';
-import Mission from './pages/Notice/Check/Mission';
-import Quiz from './pages/Notice/Check/Quiz';
 import Results from './pages/Notice/Check/Results';
 import MissionType from './pages/Notice/Write/MissionType';
 import QuizType from './pages/Notice/Write/QuizType';
@@ -25,11 +23,13 @@ import Search from './pages/Notice/Search';
 import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
-import CheckRequests from './pages/Notice/CheckRequests';
+import Confirmation from './pages/Notice/Confirmation';
 import CheckListPage from './pages/MemberList/CheckListPage';
 import Post from './pages/Notice/Write/Post';
 import { RestApi } from './api/RestApi.js';
 import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
+import Preview from './pages/Notice/Write/Preview.jsx';
+import Solve from './pages/Notice/Check/Solve.jsx';
 
 function App() {
   useEffect(() => {
@@ -77,13 +77,13 @@ function App() {
             <Route path="/notice" element={<Main />} />
             <Route path="/notice/search" element={<Search />} />
             <Route path="/notice/details" element={<Details />} />
-            <Route path="/notice/check-req" element={<CheckRequests />} />
-            <Route path="/notice/check-mission" element={<Mission />} />
-            <Route path="/notice/check-quiz" element={<Quiz />} />
-            <Route path="/notice/check-result" element={<Results />} />
+            <Route path="/notice/confirm" element={<Confirmation />} />
+            <Route path="/notice/solve" element={<Solve />} />
+            <Route path="/notice/solve/result" element={<Results />} />
             <Route path="/notice/write" element={<Post />} />
             <Route path="/notice/write/mission" element={<MissionType />} />
             <Route path="/notice/write/quiz" element={<QuizType />} />
+            <Route path="/notice/write/preview" element={<Preview />} />
             <Route path="/notice/edit" element={<RoomEdit />} />
           </Routes>
         </Router>
