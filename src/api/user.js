@@ -7,3 +7,28 @@ export const login = async (email, password) => {
   });
   return response;
 };
+
+export const createCode = async (email) => {
+  const response = await PostAxiosInstance('/user/create-code', {
+    email: email,
+  });
+  return response;
+};
+
+export const confirmCode = async (email, code) => {
+  const response = await PostAxiosInstance('/user/confirm-code', {
+    email: email,
+    code: code,
+  });
+  return response;
+};
+
+export const signup = async (email, password, name, code) => {
+  const response = await PostAxiosInstance('/user/signup', {
+    email: email,
+    password: password,
+    name: name,
+    code: code,
+  });
+  return response;
+};
