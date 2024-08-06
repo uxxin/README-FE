@@ -25,6 +25,7 @@ const SignIn = () => {
           charCount={true}
         />
         <CustomInput
+          type="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.currentTarget.value)}
