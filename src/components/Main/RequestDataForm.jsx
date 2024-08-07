@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RequestDataForm = ({ room }) => {
+const RequestDataForm = ({ room, onClick }) => {
   const displayRequestNum = room.requestnum >= 100 ? '99+' : room.requestnum;
 
   return (
-    <Container>
+    <Container onClick={onClick}>
       <TopSection>
         확인내역
         <RequestNum>{displayRequestNum}</RequestNum>
@@ -23,7 +23,7 @@ export default RequestDataForm;
 
 const Container = styled.div`
   display: flex;
-  width: 30.5%;
+  width: calc(33.333% - 0.8125rem);
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;

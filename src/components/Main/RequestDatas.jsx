@@ -7,12 +7,12 @@ import { useNavigate } from 'react-router-dom';
 export const RequestDatas = () => {
   const [requestDatas, setRequestDatas] = useState([]);
   const currentRequestDatas = requestDatas.slice();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('mock/entered.json');
+        const response = await axios.get('mock/mission.json');
         setRequestDatas(response.data);
       } catch (error) {
         console.error('Error fetching Request Datas:', error);
@@ -22,9 +22,13 @@ export const RequestDatas = () => {
     fetchData();
   }, []);
 
-  //   const handleRoomClick = (roomid) => {
-  //     navigate(`/notice-check-req/${roomid}`);
-  //   };
+  const handleRoomClick = (roomid, roomName) => {
+    {
+      navigate(
+        `/notice-check-req/${roomid}?roomName=${encodeURIComponent(roomName)}`,
+      );
+    }
+  };
 
   return (
     <>
@@ -36,7 +40,7 @@ export const RequestDatas = () => {
                 <RequestDataForm
                   key={room.id}
                   room={room}
-                  //   onClick={() => handleRoomClick(room.id)}
+                  onClick={() => handleRoomClick(room.id, room.roomName)}
                 />
               ))}
             </RequestRooms>
@@ -58,7 +62,7 @@ const Container = styled.div`
 const RequestRoomSection = styled.section`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  //align-items: flex-start;
   gap: 0.625rem; /* 10px */
   align-self: stretch;
   width: 100%;

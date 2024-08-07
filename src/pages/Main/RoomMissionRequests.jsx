@@ -3,14 +3,19 @@ import styled from 'styled-components';
 import { Header } from '../../components/Header';
 import MissionRequestForm from '../../components/Main/MissionRequestForm';
 import axios from 'axios';
+import { useLocation, useParams } from 'react-router-dom';
 
 const RoomMissionRequests = () => {
-  const [missions, setMissions] = useState([]); // 초기값을 빈 배열로 설정
+  const [missions, setMissions] = useState([]);
+  const { roomId } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const roomName = queryParams.get('roomName');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/assets/mission.json'); // JSON 파일 경로 수정
+        const response = await axios.get(`/mock/missiondetail_${roomId}.json`); // api로 수정
         console.log('Fetched data:', response.data); // 데이터 확인
         if (Array.isArray(response.data)) {
           setMissions(response.data);
@@ -23,15 +28,14 @@ const RoomMissionRequests = () => {
     };
 
     fetchData();
-  }, []);
+  }, [roomId]);
 
   return (
     <>
       <Header
         props={{
-          title: '공지방 이름(다르게 하기)',
+          title: roomName || '공지방 이름 연결',
           isSearch: false,
-          url: '/home',
         }}
       />
       <RequestMissions>

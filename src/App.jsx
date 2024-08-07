@@ -56,10 +56,9 @@ function App() {
             />
             <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
             <Route
-              path="/notice-check-req/default"
+              path="/notice-check-req/:roomId"
               element={<RoomMissionRequests />}
             />
-            {/* 여기 라우팅 주소 default에서 각 roomid로 수정해야함!!! */}
             <Route path="/penalty" element={<Penalty />} />
 
             {/* MemberList - 멤버 목록 */}
