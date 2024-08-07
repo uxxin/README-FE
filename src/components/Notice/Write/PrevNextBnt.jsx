@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { CustomBtn } from '../../CustomBtn';
 
 export const PrevNextBnt = ({ isButtonEnabled }) => {
-  console.log(isButtonEnabled);
   return (
     <Container>
       <ButtonWrapper>
@@ -12,7 +11,7 @@ export const PrevNextBnt = ({ isButtonEnabled }) => {
             text: '이전',
             border: '0.5px solid var(--Primary-normal, #509BF7)',
             background: '#FFFFFF',
-            // link: `/notice/write/${type}`,
+            link: `/notice/write`,
           }}
         />
       </ButtonWrapper>
@@ -21,7 +20,8 @@ export const PrevNextBnt = ({ isButtonEnabled }) => {
           props={{
             text: '확인',
             border: 'none',
-            background: isButtonEnabled ? '#509BF7' : '#BDBDBD', // link: `/notice/write/${type}`,
+            background: isButtonEnabled ? '#509BF7' : '#BDBDBD',
+            link: `/notice/write/preview`,
           }}
         />
       </ButtonWrapper>
