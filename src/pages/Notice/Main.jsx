@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -12,6 +13,7 @@ import { ReactComponent as RequestList } from '../../assets/images/floating_icon
 import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
+import axios from 'axios';
 
 const expand = keyframes`
   from {
@@ -40,8 +42,11 @@ const Main = () => {
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
-  const dispatch = useDispatch();
+  const [noticeData, setNoticeData] = useState([]);
+  const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
 
+  const dispatch = useDispatch();
+  const params = useParams();
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -52,29 +57,55 @@ const Main = () => {
     isSearch: true,
   };
 
-  const previewProps = {
-    quizFormat: 'Mission',
-    commentCount: 100,
-    requestStatus: 'complete',
-    startDate: '20.10.22 17:41',
-    lastDate: '20.10.22 18:41',
-    title: '공지 제목입니다.',
-    content: '내용 테스트 내용 테스트',
-    thumbnailUrl: '../../assets/images/notice_thumbnail.png',
-    peopleCount: 100,
-  };
+  useEffect(() => {
+    const getNoticeData = async () => {
+      const option = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
+        },
+      };
 
-  const previewProps2 = {
-    quizFormat: 'Quiz',
-    commentCount: 99,
-    requestStatus: 'pending',
-    startDate: '20.10.22 17:41',
-    lastDate: '20.10.22 18:41',
-    title: '공지 제목입니다.',
-    content: '내용 테스트 내용 테스트',
-    thumbnailUrl: '../../assets/images/notice_thumbnail.png',
-  };
+      try {
+        const response = await axios(
+          `https://read-me.kro.kr/room/${params.roomid}/all`,
+          option,
+        );
+        console.log(response);
+        if (!response.data || !response.data.result) {
+          setIsNoticeNull(true);
+        } else {
+          setNoticeData(response.data.result.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeData();
+  }, []);
+  useEffect(() => {
+    const unconfirmedNoticeData = async () => {
+      const option = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
+        },
+      };
 
+      try {
+        const response = await axios(
+          `https://read-me.kro.kr/room/${params.roomid}/notChecked`,
+          option,
+        );
+        setUnconfirmedNoticeData(response.data.result.posts);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    unconfirmedNoticeData();
+  }, []);
   return (
     <MainContainer>
       <Header props={navigationProps}></Header>
@@ -88,10 +119,15 @@ const Main = () => {
             <ManagerNoticePreview props={previewProps} />
           ) : (
             <>
-              <UnconfirmedNotice dispatch={dispatch} />
-              <NoticePreview props={previewProps} />
-              <NoticePreview props={previewProps2} />
-              <NoticePreview props={previewProps} />
+              {unconfirmedNoticeData.length > 0 && (
+                <UnconfirmedNotice
+                  dispatch={dispatch}
+                  postData={unconfirmedNoticeData}
+                />
+              )}
+              {noticeData.map((post, index) => (
+                <NoticePreview postData={post} />
+              ))}
             </>
           )}
         </Notice>
@@ -134,6 +170,7 @@ export default Main;
 const MainContainer = styled.div`
   height: 100%;
   position: relative;
+  background-color: transparent;
 `;
 
 const NoNoticeContainer = styled.div`
@@ -157,7 +194,9 @@ const NoNotice = styled.div`
   background: var(--Primary-light, #f4f9ff);
   color: #000;
 
+  font-family: Pretendard;
   font-size: 1rem;
+  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;
@@ -169,6 +208,7 @@ const Notice = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  background-color: transparent;
 `;
 
 const FloatingButtonContainer = styled.div`
