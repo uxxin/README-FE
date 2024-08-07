@@ -1,15 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { QuizFormatLabel } from './QuizFormatLabel';
+import { RequestStatusLabel } from './RequestStatusLabel';
+import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
+import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
+import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
+import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
 
 export const ManagerNoticePreview = ({ props }) => {
   return (
     <>
       <Container>
-        <NoticeTitle props={props} />
+        <NoticeTitle props={postData} preview={true} />
         <BottomContainer>
           <NoticeContent>{props.content}</NoticeContent>
-          <Thumbnail src="src\assets\images\defaultprofileimage.png" />
+          {props.postImage !== null && (
+            <Thumbnail src="src\assets\images\defaultprofileimage.png" />
+          )}
         </BottomContainer>
       </Container>
     </>

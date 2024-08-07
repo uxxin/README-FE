@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -12,6 +13,7 @@ import { ReactComponent as RequestList } from '../../assets/images/floating_icon
 import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
+import axios from 'axios';
 
 const expand = keyframes`
   from {
@@ -39,9 +41,12 @@ const Main = () => {
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
-  const [isManager, setIsManager] = useState(false);
-  const dispatch = useDispatch();
+  const [isManager, setIsManager] = useState(true);
+  const [noticeData, setNoticeData] = useState([]);
+  const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
 
+  const dispatch = useDispatch();
+  const params = useParams();
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -52,92 +57,123 @@ const Main = () => {
     isSearch: true,
   };
 
-  const postData = [
-    {
-      postId: 3,
-      postType: 'Quiz',
-      postTitle: 'test3',
-      postBody: 'testcontent3',
-      postImage: '../../assets/images/notice_thumbnail.png',
-      startDate: '24. 7. 27. 19:05',
-      endDate: '24. 7. 27. 19:05',
-      commentCount: 1,
-      submitState: 'NOT_COMPLETE',
-    },
-    {
-      postId: 2,
-      postType: 'Mission',
-      postTitle: 'test2',
-      postBody: 'testcontent2',
-      postImage: null,
-      startDate: '24. 7. 27. 19:01',
-      endDate: '24. 7. 27. 19:01',
-      commentCount: 0,
-      submitState: 'NOT_COMPLETE',
-    },
-    {
-      postId: 1,
-      postType: 'Quiz',
-      postTitle: 'TEST',
-      postBody: 'TESTCONTENT',
-      postImage: 'url11.com',
-      startDate: '24. 7. 25. 04:24',
-      endDate: '24. 7. 25. 05:24',
-      commentCount: 5,
-      submitState: 'COMPLETE',
-    },
-  ];
+  useEffect(() => {
+    const getNoticeData = async () => {
+      const option = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
+        },
+      };
 
+      try {
+        const response = await axios(
+          `https://read-me.kro.kr/room/${params.roomid}/all`,
+          option,
+        );
+        console.log(response);
+        if (!response.data || !response.data.result) {
+          setIsNoticeNull(true);
+        } else {
+          setNoticeData(response.data.result.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeData();
+  }, []);
+  useEffect(() => {
+    const unconfirmedNoticeData = async () => {
+      const option = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
+        },
+      };
+
+      try {
+        const response = await axios(
+          `https://read-me.kro.kr/room/${params.roomid}/notChecked`,
+          option,
+        );
+        setUnconfirmedNoticeData(response.data.result.posts);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    unconfirmedNoticeData();
+  }, []);
   return (
-    <>
+    <MainContainer>
       <Header props={navigationProps}></Header>
-
-      <MainContainer>
-        {postData.length > 0 ? <UnconfirmedNotice dispatch={dispatch} /> : null}
-        {postData.length > 0 ? (
-          postData.map((data) => (
-            <NoticePreview props={data} key={data.postId} />
-          ))
-        ) : (
+      {isNoticeNull ? (
+        <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
-        )}
-        {isManager && (
-          <FloatingButtonContainer>
-            <FloatingDivContainer showDivs={showDivs}>
-              <StyledLink to="edit" showDivs={showDivs}>
-                <FloatingDiv color="var(--system-warning, #F57D14)">
-                  <StyledEdit />
-                </FloatingDiv>
-              </StyledLink>
-              <StyledLink to="/member" showDivs={showDivs}>
-                <FloatingDiv color="var(--Primary-dark, #3C74B9)">
-                  <StyledMemberList />
-                </FloatingDiv>
-              </StyledLink>
-              <StyledLink to="check-req" showDivs={showDivs}>
-                <FloatingDiv color="var(--Primary-dark, #3C74B9)">
-                  <StyledRequestList />
-                </FloatingDiv>
-              </StyledLink>
-              <StyledLink to="write" showDivs={showDivs}>
-                <FloatingDiv color="var(--Primary-dark, #3C74B9)">
-                  <StyledWrite />
-                </FloatingDiv>
-              </StyledLink>
-            </FloatingDivContainer>
-            <FloatingButton onClick={handleFloatingButtonClick}>
-              <StyledArrow flipped={isFlipped} />
-            </FloatingButton>
-          </FloatingButtonContainer>
-        )}
-      </MainContainer>
-    </>
+        </NoNoticeContainer>
+      ) : (
+        <Notice>
+          {isManager ? (
+            <ManagerNoticePreview props={previewProps} />
+          ) : (
+            <>
+              {unconfirmedNoticeData.length > 0 && (
+                <UnconfirmedNotice
+                  dispatch={dispatch}
+                  postData={unconfirmedNoticeData}
+                />
+              )}
+              {noticeData.map((post, index) => (
+                <NoticePreview postData={post} />
+              ))}
+            </>
+          )}
+        </Notice>
+      )}
+      {isManager && (
+        <FloatingButtonContainer>
+          <FloatingDivContainer showDivs={showDivs}>
+            <StyledLink to="edit" showDivs={showDivs}>
+              <FloatingDiv color="var(--system-warning, #F57D14)">
+                <StyledEdit />
+              </FloatingDiv>
+            </StyledLink>
+            <StyledLink to="/member" showDivs={showDivs}>
+              <FloatingDiv color="var(--Primary-dark, #3C74B9)">
+                <StyledMemberList />
+              </FloatingDiv>
+            </StyledLink>
+            <StyledLink to="check-req" showDivs={showDivs}>
+              <FloatingDiv color="var(--Primary-dark, #3C74B9)">
+                <StyledRequestList />
+              </FloatingDiv>
+            </StyledLink>
+            <StyledLink to="write" showDivs={showDivs}>
+              <FloatingDiv color="var(--Primary-dark, #3C74B9)">
+                <StyledWrite />
+              </FloatingDiv>
+            </StyledLink>
+          </FloatingDivContainer>
+          <FloatingButton onClick={handleFloatingButtonClick}>
+            <StyledArrow flipped={isFlipped} />
+          </FloatingButton>
+        </FloatingButtonContainer>
+      )}
+    </MainContainer>
   );
 };
 
 export default Main;
 
 const MainContainer = styled.div`
+  height: 100%;
+  position: relative;
+  background-color: transparent;
+`;
+
+const NoNoticeContainer = styled.div`
   display: flex;
   padding: 0.625rem 1rem;
   flex-direction: column;
@@ -148,19 +184,21 @@ const MainContainer = styled.div`
 
 const NoNotice = styled.div`
   display: flex;
-  width: 100%;
-  height: 4.1875rem;
+  padding: 1.5rem 1.25rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
   border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
-  background: var(--Primary-Light, #f4f9ff);
-  color: var(--Basic-Black, #000);
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  background: var(--Primary-light, #f4f9ff);
+  color: #000;
+
+  font-family: Pretendard;
   font-size: 1rem;
+  font-style: normal;
   font-weight: 500;
-  line-height: 120%; /* 1.2rem */
+  line-height: 120%;
   letter-spacing: -0.02rem;
 `;
 
@@ -170,6 +208,7 @@ const Notice = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  background-color: transparent;
 `;
 
 const FloatingButtonContainer = styled.div`
