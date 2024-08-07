@@ -54,7 +54,7 @@ const NoticeDetails = () => {
   ];
 
   return (
-    <>
+    <div>
       <Header props={{ title: '공지방 이름', isSearch: false }} />
       <Container>
         {post.length > 0 ? (
@@ -82,7 +82,7 @@ const NoticeDetails = () => {
           </CommentInputFrame>
         </CommentInputContainer>
       </Container>
-    </>
+    </div>
   );
 };
 
