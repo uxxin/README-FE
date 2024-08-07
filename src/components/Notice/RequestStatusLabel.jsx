@@ -24,9 +24,8 @@ const STATUS_STYLES = {
   },
 };
 
-export const RequestStatusLabel = ({ requestStatus }) => {
-  const { background, color, text } =
-    STATUS_STYLES[requestStatus] || STATUS_STYLES.pending;
+export const RequestStatusLabel = (submitState) => {
+  const { background, color, text } = STATUS_STYLES[submitState.requestStatus];
 
   return (
     <Label background={background} color={color}>
@@ -38,18 +37,18 @@ export const RequestStatusLabel = ({ requestStatus }) => {
 const Label = styled.div`
   display: flex;
   width: 3.75rem;
-  padding: 0.375rem 0.625rem;
+  height: 1.625rem;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
   align-self: stretch;
   border-radius: 62.4375rem;
+  border: 2px solid ${({ background }) => background};
   background: ${({ background }) => background};
   color: ${({ color }) => color};
-  font-family: Pretendard;
   font-size: 0.875rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0175rem;
+  text-align: center;
 `;

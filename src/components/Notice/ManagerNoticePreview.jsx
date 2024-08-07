@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import { QuizFormatLabel } from './QuizFormatLabel';
 import { RequestStatusLabel } from './RequestStatusLabel';
@@ -10,24 +9,6 @@ import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
 
 export const ManagerNoticePreview = ({ props }) => {
-  const modalClose = () => {
-    setIsOpen(false);
-  };
-  const shareAddress = () => {
-    console.log('주소 공유');
-  };
-  const correctNotice = () => {
-    console.log('수정');
-  };
-  const deleteNotice = () => {
-    console.log('삭제');
-  };
-  const modalButtons = [
-    { label: '주소 공유', onClick: shareAddress, color: '#222222' },
-    { label: '수정', onClick: correctNotice, color: '#222222' },
-    { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
-  ];
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Container>
@@ -54,96 +35,10 @@ const Container = styled.div`
   border: 0.33px solid var(--Blue-light-active, #c9e0fd);
   background: var(--Blue-light, #f4f9ff);
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-family: Pretendard;
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
-`;
-const TopContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-`;
-const TopLeftSide = styled.div`
-  width: 35%;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-`;
-const TopRightSide = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-`;
-const UncheckedContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.25rem;
-  align-self: stretch;
-  color: var(--Text-caption, var(--Grayscale-Gray5, #888));
-  font-family: Pretendard;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  letter-spacing: -0.0175rem;
-`;
-const StyledUncheckedPeople = styled(UncheckedPeople)`
-  width: 0.75rem;
-  height: 0.75rem;
-`;
-const CommentIconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.3125rem;
-  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
-  font-family: Pretendard;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  letter-spacing: -0.0175rem;
-`;
-const StyledCommentIcon = styled(CommentIcon)`
-  width: 0.875rem;
-  height: 0.75rem;
-`;
-const StyledShowmoreIcon = styled(ShowmoreIcon)`
-  width: 1.5rem;
-  height: 1.5rem;
-`;
-
-const ShowmoreIconContainer = styled.div`
-  position: relative;
-`;
-
-const DeadlineContainer = styled.div`
-  display: flex;
-  padding-bottom: 0.5rem;
-  align-items: center;
-  gap: 0.25rem;
-  align-self: stretch;
-  border-bottom: 0.33px solid var(--Primary-Normal, #509bf7);
-`;
-const DeadlineText = styled.div`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
-  text-overflow: ellipsis;
-
-  font-family: Pretendard;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  letter-spacing: -0.015rem;
 `;
 
 const BottomContainer = styled.div`
@@ -160,9 +55,7 @@ const NoticeContent = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;

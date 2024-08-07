@@ -72,11 +72,13 @@ const Main = () => {
           option,
         );
         console.log(response);
+        console.log(isNoticeNull);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
           setNoticeData(response.data.result.postData);
         }
+        console.log(isNoticeNull);
       } catch (error) {
         console.log(error);
       }

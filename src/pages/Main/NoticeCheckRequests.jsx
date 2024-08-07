@@ -1,7 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Header } from '../../components/Header';
 
 const NoticeCheckRequests = () => {
-  return <div>확인 요청 내역</div>;
+  return (
+    <>
+      <Header
+        props={{
+          title: '확인요청내역',
+          isSearch: false,
+          url: '/home',
+        }}
+      />
+    </>
+  );
 };
 
 export default NoticeCheckRequests;
