@@ -31,6 +31,7 @@ import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
 import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
+import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
 
 function App() {
   useEffect(() => {
@@ -60,6 +61,7 @@ function App() {
               element={<RoomMissionRequests />}
             />
             <Route path="/penalty" element={<Penalty />} />
+            <Route path="/penalty/:roomId" element={<NoticeRoomPenaltys />} />
 
             {/* MemberList - 멤버 목록 */}
             <Route path="/member" element={<MemberList />} />
