@@ -6,6 +6,7 @@ import { RequestStatusLabel } from './RequestStatusLabel';
 import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import CustomModal from '../CustomModal';
+import { NoticeTitle } from './NoticeTitle';
 export const NoticePreview = ({ postData }) => {
   const modalClose = () => {
     setIsOpen(false);
@@ -24,39 +25,7 @@ export const NoticePreview = ({ postData }) => {
   return (
     <>
       <Container>
-        <TopContainer>
-          <TopLeftSide>
-            <QuizFormatLabel quizFormat={postData.postType}></QuizFormatLabel>
-            <RequestStatusLabel
-              requestStatus={postData.submitState}
-            ></RequestStatusLabel>
-          </TopLeftSide>
-          <TopRightSide>
-            <CommentIconContainer>
-              <StyledCommentIcon />
-              {postData.commentCount > 99 ? '99+' : postData.commentCount}
-            </CommentIconContainer>
-            <ShowmoreIconContainer>
-              <StyledShowmoreIcon
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsOpen((prev) => !prev);
-                }}
-              />
-              <CustomModal
-                isOpen={isOpen}
-                onClose={modalClose}
-                buttons={modalButtons}
-              />
-            </ShowmoreIconContainer>
-          </TopRightSide>
-        </TopContainer>
-        {postData.postTitle}
-        <DeadlineContainer>
-          <DeadlineText>
-            {postData.startDate} - {postData.endDate}
-          </DeadlineText>
-        </DeadlineContainer>
+        <NoticeTitle props={postData} />
         <BottomContainer>
           <NoticeContent>{postData.postBody}</NoticeContent>
           <Thumbnail src={postData.postImage} />

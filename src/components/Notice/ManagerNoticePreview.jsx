@@ -7,6 +7,7 @@ import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
+import { NoticeTitle } from './NoticeTitle';
 
 export const ManagerNoticePreview = ({ props }) => {
   const modalClose = () => {
@@ -30,47 +31,12 @@ export const ManagerNoticePreview = ({ props }) => {
   return (
     <>
       <Container>
-        <TopContainer>
-          <TopLeftSide>
-            <QuizFormatLabel quizFormat={props.quizFormat}></QuizFormatLabel>
-            <RequestStatusLabel
-              requestStatus={props.requestStatus}
-            ></RequestStatusLabel>
-          </TopLeftSide>
-          <TopRightSide>
-            <UncheckedContainer>
-              미확인
-              <StyledUncheckedPeople />
-              {props.peopleCount > 99 ? '99+' : props.peopleCount}
-            </UncheckedContainer>
-            <CommentIconContainer>
-              <StyledCommentIcon />
-              {props.commentCount > 99 ? '99+' : props.commentCount}
-            </CommentIconContainer>
-            <ShowmoreIconContainer>
-              <StyledShowmoreIcon
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsOpen((prev) => !prev);
-                }}
-              />
-              <CustomModal
-                isOpen={isOpen}
-                onClose={modalClose}
-                buttons={modalButtons}
-              />
-            </ShowmoreIconContainer>
-          </TopRightSide>
-        </TopContainer>
-        {props.title}
-        <DeadlineContainer>
-          <DeadlineText>
-            {props.startDate} - {props.lastDate}
-          </DeadlineText>
-        </DeadlineContainer>
+        <NoticeTitle props={postData} />
         <BottomContainer>
           <NoticeContent>{props.content}</NoticeContent>
-          <Thumbnail src="src\assets\images\defaultprofileimage.png" />
+          {props.postImage !== null && (
+            <Thumbnail src="src\assets\images\defaultprofileimage.png" />
+          )}
         </BottomContainer>
       </Container>
     </>
