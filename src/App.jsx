@@ -30,6 +30,7 @@ import { RestApi } from './api/RestApi.js';
 import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
 import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
+import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 
 function App() {
   useEffect(() => {
@@ -54,6 +55,10 @@ function App() {
               element={<CreateNoticeRoomSuccess />}
             />
             <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
+            <Route
+              path="/notice-check-req/:roomId"
+              element={<RoomMissionRequests />}
+            />
             <Route path="/penalty" element={<Penalty />} />
 
             {/* MemberList - 멤버 목록 */}
