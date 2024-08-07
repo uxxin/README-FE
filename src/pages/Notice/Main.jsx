@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -40,12 +41,12 @@ const Main = () => {
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
-  const [isManager, setIsManager] = useState(false);
+  const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
 
   const dispatch = useDispatch();
-
+  const params = useParams();
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -62,23 +63,21 @@ const Main = () => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIyODY1NTU2LCJleHAiOjE3MjI4NzYzNTZ9.DSdeFF1pK9P8nNi0sgpsgTPR7B6SQ1DfHDpa0FSb2B0`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
         },
       };
 
       try {
         const response = await axios(
-          'https://read-me.kro.kr/room/1/all',
+          `https://read-me.kro.kr/room/${params.roomid}/all`,
           option,
         );
         console.log(response);
-        console.log(isNoticeNull);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
-          setNoticeData(response.data.result.postData);
+          setNoticeData(response.data.result.data);
         }
-        console.log(isNoticeNull);
       } catch (error) {
         console.log(error);
       }
@@ -91,13 +90,13 @@ const Main = () => {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIyODY1NTU2LCJleHAiOjE3MjI4NzYzNTZ9.DSdeFF1pK9P8nNi0sgpsgTPR7B6SQ1DfHDpa0FSb2B0`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
         },
       };
 
       try {
         const response = await axios(
-          'https://read-me.kro.kr/room/1/notChecked',
+          `https://read-me.kro.kr/room/${params.roomid}/notChecked`,
           option,
         );
         setUnconfirmedNoticeData(response.data.result.posts);

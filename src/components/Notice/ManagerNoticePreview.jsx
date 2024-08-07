@@ -12,7 +12,7 @@ export const ManagerNoticePreview = ({ props }) => {
   return (
     <>
       <Container>
-        <NoticeTitle props={postData} />
+        <NoticeTitle props={postData} preview={true} />
         <BottomContainer>
           <NoticeContent>{props.content}</NoticeContent>
           {props.postImage !== null && (
