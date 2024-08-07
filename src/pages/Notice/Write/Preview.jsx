@@ -3,6 +3,7 @@ import { NoticeItem } from '../../../components/Notice/NoticeItem';
 import { Header } from '../../../components/Header';
 import styled from 'styled-components';
 import { QuestionPreview } from '../../../components/Notice/Write/QuestionPreview';
+import { TwoButton } from '../../../components/Notice/Write/TwoButton';
 
 const Preview = () => {
   const isManager = true;
@@ -35,6 +36,7 @@ const Preview = () => {
           <></>
         )}
         <QuestionPreview postType={post.postType} />
+        <TwoButton isButtonEnabled={true} btn1="수정하기" btn2="등록하기" />
       </Container>
     </div>
   );
