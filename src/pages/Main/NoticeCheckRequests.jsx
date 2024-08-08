@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Header } from '../../components/Header';
+import RequestDatas from '../../components/Main/RequestDatas';
 
 const NoticeCheckRequests = () => {
   return (
@@ -12,6 +12,7 @@ const NoticeCheckRequests = () => {
           url: '/home',
         }}
       />
+      <RequestDatas />
     </>
   );
 };

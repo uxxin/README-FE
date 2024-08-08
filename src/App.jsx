@@ -29,6 +29,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/Store.jsx';
 import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
+import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
+
+//import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
 
 function App() {
   return (
@@ -49,6 +52,10 @@ function App() {
               element={<CreateNoticeRoomSuccess />}
             />
             <Route path="/notice-check-req" element={<NoticeCheckRequests />} />
+            <Route
+              path="/notice-check-req/:roomId"
+              element={<RoomMissionRequests />}
+            />
             <Route path="/penalty" element={<Penalty />} />
 
             {/* MemberList - 멤버 목록 */}
