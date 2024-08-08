@@ -22,6 +22,10 @@ const SignUp = () => {
 
   const [step, setStep] = useState(1);
 
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [isEmailConfirmed, setIsEmailConfirmed] = useState(false);
+  const [emailConfirmError, setEmailConfirmError] = useState('');
+
   const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
@@ -66,8 +70,22 @@ const SignUp = () => {
     if (!emailConfirmRegex.test(emailConfirm))
       return '유효한 인증코드를 입력해주세요!';
     return null;
-    // TODO 에러메세지 조건추가 => 인증코드 일치할 때 (인증되었습니다!)
   }, [emailConfirm]);
+
+  const handleSendCode = async (email) => {
+    await createCode(email);
+    setIsEmailSent(true);
+  };
+
+  const handleConfirmCode = async (email, code) => {
+    const result = await confirmCode(email, code);
+    if (result.data.isSuccess) {
+      setIsEmailConfirmed(true);
+      setEmailConfirmError('');
+    } else {
+      setEmailConfirmError('인증코드가 일치하지 않습니다.');
+    }
+  };
 
   const passwordInvalid = useMemo(() => {
     if (password === '') return '비밀번호를 입력해주세요!';
@@ -100,27 +118,6 @@ const SignUp = () => {
       return () => clearTimeout(timer);
     }
   }, [signupCompleted, navigate]);
-
-  // const formValid = useMemo(
-  //   () => !nameInvalid && !idInValid && !emailInvalid && !ageInvalid && !passwordInvalid && !passwordCheckInvalid,
-  //   [nameInvalid, idInValid, ageInvalid, emailInvalid, passwordInvalid, passwordCheckInvalid]
-  // )
-  //
-  // const signUpClick = async () => {
-  //   if (formValid) {
-  //     const body = JSON.stringify({ name, username: id, email, age: age, password, passwordCheck });
-  //     // B.E.로 보내기 =
-  //     const response = await fetch("http://localhost:8080/auth/signup", { method: "POST", body, headers: { "Content-Type": "application/json" } })
-  //     if (response.ok) { // 응답코드가 200번대이면!
-  //       alert("회원가입에 성공하였습니다.");
-  //       navigate("/login");
-  //     } else {
-  //       alert("회원가입 실패!!")
-  //     }
-  //   } else {
-  //     console.log("필드에 잘못된 데이터가 있습니다.");
-  //   }
-  // };
 
   return (
     <>
@@ -200,15 +197,13 @@ const SignUp = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="입력하세요."
                       value={email}
-                      // TODO disable 조건추가 => 인증메일 전송되었을때
+                      readOnly={isEmailSent}
                     />
                     <EmailButton
-                      onClick={() => createCode(email)}
-                      disabled={!!emailInvalid}
-                      // TODO disable 조건추가 => 인증메일 전송되었을때
-                      // TODO 버튼 전송완료로 바꾸기 및 색 배꾸기
+                      onClick={() => handleSendCode(email)}
+                      disabled={!!emailInvalid || isEmailSent}
                     >
-                      인증하기
+                      {isEmailSent ? '전송완료' : '인증하기'}
                     </EmailButton>
                     {emailInvalid && emailTouched && (
                       <EmailErrorMessage>{emailInvalid}</EmailErrorMessage>
@@ -224,23 +219,31 @@ const SignUp = () => {
                       value={emailConfirm}
                     />
                     <EmailButton
-                      onClick={() => confirmCode(email, emailConfirm)}
-                      disabled={!!emailConfirmInvalid}
-                      // TODO disable 조건추가 => 위 두개 다 안하면 disable
+                      onClick={() => handleConfirmCode(email, emailConfirm)}
+                      disabled={!!emailConfirmInvalid || !isEmailSent}
                     >
                       확인
                     </EmailButton>
-                    {emailConfirmInvalid && emailConfirmTouched && (
-                      <EmailErrorMessage>
-                        {emailConfirmInvalid}
+                    {/*TODO: 인증코드 틀리면 '인증코드가 일치하지 않습니다' 에러메세지 띄우기*/}
+                    {isEmailConfirmed && (
+                      <EmailErrorMessage style={{ color: 'green' }}>
+                        인증되었습니다.
                       </EmailErrorMessage>
+                    )}
+                    {emailConfirmError && !isEmailConfirmed && (
+                      <EmailErrorMessage>{emailConfirmError}</EmailErrorMessage>
                     )}
                   </InputWrapperWithButton>
                 </ContentContainer>
                 <ButtonContainer>
                   <Button
                     onClick={() => handleNextStep()}
-                    disabled={!!emailConfirmInvalid}
+                    disabled={
+                      !isEmailSent ||
+                      !isEmailConfirmed ||
+                      !!emailInvalid ||
+                      !!emailConfirmInvalid
+                    }
                   >
                     확인
                   </Button>
@@ -325,7 +328,7 @@ const Label = styled.div`
   align-self: stretch;
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: 100%; /* 1.5rem */
+  line-height: 100%;
   letter-spacing: -0.03rem;
 `;
 
