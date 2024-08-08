@@ -3,7 +3,7 @@ import { Header } from '../../../components/Header';
 import styled from 'styled-components';
 import ImgUpload from '../../../components/Notice/Write/ImgUpload';
 import { Mission } from '../../../components/Notice/Write/Mission';
-import { PrevNextBnt } from '../../../components/Notice/Write/PrevNextBnt';
+import { TwoButton } from '../../../components/Notice/Write/TwoButton';
 
 const MissionType = () => {
   const [startDate, setStartDate] = useState('');
@@ -32,7 +32,7 @@ const MissionType = () => {
           question={question}
           setQuestion={setQuestion}
         />
-        <PrevNextBnt isButtonEnabled={isButtonEnabled} />
+        <TwoButton isButtonEnabled={isButtonEnabled} btn1="이전" btn2="확인" />
       </Container>
     </div>
   );
