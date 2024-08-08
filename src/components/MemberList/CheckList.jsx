@@ -224,21 +224,6 @@ export const CheckList = () =>{
                         />
                     ))
                 }
-            {/*
-                <ProfileContainer>
-                <ImgContainer></ImgContainer>
-                <TextContainer>
-                <ProfileName>숩 </ProfileName>
-                <ProfileInfo> 감사합니다</ProfileInfo>
-                </TextContainer>
-                </ProfileContainer>
-                <ContentContainer> <SlideButton/>
-                </ContentContainer>
-                <SecondButtonContainer>
-                <YesButton><CheckButton/>수락</YesButton>
-                <NoButton><XButton/>거절</NoButton>
-                </SecondButtonContainer>
-            */}
             </BoxContainer>
             </Container>
       
