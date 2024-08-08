@@ -61,12 +61,12 @@ const MissionRequestForm = ({ mission }) => {
         </Info>
       </TopSection>
       <BottomSection>
-        {images.length > 1 && (
+        {images.length > 1 && currentIndex != 0 && (
           <PrevButton
             src={prevButton}
             alt="Previous"
             onClick={handlePrev}
-            disabled={currentIndex === 0}
+            //disabled={currentIndex === 0}
           />
         )}
         <ImageContainer>
@@ -81,12 +81,12 @@ const MissionRequestForm = ({ mission }) => {
             </>
           )}
         </ImageContainer>
-        {images.length > 1 && (
+        {images.length > 1 && currentIndex !== images.length - 1 && (
           <NextButton
             src={nextButton}
             alt="Next"
             onClick={handleNext}
-            disabled={currentIndex === images.length - 1}
+            //disabled={currentIndex === images.length - 1}
           />
         )}
         <RequestState state={mission.requestState}>
@@ -189,10 +189,12 @@ const Button = styled.img`
 
 const PrevButton = styled(Button)`
   left: 0.625rem;
+  z-index: 3;
 `;
 
 const NextButton = styled(Button)`
   right: 0.625rem;
+  z-index: 3;
 `;
 
 const RequestState = styled.div`

@@ -75,7 +75,7 @@ const RequestRooms = styled.div`
   gap: 0.8125rem;
   align-self: stretch;
   flex-wrap: wrap;
-  justify-content: space-between;
+  //justify-content: space-between;
 `;
 
 const NoDataContainer = styled.div`
