@@ -1,7 +1,7 @@
-import { PostAxiosInstance } from '../axios/axios.method.js';
+import axios from 'axios';
 
 export const login = async (email, password) => {
-  const response = await PostAxiosInstance('/user/login', {
+  const response = await axios.post('https://read-me.kro.kr/user/login', {
     email: email,
     password: password,
   });
@@ -9,22 +9,25 @@ export const login = async (email, password) => {
 };
 
 export const createCode = async (email) => {
-  const response = await PostAxiosInstance('/user/create-code', {
+  const response = await axios.post('https://read-me.kro.kr/user/create-code', {
     email: email,
   });
   return response;
 };
 
 export const confirmCode = async (email, code) => {
-  const response = await PostAxiosInstance('/user/confirm-code', {
-    email: email,
-    code: code,
-  });
+  const response = await axios.post(
+    'https://read-me.kro.kr/user/confirm-code',
+    {
+      email: email,
+      code: code,
+    },
+  );
   return response;
 };
 
 export const signup = async (name, nickname, email, password) => {
-  const response = await PostAxiosInstance('/user/signup', {
+  const response = await axios.post('https://read-me.kro.kr/user/signup', {
     name: name,
     nickname: nickname,
     email: email,

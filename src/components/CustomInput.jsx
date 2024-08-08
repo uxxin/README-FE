@@ -8,6 +8,7 @@ const CustomInput = ({
   onBlur,
   charCount,
   type = 'text',
+  readOnly = false,
 }) => {
   return (
     <Container>
@@ -18,6 +19,7 @@ const CustomInput = ({
         onChange={onChange}
         onBlur={onBlur}
         maxLength={charCount ? 20 : undefined}
+        readOnly={readOnly}
       />
       {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
     </Container>
