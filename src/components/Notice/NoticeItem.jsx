@@ -23,10 +23,10 @@ export const NoticeItem = ({ props, imgs, preview }) => {
 
 const Container = styled.div`
   display: flex;
-  width: 100%;
   padding: 1rem;
   flex-direction: column;
   align-items: flex-start;
+  align-self: stretch;
   gap: 0.625rem;
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-Light-active, #c9e0fd);

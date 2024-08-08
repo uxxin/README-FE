@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import RequestDataForm from './RequestDataForm';
+import PenaltyRoomForm from './PenaltyRoomForm';
 import { useNavigate } from 'react-router-dom';
 
-export const RequestDatas = () => {
-  const [requestDatas, setRequestDatas] = useState([]);
-  const currentRequestDatas = requestDatas.slice();
+export const PenaltyRooms = () => {
+  const [penaltyRooms, setPenaltyRooms] = useState([]);
+  const PenaltyDatas = penaltyRooms.slice();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('mock/mission.json');
-        setRequestDatas(response.data);
+        const response = await axios.get('mock/penaltyrooms.json');
+        setPenaltyRooms(response.data);
       } catch (error) {
-        console.error('Error fetching Request Datas:', error);
+        console.error('Error fetching Penatly Datas:', error);
       }
     };
 
@@ -24,31 +24,29 @@ export const RequestDatas = () => {
 
   const handleRoomClick = (roomid, roomName) => {
     {
-      navigate(
-        `/notice-check-req/${roomid}?roomName=${encodeURIComponent(roomName)}`,
-      );
+      navigate(`/penalty/${roomid}?roomName=${encodeURIComponent(roomName)}`);
     }
   };
 
   return (
     <>
-      {currentRequestDatas.length > 0 ? (
-        <RequestRoomSection>
+      {PenaltyDatas.length > 0 ? (
+        <RoomSection>
           <Container>
-            <RequestRooms>
-              {currentRequestDatas.map((room) => (
-                <RequestDataForm
+            <Rooms>
+              {PenaltyDatas.map((room) => (
+                <PenaltyRoomForm
                   key={room.id}
                   room={room}
                   onClick={() => handleRoomClick(room.id, room.roomName)}
                 />
               ))}
-            </RequestRooms>
+            </Rooms>
           </Container>
-        </RequestRoomSection>
+        </RoomSection>
       ) : (
         <NoDataContainer>
-          <NoData>확인요청내역이 없습니다.</NoData>
+          <NoData>받은 페널티가 없습니다.</NoData>
         </NoDataContainer>
       )}
     </>
@@ -59,7 +57,7 @@ const Container = styled.div`
   padding: 0.625rem 1rem;
 `;
 
-const RequestRoomSection = styled.section`
+const RoomSection = styled.section`
   display: flex;
   flex-direction: column;
   //align-items: flex-start;
@@ -68,14 +66,14 @@ const RequestRoomSection = styled.section`
   width: 100%;
 `;
 
-const RequestRooms = styled.div`
+const Rooms = styled.div`
   display: flex;
   align-items: flex-start;
   align-content: flex-start;
   gap: 0.8125rem;
   align-self: stretch;
   flex-wrap: wrap;
-  //justify-content: space-between;
+  justify-content: space-between;
 `;
 
 const NoDataContainer = styled.div`
@@ -94,8 +92,8 @@ const NoData = styled.div`
   gap: 0.625rem;
 
   border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
-  background: #f4f9ff;
+  border: 0.33px solid #f5535e;
+  background: #fdd8db;
 
   color: #000;
   font-size: 1rem;
@@ -104,4 +102,4 @@ const NoData = styled.div`
   letter-spacing: -0.02rem;
 `;
 
-export default RequestDatas;
+export default PenaltyRooms;

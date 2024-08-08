@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
-import { store, persistor } from './redux/Store';
 import SignIn from './pages/Auth/SignIn';
 import SignUp from './pages/Auth/SignUp';
 import Home from './pages/Main/Home';
@@ -26,17 +23,16 @@ import Profile from './pages/MemberList/Profile';
 import Confirmation from './pages/Notice/Confirmation';
 import CheckListPage from './pages/MemberList/CheckListPage';
 import Post from './pages/Notice/Write/Post';
-import { RestApi } from './api/RestApi.js';
 import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './redux/Store.jsx';
 import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
+import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
 
 function App() {
-  useEffect(() => {
-    RestApi.instance.autoLogin().then(console.log);
-  }, []);
-
   return (
     //<div className="App">
     <Provider store={store}>
@@ -60,6 +56,7 @@ function App() {
               element={<RoomMissionRequests />}
             />
             <Route path="/penalty" element={<Penalty />} />
+            <Route path="/penalty/:roomId" element={<NoticeRoomPenaltys />} />
 
             {/* MemberList - 멤버 목록 */}
             <Route path="/member" element={<MemberList />} />
