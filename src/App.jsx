@@ -11,8 +11,6 @@ import DefaultProfileEdit from './pages/MyPage/DefaultProfileEdit';
 import Main from './pages/Notice/Main';
 import Details from './pages/Notice/Details';
 import Results from './pages/Notice/Check/Results';
-import MissionType from './pages/Notice/Write/MissionType';
-import QuizType from './pages/Notice/Write/QuizType';
 import NoticeRoomProfileEdit from './pages/MyPage/NoticeRoomProfileEdit';
 import NoticeCheckRequests from './pages/Main/NoticeCheckRequests';
 import Penalty from './pages/Main/Penalty';
@@ -22,15 +20,14 @@ import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
 import Confirmation from './pages/Notice/Confirmation';
 import CheckListPage from './pages/MemberList/CheckListPage';
-import Post from './pages/Notice/Write/Post';
 import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/Store.jsx';
-import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
+import Write from './pages/Notice/Write/Write.jsx';
 
 function App() {
   return (
@@ -82,10 +79,7 @@ function App() {
             <Route path="/notice/confirm" element={<Confirmation />} />
             <Route path="/notice/solve" element={<Solve />} />
             <Route path="/notice/solve/result" element={<Results />} />
-            <Route path="/notice/write" element={<Post />} />
-            <Route path="/notice/write/mission" element={<MissionType />} />
-            <Route path="/notice/write/quiz" element={<QuizType />} />
-            <Route path="/notice/write/preview" element={<Preview />} />
+            <Route path="/notice/write" element={<Write />} />
             <Route path="/notice/edit" element={<RoomEdit />} />
           </Routes>
         </Router>

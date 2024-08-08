@@ -13,7 +13,7 @@ export const QuestionPreview = ({ postType }) => {
         </>
       ) : (
         <Question>
-          Q. 질문형 공지글의 예시 질문입니다. 예시 질문입니다.
+          Q. 미션형 공지글의 예시 질문입니다. 예시 질문입니다.{' '}
         </Question>
       )}
     </Container>
