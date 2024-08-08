@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CustomInput from '../../components/CustomInput';
 import { CustomBtn } from '../../components/CustomBtn';
@@ -13,8 +12,6 @@ const CreateNoticeRoom = () => {
   const [password, setPassword] = useState('');
   const [penaltyCount, setPenaltyCount] = useState('');
   const [image, setImage] = useState('');
-
-  const navigate = useNavigate();
 
   const handleAlbumClick = () => {
     const input = document.createElement('input');
@@ -41,20 +38,12 @@ const CreateNoticeRoom = () => {
         max_penalty: penaltyCount,
       };
 
-      navigate('/create-notice-room/success', {
-        state: requestData,
-      });
-
-      //API 연결시
-      // try {
-      //   const response = await axios.post('/api/admin/room', requestData);
-      //   console.log(response.data);
-      //   navigate('/create-notice-room/success', {
-      //     state: requestData,
-      //   });
-      // } catch (error) {
-      //   console.error('Error creating notice room:', error);
-      // }
+      try {
+        const response = await axios.post('/api/admin/room', requestData);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error creating notice room:', error);
+      }
     }
   };
 
@@ -127,7 +116,7 @@ const CreateNoticeRoom = () => {
         <CustomBtn
           props={{
             text: '생성하기',
-            background: isFormValid ? '#509BF7' : ' #BDBDBD',
+            background: isFormValid ? '#509BF7' : '#BDBDBD',
             border: 'none',
             link: '/create-notice-room/success',
             onClick: handleCreateClick,
