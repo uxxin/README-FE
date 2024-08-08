@@ -29,69 +29,82 @@ const CreateNoticeRoomSuccess = () => {
   }, []);
 
   return (
-    <>
-      <Header
-        props={{
-          title: '',
-          isSearch: false, // 검색 기능이 필요 없는 경우
-          url: '/create-notice-room', // 이전 페이지
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100vh',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
         }}
-      />
-      <Container>
-        <InfoBox>
-          <TopSection>리드미 완성🎉</TopSection>
-          <InfoSection>
-            <ProfileImage
-              src={profileImage || exampleProfileImage}
-              alt="Profile"
-            />
-            <Info>
-              <InfoSet>
-                <InfoLabel>초대 URL:</InfoLabel>
-                <InfoValue>{url}</InfoValue>
-              </InfoSet>
-              <InfoSet>
-                <InfoLabel>공지방 이름:</InfoLabel>
-                <InfoValue>{roomName}</InfoValue>
-              </InfoSet>
-              <InfoSet>
-                <InfoLabel>비밀번호:</InfoLabel>
-                <InfoValue>{password}</InfoValue>
-              </InfoSet>
-              <InfoSet>
-                <InfoLabel>대표자:</InfoLabel>
-                <InfoValue>{nickName}</InfoValue>
-              </InfoSet>
-            </Info>
-          </InfoSection>
-        </InfoBox>
-        <ButtonContainer>
-          <CustomBtn
-            props={{
-              text: '공지방으로 이동',
-              background: '#509BF7',
-              border: 'none',
-              link: '/notice',
-            }}
-          />
-          <CustomBtn
-            props={{
-              text: '메인으로 이동',
-              background: '#FFFFFF',
-              border: '0.5px solid #509BF7',
-              link: '/home',
-            }}
-          />
-        </ButtonContainer>
-      </Container>
-    </>
+      >
+        <Header
+          props={{
+            title: '',
+            isSearch: false, // 검색 기능이 필요 없는 경우
+            url: '/create-notice-room', // 이전 페이지
+          }}
+        />
+        <Container>
+          <InfoBox>
+            <TopSection>리드미 완성🎉</TopSection>
+            <InfoSection>
+              <ProfileImage
+                src={profileImage || exampleProfileImage}
+                alt="Profile"
+              />
+              <Info>
+                <InfoSet>
+                  <InfoLabel>초대 URL:</InfoLabel>
+                  <InfoValue>{url}</InfoValue>
+                </InfoSet>
+                <InfoSet>
+                  <InfoLabel>공지방 이름:</InfoLabel>
+                  <InfoValue>{roomName}</InfoValue>
+                </InfoSet>
+                <InfoSet>
+                  <InfoLabel>비밀번호:</InfoLabel>
+                  <InfoValue>{password}</InfoValue>
+                </InfoSet>
+                <InfoSet>
+                  <InfoLabel>대표자:</InfoLabel>
+                  <InfoValue>{nickName}</InfoValue>
+                </InfoSet>
+              </Info>
+            </InfoSection>
+          </InfoBox>
+        </Container>
+      </div>
+      <ButtonContainer>
+        <CustomBtn
+          props={{
+            text: '공지방으로 이동',
+            background: '#509BF7',
+            border: 'none',
+            link: '/notice',
+          }}
+        />
+        <CustomBtn
+          props={{
+            text: '메인으로 이동',
+            background: '#FFFFFF',
+            border: '0.5px solid #509BF7',
+            link: '/home',
+          }}
+        />
+      </ButtonContainer>
+    </div>
   );
 };
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   padding: 0 1rem;
 `;
 
@@ -182,6 +195,8 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
+  margin-bottom: 1.25rem;
+  padding: 0.625rem 1rem;
 `;
 
 export default CreateNoticeRoomSuccess;
