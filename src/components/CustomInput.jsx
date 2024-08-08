@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
-  // const [inputValue, setInputValue] = useState('');
-
-  // value={inputValue}
-  // onChange={(e) => setInputValue(e.target.value)}
-
+const CustomInput = ({
+  placeholder,
+  value,
+  onChange,
+  onBlur,
+  charCount,
+  type = 'text',
+}) => {
   return (
     <Container>
       <Input
-        type="text"
+        type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -24,6 +26,7 @@ const CustomInput = ({ placeholder, value, onChange, onBlur, charCount }) => {
 
 const Container = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
   padding: 1.25rem 1.12rem;
   border-radius: 0.5rem;
