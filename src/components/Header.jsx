@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as BackButton } from '../assets/images/back_button.svg';
 import { ReactComponent as SearchButton } from '../assets/images/search_button.svg';
+import CloseButton from '../assets/images/close_button.svg';
 
 export const Header = ({ props }) => {
   /*
@@ -57,7 +58,11 @@ export const Header = ({ props }) => {
       ) : (
         <Container onClick={handleContainerClick}>
           <LeftButtonWrapper onClick={handleLeftButtonClick}>
-            <StyledBackButton fill="#222222" />
+            {props.write ? (
+              <StyledCloseButton src={CloseButton} />
+            ) : (
+              <StyledBackButton fill="#222222" />
+            )}
           </LeftButtonWrapper>
           <Title>{props.title}</Title>
           {props.isSearch ? (
@@ -99,6 +104,11 @@ const RightButtonWrapper = styled.div`
 `;
 
 const StyledBackButton = styled(BackButton)`
+  width: 1.5rem;
+  height: 1.5rem;
+`;
+
+const StyledCloseButton = styled.img`
   width: 1.5rem;
   height: 1.5rem;
 `;

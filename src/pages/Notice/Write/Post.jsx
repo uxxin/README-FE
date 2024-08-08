@@ -21,7 +21,14 @@ const Post = () => {
 
   return (
     <div>
-      <Header props={{ title: '공지 작성', isSearch: false }} />
+      <Header
+        props={{
+          title: '공지 작성',
+          isSearch: false,
+          url: '/notice',
+          write: true,
+        }}
+      />
       <Container>
         <TypeCheck onTypeChange={handleTypeCheck} />
         <PostInput onInputChange={handleInputChange} />
