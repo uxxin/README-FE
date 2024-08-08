@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NoticeItem } from '../../components/Notice/NoticeItem';
 import styled from 'styled-components';
 import { CommentItem } from '../../components/Notice/CommentItem';
@@ -6,6 +6,7 @@ import CommentWrite from '../../assets/images/comment_write.svg';
 import { Header } from '../../components/Header';
 
 const NoticeDetails = () => {
+  const [width, setWidth] = useState(0);
   const isManager = true;
   const post = [
     {
@@ -53,8 +54,12 @@ const NoticeDetails = () => {
     },
   ];
 
+  useEffect(() => {
+    setWidth(document.querySelector('.container')?.clientWidth);
+  }, []);
+
   return (
-    <div>
+    <div className="container" style={{ border: '1px solid blue' }}>
       <Header props={{ title: '공지방 이름', isSearch: false }} />
       <Container>
         {post.length > 0 ? (
@@ -75,7 +80,7 @@ const NoticeDetails = () => {
           )}
         </CommentList>
 
-        <CommentInputContainer>
+        <CommentInputContainer width={width}>
           <CommentInputFrame>
             <CommentInput placeholder="입력하세요." />
             <CommentWriteIcon src={CommentWrite} alt="comment write" />
@@ -88,7 +93,7 @@ const NoticeDetails = () => {
 
 const Container = styled.div`
   display: flex;
-  padding: 0.625rem 1rem;
+  padding: 0.625rem 1rem 5.8432rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -104,8 +109,9 @@ const CommentList = styled.div`
 
 const CommentInputContainer = styled.div`
   display: flex;
-  width: 70%;
-  padding: 0.25rem;
+  width: ${(props) => (props.width - 8) / 16}rem;
+  /* padding: 0.25rem; */
+  padding-bottom: 2.34631rem;
   justify-content: center;
   align-items: center;
   background: var(--Basic-White, #fff);

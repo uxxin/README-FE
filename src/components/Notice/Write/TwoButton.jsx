@@ -21,7 +21,7 @@ export const TwoButton = ({ isButtonEnabled, btn1, btn2 }) => {
             text: btn2,
             border: 'none',
             background: isButtonEnabled ? '#509BF7' : '#BDBDBD',
-            link: `/notice/write/preview`,
+            link: btn2 === '확인' ? `/notice/write/preview` : `/notice`,
           }}
         />
       </ButtonWrapper>

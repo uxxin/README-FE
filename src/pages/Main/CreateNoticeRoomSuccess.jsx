@@ -1,81 +1,110 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // axios를 import 해야 합니다
 import styled from 'styled-components';
 import { CustomBtn } from '../../components/CustomBtn';
 import exampleProfileImage from '../../assets/images/exampleimage.png';
 import { Header } from '../../components/Header';
 
 const CreateNoticeRoomSuccess = () => {
-  const location = useLocation();
+  const [profileImage, setProfileImage] = useState(
+    '/assets/images/defaultprofileimage.png',
+  );
+  const [url, setURL] = useState('https:/default/url');
+  const [roomName, setRoomName] = useState('공지방 이름');
+  const [password, setPassword] = useState('비밀번호');
+  const [nickName, setNickName] = useState('대표자 이름');
 
-  // location.state에서 전달된 데이터 가져오기
-  const { room_image, admin_nickname, room_name, room_password } =
-    location.state || {};
+  useEffect(() => {
+    axios
+      .get('/mock/createsuccess.json')
+      .then((response) => {
+        const data = response.data[0]; // 첫 번째 프로필 데이터 가져오기
+        setProfileImage(data.room_image);
+        setURL(data.room_url);
+        setRoomName(data.room_name);
+        setPassword(data.room_password);
+        setNickName(data.admin_nickname);
+      })
+      .catch((error) => console.error('Error fetching profile data:', error));
+  }, []);
 
   return (
-    <>
-      <Header
-        props={{
-          title: '',
-          isSearch: false, // 검색 기능이 필요 없는 경우
-          url: '/create-notice-room', // 이전 페이지
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100vh',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
         }}
-      />
-      <Container>
-        <InfoBox>
-          <TopSection>리드미 완성🎉</TopSection>
-          <InfoSection>
-            <ProfileImage
-              src={room_image || exampleProfileImage}
-              alt="Profile"
-            />
-            <Info>
-              <InfoSet>
-                <InfoLabel>초대 URL:</InfoLabel>
-                <InfoValue>http://example.com</InfoValue>
-              </InfoSet>
-              <InfoSet>
-                <InfoLabel>공지방 이름:</InfoLabel>
-                <InfoValue>{room_name}</InfoValue>
-              </InfoSet>
-              <InfoSet>
-                <InfoLabel>비밀번호:</InfoLabel>
-                <InfoValue>{room_password}</InfoValue>
-              </InfoSet>
-              <InfoSet>
-                <InfoLabel>대표자:</InfoLabel>
-                <InfoValue>{admin_nickname}</InfoValue>
-              </InfoSet>
-            </Info>
-          </InfoSection>
-        </InfoBox>
-        <ButtonContainer>
-          <CustomBtn
-            props={{
-              text: '공지방으로 이동',
-              background: '#509BF7',
-              border: 'none',
-              link: '/notice',
-            }}
-          />
-          <CustomBtn
-            props={{
-              text: '메인으로 이동',
-              background: '#FFFFFF',
-              border: '0.5px solid #509BF7',
-              link: '/home',
-            }}
-          />
-        </ButtonContainer>
-      </Container>
-    </>
+      >
+        <Header
+          props={{
+            title: '',
+            isSearch: false, // 검색 기능이 필요 없는 경우
+            url: '/create-notice-room', // 이전 페이지
+          }}
+        />
+        <Container>
+          <InfoBox>
+            <TopSection>리드미 완성🎉</TopSection>
+            <InfoSection>
+              <ProfileImage
+                src={profileImage || exampleProfileImage}
+                alt="Profile"
+              />
+              <Info>
+                <InfoSet>
+                  <InfoLabel>초대 URL:</InfoLabel>
+                  <InfoValue>{url}</InfoValue>
+                </InfoSet>
+                <InfoSet>
+                  <InfoLabel>공지방 이름:</InfoLabel>
+                  <InfoValue>{roomName}</InfoValue>
+                </InfoSet>
+                <InfoSet>
+                  <InfoLabel>비밀번호:</InfoLabel>
+                  <InfoValue>{password}</InfoValue>
+                </InfoSet>
+                <InfoSet>
+                  <InfoLabel>대표자:</InfoLabel>
+                  <InfoValue>{nickName}</InfoValue>
+                </InfoSet>
+              </Info>
+            </InfoSection>
+          </InfoBox>
+        </Container>
+      </div>
+      <ButtonContainer>
+        <CustomBtn
+          props={{
+            text: '공지방으로 이동',
+            background: '#509BF7',
+            border: 'none',
+            link: '/notice',
+          }}
+        />
+        <CustomBtn
+          props={{
+            text: '메인으로 이동',
+            background: '#FFFFFF',
+            border: '0.5px solid #509BF7',
+            link: '/home',
+          }}
+        />
+      </ButtonContainer>
+    </div>
   );
 };
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   padding: 0 1rem;
 `;
 
@@ -100,10 +129,9 @@ const TopSection = styled.div`
   border-top-right-radius: 0.5rem;
   background: var(--Primary-Normal, #509bf7);
   color: var(--Basic-White, var(--Basic-White, #fff));
-
   font-size: 1rem;
   font-weight: 700;
-  line-height: 100%; /* 1rem */
+  line-height: 100%;
   letter-spacing: -0.02rem;
 `;
 
@@ -123,7 +151,7 @@ const ProfileImage = styled.img`
   width: 12.5rem;
   height: 12.5rem;
   border-radius: 0.5rem;
-  background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+  background: lightgray 50% / cover no-repeat;
 `;
 
 const Info = styled.div`
@@ -133,12 +161,12 @@ const Info = styled.div`
   gap: 0.375rem;
   align-self: stretch;
 `;
+
 const InfoLabel = styled.div`
   color: var(--Primary-dark, var(--Primary-Dark, #3c74b9));
-
   font-size: 1rem;
   font-weight: 700;
-  line-height: 100%; /* 1rem */
+  line-height: 100%;
   letter-spacing: -0.02rem;
 `;
 
@@ -154,10 +182,10 @@ const InfoValue = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
+
 const InfoSet = styled.div`
   display: flex;
   height: 2.1875rem;
-  //padding: 0.625rem;
   align-items: center;
   gap: 0.625rem;
   align-self: stretch;
@@ -167,10 +195,8 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
-  //position: fixed;
-  //bottom: 20px;
-  //left: 50%;
-  //transform: translateX(-50%);
+  margin-bottom: 1.25rem;
+  padding: 0.625rem 1rem;
 `;
 
 export default CreateNoticeRoomSuccess;
