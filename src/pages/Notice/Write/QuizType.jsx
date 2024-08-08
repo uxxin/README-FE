@@ -4,14 +4,22 @@ import styled from 'styled-components';
 import { Quiz } from '../../../components/Notice/Write/Quiz';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const QuizType = ({ onStepChange, postType }) => {
+const QuizType = ({ onStepChange, postType, postTitle, postContent }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
 
   const handleNextClick = () => {
-    onStepChange(postType); // 다음 단계로 이동
+    onStepChange(
+      postType,
+      postTitle,
+      postContent,
+      startDate,
+      endDate,
+      question,
+      answer,
+    );
   };
 
   return (

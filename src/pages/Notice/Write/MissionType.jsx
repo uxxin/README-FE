@@ -4,13 +4,20 @@ import ImgUpload from '../../../components/Notice/Write/ImgUpload';
 import { Mission } from '../../../components/Notice/Write/Mission';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const MissionType = ({ onStepChange, postType }) => {
+const MissionType = ({ onStepChange, postType, postTitle, postContent }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [question, setQuestion] = useState('');
 
   const handleNextClick = () => {
-    onStepChange(postType); // 다음 단계로 이동
+    onStepChange(
+      postType,
+      postTitle,
+      postContent,
+      startDate,
+      endDate,
+      question,
+    );
   };
 
   return (
