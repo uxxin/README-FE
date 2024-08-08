@@ -38,6 +38,21 @@ const FixedNotice = ({ onDelete }) => {
     getFixedNotice();
   }, []);
 
+  const handleDelete = async () => {
+    try {
+      const options = {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU5LCJwcm92aWRlciI6IlJFQURNRSIsImlhdCI6MTcyMzEwMDE3NSwiZXhwIjoxNzIzMTEwOTc1fQ.c_hk6yPRxJYYrvDJeM72kpAJavFKjSUq1hhdJ3wrmIo`,
+        },
+      };
+      await axios.delete(`https://read-me.kro.kr/room/fixPost`, options);
+      onDelete(); // 삭제 후 추가적인 작업이 필요하다면 onDelete 함수로 처리
+    } catch (error) {
+      console.error('공지 삭제 중 오류 발생:', error);
+    }
+  };
+
   return (
     <>
       {notice && (
@@ -53,7 +68,7 @@ const FixedNotice = ({ onDelete }) => {
               <Date>{notice.endDate}</Date>
             </NoticeDate>
           </NoticeContent>
-          <DeleteButton onClick={onDelete}>
+          <DeleteButton onClick={handleDelete}>
             <img src={deleteIcon} alt="Delete Icon" />
           </DeleteButton>
         </NoticeContainer>
