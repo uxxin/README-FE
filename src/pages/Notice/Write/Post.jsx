@@ -19,7 +19,7 @@ const Post = ({ onStepChange }) => {
   };
 
   const handleNextClick = () => {
-    onStepChange(type); // 다음 단계로 이동
+    onStepChange(type, title, content);
   };
 
   return (

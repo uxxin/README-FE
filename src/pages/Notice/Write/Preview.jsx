@@ -4,35 +4,42 @@ import styled from 'styled-components';
 import { QuestionPreview } from '../../../components/Notice/Write/QuestionPreview';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const Preview = ({ postType }) => {
+const Preview = ({
+  postType,
+  title,
+  content,
+  startDate,
+  endDate,
+  question,
+  answer,
+}) => {
   const isManager = true;
-  // const post = [
-  //   {
-  //     postId: 1,
-  //     postType: 'Quiz',
-  //     postTitle: 'TEST',
-  //     postBody: 'TESTCONTENT',
-  //     startDate: '24. 7. 25. 04:24',
-  //     endDate: '24. 7. 25. 05:24',
-  //   },
-  // ];
+  const post = [
+    {
+      postType: postType,
+      postTitle: title,
+      postBody: content,
+      startDate: startDate,
+      endDate: endDate,
+    },
+  ];
   const imageURLs = ['url11.com', 'url12.com'];
 
   return (
     <Container>
-      {/* {post.length > 0 ? (
+      {post.length > 0 ? (
         post.map((data) => (
-          <NoticeItem
-            props={data}
-            key={data.postId}
-            imgs={imageURLs}
-            preview={true}
-          />
+          <NoticeItem props={data} imgs={imageURLs} preview={true} />
         ))
       ) : (
         <></>
-      )} */}
-      <QuestionPreview postType={postType} />
+      )}
+
+      <QuestionPreview
+        postType={postType}
+        question={question}
+        answer={answer}
+      />
       <TwoButton
         props={{
           border1: '#509BF7',

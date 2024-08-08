@@ -1,20 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const QuestionPreview = ({ postType }) => {
+export const QuestionPreview = ({ postType, question, answer }) => {
+  console.log(postType);
+  console.log(question);
+  console.log(answer);
   return (
     <Container>
       {postType === 'Quiz' ? (
         <>
-          <Question>
-            Q. 퀴즈형 공지글의 예시 질문입니다. 예시 질문입니다.
-          </Question>
-          <Answer>A. 퀴즈형 공지글의 예시 답변입니다.</Answer>
+          <Question>{question}</Question>
+          <Answer>{answer}</Answer>
         </>
       ) : (
-        <Question>
-          Q. 미션형 공지글의 예시 질문입니다. 예시 질문입니다.{' '}
-        </Question>
+        <Question>{question}</Question>
       )}
     </Container>
   );
