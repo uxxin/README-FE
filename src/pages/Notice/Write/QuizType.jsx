@@ -3,7 +3,7 @@ import { Header } from '../../../components/Header';
 import { ImgUpload } from '../../../components/Notice/Write/ImgUpload';
 import styled from 'styled-components';
 import { Quiz } from '../../../components/Notice/Write/Quiz';
-import { PrevNextBnt } from '../../../components/Notice/Write/PrevNextBnt';
+import { TwoButton } from '../../../components/Notice/Write/TwoButton';
 
 const QuizType = () => {
   const [startDate, setStartDate] = useState('');
@@ -35,7 +35,7 @@ const QuizType = () => {
           answer={answer}
           setAnswer={setAnswer}
         />
-        <PrevNextBnt isButtonEnabled={isButtonEnabled} />
+        <TwoButton isButtonEnabled={isButtonEnabled} btn1="이전" btn2="확인" />
       </Container>
     </div>
   );
