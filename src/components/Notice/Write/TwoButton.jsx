@@ -2,26 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../../CustomBtn';
 
-export const PrevNextBnt = ({ isButtonEnabled }) => {
-  console.log(isButtonEnabled);
+export const TwoButton = ({ isButtonEnabled, btn1, btn2 }) => {
   return (
     <Container>
       <ButtonWrapper>
         <CustomBtn
           props={{
-            text: '이전',
+            text: btn1,
             border: '0.5px solid var(--Primary-normal, #509BF7)',
             background: '#FFFFFF',
-            // link: `/notice/write/${type}`,
+            link: `/notice/write`,
           }}
         />
       </ButtonWrapper>
       <ButtonWrapper>
         <CustomBtn
           props={{
-            text: '확인',
+            text: btn2,
             border: 'none',
-            background: isButtonEnabled ? '#509BF7' : '#BDBDBD', // link: `/notice/write/${type}`,
+            background: isButtonEnabled ? '#509BF7' : '#BDBDBD',
+            link: btn2 === '확인' ? `/notice/write/preview` : `/notice`,
           }}
         />
       </ButtonWrapper>
