@@ -14,15 +14,30 @@ export const Profile = () => {
   const [email, setEmail] = useState('이메일@gmail.com');
 
   useEffect(() => {
-    axios
-      .get('/mock/ProfileData.json')
-      .then((response) => {
-        const data = response.data[0]; // 첫 번째 프로필 데이터 가져오기
+    const getProfileData = async () => {
+      try {
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU5LCJwcm92aWRlciI6IlJFQURNRSIsImlhdCI6MTcyMzEwMDE3NSwiZXhwIjoxNzIzMTEwOTc1fQ.c_hk6yPRxJYYrvDJeM72kpAJavFKjSUq1hhdJ3wrmIo`,
+          },
+        };
+        const response = await axios('https://read-me.kro.kr/user', options);
+        const data = response.data.result;
+
+        console.log(response);
+        console.log(data);
+
         setName(data.nickname);
         setEmail(data.email);
-        setProfileImage(data.profile_image);
-      })
-      .catch((error) => console.error('Error fetching profile data:', error));
+        setProfileImage(data.profileImage);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    getProfileData();
   }, []);
 
   const handleVerificationClick = () => {
