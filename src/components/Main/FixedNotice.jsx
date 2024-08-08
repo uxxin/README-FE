@@ -6,7 +6,8 @@ import deleteIcon from '../../assets/images/deleteicon.svg';
 
 const FixedNotice = ({ onDelete }) => {
   const [notice, setNotice] = useState({
-    postId: 1,
+    roomId: 0,
+    postId: 0,
     title: '공지글 제목',
     startDate: '시작일',
     endDate: '마감일',
