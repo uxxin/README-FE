@@ -22,7 +22,6 @@ const SignIn = () => {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.currentTarget.value)}
-          charCount={true}
         />
         <CustomInput
           type="password"
