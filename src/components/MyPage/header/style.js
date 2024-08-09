@@ -6,6 +6,7 @@ export const ProfileContainer = styled.section`
   justify-content: center;
   position: fixed;
   width: 100dvw;
+  max-width: 429px;
   height: 2.75rem;
   background-color: #ffffff;
 
