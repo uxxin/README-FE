@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const QuizFormatLabel = ({ postType }) => {
   return (
     <>
-      {postType == 'MISSION' ? (
+      {postType == 'Mission' ? (
         <MissionLabel>미션</MissionLabel>
       ) : (
         <QuizLabel>퀴즈</QuizLabel>

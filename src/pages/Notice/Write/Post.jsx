@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Header } from '../../../components/Header';
 import styled from 'styled-components';
 import TypeCheck from '../../../components/Notice/Write/TypeCheck';
 import { PostInput } from '../../../components/Notice/Write/PostInput';
-import { CustomBtn } from '../../../components/CustomBtn';
+import { OneButton } from '../../../components/Notice/Write/StepButton';
 
-const Post = () => {
-  const [type, setType] = useState('quiz');
+const Post = ({ onStepChange }) => {
+  const [type, setType] = useState('Quiz');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -19,28 +18,28 @@ const Post = () => {
     setContent(newContent);
   };
 
+  const handleNextClick = () => {
+    onStepChange(type, title, content);
+  };
+
   return (
-    <div>
-      <Header props={{ title: '공지 작성', isSearch: false }} />
-      <Container>
-        <TypeCheck onTypeChange={handleTypeCheck} />
-        <PostInput onInputChange={handleInputChange} />
-        <CustomBtn
-          props={{
-            text: '다음',
-            border: 'none',
-            background: title && content ? '#509BF7' : '#BDBDBD',
-            link: `/notice/write/${type}`,
-          }}
-        />
-      </Container>
-    </div>
+    <Container>
+      <TypeCheck onTypeChange={handleTypeCheck} />
+      <PostInput onInputChange={handleInputChange} />
+      <OneButton
+        props={{
+          text: '다음',
+          border: 'none',
+          background: title && content ? '#509BF7' : '#BDBDBD',
+        }}
+        onStepChange={handleNextClick}
+      />
+    </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  padding: 0.625rem 1rem;
   flex-direction: column;
   gap: 1rem;
 `;

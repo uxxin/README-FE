@@ -1,6 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
+const BoxContainer = styled.div`
+    display: flex;
+    padding-right: 1rem;
+    padding: 0.625rem 1rem 6.25rem 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+`
+
 const Container = styled.div`
     display: flex;
     width: 24.8125rem;
@@ -24,7 +33,6 @@ const ContentContainer = styled.div`
 const Title = styled.span`
     align-self: stretch;
     color: var(--Text-default, var(--Grayscale-Gray7, #222));
-
     /* Pretendard/bold/18 */
     font-family: Pretendard;
     font-size: 1.125rem;
@@ -76,7 +84,8 @@ const ContentImg = styled.img`
 
 
 export const NoticeList = () =>{
-    return(    <div>
+    return(    
+        <BoxContainer>
     <Container>
         <ContentContainer>
             <Title>공지글의 예시제목</Title>
@@ -90,6 +99,7 @@ export const NoticeList = () =>{
         </ContentContainer>
     
     </Container>
-    </div>
+    </BoxContainer>
+
     )
 }

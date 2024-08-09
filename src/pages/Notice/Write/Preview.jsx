@@ -1,52 +1,62 @@
 import React from 'react';
 import { NoticeItem } from '../../../components/Notice/NoticeItem';
-import { Header } from '../../../components/Header';
 import styled from 'styled-components';
 import { QuestionPreview } from '../../../components/Notice/Write/QuestionPreview';
-import { TwoButton } from '../../../components/Notice/Write/TwoButton';
+import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const Preview = () => {
+const Preview = ({
+  postType,
+  title,
+  content,
+  startDate,
+  endDate,
+  question,
+  answer,
+}) => {
   const isManager = true;
   const post = [
     {
-      postId: 1,
-      postType: 'Quiz',
-      postTitle: 'TEST',
-      postBody: 'TESTCONTENT',
-      startDate: '24. 7. 25. 04:24',
-      endDate: '24. 7. 25. 05:24',
+      postType: postType,
+      postTitle: title,
+      postBody: content,
+      startDate: startDate,
+      endDate: endDate,
     },
   ];
   const imageURLs = ['url11.com', 'url12.com'];
 
   return (
-    <div>
-      <Header props={{ title: '공지 작성', isSearch: false }} />
-      <Container>
-        {post.length > 0 ? (
-          post.map((data) => (
-            <NoticeItem
-              props={data}
-              key={data.postId}
-              imgs={imageURLs}
-              preview={true}
-            />
-          ))
-        ) : (
-          <></>
-        )}
-        <QuestionPreview postType={post.postType} />
-        <TwoButton isButtonEnabled={true} btn1="수정하기" btn2="등록하기" />
-      </Container>
-    </div>
+    <Container>
+      {post.length > 0 ? (
+        post.map((data) => (
+          <NoticeItem props={data} imgs={imageURLs} preview={true} />
+        ))
+      ) : (
+        <></>
+      )}
+
+      <QuestionPreview
+        postType={postType}
+        question={question}
+        answer={answer}
+      />
+      <TwoButton
+        props={{
+          border1: '#509BF7',
+          background1: '#FFFFFF',
+          btn1: '수정하기',
+          border2: 'none',
+          background2: '#509BF7',
+          btn2: '등록하기',
+        }}
+      />
+    </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  padding: 0.625rem 1rem;
   flex-direction: column;
-  align-items: center;
   gap: 1rem;
 `;
 
