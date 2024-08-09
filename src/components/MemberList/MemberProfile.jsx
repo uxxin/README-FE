@@ -66,7 +66,7 @@ export const MemberProfile = (props) =>{
 
   const location = useLocation();
   const { profile_image = "" } = location.state;
-  const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
+ // const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
 
   const [penaltyCount,setPenaltyCount] = useState(penalty_count);
 
@@ -91,7 +91,7 @@ export const MemberProfile = (props) =>{
 
     return(
         <Container>
-          <ImgContainer src={imageUrl} alt={`${nickname}'s profile`} />
+          <ImgContainer src={profile_image} alt={`${nickname}'s profile`} />
          <PaneltyCheck>패널티 {props.penalty_count}</PaneltyCheck>
          
          <CustomBtn

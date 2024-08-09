@@ -30,7 +30,9 @@ import { persistor, store } from './redux/Store.jsx';
 import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
-import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
+import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';;
+import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
+import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
 
 function App() {
   return (
@@ -63,6 +65,10 @@ function App() {
             <Route path="/member/invite" element={<Invite />} />
             <Route path="/member/profile/:nickname" element={<Profile />} />
             <Route path="/member/checklist" element={<CheckListPage />} />
+            <Route path="/member/acceptance" element={<AcceptancePage />} />
+            <Route path="/member/noticelist" element={<NoticeListPage />} />
+
+            
 
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />

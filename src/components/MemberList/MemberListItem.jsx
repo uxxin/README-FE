@@ -9,6 +9,8 @@ import axios from 'axios';
 import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';
+import { store } from '../../redux/Store';
+
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -126,8 +128,9 @@ export const MemberListItem = (props) => {
   const debouncedSearch = Debounce(state.search,300);
 
   useEffect(() => {
-    if (members && members.length > 0) {
+    if (members && members.length >= 0) {
       setState(prevState => ({ ...prevState, results: members, allMembers: members }));
+
     }
   }, [members]);
 
@@ -136,7 +139,7 @@ export const MemberListItem = (props) => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU4LCJwcm92aWRlciI6IlJFQURNRSIsImlhdCI6MTcyMzEwMjg5MywiZXhwIjoxNzIzMTEzNjkzfQ.yjalsJhH3DPIQsbfNTclwpX4mKPk2Prg_38IOpwSyrA`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMTk3MDM4LCJleHAiOjE3MjMyMDc4Mzh9.hQBMLkITkp4d9kdojiTASKxr8DoAp8qPGve0BErrNkg`
         }};
 
         const response = await axios.get("https://read-me.kro.kr/admin/users", option);
@@ -155,10 +158,8 @@ export const MemberListItem = (props) => {
   }, [dispatch]);
 
   
-  console.log("keyscount",keysCount)
 
-
-
+ 
 
 
 // 검색어에 따라 필터링
@@ -183,8 +184,6 @@ useEffect(() => {
     setState(prevState=>({...prevState,search:e.target.value}));
   }
 
-  console.log("필터링된 사람:ListItem",state.results)
-
   console.log('필터링된 사람:ListItem', state.results);
 
   return (
@@ -192,7 +191,7 @@ useEffect(() => {
       <CustomInput placeholder={"입력하세요"} onChange={handleInput}></CustomInput>
       <MemberIcon>
         <HumanIcon />
-      <CountColor> {keysCount} </CountColor>
+      <CountColor> {keysCount+1} </CountColor>
       </MemberIcon>
       <MemberListBox>
         <ButtonContainer>
