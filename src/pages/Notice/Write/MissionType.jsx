@@ -1,46 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { Header } from '../../../components/Header';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ImgUpload from '../../../components/Notice/Write/ImgUpload';
 import { Mission } from '../../../components/Notice/Write/Mission';
-import { TwoButton } from '../../../components/Notice/Write/TwoButton';
+import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const MissionType = () => {
+const MissionType = ({ onStepChange, postType, postTitle, postContent }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [question, setQuestion] = useState('');
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
-  useEffect(() => {
-    if (startDate && endDate && question) {
-      setIsButtonEnabled(true);
-    } else {
-      setIsButtonEnabled(false);
-    }
-  }, [startDate, endDate, question]);
+  const handleNextClick = () => {
+    onStepChange(
+      postType,
+      postTitle,
+      postContent,
+      startDate,
+      endDate,
+      question,
+    );
+  };
 
   return (
-    <div>
-      <Header props={{ title: '공지 작성', isSearch: false }} />
-      <Container>
-        <ImgUpload />
-        <Mission
-          startDate={startDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          setEndDate={setEndDate}
-          question={question}
-          setQuestion={setQuestion}
-        />
-        <TwoButton isButtonEnabled={isButtonEnabled} btn1="이전" btn2="확인" />
-      </Container>
-    </div>
+    <Container>
+      <ImgUpload />
+      <Mission
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
+        question={question}
+        setQuestion={setQuestion}
+      />
+      <TwoButton
+        props={{
+          border1: '#509BF7',
+          background1: '#FFFFFF',
+          btn1: '이전',
+          border2: 'none',
+          background2: startDate && endDate && question ? '#509BF7' : '#BDBDBD',
+          btn2: '확인',
+        }}
+        onStepChange={handleNextClick}
+      />
+    </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  padding: 0.625rem 1rem;
   flex-direction: column;
   gap: 1rem;
 `;

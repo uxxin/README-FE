@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Check from '../../../assets/images/post_type_check.svg';
 
 export const TypeCheck = ({ onTypeChange }) => {
-  const [selectedType, setSelectedType] = useState('quiz');
+  const [selectedType, setSelectedType] = useState('Quiz');
 
   const handleClick = (type) => {
     setSelectedType(type);
@@ -14,15 +14,15 @@ export const TypeCheck = ({ onTypeChange }) => {
     <Container>
       <CheckImg src={Check} alt="check" />
       <Type
-        isSelected={selectedType === 'quiz'}
-        onClick={() => handleClick('quiz')}
+        isSelected={selectedType === 'Quiz'}
+        onClick={() => handleClick('Quiz')}
       >
         퀴즈
       </Type>
       <Division>|</Division>
       <Type
-        isSelected={selectedType === 'mission'}
-        onClick={() => handleClick('mission')}
+        isSelected={selectedType === 'Mission'}
+        onClick={() => handleClick('Mission')}
       >
         미션
       </Type>

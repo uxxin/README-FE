@@ -33,6 +33,7 @@ export const NoticeTitle = ({ props, preview }) => {
     { label: '수정', onClick: correctNotice, color: '#222222' },
     { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
+  console.log(props);
 
   return (
     <Container>
