@@ -89,7 +89,7 @@ export const DefaultProfileEditContainer = styled(CommonContainer)`
 `;
 
 export const EditPasswordContainer = styled(CommonContainer)`
-  section {
+  .input-container {
     padding: 0.625rem 1rem;
     display: flex;
     flex-direction: column;
@@ -98,6 +98,60 @@ export const EditPasswordContainer = styled(CommonContainer)`
     .divider {
       height: 0.0625rem;
       background-color: var(--color-primary-normal);
+    }
+  }
+`;
+
+export const NoticeRoomProfileEditContainer = styled(CommonContainer)`
+  .image-email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.625rem 0 1.25rem;
+
+    .image {
+      position: relative;
+
+      button {
+        border: none;
+        background-color: var(--color-primary-normal);
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        height: 2.25rem;
+        width: 2.25rem;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0.5rem;
+      }
+      input {
+        display: none;
+      }
+    }
+    > span {
+      color: var(--color-caption);
+    }
+
+    .check-nickname {
+      display: flex;
+      gap: 0.44rem;
+      justify-content: space-between;
+      width: calc(100% - 2rem);
+
+      button {
+        border: none;
+        background-color: var(--color-primary-normal);
+        color: #ffffff;
+        padding: 1.36rem 1.06rem;
+        border-radius: 0.5rem;
+        height: 4.0625rem;
+
+        &.disabled {
+          background-color: var(--color-disabled);
+        }
+      }
     }
   }
 `;

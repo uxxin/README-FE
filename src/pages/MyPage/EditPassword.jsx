@@ -55,7 +55,7 @@ const EditPassword = () => {
     <>
       <Header title="마이페이지" back />
       <EditPasswordContainer>
-        <section>
+        <section className="input-container">
           <Input
             id="current"
             type="password"
