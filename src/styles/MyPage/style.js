@@ -35,3 +35,55 @@ export const MypageContainer = styled(CommonContainer)`
     }
   }
 `;
+
+export const DefaultProfileEditContainer = styled(CommonContainer)`
+  .image-email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.625rem 0 1.25rem;
+
+    .image {
+      position: relative;
+
+      button {
+        border: none;
+        background-color: var(--color-primary-normal);
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        height: 2.25rem;
+        width: 2.25rem;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0.5rem;
+      }
+      input {
+        display: none;
+      }
+    }
+    > span {
+      color: var(--color-caption);
+    }
+  }
+
+  .input-nickname {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 0 1rem;
+
+    .input-wrap {
+      display: flex;
+      flex-direction: column;
+      padding: 0.625rem 0;
+      gap: 0.625rem;
+    }
+
+    .link {
+      color: var(--color-caption);
+    }
+  }
+`;
