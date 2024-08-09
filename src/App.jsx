@@ -31,6 +31,7 @@ import Preview from './pages/Notice/Write/Preview.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
+import EditPassword from './pages/MyPage/EditPassword.jsx';
 
 function App() {
   return (
@@ -69,6 +70,10 @@ function App() {
             <Route
               path="/my-page/default-edit"
               element={<DefaultProfileEdit />}
+            />
+            <Route
+              path="/my-page/default-edit/password"
+              element={<EditPassword />}
             />
             <Route
               path="/my-page/notice-edit"
