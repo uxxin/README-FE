@@ -1,4 +1,4 @@
-import defaultProfileSrc from '../../../assets/images/defaultprofileimage.png';
+import defaultProfileSrc from '../../../assets/images/default_profile_8.png';
 import { ImageStyled } from './style';
 
 export default function Image({ url }) {
