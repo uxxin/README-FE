@@ -20,7 +20,7 @@ const DefaultProfileEdit = () => {
     if (!isLoading) return user;
     return null;
   }, [isLoading]);
-  console.log(prevUser);
+
   const buttonDisabled =
     user.nickname.length < 1 ||
     user.name.length < 1 ||
@@ -29,6 +29,7 @@ const DefaultProfileEdit = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+    if (value.length > 20) return;
     setUser((prev) => ({ ...prev, [id]: value }));
   };
 
@@ -97,7 +98,9 @@ const DefaultProfileEdit = () => {
               onChange={handleChange}
             />
           </div>
-          <Link className="link">비밀번호 변경</Link>
+          <Link className="link" to="/my-page/default-edit/password">
+            비밀번호 변경
+          </Link>
         </section>
       </DefaultProfileEditContainer>
       <FloatingButton onClick={handleUpdateProfile} disabled={buttonDisabled} />

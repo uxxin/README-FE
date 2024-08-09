@@ -87,3 +87,17 @@ export const DefaultProfileEditContainer = styled(CommonContainer)`
     }
   }
 `;
+
+export const EditPasswordContainer = styled(CommonContainer)`
+  section {
+    padding: 0.625rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+
+    .divider {
+      height: 0.0625rem;
+      background-color: var(--color-primary-normal);
+    }
+  }
+`;
