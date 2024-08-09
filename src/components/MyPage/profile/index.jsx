@@ -2,7 +2,7 @@ import defaultProfileSrc from '../../../assets/images/defaultprofileimage.png';
 import settingSrc from '../../../assets/svgs/setting.svg';
 import { ProfileContainer } from './style';
 
-export default function Profile() {
+export default function Profile({ room }) {
   return (
     <ProfileContainer>
       <div className="profile">
@@ -14,7 +14,7 @@ export default function Profile() {
         <div>
           <span className="medium-18 nickname">닉네임</span>
           <br />
-          <span className="regular-12">기본 프로필</span>
+          <span className="regular-12">{room || '기본 프로필'} </span>
         </div>
       </div>
       <button className="setting">
