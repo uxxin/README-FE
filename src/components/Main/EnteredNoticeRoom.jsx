@@ -14,15 +14,17 @@ export const EnteredNoticeRoom = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('mock/entered.json');
-        setNoticeRooms(response.data);
+        const response = await axios.get(
+          `https://read-me.kro.kr/user/join-room?page=${currentPage}&pageSize=${ITEMS_PER_PAGE}`,
+        );
+        setNoticeRooms(response.data.result.rooms);
       } catch (error) {
         console.error('Error fetching notice rooms:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
 
@@ -46,35 +48,49 @@ export const EnteredNoticeRoom = () => {
       <EnteredTitle>입장한 공지방</EnteredTitle>
       <NoticeRoomsInfo>
         {currentNotices.length > 0 ? (
-          <NoticeRooms>
-            {currentNotices.map((room) => (
-              <NoticeRoom key={room.id} room={room} />
-            ))}
-          </NoticeRooms>
+          <>
+            <NoticeRooms>
+              {currentNotices.map((room) => (
+                <NoticeRoom key={room.id} room={room} />
+              ))}
+            </NoticeRooms>
+            {noticeRooms.length > 0 && (
+              <Pagination>
+                <NavButton
+                  onClick={handlePrevPage}
+                  src={prevButtonSvg}
+                  alt="Previous"
+                />
+                <PageNumber>
+                  <CurrentPage>{currentPage}</CurrentPage>
+                  <Separator>/</Separator>
+                  <TotalPages>{totalPages}</TotalPages>
+                </PageNumber>
+                <NavButton
+                  onClick={handleNextPage}
+                  src={nextButtonSvg}
+                  alt="Next"
+                />
+              </Pagination>
+            )}
+          </>
         ) : (
           <NoticeRooms>
             <NoNoticesBox>
-              <NoNoticesText>아직 입장한 공지방이 없어요</NoNoticesText>
+              <NoNoticesText>
+                <span>아직 입장한</span>
+                <br />
+                <span>공지방이 없어요</span>
+              </NoNoticesText>
             </NoNoticesBox>
           </NoticeRooms>
         )}
-        <Pagination>
-          <NavButton
-            onClick={handlePrevPage}
-            src={prevButtonSvg}
-            alt="Previous"
-          />
-          <PageNumber>
-            <CurrentPage>{currentPage}</CurrentPage>
-            <Separator>/</Separator>
-            <TotalPages>{totalPages}</TotalPages>
-          </PageNumber>
-          <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
-        </Pagination>
       </NoticeRoomsInfo>
     </EnteredNoticeRoomSection>
   );
 };
+
+export default EnteredNoticeRoom;
 
 const NoticeRoomsInfo = styled.div`
   display: flex;
@@ -121,8 +137,6 @@ const NoNoticesBox = styled.div`
   align-items: flex-start;
   border-radius: 0.5rem;
   border: 0.0208rem solid var(--Primary-normal, #509bf7);
-
-  //height: 10rem;
   padding: 4.375rem 1.1875rem 4.125rem 1.1875rem;
   justify-content: flex-end;
   align-items: center;
@@ -176,5 +190,3 @@ const NavButton = styled.img`
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
 `;
-
-export default EnteredNoticeRoom;

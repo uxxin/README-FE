@@ -39,7 +39,7 @@ const Logo = styled.img`
 `;
 
 const Container = styled.div`
-  display: flex;
+  //display: flex;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;

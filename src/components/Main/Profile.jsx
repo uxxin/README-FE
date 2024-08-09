@@ -11,7 +11,7 @@ export const Profile = () => {
   const [profileImage, setProfileImage] = useState(
     '/assets/images/defaultprofileimage.png',
   );
-  const [nickname, setNickname] = useState('이름');
+  const [nickName, setNickname] = useState('이름');
   const [email, setEmail] = useState('이메일@gmail.com');
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const Profile = () => {
       <InfoContainer>
         <ProfileImage src={profileImage} alt="Profile" />
         <PersonalInfo>
-          <Name>{nickname}</Name>
+          <Name>{nickName}</Name>
           <Email>{email}</Email>
         </PersonalInfo>
       </InfoContainer>
