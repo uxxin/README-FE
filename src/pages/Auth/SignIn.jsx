@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { AuthLogo } from '../../components/Auth/AuthLogo';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput.jsx';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../api/user.js';
+import logo from '../../assets/images/logoex.svg';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const SignIn = () => {
 
   return (
     <Root>
-      <AuthLogo />
+      <StyledLogo src={logo} alt="logo" />
       <InputContainer>
         <CustomInput
           placeholder="이메일"
@@ -83,6 +83,7 @@ const SignInButton = styled(CommonButton)`
   background-color: #509bf7;
   color: #ffffff;
 `;
+
 const SignupButton = styled(CommonButton)`
   background-color: #ffffff;
   color: #509bf7;
@@ -102,6 +103,13 @@ const ButtonWrapper = styled.div`
   position: fixed;
   max-width: 397px;
   bottom: 3.37rem;
+`;
+
+const StyledLogo = styled.img`
+  width: 21.5625rem;
+  height: 6.875rem;
+  flex-shrink: 0;
+  margin: 2.88rem auto 3.25rem auto;
 `;
 
 export default SignIn;
