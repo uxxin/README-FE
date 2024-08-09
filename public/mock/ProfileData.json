@@ -1,11 +1,19 @@
 [{
   "nickname": "더기/양유진",
   "email": "duggy1114@gmail.com",
-  "profile_image": "../src/assets/images/defaultprofileimage.png"
+  "profile_image": "../src/assets/images/defaultprofileimage.png",
+  "penalty_count": 3
 },
 {
   "nickname": "아미라/장희원",
   "email": "abcd123@gmail.com",
-  "profile_image": "../src/assets/images/defaultprofileimage.png"
+  "profile_image": "../src/assets/images/defaultprofileimage.png",
+  "penalty_count": 3
+},
+{
+  "nickname": "제이",
+  "email": "abcd123@gmail.com",
+  "profile_image": "../src/assets/images/defaultprofileimage.png",
+  "penalty_count": 3
 }
 ]

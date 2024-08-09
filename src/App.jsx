@@ -27,7 +27,9 @@ import { persistor, store } from './redux/Store.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
-import Write from './pages/Notice/Write/Write.jsx';
+import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
+import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
+
 
 function App() {
   return (
@@ -60,6 +62,10 @@ function App() {
             <Route path="/member/invite" element={<Invite />} />
             <Route path="/member/profile/:nickname" element={<Profile />} />
             <Route path="/member/checklist" element={<CheckListPage />} />
+            <Route path="/member/acceptance" element={<AcceptancePage />} />
+            <Route path="/member/noticelist" element={<NoticeListPage />} />
+
+            
 
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />
@@ -79,7 +85,7 @@ function App() {
             <Route path="/notice/confirm" element={<Confirmation />} />
             <Route path="/notice/solve" element={<Solve />} />
             <Route path="/notice/solve/result" element={<Results />} />
-            <Route path="/notice/write" element={<Write />} />
+            {/*<Route path="/notice/write" element={<Write />} />*/}
             <Route path="/notice/edit" element={<RoomEdit />} />
           </Routes>
         </Router>
