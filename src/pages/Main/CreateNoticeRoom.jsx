@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
-import CustomInput from '../../components/CustomInput';
-import { CustomBtn } from '../../components/CustomBtn';
-import toAlbumBtnIcon from '../../assets/images/albumbutton.svg';
 import { Header } from '../../components/Header';
+import CreateNoticeRoomForm from '../../components/Main/CreateNoticeRoomForm';
+import { CustomBtn } from '../../components/CustomBtn';
+import styled from 'styled-components';
+import { postNoticeRoom } from '../../api/createnoticeroom';
 
 const CreateNoticeRoom = () => {
   const [leaderName, setLeaderName] = useState('');
@@ -13,106 +13,80 @@ const CreateNoticeRoom = () => {
   const [penaltyCount, setPenaltyCount] = useState('');
   const [image, setImage] = useState('');
 
-  const handleAlbumClick = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (event) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    };
-    input.click();
-  };
-
   const handleCreateClick = async () => {
     if (isFormValid) {
-      const requestData = {
+      const RoomData = {
+        admin_id: 0,
         room_image: image,
         admin_nickname: leaderName,
         room_name: roomName,
         room_password: password,
         max_penalty: penaltyCount,
       };
-
-      try {
-        const response = await axios.post('/api/admin/room', requestData);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error creating notice room:', error);
-      }
+      useEffect(() => {
+        (async () => {
+          try {
+            const response = await postNoticeRoom(RoomData);
+            console.log(response);
+            console.log('공지방 생성 성공 콘솔');
+          } catch (error) {
+            console.log('공지방 생성 중 에러', error);
+          }
+        })();
+      }, []);
     }
   };
 
   const isFormValid = leaderName && roomName && password && penaltyCount;
 
-  const handleLeaderNameChange = (e) => {
-    setLeaderName(e.target.value);
-    console.log('Leader Name:', e.target.value);
-  };
-
-  const handleRoomNameChange = (e) => {
-    setRoomName(e.target.value);
-    console.log('Room Name:', e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    console.log('Password:', e.target.value);
-  };
-
-  const handlePenaltyCountChange = (e) => {
-    setPenaltyCount(e.target.value);
-    console.log('Penalty Count:', e.target.value);
-  };
-
   return (
-    <>
-      <Header
-        props={{
-          title: '공지방 생성',
-          isSearch: false,
-          url: '/home',
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100vh',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
         }}
-      />
-      <Container>
-        <ImageContainer>
-          <RoomImage src={image || '<path-to-image>'} alt="Room" />
-          <ToAlbumBtn onClick={handleAlbumClick}>
-            <img src={toAlbumBtnIcon} alt="Album Button" />
-          </ToAlbumBtn>
-        </ImageContainer>
-        <FormContainer>
-          <Section>
-            <SectionTitle>단체 정보</SectionTitle>
-            <CustomInput
-              placeholder="단체 대표자 이름"
-              value={leaderName}
-              onChange={handleLeaderNameChange}
-            />
-          </Section>
-          <Section>
-            <SectionTitle>공지방 설정</SectionTitle>
-            <CustomInput
-              placeholder="공지방 이름"
-              value={roomName}
-              onChange={handleRoomNameChange}
-            />
-            <CustomInput
-              placeholder="비밀번호"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-            <CustomInput
-              placeholder="패널티 개수"
-              value={penaltyCount}
-              onChange={handlePenaltyCountChange}
-            />
-          </Section>
-        </FormContainer>
+      >
+        <Header
+          props={{
+            title: '공지방 생성',
+            isSearch: false,
+            url: '/home',
+          }}
+        />
+        <CreateNoticeRoomForm
+          leaderName={leaderName}
+          roomName={roomName}
+          password={password}
+          penaltyCount={penaltyCount}
+          image={image}
+          onImageChange={(img) => setImage(img)}
+          onLeaderNameChange={(e) => {
+            console.log('Leader Name:', e.target.value);
+            setLeaderName(e.target.value);
+          }}
+          onRoomNameChange={(e) => {
+            console.log('Room Name:', e.target.value);
+            setRoomName(e.target.value);
+          }}
+          onPasswordChange={(e) => {
+            console.log('Password:', e.target.value);
+            setPassword(e.target.value);
+          }}
+          onPenaltyCountChange={(e) => {
+            console.log('Penalty Count:', e.target.value);
+            setPenaltyCount(e.target.value);
+          }}
+        />
+      </div>
+      <ButtonContainer>
         <CustomBtn
           props={{
             text: '생성하기',
@@ -122,61 +96,15 @@ const CreateNoticeRoom = () => {
             onClick: handleCreateClick,
           }}
         />
-      </Container>
-    </>
+      </ButtonContainer>
+    </div>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0.625rem 1rem;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 2rem;
-`;
-
-const RoomImage = styled.div`
-  width: 8.75rem;
-  height: 8.75rem;
-  border-radius: 1.125rem;
-  background: ${({ src }) => `url(${src}) lightgray 50% / cover no-repeat`};
-  flex-shrink: 0;
-`;
-
-const ToAlbumBtn = styled.button`
-  position: absolute;
-  right: 8rem; //일단 이렇게
-  bottom: 0rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const FormContainer = styled.div`
-  display: flex;
-  width: 24.875rem;
-  flex-direction: column;
-  gap: 1.875rem;
-  margin-bottom: 4rem;
-`;
-
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-`;
-
-const SectionTitle = styled.div`
-  color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 100%;
-  letter-spacing: -0.0225rem;
-`;
-
 export default CreateNoticeRoom;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-bottom: 1.25rem;
+  padding: 0rem 1rem;
+`;
