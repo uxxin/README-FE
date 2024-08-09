@@ -3,6 +3,32 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --color-gray-7: #222222;
+  --color-gray-6: #444444;
+  --color-gray-5: #888888;
+  --color-gray-4: #bdbdbd;
+  --color-gray-3: #dddddd;
+  --color-gray-2: #e9e9e9;
+  --color-gray-1: #f3f3f3;
+
+  --color-success-light: #e3f2ef;
+  --color-success: #00a881;
+  --color-warning-light: #fee9d7;
+  --color-warning: #f57d14;
+  --color-danger-light: #fdd8db;
+  --color-danger: #f5535e;
+
+  --color-primary-dark: #3c74b9;
+  --color-primary-normal: #509bf7;
+  --color-primary-light-active: #c9e0fd;
+  --color-primary-light: #f4f9ff;
+
+  --color-default: #222222;
+  --color-caption: #888888;
+  --color-disabled: #bdbdbd;
+  --color-empty: #bdbdbd;
+  --color-white: #ffffff;
+
   /* bold 서체 */
   .bold-36 {
     font-size: 2.25rem;
