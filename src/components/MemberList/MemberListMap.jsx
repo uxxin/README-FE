@@ -22,10 +22,12 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 `;
 
 const ShowMoreIconContainer = styled.div`
   position: relative;
+  z-index: 1;
 `
 
 const SecondModalContent = styled.div`
@@ -103,6 +105,7 @@ const MemberAddBtn = styled.button`
 `;
 
 
+
 export const MemberListMap = ({members}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -144,13 +147,19 @@ export const MemberListMap = ({members}) => {
     setIsSecondModalOpen(false);
   };
 
-  const handleConfirmKickOut = () => {
+  const handleConfirmKickOut = async () => {
     if (selectedProfile) {
-      console.log("추방할 리스트:",selectedProfile.nickname)
-      dispatch(removeMember(selectedProfile.nickname));
-      setIsSecondModalOpen(false);
-      setIsModalOpen(false);
-    }
+    /*  try {
+        // API 호출
+        await axios.delete("https://read-me.kro.kr/admin/rooms/user-Ban", {
+          nickname: selectedProfile.nickname,
+        });
+*/
+        // 성공 시 Redux 상태 업데이트
+        dispatch(removeMember(selectedProfile.nickname));
+        setIsSecondModalOpen(false);
+        setIsModalOpen(false);
+      } 
   };
 
   const modalButtons = [
@@ -165,12 +174,22 @@ export const MemberListMap = ({members}) => {
     {members && members.length > 0 ? (
       members.map((item, index) => (
         item && item.nickname ? (
-          <MemberListDetails
-            key={index}
-            nickname={item.nickname}
-            profile_image={item.profile_image}
-            onOpenModal={() => handleOpenModal(item)}
-          />
+          <div key={index}>
+            <MemberListDetails
+              nickname={item.nickname}
+              profile_image={item.profile_image}
+              onOpenModal={() => handleOpenModal(item)}
+            />
+            {selectedProfile?.nickname === item.nickname && (
+              <ShowMoreIconContainer>
+                <CustomModal
+                  isOpen={isModalOpen}
+                  onClose={handleCloseModal}
+                  buttons={modalButtons}
+                />
+              </ShowMoreIconContainer>
+            )}
+          </div>
         ) : (
           <p key={index}>유효하지 않은 멤버 데이터</p>
         )
@@ -178,15 +197,7 @@ export const MemberListMap = ({members}) => {
     ) : (
       <p>멤버가 없습니다.</p>
     )}
-     
-     <ShowMoreIconContainer>
-        <CustomModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          buttons={modalButtons}
-        />
-      </ShowMoreIconContainer>
-       
+   
       <ButtonContainer>
           <Link to="/member/invite">
             <MemberAddBtn>

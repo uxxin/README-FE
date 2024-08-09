@@ -26,6 +26,7 @@ const MemberIcon = styled.div`
   height: 0.875rem; 
   gap: 0.25rem; 
   box-sizing: border-box;
+  white-space: nowrap;
 `;
 
 const MemberListBox = styled.div`
@@ -104,6 +105,7 @@ line-height: 14px;
 letter-spacing: -0.02em;
 text-align: left;
 color: #888888;
+white-space: nowrap;
 `
 
 
@@ -139,7 +141,7 @@ export const MemberListItem = (props) => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMTk3MDM4LCJleHAiOjE3MjMyMDc4Mzh9.hQBMLkITkp4d9kdojiTASKxr8DoAp8qPGve0BErrNkg`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMjA3NjY0LCJleHAiOjE3MjMyMTg0NjR9.C-C57rAmiPznEVUjHJo9olqvw7-djAqoWS1dt6-1f4o`
         }};
 
         const response = await axios.get("https://read-me.kro.kr/admin/users", option);
