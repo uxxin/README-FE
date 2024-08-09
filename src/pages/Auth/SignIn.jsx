@@ -9,10 +9,21 @@ import { login } from '../../api/user.js';
 const SignIn = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(undefined);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const response = await login(email, password);
+      const token = response.data.result.accessToken;
+
+      localStorage.setItem('token', token);
+
+      navigate('/home');
+    } catch (error) {
+      console.error('로그인 실패:', error);
+    }
+  };
 
   return (
     <Root>
@@ -32,14 +43,7 @@ const SignIn = () => {
         />
       </InputContainer>
       <ButtonWrapper>
-        <SignInButton
-          onClick={async () => {
-            setUser(login(email, password));
-            navigate('/home');
-          }}
-        >
-          로그인
-        </SignInButton>
+        <SignInButton onClick={handleLogin}>로그인</SignInButton>
         <NotAuth>아직 회원이 아니신가요?</NotAuth>
         <SignupButton onClick={() => navigate('/sign-up')}>
           회원가입
