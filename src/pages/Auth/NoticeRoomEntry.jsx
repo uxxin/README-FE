@@ -3,30 +3,6 @@ import { Header } from '../../components/Header.jsx';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput.jsx';
 
-{
-  // 비밀번호 확인 어떻게 하지?
-}
-
-// const [password, setPassword] = useState('');
-// const [passwordConfirm, setPasswordConfirm] = useState('');
-// const [nickname, setNickname] = useState('');
-// const [nickNameTouched, setNicknameTouched] = useState(null);
-// const [passwordConfirmTouched, setPasswordConfirmTouched] = useState(null);
-//
-// const passwordCheckInvalid = useMemo(() => {
-//   if (passwordConfirm === '') return '비밀번호를 입력해주세요!';
-//   if (password !== passwordConfirm) return '비밀번호가 일치하지 않습니다!';
-//
-//   return null;
-// }, [password, passwordConfirm]);
-//
-// const nicknameInValid = useMemo(() => {
-//   if (nickname === '') return '닉네임을 입력해주세요!';
-//   if (!nickNameRegex.test(nickname)) return '올바른 아이디를 입력해주세요!';
-//
-//   return null;
-// }, [nickname]);
-
 const NoticeRoomEntry = () => {
   return (
     <>
@@ -110,11 +86,10 @@ const InfoContainer = styled.div`
 `;
 
 const RoomImg = styled.div`
-  background-color: gray;
   width: 12.5rem;
   height: 12.5rem;
   border-radius: 0.5rem;
-  background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+  background: lightgray url(<path-to-image>) no-repeat 50% 50%;
 `;
 
 const TextContainer = styled.div`
@@ -134,7 +109,6 @@ const TextTitle = styled.span`
   height: 1rem;
   gap: 0.62rem;
   opacity: 1;
-  font-family: Pretendard;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1rem;
@@ -153,16 +127,12 @@ const TextContent = styled.span`
   overflow: hidden;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
-  font-family: Pretendard;
   font-size: 0.75rem;
-  font-style: normal;
   line-height: normal;
 `;
 
 const Label = styled.div`
-  font-family: Pretendard;
   align-self: stretch;
-  font-style: normal;
   font-weight: 700;
   line-height: 100%;
   font-size: 1rem;
