@@ -24,7 +24,7 @@ export default function Input({
           : 'warning',
   };
   return (
-    <>
+    <section style={{ padding: 0 }}>
       <InputContainer disabled={disabled}>
         <input
           type={type}
@@ -52,6 +52,6 @@ export default function Input({
           {message.content}
         </Message>
       )}
-    </>
+    </section>
   );
 }

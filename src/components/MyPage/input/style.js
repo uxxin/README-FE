@@ -7,7 +7,6 @@ export const InputContainer = styled.div`
   padding: 1.25rem 1.12rem;
   border: 0.0625rem solid var(--color-primary-light-active);
   border-radius: 0.5rem;
-  align-self: stretch;
   background-color: ${(props) =>
     props.disabled ? 'var(--color-gray-2)' : 'var(--color-primary-light)'};
 
@@ -23,10 +22,6 @@ export const InputContainer = styled.div`
 `;
 
 export const Message = styled.span`
-  display: flex;
-  position: absolute;
-  margin-top: 4.5rem;
-
   &.danger {
     color: var(--color-danger);
   }
