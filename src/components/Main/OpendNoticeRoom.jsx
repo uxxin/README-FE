@@ -9,28 +9,26 @@ import nextButtonSvg from '../../assets/images/next_button.svg';
 
 const ITEMS_PER_PAGE = 6;
 
-export const OpendNoticeRoom = () => {
+export const OpenedNoticeRoom = () => {
   const navigate = useNavigate();
   const [noticeRooms, setNoticeRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const response = await axios.get(
-          `https://read-me.kro.kr/user/create-room?page=${currentPage}&pageSize=${ITEMS_PER_PAGE}`,
-        );
-        if (response.data.isSuccess) {
-          setNoticeRooms(response.data.result.rooms);
-          setIsNext(response.data.result.isNext);
+        const response = await getOpenedRoom(currentPage, ITEMS_PER_PAGE);
+        console.log(response);
+
+        if (response.result.isSuccess) {
+          setNoticeRooms(response.result.rooms);
+          setIsNext(response.result.isNext);
         }
       } catch (error) {
-        console.error('Error fetching notice rooms:', error);
+        console.error('Error fetching opened rooms:', error);
       }
-    };
-
-    fetchData();
+    })();
   }, [currentPage]);
 
   const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
@@ -94,7 +92,7 @@ export const OpendNoticeRoom = () => {
   );
 };
 
-export default OpendNoticeRoom;
+export default OpenedNoticeRoom;
 
 const TitleContainer = styled.div`
   display: flex;
@@ -177,9 +175,9 @@ const TotalPages = styled.span`
 `;
 
 const NavButton = styled.img`
-  width: 1.5rem; /* 24px */
-  height: 1.5rem; /* 24px */
-  padding: 0.5rem; /* 8px */
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
   border-radius: 999px;

@@ -20,9 +20,11 @@ export const Profile = () => {
         const response = await getMyProfile();
         console.log(response);
 
-        setNickname(response.result.nickname);
-        setEmail(response.result.email);
-        setProfileImage(response.result.profileImage);
+        if (response.result.isSuccess) {
+          setNickname(response.result.nickname);
+          setEmail(response.result.email);
+          setProfileImage(response.result.profileImage);
+        }
       } catch (error) {
         console.log('프로필 조회 에러', error);
       }

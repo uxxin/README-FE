@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { getEnteredRoom } from '../../api/home';
 import NoticeRoom from './NoticeRoom';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
 import nextButtonSvg from '../../assets/images/next_button.svg';
@@ -10,20 +10,22 @@ const ITEMS_PER_PAGE = 6;
 export const EnteredNoticeRoom = () => {
   const [noticeRooms, setNoticeRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const response = await axios.get(
-          `https://read-me.kro.kr/user/join-room?page=${currentPage}&pageSize=${ITEMS_PER_PAGE}`,
-        );
-        setNoticeRooms(response.data.result.rooms);
-      } catch (error) {
-        console.error('Error fetching notice rooms:', error);
-      }
-    };
+        const response = await getEnteredRoom(currentPage, ITEMS_PER_PAGE);
+        console.log(response);
 
-    fetchData();
+        if (response.result.isSuccess) {
+          setNoticeRooms(response.result.rooms);
+          setIsNext(response.result.isNext);
+        }
+      } catch (error) {
+        console.error('Error fetching entered rooms:', error); // 에러 처리
+      }
+    })();
   }, [currentPage]);
 
   const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
@@ -33,9 +35,9 @@ export const EnteredNoticeRoom = () => {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) =>
-      prevPage < totalPages ? prevPage + 1 : prevPage,
-    );
+    if (isNext || currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
   const currentNotices = noticeRooms.slice(
