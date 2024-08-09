@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { getEnteredRoom } from '../../api/home';
 import NoticeRoom from './NoticeRoom';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
 import nextButtonSvg from '../../assets/images/next_button.svg';
@@ -10,19 +10,23 @@ const ITEMS_PER_PAGE = 6;
 export const EnteredNoticeRoom = () => {
   const [noticeRooms, setNoticeRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const response = await axios.get('mock/entered.json');
-        setNoticeRooms(response.data);
-      } catch (error) {
-        console.error('Error fetching notice rooms:', error);
-      }
-    };
+        const response = await getEnteredRoom(currentPage, ITEMS_PER_PAGE);
+        console.log(response);
 
-    fetchData();
-  }, []);
+        if (response.result.isSuccess) {
+          setNoticeRooms(response.result.rooms);
+          setIsNext(response.result.isNext);
+        }
+      } catch (error) {
+        console.error('Error fetching entered rooms:', error); // 에러 처리
+      }
+    })();
+  }, [currentPage]);
 
   const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
 
@@ -31,9 +35,9 @@ export const EnteredNoticeRoom = () => {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) =>
-      prevPage < totalPages ? prevPage + 1 : prevPage,
-    );
+    if (isNext || currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
   const currentNotices = noticeRooms.slice(
@@ -46,35 +50,49 @@ export const EnteredNoticeRoom = () => {
       <EnteredTitle>입장한 공지방</EnteredTitle>
       <NoticeRoomsInfo>
         {currentNotices.length > 0 ? (
-          <NoticeRooms>
-            {currentNotices.map((room) => (
-              <NoticeRoom key={room.id} room={room} />
-            ))}
-          </NoticeRooms>
+          <>
+            <NoticeRooms>
+              {currentNotices.map((room) => (
+                <NoticeRoom key={room.id} room={room} />
+              ))}
+            </NoticeRooms>
+            {noticeRooms.length > 0 && (
+              <Pagination>
+                <NavButton
+                  onClick={handlePrevPage}
+                  src={prevButtonSvg}
+                  alt="Previous"
+                />
+                <PageNumber>
+                  <CurrentPage>{currentPage}</CurrentPage>
+                  <Separator>/</Separator>
+                  <TotalPages>{totalPages}</TotalPages>
+                </PageNumber>
+                <NavButton
+                  onClick={handleNextPage}
+                  src={nextButtonSvg}
+                  alt="Next"
+                />
+              </Pagination>
+            )}
+          </>
         ) : (
           <NoticeRooms>
             <NoNoticesBox>
-              <NoNoticesText>아직 입장한 공지방이 없어요</NoNoticesText>
+              <NoNoticesText>
+                <span>아직 입장한</span>
+                <br />
+                <span>공지방이 없어요</span>
+              </NoNoticesText>
             </NoNoticesBox>
           </NoticeRooms>
         )}
-        <Pagination>
-          <NavButton
-            onClick={handlePrevPage}
-            src={prevButtonSvg}
-            alt="Previous"
-          />
-          <PageNumber>
-            <CurrentPage>{currentPage}</CurrentPage>
-            <Separator>/</Separator>
-            <TotalPages>{totalPages}</TotalPages>
-          </PageNumber>
-          <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
-        </Pagination>
       </NoticeRoomsInfo>
     </EnteredNoticeRoomSection>
   );
 };
+
+export default EnteredNoticeRoom;
 
 const NoticeRoomsInfo = styled.div`
   display: flex;
@@ -121,8 +139,6 @@ const NoNoticesBox = styled.div`
   align-items: flex-start;
   border-radius: 0.5rem;
   border: 0.0208rem solid var(--Primary-normal, #509bf7);
-
-  //height: 10rem;
   padding: 4.375rem 1.1875rem 4.125rem 1.1875rem;
   justify-content: flex-end;
   align-items: center;
@@ -176,5 +192,3 @@ const NavButton = styled.img`
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
 `;
-
-export default EnteredNoticeRoom;

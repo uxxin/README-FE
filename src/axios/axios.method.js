@@ -1,4 +1,4 @@
-import axiosInstance from './axios.instance.js';
+import axiosInstance from './axios.instance';
 
 export const PostAxiosInstance = async (url, data, config) => {
   const res = await axiosInstance.post(url, data, config);

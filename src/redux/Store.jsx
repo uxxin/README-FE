@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // 기본 로컬 스토리지
 import { combineReducers } from 'redux'; // combineReducers 임포트
 import keysReducer from './KeySlice';
+import checkReducer from './CheckSlice'
 import NoticeReducer from './Notice/NoticeReducer';
 
 // 리듀서 결합
 const rootReducer = combineReducers({
   keys: keysReducer,
+  check : checkReducer,
   notice: NoticeReducer,
 });
 
@@ -23,6 +25,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // 스토어 생성
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 // persistor 생성

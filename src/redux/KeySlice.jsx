@@ -11,10 +11,14 @@ const keysSlice = createSlice({
       state.count = action.payload.count; // 숫자로 설정
       state.members = action.payload.members; // 배열로 설정
     },
-    removeMember: (state, action) => {
-      state.members = state.members.filter(member => member.nickname !== action.payload);
-      state.count = state.members.length;
-    },
+  removeMember: (state, action) => {
+  if (Array.isArray(state.members)) {
+    state.members = state.members.filter(member => member.nickname !== action.payload);
+    state.count = state.members.length;
+  } else {
+    console.error('Expected state.members to be an array, but got:', state.members);
+  }
+},
     decrement: (state) => {
       state.count -= 1;
     },
