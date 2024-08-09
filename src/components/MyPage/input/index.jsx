@@ -12,6 +12,7 @@ export default function Input({
   success,
   warning,
   onChange,
+  full = false,
 }) {
   const message = {
     content:
@@ -24,8 +25,8 @@ export default function Input({
           : 'warning',
   };
   return (
-    <section style={{ padding: 0 }}>
-      <InputContainer disabled={disabled}>
+    <InputContainer disabled={disabled}>
+      <div className={`${disabled && 'disabled'} ${full && 'full'}`}>
         <input
           type={type}
           id={id}
@@ -34,24 +35,18 @@ export default function Input({
           placeholder={placeholder}
           disabled={disabled}
           className="bold-18"
-          style={{
-            width: 'calc(100% - 3.6rem)',
-            backgroundColor: disabled
-              ? 'var(--color-gray-2)'
-              : 'var(--color-primary-light)',
-          }}
         />
         {maxLength && (
           <span className="regular-12">
             ({value.length}/{maxLength})
           </span>
         )}
-      </InputContainer>
+      </div>
       {status !== 'none' && (
         <Message className={`regular-12 ${message.color}`}>
           {message.content}
         </Message>
       )}
-    </section>
+    </InputContainer>
   );
 }
