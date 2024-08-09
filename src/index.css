@@ -2,6 +2,94 @@
   background-color: #000000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* bold 서체 */
+  .bold-36 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-32 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-28 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-24 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-20 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-18 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-16 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-14 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  .bold-12 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+
+  /* semi-bold 서체 */
+  .semi-bold-16 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 100%;
+  }
+
+  /* medium 서체 */
+  .medium-18 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 100%;
+  }
+  .medium-16 {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 120%;
+  }
+
+  /* regular 서체 */
+  .regular-16 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 100%;
+  }
+  .regular-14 {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 100%;
+  }
+  .regular-12 {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 100%;
+  }
+  .regular-10 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 100%;
+  }
 }
 
 body {
