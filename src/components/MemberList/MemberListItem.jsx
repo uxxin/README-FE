@@ -9,6 +9,8 @@ import axios from 'axios';
 import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';
+import { store } from '../../redux/Store';
+
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -119,24 +121,35 @@ export const MemberListItem = (props) => {
   const [state,setState] = useState({
     search:"",
     results:[],
-    allMembers:[]
+    allMembers:[],
+    adminName: []  
   })
 
   const debouncedSearch = Debounce(state.search,300);
 
   useEffect(() => {
-    if (members.length >= 0) {
+    if (members && members.length >= 0) {
       setState(prevState => ({ ...prevState, results: members, allMembers: members }));
+
     }
   }, [members]);
 
     useEffect(() => {
     const fetchMemberList = async () => {
       try {
-        const response = await axios.get('/mock/ProfileData.json');
-        const memberData = response.data;
-        setState(prevState => ({ ...prevState, results: memberData, allMembers: memberData }));
-        dispatch(setKeysCount({ count: memberData.length, members: memberData }));
+        const option = {
+          headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMTk3MDM4LCJleHAiOjE3MjMyMDc4Mzh9.hQBMLkITkp4d9kdojiTASKxr8DoAp8qPGve0BErrNkg`
+        }};
+
+        const response = await axios.get("https://read-me.kro.kr/admin/users", option);
+        const myInfoResponse = await axios.get("https://read-me.kro.kr/user/profile", option);
+        const adminName = myInfoResponse.data.result;
+        const memberData = response.data.result;
+        console.log("admin 이름:",adminName)
+        console.log("현재 공지방 안에 있는 사람", memberData )
+        setState(prevState => ({ ...prevState, results: memberData, allMembers: memberData, adminName:adminName }));
+        dispatch(setKeysCount({ count:memberData.length, members: memberData }));
       } catch (error) {
         console.error('Error fetching member list:', error);
       }
@@ -145,15 +158,14 @@ export const MemberListItem = (props) => {
   }, [dispatch]);
 
   
-  console.log("keyscount",keysCount)
-  
 
+ 
 
 
 // 검색어에 따라 필터링
 useEffect(() => {
   console.log('Debounced search:', debouncedSearch);
-  if (debouncedSearch.trim() !== "") {
+  if (debouncedSearch.trim() !== "" && Array.isArray(state.allMembers)) {
     const filteredResults = state.allMembers.filter(member =>
       member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
@@ -172,8 +184,7 @@ useEffect(() => {
     setState(prevState=>({...prevState,search:e.target.value}));
   }
 
-  console.log("필터링된 사람:ListItem",state.results)
-
+  console.log('필터링된 사람:ListItem', state.results);
 
   return (
     <Container>
@@ -194,10 +205,10 @@ useEffect(() => {
         <ButtonContainer>
             <MemberAddBtn>
             </MemberAddBtn>
-          <ButtonText>본인</ButtonText>
+          <ButtonText>{`본인: ${state.adminName.nickname}`}</ButtonText>
         </ButtonContainer>
  
-        {state.results.length > 0 ? (
+        {state.results && state.results.length > 0 ? (
           <MemberListMap
             members={state.results}
             
@@ -205,7 +216,7 @@ useEffect(() => {
           />
            
         ) : (
-          members.length === 0 ? (
+          members && members.length === 0 ? (
             <TextColor>아무도 없어요!</TextColor>
           ) : (
             <TextColor>검색한 결과가 없어요!</TextColor>

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { CustomBtn } from "../CustomBtn";
 import { useLocation} from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useState,useEffect } from "react";
+import axios from "axios";
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -58,17 +60,40 @@ const PaneltyCheck = styled.div`
 
 
 
-export const MemberProfile = () =>{
-  const { nickname } = useParams();  // URL에서 nickname을 가져옴
+export const MemberProfile = (props) =>{
+  const { nickname } = useParams(); 
+  const { penalty_count } = useParams(); 
+
   const location = useLocation();
   const { profile_image = "" } = location.state;
-  const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
+ // const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
 
+  const [penaltyCount,setPenaltyCount] = useState(penalty_count);
+
+
+  console.log('패널티 :', penalty_count);
+
+    
+  useEffect(() => {
+      axios
+          .get('/mock/ProfileData.json')
+          .then((response) => {
+            setPenaltyCount(response.data.penalty_count);
+            console.log('패널티 데이타:', response.data);
+          })
+          .catch((error) => {
+              console.error('Error fetching data:', error);
+          });
+  }, []);
+
+
+  
 
     return(
         <Container>
-          <ImgContainer src={imageUrl} alt={`${nickname}'s profile`} />
-         <PaneltyCheck>패널티</PaneltyCheck>
+          <ImgContainer src={profile_image} alt={`${nickname}'s profile`} />
+         <PaneltyCheck>패널티 {props.penalty_count}</PaneltyCheck>
+         
          <CustomBtn
             props={{
               text: '확인',

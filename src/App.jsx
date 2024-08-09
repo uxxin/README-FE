@@ -27,7 +27,10 @@ import { persistor, store } from './redux/Store.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
+import EditPassword from './pages/MyPage/EditPassword.jsx';
 import Write from './pages/Notice/Write/Write.jsx';
+import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
+import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
 
 function App() {
   return (
@@ -60,12 +63,20 @@ function App() {
             <Route path="/member/invite" element={<Invite />} />
             <Route path="/member/profile/:nickname" element={<Profile />} />
             <Route path="/member/checklist" element={<CheckListPage />} />
+            <Route path="/member/acceptance" element={<AcceptancePage />} />
+            <Route path="/member/noticelist" element={<NoticeListPage />} />
+
+            
 
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />
             <Route
               path="/my-page/default-edit"
               element={<DefaultProfileEdit />}
+            />
+            <Route
+              path="/my-page/default-edit/password"
+              element={<EditPassword />}
             />
             <Route
               path="/my-page/notice-edit"

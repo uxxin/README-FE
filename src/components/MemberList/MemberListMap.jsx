@@ -162,17 +162,22 @@ export const MemberListMap = ({members}) => {
 
   return (
     <div>
-            
-        {members.length > 0 &&
-          members.map((item, index) => (
-            <MemberListDetails
-              key={index}
-              nickname={item.nickname}
-              profile_image={item.profile_image}
-              onOpenModal={() => handleOpenModal(item)}
-              
-            />
-          ))}
+    {members && members.length > 0 ? (
+      members.map((item, index) => (
+        item && item.nickname ? (
+          <MemberListDetails
+            key={index}
+            nickname={item.nickname}
+            profile_image={item.profile_image}
+            onOpenModal={() => handleOpenModal(item)}
+          />
+        ) : (
+          <p key={index}>유효하지 않은 멤버 데이터</p>
+        )
+      ))
+    ) : (
+      <p>멤버가 없습니다.</p>
+    )}
      
      <ShowMoreIconContainer>
         <CustomModal

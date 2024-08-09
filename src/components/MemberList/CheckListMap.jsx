@@ -2,92 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { SlideButton, CheckButton, XButton } from "../../assets/images/icons";
-
-
-const Container = styled.div`
-    display: flex;
-    width: 26.75rem;
-    padding-right: 1rem;
-    padding: 0.625rem 1rem;
-    padding-right: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.625rem;
-`
-
-const TotalContainer = styled.div`
-    display: flex;
-    width: 26.75rem;
-    padding: 0.625rem 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.625rem;
-`
-
-
-const MissionTogle = styled.div`
-    display: flex;
-    height: 2.5rem;
-    justify-content: center;
-    align-items: center;
-    align-self: stretch;
-    border-radius: 0.5rem;
-`
-
-const BarLeftContainer = styled.div`
-    border-radius: 0.5rem 0 0 0.5rem; 
-    border: 1px solid #BDBDBD;
-    align-items: center;
-    box-sizing: border-box;
-    justify-content: center;
-    color: white;
-    display: flex;
-    padding: 0.75rem 4.125rem;
-    align-items: center;
-    gap: 0.125rem;
-    flex: 1 0 0;
-    align-self: stretch;
-    background:white;
-    color: #509BF7;;
-    
-`;
-
-const BarRightContainer = styled.div`
-    display: flex;
-    padding: 0.75rem 4.125rem;
-    justify-content: center;
-    align-items: center;
-    gap: 0.125rem;
-    flex: 1 0 0;
-    align-self: stretch;
-    border-radius: 0rem 0.5rem 0.5rem 0rem;
-    background: var(--Primary-normal, #509BF7);
-`;
-
-const CheckContainer = styled.div`
-    display: flex;
-    width: 22rem;
-    padding: 1.5rem 1.25rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 0.5rem;
-    border: 0.33px solid var(--Primary-light-active, #C9E0FD);
-    background: var(--Primary-light, #F4F9FF);
-    
-`
-
-const BoxContainer = styled.div`
-    display: flex;
-    padding-right: 2rem;
-    padding-bottom: 1rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.625rem;
-    align-self: stretch;
-    border-bottom: 0.33px solid var(--Primary-light-active, #C9E0FD);
-`
+import { useDispatch } from "react-redux";
+import { acceptance, rejection } from "../../redux/CheckSlice";
+import { useSelector } from "react-redux";
 
 const ProfileContainer = styled.div`
     display: flex;
@@ -161,10 +78,8 @@ const YesButton = styled.button`
     flex: 1 0 0;
     border-right: 0.33px solid var(--Primary-light-active, #C9E0FD);
     background: var(--Primary-light, #F4F9FF);
-    border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
+    border: 0.3px solid  #C9E0FD; 
     border-radius:  0.5rem 0rem 0rem 0.5rem;
-
-    
 `
 
 const NoButton = styled.button`
@@ -175,13 +90,31 @@ const NoButton = styled.button`
     flex: 1 0 0;
     border-right: 0.33px solid var(--Primary-light-active, #C9E0FD);
     background: var(--Primary-light, #F4F9FF);
-    border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
+    border: 0.3px solid  #C9E0FD; 
     border-radius: 0rem 0.5rem 0.5rem 0rem;
 `
 
 export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
     console.log('CheckListMap rendered');
     const { nickname, profile_image } = user_info;
+    const dispatch = useDispatch();
+    const requiredList = useSelector((state) => state.check.requiredList); 
+
+    
+    const handleAcceptance = () =>{
+        console.log("수락한 게시글 id",submit_id);
+        dispatch(acceptance(submit_id));
+    }
+
+    const handleRejection = () =>{
+        console.log("거절할 게시글",submit_id);
+        dispatch(rejection(submit_id));
+    }
+
+    useEffect(()=>{
+        console.log("리렌더링:",requiredList);
+    },[requiredList])
+
 
 
     return (
@@ -195,9 +128,13 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
             </ProfileContainer>
             <ContentContainer> <SlideButton/> </ContentContainer>
             <SecondButtonContainer>
-                <YesButton><CheckButton/>수락</YesButton>
-                <NoButton><XButton/>거절</NoButton>
+                <YesButton onClick={handleAcceptance}><CheckButton/>수락</YesButton>
+                <NoButton onClick={handleRejection}><XButton/>거절</NoButton>
             </SecondButtonContainer>
         </div>
     );
+
+    
 };
+
+
