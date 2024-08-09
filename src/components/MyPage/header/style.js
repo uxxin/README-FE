@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ProfileContainer = styled.section`
+export const HeaderContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
