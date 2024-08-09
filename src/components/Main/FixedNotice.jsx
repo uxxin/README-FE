@@ -3,55 +3,37 @@ import styled from 'styled-components';
 import axios from 'axios';
 import pinIcon from '../../assets/images/pinicon.svg';
 import deleteIcon from '../../assets/images/deleteicon.svg';
+import { getFixedNotice } from '../../api/home';
 
 const FixedNotice = ({ onDelete }) => {
-  const [notice, setNotice] = useState({
-    roomId: 0,
-    postId: 0,
-    title: '공지글 제목',
-    startDate: '시작일',
-    endDate: '마감일',
-  });
+  const [notice, setNotice] = useState(null);
 
   useEffect(() => {
-    const getFixedNotice = async () => {
+    (async () => {
       try {
-        const options = {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU5LCJwcm92aWRlciI6IlJFQURNRSIsImlhdCI6MTcyMzEwMDE3NSwiZXhwIjoxNzIzMTEwOTc1fQ.c_hk6yPRxJYYrvDJeM72kpAJavFKjSUq1hhdJ3wrmIo`,
-          },
-        };
-        const response = await axios(
-          'https://read-me.kro.kr/user/fixed',
-          options,
-        );
-        if (response === null) {
-          return;
-        } else {
-          setNotice(response.data.result);
+        const response = await getFixedNotice();
+        console.log(response);
+
+        if (response.result.isSuccess) {
+          setNotice(response.result);
         }
       } catch (error) {
-        console.error('공지 데이터를 가져오는 중 오류 발생:', error);
+        console.log('고정 공지 데이터를 가져오는 중 오류 발생: ', error);
       }
-    };
-    getFixedNotice();
+    })();
   }, []);
 
-  const handleDelete = async () => {
-    try {
-      const options = {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU5LCJwcm92aWRlciI6IlJFQURNRSIsImlhdCI6MTcyMzEwMDE3NSwiZXhwIjoxNzIzMTEwOTc1fQ.c_hk6yPRxJYYrvDJeM72kpAJavFKjSUq1hhdJ3wrmIo`,
-        },
-      };
-      await axios.delete(`https://read-me.kro.kr/room/fixPost`, options);
-      onDelete(); // 삭제 후 추가적인 작업이 필요하다면 onDelete 함수로 처리
-    } catch (error) {
-      console.error('공지 삭제 중 오류 발생:', error);
-    }
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await deleteFixedNotice();
+        console.log(response);
+        onDelete(); // 삭제 후 추가적인 작업이 필요하다면 onDelete 함수로 처리
+      } catch (error) {
+        console.log('고정 공지 삭제 중 오류 발생: ', error);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -68,7 +50,7 @@ const FixedNotice = ({ onDelete }) => {
               <Date>{notice.endDate}</Date>
             </NoticeDate>
           </NoticeContent>
-          <DeleteButton onClick={handleDelete}>
+          <DeleteButton onClick={deleteFixedNotice}>
             <img src={deleteIcon} alt="Delete Icon" />
           </DeleteButton>
         </NoticeContainer>

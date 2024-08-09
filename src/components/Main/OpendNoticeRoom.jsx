@@ -9,23 +9,27 @@ import nextButtonSvg from '../../assets/images/next_button.svg';
 
 const ITEMS_PER_PAGE = 6;
 
-export const OpendNoticeRoom = () => {
+export const OpenedNoticeRoom = () => {
   const navigate = useNavigate();
   const [noticeRooms, setNoticeRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const response = await axios.get('mock/opened.json');
-        setNoticeRooms(response.data);
-      } catch (error) {
-        console.error('Error fetching notice rooms:', error);
-      }
-    };
+        const response = await getOpenedRoom(currentPage, ITEMS_PER_PAGE);
+        console.log(response);
 
-    fetchData();
-  }, []);
+        if (response.result.isSuccess) {
+          setNoticeRooms(response.result.rooms);
+          setIsNext(response.result.isNext);
+        }
+      } catch (error) {
+        console.error('Error fetching opened rooms:', error);
+      }
+    })();
+  }, [currentPage]);
 
   const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
 
@@ -38,9 +42,9 @@ export const OpendNoticeRoom = () => {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prevPage) =>
-      prevPage < totalPages ? prevPage + 1 : prevPage,
-    );
+    if (isNext || currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
   const currentNotices = noticeRooms.slice(
@@ -64,23 +68,31 @@ export const OpendNoticeRoom = () => {
             <NoticeRoom key={room.id} room={room} />
           ))}
         </NoticeRooms>
-        <Pagination>
-          <NavButton
-            onClick={handlePrevPage}
-            src={prevButtonSvg}
-            alt="Previous"
-          />
-          <PageNumber>
-            <CurrentPage>{currentPage}</CurrentPage>
-            <Separator>/</Separator>
-            <TotalPages>{totalPages}</TotalPages>
-          </PageNumber>
-          <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
-        </Pagination>
+        {noticeRooms.length > 0 && (
+          <Pagination>
+            <NavButton
+              onClick={handlePrevPage}
+              src={prevButtonSvg}
+              alt="Previous"
+            />
+            <PageNumber>
+              <CurrentPage>{currentPage}</CurrentPage>
+              <Separator>/</Separator>
+              <TotalPages>{totalPages}</TotalPages>
+            </PageNumber>
+            <NavButton
+              onClick={handleNextPage}
+              src={nextButtonSvg}
+              alt="Next"
+            />
+          </Pagination>
+        )}
       </NoticeRoomsInfo>
     </OpenedNoticeRoomSection>
   );
 };
+
+export default OpenedNoticeRoom;
 
 const TitleContainer = styled.div`
   display: flex;
@@ -163,9 +175,9 @@ const TotalPages = styled.span`
 `;
 
 const NavButton = styled.img`
-  width: 1.5rem; /* 24px */
-  height: 1.5rem; /* 24px */
-  padding: 0.5rem; /* 8px */
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
   border-radius: 999px;
@@ -173,5 +185,3 @@ const NavButton = styled.img`
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
 `;
-
-export default OpendNoticeRoom;
