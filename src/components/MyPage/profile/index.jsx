@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import defaultProfileSrc from '../../../assets/images/default_profile_3.png';
 import settingSrc from '../../../assets/svgs/setting.svg';
 import { ProfileContainer } from './style';
+import Image from '../image';
 
 export default function Profile({ roomId, profileImage, nickname, roomName }) {
   const navigate = useNavigate();
@@ -16,11 +17,7 @@ export default function Profile({ roomId, profileImage, nickname, roomName }) {
   return (
     <ProfileContainer>
       <div className="profile">
-        <img
-          src={profileImage || defaultProfileSrc}
-          alt="프로필 사진"
-          className="profile-image"
-        />
+        <Image url={profileImage || defaultProfileSrc} small />
         <div>
           <span className="medium-18 nickname">{nickname}</span>
           <br />
