@@ -65,7 +65,11 @@ export const OpenedNoticeRoom = () => {
       <NoticeRoomsInfo>
         <NoticeRooms>
           {currentNotices.map((room) => (
-            <NoticeRoom key={room.id} room={room} />
+            <NoticeRoom
+              key={room.id}
+              room={room}
+              onClick={() => navigate(`/notice/${room.id}`)}
+            />
           ))}
         </NoticeRooms>
         {noticeRooms.length > 0 && (
