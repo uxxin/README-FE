@@ -5,6 +5,7 @@ import { QuestionPreview } from '../../../components/Notice/Write/QuestionPrevie
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
 const Preview = ({
+  onPrevStep,
   postType,
   title,
   content,
@@ -24,6 +25,10 @@ const Preview = ({
     },
   ];
   const imageURLs = ['url11.com', 'url12.com'];
+
+  const handlePrevClick = () => {
+    onPrevStep(postType, title, content, startDate, endDate, question, answer);
+  };
 
   return (
     <Container>
@@ -49,6 +54,7 @@ const Preview = ({
           background2: '#509BF7',
           btn2: '등록하기',
         }}
+        onPrevStep={handlePrevClick}
       />
     </Container>
   );

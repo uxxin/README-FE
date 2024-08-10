@@ -16,6 +16,25 @@ const Write = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
 
+  const handlePrevStep = (
+    selectedType,
+    inputTitle,
+    inputContent,
+    inputStartDate,
+    inputEndDate,
+    inputQuestion,
+    inputAnswer,
+  ) => {
+    setStep((prevState) => Math.max(prevState - 1, 1));
+    setType(selectedType);
+    setTitle(inputTitle);
+    setContent(inputContent);
+    setStartDate(inputStartDate);
+    setEndDate(inputEndDate);
+    setQuestion(inputQuestion);
+    setAnswer(inputAnswer);
+  };
+
   const handleNextStep = (
     selectedType,
     inputTitle,
@@ -34,8 +53,6 @@ const Write = () => {
     setQuestion(inputQuestion);
     setAnswer(inputAnswer);
   };
-  console.log(step);
-  console.log(type);
 
   return (
     <div>
@@ -49,25 +66,41 @@ const Write = () => {
       />
       <Container>
         {step === 1 ? (
-          <Post onStepChange={handleNextStep} />
+          <Post
+            onNextStep={handleNextStep}
+            postType={type}
+            postTitle={title}
+            postContent={content}
+          />
         ) : step === 2 ? (
           type === 'Quiz' ? (
             <QuizType
-              onStepChange={handleNextStep}
+              onPrevStep={handlePrevStep}
+              onNextStep={handleNextStep}
               postType={type}
               postTitle={title}
               postContent={content}
+              startDate={startDate}
+              endDate={endDate}
+              question={question}
+              answer={answer}
             />
           ) : (
             <MissionType
-              onStepChange={handleNextStep}
+              onPrevStep={handlePrevStep}
+              onNextStep={handleNextStep}
               postType={type}
               postTitle={title}
               postContent={content}
+              startDate={startDate}
+              endDate={endDate}
+              question={question}
+              answer={answer}
             />
           )
         ) : (
           <Preview
+            onPrevStep={handlePrevStep}
             postType={type}
             title={title}
             content={content}

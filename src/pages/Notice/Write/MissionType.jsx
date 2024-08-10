@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ImgUpload from '../../../components/Notice/Write/ImgUpload';
 import { Mission } from '../../../components/Notice/Write/Mission';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const MissionType = ({ onStepChange, postType, postTitle, postContent }) => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [question, setQuestion] = useState('');
+const MissionType = ({
+  onPrevStep,
+  onNextStep,
+  postType,
+  postTitle,
+  postContent,
+  startDate: inputStartDate,
+  endDate: inputEndDate,
+  question: inputQuestion,
+}) => {
+  const [startDate, setStartDate] = useState(inputStartDate || '');
+  const [endDate, setEndDate] = useState(inputEndDate || '');
+  const [question, setQuestion] = useState(inputQuestion || '');
+
+  const handlePrevClick = () => {
+    onPrevStep(postType, postTitle, postContent, startDate, endDate, question);
+  };
 
   const handleNextClick = () => {
-    onStepChange(
-      postType,
-      postTitle,
-      postContent,
-      startDate,
-      endDate,
-      question,
-    );
+    onNextStep(postType, postTitle, postContent, startDate, endDate, question);
   };
 
   return (
@@ -40,7 +46,8 @@ const MissionType = ({ onStepChange, postType, postTitle, postContent }) => {
           background2: startDate && endDate && question ? '#509BF7' : '#BDBDBD',
           btn2: '확인',
         }}
-        onStepChange={handleNextClick}
+        onPrevStep={handlePrevClick}
+        onNextStep={handleNextClick}
       />
     </Container>
   );

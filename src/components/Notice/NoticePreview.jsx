@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { QuizFormatLabel } from './QuizFormatLabel';
-import { RequestStatusLabel } from './RequestStatusLabel';
-import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
-import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
-import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
 export const NoticePreview = ({ props }) => {
-  const modalClose = () => {
-    setIsOpen(false);
-  };
   const shareAddress = () => {
     console.log('주소 공유');
   };
@@ -20,7 +12,6 @@ export const NoticePreview = ({ props }) => {
     { label: '주소 공유', onClick: shareAddress, color: '#222222' },
     { label: '메인에 고정', onClick: fixNotice, color: '#222222' },
   ];
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Container>
