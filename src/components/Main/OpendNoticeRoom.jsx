@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getOpenedRoom } from '../../api/home';
 import NoticeRoom from './NoticeRoom';
 import addButton from '../../assets/images/addicon.svg';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
@@ -21,7 +21,7 @@ export const OpenedNoticeRoom = () => {
         const response = await getOpenedRoom(currentPage, ITEMS_PER_PAGE);
         console.log(response);
 
-        if (response.result.isSuccess) {
+        if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
         }

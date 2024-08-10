@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const QuestionPreview = ({ postType, question, answer }) => {
-  console.log(postType);
-  console.log(question);
-  console.log(answer);
   return (
     <Container>
       {postType === 'Quiz' ? (
