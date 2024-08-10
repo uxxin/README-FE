@@ -18,7 +18,7 @@ export const EnteredNoticeRoom = () => {
         const response = await getEnteredRoom(currentPage, ITEMS_PER_PAGE);
         console.log(response);
 
-        if (response.result.isSuccess) {
+        if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
         }

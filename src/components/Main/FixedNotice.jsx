@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import pinIcon from '../../assets/images/pinicon.svg';
 import deleteIcon from '../../assets/images/deleteicon.svg';
-import { getFixedNotice } from '../../api/home';
+import { getFixedNotice, deleteFixedNotice } from '../../api/home';
 
 const FixedNotice = ({ onDelete }) => {
   const [notice, setNotice] = useState(null);
@@ -14,7 +14,7 @@ const FixedNotice = ({ onDelete }) => {
         const response = await getFixedNotice();
         console.log(response);
 
-        if (response.result.isSuccess) {
+        if (response.isSuccess) {
           setNotice(response.result);
         }
       } catch (error) {
@@ -23,17 +23,16 @@ const FixedNotice = ({ onDelete }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await deleteFixedNotice();
-        console.log(response);
-        onDelete(); // 삭제 후 추가적인 작업이 필요하다면 onDelete 함수로 처리
-      } catch (error) {
-        console.log('고정 공지 삭제 중 오류 발생: ', error);
-      }
-    })();
-  }, []);
+  const handleDelete = async () => {
+    try {
+      const response = await deleteFixedNotice();
+      console.log(response);
+      onDelete();
+      setNotice(null);
+    } catch (error) {
+      console.log('고정 공지 삭제 중 오류 발생: ', error);
+    }
+  };
 
   return (
     <>
@@ -50,7 +49,7 @@ const FixedNotice = ({ onDelete }) => {
               <Date>{notice.endDate}</Date>
             </NoticeDate>
           </NoticeContent>
-          <DeleteButton onClick={deleteFixedNotice}>
+          <DeleteButton onClick={handleDelete}>
             <img src={deleteIcon} alt="Delete Icon" />
           </DeleteButton>
         </NoticeContainer>
