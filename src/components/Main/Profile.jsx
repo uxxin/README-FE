@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as VerificationIcon } from '../../assets/images/vertificationicon.svg';
 import { ReactComponent as PenaltyIcon } from '../../assets/images/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';
-import { getMyProfile } from '../../api/home';
+import { getMyProfile } from '../../api/Main/home';
 
 export const Profile = () => {
   const navigate = useNavigate();

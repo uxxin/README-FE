@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { getOpenedRoom } from '../../api/home';
+import { getOpenedRoom } from '../../api/Main/home';
 import NoticeRoom from './NoticeRoom';
 import addButton from '../../assets/images/addicon.svg';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
@@ -65,7 +65,11 @@ export const OpenedNoticeRoom = () => {
       <NoticeRoomsInfo>
         <NoticeRooms>
           {currentNotices.map((room) => (
-            <NoticeRoom key={room.id} room={room} />
+            <NoticeRoom
+              key={room.id}
+              room={room}
+              onClick={() => navigate(`/notice/${room.id}`)}
+            />
           ))}
         </NoticeRooms>
         {noticeRooms.length > 0 && (

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NoticeRoom = ({ room }) => {
+const NoticeRoom = ({ room, onClick }) => {
   const isDeleted = room.state === 'DELETED';
 
   return (
-    <Container isDeleted={isDeleted}>
+    <Container isDeleted={isDeleted} onClick={onClick}>
       <TopSection isDeleted={isDeleted}>
         {isDeleted ? '삭제된 공지방' : room.latestPostTime}
       </TopSection>

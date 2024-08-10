@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -13,7 +13,7 @@ import { ReactComponent as RequestList } from '../../assets/images/floating_icon
 import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
-import { getNotices, getUnconfirmedNotices } from '../../api/noticeMain';
+import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
 
 const expand = keyframes`
   from {
@@ -38,6 +38,7 @@ const collapse = keyframes`
 `;
 
 const Main = () => {
+  const navigate = useNavigate();
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
@@ -113,7 +114,10 @@ const Main = () => {
           {isManager ? (
             <>
               {noticeData.map((post) => (
-                <ManagerNoticePreview props={post} />
+                <ManagerNoticePreview
+                  props={post}
+                  onClick={() => navigate(`/notice/${roomId}/details`)}
+                />
               ))}
             </>
           ) : (

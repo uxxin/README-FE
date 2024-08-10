@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput.jsx';
 import { useNavigate } from 'react-router-dom';
 
-import { login } from '../../api/user.js';
+import { login } from '../../api/Auth/user.js';
 import logo from '../../assets/images/logoex.svg';
 
 const SignIn = () => {

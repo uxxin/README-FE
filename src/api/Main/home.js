@@ -1,7 +1,7 @@
 import {
   GetAxiosInstance,
   DeleteAxiosInstance,
-} from '../axios/axios.method.js';
+} from '../../axios/axios.method.js';
 
 //프로필 조회
 export const getMyProfile = async () => {

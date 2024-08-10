@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput';
 import toAlbumBtnIcon from '../../assets/images/albumbutton.svg';
-import { postNoticeRoomImage } from '../../api/createnoticeroom';
+import { postNoticeRoomImage } from '../../api/Main/createnoticeroom';
 
 const CreateNoticeRoomForm = ({
   leaderName,

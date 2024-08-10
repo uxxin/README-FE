@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { QuizFormatLabel } from './QuizFormatLabel';
 import { RequestStatusLabel } from './RequestStatusLabel';
@@ -6,8 +6,8 @@ import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
-import { patchFixNotice } from '../../api/noticeMain';
-import { UnconfirmedPeopleModal } from './UnconfirmedPeopleModal';
+import { patchFixNotice } from '../../api/Notice/noticeMain';
+
 export const NoticeTitle = ({ props, preview }) => {
   const [isOpen, setIsOpen] = useState(false);
   const modalClose = () => {

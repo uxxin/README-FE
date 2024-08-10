@@ -1,4 +1,7 @@
-import { GetAxiosInstance, PostAxiosInstance } from '../axios/axios.method.js';
+import {
+  GetAxiosInstance,
+  PostAxiosInstance,
+} from '../../axios/axios.method.js';
 
 export const roomInfo = async (roomName, roomImage, admin_Nickname) => {
   const response = await GetAxiosInstance('/room/enter/{roomId}', {
