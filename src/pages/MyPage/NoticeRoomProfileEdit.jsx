@@ -6,28 +6,47 @@ import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
 import Input from '../../components/MyPage/input';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FloatingButton from '../../components/MyPage/floating-button';
+import {
+  PatchAxiosInstance,
+  PostAxiosInstance,
+} from '../../axios/axios.method';
+import defaultProfileSrc from '../../assets/images/default_profile_8.png';
 
 const NoticeRoomProfileEdit = () => {
   const { state } = useLocation();
-  const [nickname, setNickname] = useState({
-    value: state?.nickname || '',
-    duplicate: 'none',
+  const [profile, setProfile] = useState({
+    nickname: state?.nickname || '',
+    status: 'none',
   });
-  const [image, setImage] = useState(state?.profile || null);
+  const [image, setImage] = useState({
+    preview: state?.profileImage || '',
+    file: '',
+  });
   const imageRef = useRef(null);
-  const prevUser = useMemo(() => state?.nickname || '', []);
+  const prevUser = useMemo(
+    () =>
+      ({
+        nickname: state?.nickname,
+        profileImage: state?.profileImage || '',
+      }) || '',
+    [],
+  );
 
   const navigate = useNavigate();
 
+  const sameImage = prevUser.profileImage === image.preview;
+  const sameNickname = prevUser.nickname === profile.nickname;
+
   const buttonDisabled =
-    nickname.value.length < 1 ||
-    prevUser === nickname.value ||
-    nickname.duplicate !== 'avaliable';
+    profile.nickname.length < 1 ||
+    (sameNickname && sameImage) ||
+    profile.status === 'duplicate' ||
+    profile.status === 'typing';
 
   const handleChange = (e) => {
     const { value } = e.target;
     if (value.length > 20) return;
-    setNickname({ value, duplicate: 'none' });
+    setProfile({ nickname: value, status: 'typing' });
   };
 
   const handleOpenImageSelect = () => imageRef.current.click();
@@ -38,15 +57,31 @@ const NoticeRoomProfileEdit = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        setImage(reader.result);
+        setImage({ preview: reader.result, file });
+        if (profile.status === 'typing') {
+          handleCheckNickname();
+        }
       };
     }
   };
 
   const handleCheckNickname = async () => {
+    if (profile.nickname === prevUser.nickname)
+      return setProfile((prev) => ({
+        nickname: prev.nickname,
+        status: 'none',
+      }));
     try {
-      // 닉네임 중복 확인하는 API 호출
-      setNickname({ ...nickname, duplicate: false ? 'avaliable' : 'exist' });
+      const res = await PostAxiosInstance(
+        `/user/profile/${state?.roomId}/nickname`,
+        { nickname: profile.nickname },
+      );
+      if (res.data.isSuccess) {
+        setProfile({
+          ...profile,
+          status: res.data.result.isDuplicate ? 'duplicate' : 'avaliable',
+        });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -54,7 +89,21 @@ const NoticeRoomProfileEdit = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      // 공지방별 내 정보 수정하는 API 호출
+      let profileImage = image.preview;
+      if (!image.preview.startsWith('https://s3' && image.file)) {
+        const formData = new FormData();
+        formData.append('file', image.file);
+        const s3Response = await PostAxiosInstance(
+          '/user/s3/upload',
+          formData,
+          { headers: { 'Content-Type': 'multipart/form-data' } },
+        );
+        profileImage = s3Response.data.result.image;
+      }
+      await PatchAxiosInstance(`/user/profile/${state?.roomId}`, {
+        nickname: profile.nickname,
+        profileImage,
+      });
       navigate(-1);
     } catch (err) {
       console.error(err);
@@ -67,7 +116,7 @@ const NoticeRoomProfileEdit = () => {
       <NoticeRoomProfileEditContainer>
         <section className="image-email">
           <div className="image">
-            <Image url={image} />
+            <Image url={image.preview || defaultProfileSrc} />
             <button onClick={handleOpenImageSelect}>
               <Camera color="#ffffff" />
             </button>
@@ -78,19 +127,19 @@ const NoticeRoomProfileEdit = () => {
               onChange={handleImageSelect}
             />
           </div>
-          <span className="regular-12">{state?.room || '공지방 이름'}</span>
+          <span className="regular-12">{state?.roomName || '공지방 이름'}</span>
           <div className="check-nickname">
             <Input
-              id="value"
+              id="nickname"
               type="text"
-              value={nickname.value}
+              value={profile.nickname}
               onChange={handleChange}
               maxLength={20}
               placeholder="닉네임을 입력해주세요."
               status={
-                nickname.duplicate === 'exist'
+                profile.status === 'duplicate'
                   ? 'warning'
-                  : nickname.duplicate === 'avaliable'
+                  : profile.status === 'avaliable'
                     ? 'success'
                     : 'none'
               }
@@ -98,9 +147,9 @@ const NoticeRoomProfileEdit = () => {
               warning="이미 사용중인 닉네임입니다."
             />
             <button
-              className={`regular-14 ${!nickname.value.length && 'disabled'}`}
+              className={`regular-14 ${!profile.nickname.length && 'disabled'}`}
               onClick={handleCheckNickname}
-              disabled={!nickname.value.length}
+              disabled={!profile.nickname.length}
             >
               확인
             </button>

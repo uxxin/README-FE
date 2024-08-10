@@ -36,7 +36,7 @@ const MyPage = () => {
           ) : (
             <div className="wrapper">
               {user.profiles.map((profile) => (
-                <Profile key={profile.id} {...profile} />
+                <Profile key={profile.roomId} {...profile} />
               ))}
             </div>
           )}
