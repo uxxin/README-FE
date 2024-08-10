@@ -13,11 +13,6 @@ export const ProfileContainer = styled.section`
     gap: 0.5rem;
     color: #888;
 
-    .profile-image {
-      width: 3.375rem;
-      height: 3.375rem;
-    }
-
     .nickname {
       color: #000;
     }

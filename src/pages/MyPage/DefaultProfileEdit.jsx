@@ -6,13 +6,21 @@ import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
 import Input from '../../components/MyPage/input';
 import { Link, useNavigate } from 'react-router-dom';
 import FloatingButton from '../../components/MyPage/floating-button';
+import defaultProfileSrc from '../../assets/images/default_profile_8.png';
+import {
+  GetAxiosInstance,
+  PatchAxiosInstance,
+  PostAxiosInstance,
+} from '../../axios/axios.method';
 
 const DefaultProfileEdit = () => {
   const [user, setUser] = useState({
     name: '',
     nickname: '',
+    email: '이메일 주소',
+    profileImage: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [image, setImage] = useState(null);
   const imageRef = useRef(null);
   const navigate = useNavigate();
@@ -24,8 +32,9 @@ const DefaultProfileEdit = () => {
   const buttonDisabled =
     user.nickname.length < 1 ||
     user.name.length < 1 ||
-    prevUser.name === user.name ||
-    prevUser.nickname === user.nickname;
+    (prevUser.name === user.name &&
+      prevUser.nickname === user.nickname &&
+      prevUser.profileImage === user.profileImage);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -38,6 +47,7 @@ const DefaultProfileEdit = () => {
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setUser((prev) => ({ ...prev, profileImage: file }));
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -48,7 +58,24 @@ const DefaultProfileEdit = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      // 내 정보 수정하는 API 호출
+      let { profileImage, name, nickname } = user;
+
+      if (!image.startsWith('https://s3')) {
+        const formData = new FormData();
+        formData.append('file', profileImage);
+        const s3Response = await PostAxiosInstance(
+          '/user/s3/upload',
+          formData,
+          { headers: { 'Content-Type': 'multipart/form-data' } },
+        );
+        profileImage = s3Response.data.result.image;
+      }
+
+      await PatchAxiosInstance('/user/profile', {
+        name,
+        nickname,
+        profileImage,
+      });
       navigate(-1);
     } catch (err) {
       console.error(err);
@@ -56,11 +83,23 @@ const DefaultProfileEdit = () => {
   };
 
   useEffect(() => {
-    if (isLoading) {
-      // 내 정보 가져오는 API 호출
-
-      setIsLoading(false);
-    }
+    (async () => {
+      try {
+        if (isLoading) {
+          const res = await GetAxiosInstance('/user');
+          if (res.data.isSuccess) {
+            setUser({
+              ...res.data.result,
+              profileImage: res.data.result.profileImage || '',
+            });
+            setImage(res.data.result.profileImage || '');
+            setIsLoading(false);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   }, [isLoading]);
   return (
     <>
@@ -68,7 +107,7 @@ const DefaultProfileEdit = () => {
       <DefaultProfileEditContainer>
         <section className="image-email">
           <div className="image">
-            <Image url={image} />
+            <Image url={image || defaultProfileSrc} />
             <button onClick={handleOpenImageSelect}>
               <Camera color="#ffffff" />
             </button>
@@ -79,7 +118,7 @@ const DefaultProfileEdit = () => {
               onChange={handleImageSelect}
             />
           </div>
-          <span className="regular-12">example@gmail.com</span>
+          <span className="regular-12">{user.email}</span>
         </section>
         <section className="input-nickname">
           <div className="input-wrap">
