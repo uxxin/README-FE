@@ -9,10 +9,11 @@ import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
 
 export const ManagerNoticePreview = ({ props }) => {
+  const managerProps = { ...props, isManager: true };
   return (
     <>
       <Container>
-        <NoticeTitle props={postData} preview={true} />
+        <NoticeTitle props={managerProps} preview={true} />
         <BottomContainer>
           <NoticeContent>{props.content}</NoticeContent>
           {props.postImage !== null && (

@@ -30,7 +30,6 @@ import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
 import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
 import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
 
-
 function App() {
   return (
     //<div className="App">
@@ -65,8 +64,6 @@ function App() {
             <Route path="/member/acceptance" element={<AcceptancePage />} />
             <Route path="/member/noticelist" element={<NoticeListPage />} />
 
-            
-
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />
             <Route
@@ -79,9 +76,9 @@ function App() {
             />
 
             {/* Notice - 공지 */}
-            <Route path="/notice" element={<Main />} />
+            <Route path="/notice/:roomId" element={<Main />} />
             <Route path="/notice/search" element={<Search />} />
-            <Route path="/notice/details" element={<Details />} />
+            <Route path="/notice//details" element={<Details />} />
             <Route path="/notice/confirm" element={<Confirmation />} />
             <Route path="/notice/solve" element={<Solve />} />
             <Route path="/notice/solve/result" element={<Results />} />
