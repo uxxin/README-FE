@@ -7,8 +7,17 @@ export const postNoticeRoom = async (RoomData) => {
   return response.data;
 };
 
-export const postNoticeRoomImage = async (RoomImage) => {
-  const response = await PostAxiosInstance(`/user/s3/upload`, RoomImage);
+export const postNoticeRoomImage = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  const response = await PostAxiosInstance(`/user/s3/upload`, formData, config);
   console.log(response.data);
   return response.data;
 };

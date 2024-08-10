@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput';
 import toAlbumBtnIcon from '../../assets/images/albumbutton.svg';
+import { postNoticeRoomImage } from '../../api/createnoticeroom';
 
 const CreateNoticeRoomForm = ({
   leaderName,
@@ -19,13 +20,24 @@ const CreateNoticeRoomForm = ({
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.onchange = (event) => {
+    input.onchange = async (event) => {
       const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onImageChange(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await postNoticeRoomImage(file);
+        console.log('서버 응답: ', response);
+        const imageUrl = response.result.image;
+        if (imageUrl) {
+          console.log('이미지 업로드 성공:', imageUrl);
+          onImageChange(imageUrl);
+        } else {
+          console.error('이미지 URL이 응답에 포함되어 있지 않음');
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+      }
     };
     input.click();
   };
@@ -33,7 +45,7 @@ const CreateNoticeRoomForm = ({
   return (
     <Container>
       <ImageContainer>
-        <RoomImage src={image || '<path-to-image>'} alt="Room" />
+        <RoomImage src={image || '<path-to-default-image>'} alt="Room" />
         <ToAlbumBtn onClick={handleAlbumClick}>
           <img src={toAlbumBtnIcon} alt="Album Button" />
         </ToAlbumBtn>

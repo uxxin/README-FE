@@ -2,30 +2,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // axios를 import 해야 합니다
 import styled from 'styled-components';
 import { CustomBtn } from '../../components/CustomBtn';
-import exampleProfileImage from '../../assets/images/exampleimage.png';
 import { Header } from '../../components/Header';
 import CreateNoticeRoomSuccessForm from '../../components/Main/CreateNoticeRoomSuccessForm';
+import { useLocation } from 'react-router-dom';
 
 const CreateNoticeRoomSuccess = () => {
-  const [profileImage, setProfileImage] = useState(exampleProfileImage);
-  const [url, setURL] = useState('https:/default/url');
-  const [roomName, setRoomName] = useState('공지방 이름');
-  const [password, setPassword] = useState('비밀번호');
-  const [nickName, setNickName] = useState('대표자 이름');
-
-  useEffect(() => {
-    axios
-      .get('/mock/createsuccess.json')
-      .then((response) => {
-        const data = response.data[0];
-        setProfileImage(data.room_image);
-        setURL(data.room_url);
-        setRoomName(data.room_name);
-        setPassword(data.room_password);
-        setNickName(data.admin_nickname);
-      })
-      .catch((error) => console.error('Error fetching profile data:', error));
-  }, []);
+  const location = useLocation();
+  const profileImage = useState(location.state?.roomImage || '');
+  const url = useState(location.state?.roomInviteUrl || '');
+  const roomName = useState(location.state?.roomName || '');
+  const password = useState(location.state?.roomPassword || '');
+  const nickName = useState(location.state?.adminNickname || '');
 
   return (
     <div
@@ -44,7 +31,7 @@ const CreateNoticeRoomSuccess = () => {
       >
         <Header
           props={{
-            title: '',
+            title: roomName,
             isSearch: false,
             url: '/create-notice-room',
           }}

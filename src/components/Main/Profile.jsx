@@ -20,7 +20,7 @@ export const Profile = () => {
         const response = await getMyProfile();
         console.log(response);
 
-        if (response.result.isSuccess) {
+        if (response.isSuccess) {
           setNickname(response.result.nickname);
           setEmail(response.result.email);
           setProfileImage(response.result.profileImage);
@@ -39,9 +39,13 @@ export const Profile = () => {
     navigate('/penalty');
   };
 
+  const handleProfileClick = () => {
+    navigate('/my-page');
+  };
+
   return (
     <ProfileContainer>
-      <InfoContainer>
+      <InfoContainer onClick={handleProfileClick}>
         <ProfileImage src={profileImage} alt="Profile" />
         <PersonalInfo>
           <Name>{nickName}</Name>
@@ -74,6 +78,7 @@ const InfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer; /* 클릭 가능한 영역으로 보이도록 설정 */
 `;
 
 const ProfileImage = styled.img`
