@@ -8,6 +8,9 @@ import { check } from "prettier";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setRequiredListCount } from "../../redux/CheckSlice";
+import { Navigate, useNavigate } from "react-router-dom";
+import {AcceptanceListMap} from './AcceptanceListMap'
+
 
 
 const Container = styled.div`
@@ -40,26 +43,25 @@ const MissionTogle = styled.div`
     border-radius: 0.5rem;
 `
 
-const BarLeftContainer = styled.div`
+const BarLeftContainer = styled.button`
     border-radius: 0.5rem 0 0 0.5rem; 
     border: 1px solid #BDBDBD;
     align-items: center;
     box-sizing: border-box;
     justify-content: center;
-    color: white;
+    color:  #509BF7;
     display: flex;
     padding: 0.75rem 4.125rem;
     align-items: center;
     gap: 0.125rem;
     flex: 1 0 0;
     align-self: stretch;
-    background:white;
-    color: #509BF7;;
-    
+    background: white;
 `;
 
-const BarRightContainer = styled.div`
+const BarRightContainer = styled.button`
     display: flex;
+    color: white;
     padding: 0.75rem 4.125rem;
     justify-content: center;
     align-items: center;
@@ -67,6 +69,7 @@ const BarRightContainer = styled.div`
     flex: 1 0 0;
     align-self: stretch;
     border-radius: 0rem 0.5rem 0.5rem 0rem;
+    border: 0.33px solid #BDBDBD;
     background: var(--Primary-normal, #509BF7);
 `;
 
@@ -95,124 +98,68 @@ const BoxContainer = styled.div`
     border-bottom: 0.33px solid var(--Primary-light-active, #C9E0FD);
 `
 
-const ProfileContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex: 1 0 0;
-    align-self: stretch;
-`
-const TextContainer = styled.div`
-      display: flex;
-    flex-direction: column;
-    justify-content: center;
-`
-
-const ProfileName = styled.span`
-    align-self: stretch;
-    color: var(--Text-default, var(--Grayscale-Gray7, #222));
-
-    /* Pretendard/medium/16 */
-    font-family: Pretendard;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 120%; /* 1.2rem */
-    letter-spacing: -0.02rem;
-`
-
-const ProfileInfo = styled.span`
-    align-self: stretch;
-    color: var(--Text-caption, var(--Grayscale-Gray5, #888));
-
-    /* Pretendard/regular/12 */
-    font-family: Pretendard;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 100%; /* 0.75rem */
-    letter-spacing: -0.015rem;
-`
-
-const ImgContainer = styled.img`
-    display: flex;
-    width: 2.25rem;
-    height: 2.25rem;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.75rem;
-`
-
-const ContentContainer = styled.div`
-    width: 24.875rem;
-    height: 12.5rem;
-    justify-content: flex-end; //슬라이드버튼을 오른쪽 끝에 오게 만든다.
-    align-items: center; 
-    display: flex;
-`
-const SecondButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: stretch;
-    border-radius: 0.5rem;
-    border: 0.33px solid var(--Primary-Light-active, #C9E0FD);
-`
-
-const YesButton = styled.button`
-    display: flex;
-    padding: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    flex: 1 0 0;
-    border-right: 0.33px solid var(--Primary-light-active, #C9E0FD);
-    background: var(--Primary-light, #F4F9FF);
-    border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
-    border-radius:  0.5rem 0rem 0rem 0.5rem;
-
-    
-`
-
-const NoButton = styled.button`
-    display: flex;
-    padding: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    flex: 1 0 0;
-    border-right: 0.33px solid var(--Primary-light-active, #C9E0FD);
-    background: var(--Primary-light, #F4F9FF);
-    border: 0.33px solid #BDBDBD; /* 전체 경계선을 회색으로 설정 */
-    border-radius: 0rem 0.5rem 0.5rem 0rem;
-`
-
-
 export const AcceptanceList = () =>{
     const [checklist,setCheckList] = useState([]);
     const keysCount = useSelector((state) => state.check.count); 
-    const dispatch = useDispatch();
-    const acceptedList = useSelector((state)=>state.check.acceptedList)
-
-    console.log("승인목록 리스트",acceptedList);
+    const requiredList = useSelector((state) => state.check.requiredList); 
+    const acceptanceList = useSelector((state) => state.check.acceptanceList);
+    const navigate = useNavigate();
     
+    const dispatch = useDispatch();
+
+    const handleWaitingList = () =>{
+        navigate("/member/checklist")
+    }
+
+
+    
+    useEffect(() => {
+        axios
+            .get('/mock/CheckList.json')
+            .then((response) => {
+                const data = response.data;
+                setCheckList(response.data);
+                console.log('Fetched data:', response.data);
+                console.log('Fetched data length:', data.length);
+                dispatch(setRequiredListCount({
+                    count: data.length,
+                    requiredList: data,
+                    acceptanceList: []
+                }));
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }, [dispatch]);
+
+    console.log("리스트 값:",checklist)
+    console.log("대기요청개수",keysCount)
+    console.log("수락확인된 요청 리스트",acceptanceList)
+ 
+
+
+
     return(
         <div>
              <Container>
              <BoxContainer>    
           
                 <MissionTogle>
-                <BarLeftContainer>대기({keysCount})</BarLeftContainer>
-                <BarRightContainer>승인완료</BarRightContainer>
+                <BarLeftContainer onClick={handleWaitingList}>대기({keysCount})</BarLeftContainer>
+                <BarRightContainer >승인완료</BarRightContainer>
                 </MissionTogle>
-                <h2>수락된 항목 목록</h2>
-            {acceptedList.length === 0 ? (
-                <p>수락된 항목이 없습니다.</p>
-            ) : (
-                acceptedList.map(item => (
-                    <div key={item.submit_id}>
-                        <p>{item.user_info.nickname}: {item.content}</p>
-                    </div>
-                ))
-            )}
+                {requiredList.length===0?(
+            <CheckContainer>확인요청내역 없음</CheckContainer>):(
+                    requiredList.map((item) => (
+                        <AcceptanceListMap
+                            key={item.submit_id} 
+                            submit_id={item.submit_id}
+                            user_info={item.user_info}
+                            content={item.content}
+                            image_URL={item.image_URL}
+                        />
+                    ))
+             )}
             </BoxContainer>
             </Container>
       

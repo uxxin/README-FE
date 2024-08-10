@@ -139,6 +139,8 @@ export const MemberListMap = ({members}) => {
     }
   };
 
+
+
   const handleKickOutClick = () => {
     setIsSecondModalOpen(true);
   };
@@ -149,17 +151,19 @@ export const MemberListMap = ({members}) => {
 
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
-    /*  try {
-        // API 호출
+      try {
         await axios.delete("https://read-me.kro.kr/admin/rooms/user-Ban", {
           nickname: selectedProfile.nickname,
-        });
-*/
-        // 성공 시 Redux 상태 업데이트
+          room_id: selectedProfile.room_id 
+        }); 
         dispatch(removeMember(selectedProfile.nickname));
         setIsSecondModalOpen(false);
         setIsModalOpen(false);
-      } 
+      } catch(err){
+        console.error("추방실패");
+      }
+        
+      }
   };
 
   const modalButtons = [

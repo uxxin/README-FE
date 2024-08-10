@@ -62,6 +62,7 @@ const PaneltyCheck = styled.div`
 
 export const MemberProfile = (props) =>{
   const { nickname } = useParams(); 
+  const {uesrId} = useParams(); //userId를 useParams으로 받아올 수가 없음.
   const { penalty_count } = useParams(); 
 
   const location = useLocation();
@@ -76,9 +77,9 @@ export const MemberProfile = (props) =>{
     
   useEffect(() => {
       axios
-          .get('/mock/ProfileData.json')
+      .get(`https://read-me.kro.kr/admin/profile/${userId}`) 
           .then((response) => {
-            setPenaltyCount(response.data.penalty_count);
+            setPenaltyCount(response.data.result.penalty_count);
             console.log('패널티 데이타:', response.data);
           })
           .catch((error) => {
@@ -92,7 +93,7 @@ export const MemberProfile = (props) =>{
     return(
         <Container>
           <ImgContainer src={profile_image} alt={`${nickname}'s profile`} />
-         <PaneltyCheck>패널티 {props.penalty_count}</PaneltyCheck>
+         <PaneltyCheck>패널티 {penalty_count}</PaneltyCheck>
          
          <CustomBtn
             props={{

@@ -141,11 +141,11 @@ export const MemberListItem = (props) => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMjA3NjY0LCJleHAiOjE3MjMyMTg0NjR9.C-C57rAmiPznEVUjHJo9olqvw7-djAqoWS1dt6-1f4o`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMjgyMjg1LCJleHAiOjE3MjMyOTMwODV9.DXYDnt9KW-rbrke807arRXyyyDXKOMHAi2FBIuZQS-Y`
         }};
 
-        const response = await axios.get("https://read-me.kro.kr/admin/users", option);
-        const myInfoResponse = await axios.get("https://read-me.kro.kr/user/profile", option);
+        const response = await axios.get("https://read-me.kro.kr/admin/users?roomId=8", option); //유저정보받아옴, 아미라의 방은 8번
+        const myInfoResponse = await axios.get("https://read-me.kro.kr/user/profile", option); //본인정보
         const adminName = myInfoResponse.data.result;
         const memberData = response.data.result;
         console.log("admin 이름:",adminName)

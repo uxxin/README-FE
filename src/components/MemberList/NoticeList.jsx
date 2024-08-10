@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { PointerBtn } from "../../assets/images/icons";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const BoxContainer = styled.div`
     display: flex;
-    padding-right: 1rem;
     padding: 0.625rem 1rem 6.25rem 1rem;
     flex-direction: column;
     justify-content: center;
@@ -12,7 +13,7 @@ const BoxContainer = styled.div`
 
 const Container = styled.div`
     display: flex;
-    width: 24.8125rem;
+    width: 23.4125rem;
     padding: 0.625rem;
     flex-direction: column;
     align-items: flex-start;
@@ -81,9 +82,28 @@ const ContentImg = styled.img`
     background: url(<path-to-image>) lightgray 50% / cover no-repeat;
 `
 
+const MiniBox = styled.button`
+    width: Fill (64px)px;
+    height: Hug (28px)px;
+    padding: 6px 10px 6px 10px;
+    gap: 8px;
+    border-radius: 8px;
+    border: none;
+    opacity: 0px;
+    background: #509BF7;
+    margin-left: auto;
+`
+
 
 
 export const NoticeList = () =>{
+
+    const navigate =  useNavigate();
+
+    const handleEnterPost = () =>{
+        navigate("/member/checklist")
+    }
+
     return(    
         <BoxContainer>
     <Container>
@@ -96,6 +116,7 @@ export const NoticeList = () =>{
                 </Content>
                 <ContentImg></ContentImg>
             </ContentFrame>
+            <MiniBox onClick={handleEnterPost} ><PointerBtn/>5건</MiniBox>
         </ContentContainer>
     
     </Container>
