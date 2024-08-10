@@ -45,7 +45,7 @@ const CreateNoticeRoomForm = ({
   return (
     <Container>
       <ImageContainer>
-        <RoomImage src={image || '<path-to-default-image>'} alt="Room" />
+        <RoomImage src={image} alt="Room" />
         <ToAlbumBtn onClick={handleAlbumClick}>
           <img src={toAlbumBtnIcon} alt="Album Button" />
         </ToAlbumBtn>
@@ -99,7 +99,9 @@ const RoomImage = styled.div`
   width: 8.75rem;
   height: 8.75rem;
   border-radius: 1.125rem;
-  background: ${({ src }) => `url(${src}) lightgray 50% / cover no-repeat`};
+  background: ${({ src }) =>
+    src ? `url(${src}) lightgray 50% / cover no-repeat` : 'lightgray'};
+  background-color: ${({ src }) => (src ? 'transparent' : 'lightgray')};
   flex-shrink: 0;
 `;
 
