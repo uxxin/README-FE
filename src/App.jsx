@@ -14,7 +14,6 @@ import Results from './pages/Notice/Check/Results';
 import NoticeRoomProfileEdit from './pages/MyPage/NoticeRoomProfileEdit';
 import NoticeCheckRequests from './pages/Main/NoticeCheckRequests';
 import Penalty from './pages/Main/Penalty';
-import Search from './pages/Notice/Search';
 import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
@@ -84,7 +83,6 @@ function App() {
 
             {/* Notice - 공지 */}
             <Route path="/notice/:roomId" element={<Main />} />
-            <Route path="/notice/:roomId/search" element={<Search />} />
             <Route path="/notice/:roomId/details" element={<Details />} />
             <Route path="/notice/:roomId/confirm" element={<Confirmation />} />
             <Route path="/notice/:roomId/solve" element={<Solve />} />
