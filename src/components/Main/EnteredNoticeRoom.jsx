@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getEnteredRoom } from '../../api/home';
+import { getEnteredRoom } from '../../api/Main/home';
 import NoticeRoom from './NoticeRoom';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
 import nextButtonSvg from '../../assets/images/next_button.svg';

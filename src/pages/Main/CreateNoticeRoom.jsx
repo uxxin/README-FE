@@ -4,7 +4,7 @@ import { Header } from '../../components/Header';
 import CreateNoticeRoomForm from '../../components/Main/CreateNoticeRoomForm';
 import { CustomBtn } from '../../components/CustomBtn';
 import styled from 'styled-components';
-import { postNoticeRoom } from '../../api/createnoticeroom';
+import { postNoticeRoom } from '../../api/Main/createnoticeroom';
 
 export const CreateNoticeRoom = () => {
   const [leaderName, setLeaderName] = useState('');

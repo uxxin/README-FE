@@ -4,7 +4,7 @@ import CustomInput from '../../components/CustomInput';
 import styled from 'styled-components';
 import ProgressBar from '../../components/Auth/ProgressBar';
 import { useNavigate } from 'react-router-dom';
-import { confirmCode, createCode, signup } from '../../api/user.js';
+import { confirmCode, createCode, signup } from '../../api/Auth/user';
 import logo from '../../assets/images/logoex.svg';
 
 const nameRegex = /^[가-힣a-zA-Z\s]+$/;

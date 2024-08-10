@@ -1,4 +1,4 @@
-import { GetAxiosInstance, PatchAxiosInstance } from '../axios/axios.method';
+import { GetAxiosInstance, PatchAxiosInstance } from '../../axios/axios.method';
 
 export const getNotices = async (roomId) => {
   const response = await GetAxiosInstance(`/room/${roomId}/all`);

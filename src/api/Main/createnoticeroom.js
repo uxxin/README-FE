@@ -1,4 +1,4 @@
-import { PostAxiosInstance, GetAxiosInstance } from '../axios/axios.method.js';
+import { PostAxiosInstance } from '../../axios/axios.method.js';
 
 //공지방 생성
 export const postNoticeRoom = async (RoomData) => {

@@ -8,7 +8,7 @@ import {
   passwordCheck,
   registerUser,
   roomInfo,
-} from '../../api/authEnter.js';
+} from '../../api/Auth/authEnter.js';
 
 const NoticeRoomEntry = () => {
   const navigate = useNavigate();

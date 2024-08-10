@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import pinIcon from '../../assets/images/pinicon.svg';
 import deleteIcon from '../../assets/images/deleteicon.svg';
-import { getFixedNotice, deleteFixedNotice } from '../../api/home';
+import { getFixedNotice, deleteFixedNotice } from '../../api/Main/home';
 
 const FixedNotice = ({ onDelete }) => {
   const [notice, setNotice] = useState(null);

@@ -13,7 +13,7 @@ import { ReactComponent as RequestList } from '../../assets/images/floating_icon
 import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
-import { getNotices, getUnconfirmedNotices } from '../../api/noticeMain';
+import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
 
 const expand = keyframes`
   from {
