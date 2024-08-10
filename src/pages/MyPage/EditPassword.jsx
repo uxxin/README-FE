@@ -5,6 +5,10 @@ import Input from '../../components/MyPage/input';
 import useDebounce from '../../hooks/use-debounce';
 import FloatingButton from '../../components/MyPage/floating-button';
 import { useNavigate } from 'react-router-dom';
+import {
+  PatchAxiosInstance,
+  PostAxiosInstance,
+} from '../../axios/axios.method';
 
 const EditPassword = () => {
   const [password, setPassword] = useState({
@@ -33,6 +37,7 @@ const EditPassword = () => {
   const handleUpdatePassword = async () => {
     try {
       // 비밀번호 변경 API 호출
+      await PatchAxiosInstance('/user/password', { password: password.new });
       navigate(-1);
     } catch (err) {
       console.error(err);
@@ -44,6 +49,10 @@ const EditPassword = () => {
       (async () => {
         try {
           // 비밀번호 확인 API 호출
+          // /user/password
+          await PostAxiosInstance('/user/password', {
+            password: debouncedCurrentPassword,
+          });
           setPasswordValid(true);
         } catch (err) {
           setPasswordValid(false);
@@ -64,7 +73,13 @@ const EditPassword = () => {
             maxLength={20}
             onChange={handleChange}
             status={passwordValid ? 'none' : 'error'}
-            error="현재 비밀번호와 일치하지 않습니다. 올바른 비밀번호를 입력해 주세요."
+            error={
+              <span>
+                현재 비밀번호와 일치하지 않습니다.
+                <br />
+                올바른 비밀번호를 입력해 주세요.
+              </span>
+            }
           />
           <div className="divider" />
           <Input
