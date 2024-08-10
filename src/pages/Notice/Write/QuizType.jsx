@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImgUpload } from '../../../components/Notice/Write/ImgUpload';
 import styled from 'styled-components';
 import { Quiz } from '../../../components/Notice/Write/Quiz';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
-const QuizType = ({ onStepChange, postType, postTitle, postContent }) => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+const QuizType = ({
+  onPrevStep,
+  onNextStep,
+  postType,
+  postTitle,
+  postContent,
+  startDate: inputStartDate,
+  endDate: inputEndDate,
+  question: inputQuestion,
+  answer: inputAnswer,
+}) => {
+  const [startDate, setStartDate] = useState(inputStartDate || '');
+  const [endDate, setEndDate] = useState(inputEndDate || '');
+  const [question, setQuestion] = useState(inputQuestion || '');
+  const [answer, setAnswer] = useState(inputAnswer || '');
+
+  const handlePrevClick = () => {
+    onPrevStep(postType, postTitle, postContent);
+  };
 
   const handleNextClick = () => {
-    onStepChange(
+    onNextStep(
       postType,
       postTitle,
       postContent,
@@ -21,6 +35,13 @@ const QuizType = ({ onStepChange, postType, postTitle, postContent }) => {
       answer,
     );
   };
+
+  useEffect(() => {
+    setStartDate(startDate || '');
+    setEndDate(endDate || '');
+    setQuestion(question || '');
+    setAnswer(answer || '');
+  }, [startDate, endDate, question, answer]);
 
   return (
     <Container>
@@ -45,7 +66,8 @@ const QuizType = ({ onStepChange, postType, postTitle, postContent }) => {
             startDate && endDate && question && answer ? '#509BF7' : '#BDBDBD',
           btn2: '확인',
         }}
-        onStepChange={handleNextClick}
+        onPrevStep={handlePrevClick}
+        onNextStep={handleNextClick}
       />
     </Container>
   );

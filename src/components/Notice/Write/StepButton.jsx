@@ -21,14 +21,14 @@ export const OneButton = ({ props, onStepChange }) => {
   );
 };
 
-export const TwoButton = ({ props, onStepChange }) => {
+export const TwoButton = ({ props, onPrevStep, onNextStep }) => {
   const handlePrevClick = () => {
-    alert('이전 단계로 이동');
+    onPrevStep();
   };
 
   const handleNextClick = () => {
     if (props.background !== '#BDBDBD') {
-      onStepChange(); // 다음 단계로 이동
+      onNextStep();
     } else {
       alert('제목과 내용을 입력하세요.');
     }
