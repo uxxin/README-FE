@@ -61,7 +61,6 @@ export const NoticeTitle = ({ props, preview }) => {
             <StyledCommentIcon />
             {props.commentCount > 99 ? '99+' : props.commentCount}
           </CommentIconContainer>
-
           {preview ? (
             <></>
           ) : (
