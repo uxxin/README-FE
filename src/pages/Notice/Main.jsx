@@ -99,6 +99,7 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
+  console.log(visibleCount);
   return (
     <MainContainer>
       <Header props={headerProps}></Header>
@@ -110,9 +111,6 @@ const Main = () => {
         <Notice>
           {isManager ? (
             <>
-              {noticeData.slice(0, visibleCount).map((post, index) => (
-                <ManagerNoticePreview props={post} />
-              ))}
               {noticeData.slice(0, visibleCount).map((post, index) => (
                 <ManagerNoticePreview props={post} />
               ))}
