@@ -58,7 +58,6 @@ const DefaultProfileEdit = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      // 내 정보 수정하는 API 호출
       let { profileImage, name, nickname } = user;
 
       if (!image.startsWith('https://s3')) {
@@ -87,14 +86,15 @@ const DefaultProfileEdit = () => {
     (async () => {
       try {
         if (isLoading) {
-          // 내 정보 가져오는 API 호출
           const res = await GetAxiosInstance('/user');
-          setUser({
-            ...res.data.result,
-            profileImage: res.data.result.profileImage || '',
-          });
-          setImage(res.data.result.profileImage || '');
-          setIsLoading(false);
+          if (res.data.isSuccess) {
+            setUser({
+              ...res.data.result,
+              profileImage: res.data.result.profileImage || '',
+            });
+            setImage(res.data.result.profileImage || '');
+            setIsLoading(false);
+          }
         }
       } catch (err) {
         console.error(err);

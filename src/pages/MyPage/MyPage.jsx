@@ -6,14 +6,19 @@ import { GetAxiosInstance } from '../../axios/axios.method';
 
 const MyPage = () => {
   const [user, setUser] = useState({
-    nickname: '',
+    nickname: '닉네임',
     profileImage: '',
     profiles: [],
   });
   useEffect(() => {
     (async () => {
       const res = await GetAxiosInstance('/user/profile');
-      setUser({ ...res.data.result, profiles: res.data.result.profiles || [] });
+      if (res.data.isSuccess) {
+        setUser({
+          ...res.data.result,
+          profiles: res.data.result.profiles || [],
+        });
+      }
     })();
   }, []);
   return (
