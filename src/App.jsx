@@ -29,6 +29,7 @@ import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
 import EditPassword from './pages/MyPage/EditPassword.jsx';
 import Write from './pages/Notice/Write/Write.jsx';
+import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
 import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
 import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
 
@@ -66,8 +67,6 @@ function App() {
             <Route path="/member/acceptance" element={<AcceptancePage />} />
             <Route path="/member/noticelist" element={<NoticeListPage />} />
 
-            
-
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />
             <Route
@@ -84,14 +83,17 @@ function App() {
             />
 
             {/* Notice - 공지 */}
-            <Route path="/notice" element={<Main />} />
+            <Route path="/notice/:roomId" element={<Main />} />
             <Route path="/notice/search" element={<Search />} />
-            <Route path="/notice/details" element={<Details />} />
+            <Route path="/notice//details" element={<Details />} />
             <Route path="/notice/confirm" element={<Confirmation />} />
             <Route path="/notice/solve" element={<Solve />} />
             <Route path="/notice/solve/result" element={<Results />} />
             <Route path="/notice/write" element={<Write />} />
             <Route path="/notice/edit" element={<RoomEdit />} />
+
+            {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
+            <Route path="/notice/entry" element={<NoticeRoomEntry />} />
           </Routes>
         </Router>
       </PersistGate>

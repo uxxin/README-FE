@@ -34,7 +34,6 @@ export const NoticeTitle = ({ props, preview }) => {
     { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
   console.log(props);
-
   return (
     <Container>
       <TopContainer>
@@ -58,14 +57,10 @@ export const NoticeTitle = ({ props, preview }) => {
           ) : (
             <></>
           )}
-          {props.commentCount ? (
-            <CommentIconContainer>
-              <StyledCommentIcon />
-              {props.commentCount > 99 ? '99+' : props.commentCount}
-            </CommentIconContainer>
-          ) : (
-            <></>
-          )}
+          <CommentIconContainer>
+            <StyledCommentIcon />
+            {props.commentCount > 99 ? '99+' : props.commentCount}
+          </CommentIconContainer>
           {preview ? (
             <></>
           ) : (

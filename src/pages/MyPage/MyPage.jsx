@@ -1,31 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/MyPage/header';
 import { MypageContainer } from '../../styles/MyPage/style';
 import Profile from '../../components/MyPage/profile';
-
-const profiles = [
-  { id: 1, profile: '', nickname: '리우', room: '인하 UMC' },
-  { id: 2, profile: '', nickname: '레니', room: '한국공학대 UMC' },
-  { id: 3, profile: '', nickname: '리나', room: '가톨릭대 UMC' },
-];
+import { GetAxiosInstance } from '../../axios/axios.method';
 
 const MyPage = () => {
+  const [user, setUser] = useState({
+    nickname: '닉네임',
+    profileImage: '',
+    profiles: [],
+  });
+  useEffect(() => {
+    (async () => {
+      const res = await GetAxiosInstance('/user/profile');
+      if (res.data.isSuccess) {
+        setUser({
+          ...res.data.result,
+          profiles: res.data.result.profiles || [],
+        });
+      }
+    })();
+  }, []);
   return (
     <>
       <Header title="마이페이지" back />
       <MypageContainer>
-        <Profile nickname="레니" />
+        <Profile nickname={user.nickname} profileImage={user.profileImage} />
         <div className="divider" />
         <section className="profiles">
           <span className="regular-14">공지방 프로필</span>
-          {profiles.length == 0 ? (
+          {user.profiles.length === 0 ? (
             <span className="medium-16 message">
               등록된 공지방 프로필이 없습니다.
             </span>
           ) : (
             <div className="wrapper">
-              {profiles.map((profile) => (
-                <Profile key={profile.id} {...profile} />
+              {user.profiles.map((profile) => (
+                <Profile key={profile.roomId} {...profile} />
               ))}
             </div>
           )}

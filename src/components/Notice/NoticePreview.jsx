@@ -6,7 +6,7 @@ import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
-export const NoticePreview = ({ postData }) => {
+export const NoticePreview = ({ props }) => {
   const modalClose = () => {
     setIsOpen(false);
   };
@@ -24,10 +24,10 @@ export const NoticePreview = ({ postData }) => {
   return (
     <>
       <Container>
-        <NoticeTitle props={postData} preview={true} />
+        <NoticeTitle props={props} preview={true} />
         <BottomContainer>
-          <NoticeContent>{postData.postBody}</NoticeContent>
-          <Thumbnail src={postData.postImage} />
+          <NoticeContent>{props.postBody}</NoticeContent>
+          <Thumbnail src={props.postImage} />
         </BottomContainer>
       </Container>
     </>
