@@ -1,25 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NoticeTitle } from './NoticeTitle';
+import { Link } from 'react-router-dom';
 export const NoticePreview = ({ props }) => {
-  const shareAddress = () => {
-    console.log('주소 공유');
-  };
-  const fixNotice = () => {
-    console.log('공지 고정');
-  };
-  const modalButtons = [
-    { label: '주소 공유', onClick: shareAddress, color: '#222222' },
-    { label: '메인에 고정', onClick: fixNotice, color: '#222222' },
-  ];
   return (
     <>
       <Container>
-        <NoticeTitle props={props} preview={true} />
-        <BottomContainer>
-          <NoticeContent>{props.postBody}</NoticeContent>
-          <Thumbnail src={props.postImage} />
-        </BottomContainer>
+        <NoticeTitle props={props} />
+        <StyledLink to="details">
+          <BottomContainer>
+            <NoticeContent>{props.postBody}</NoticeContent>
+            {props.postImage !== null ? (
+              <Thumbnail src="/src/assets/images/defaultprofileimage.png" />
+            ) : (
+              <Thumbnail src={props.postImage} />
+            )}
+          </BottomContainer>
+        </StyledLink>
       </Container>
     </>
   );
@@ -70,4 +67,9 @@ const Thumbnail = styled.img`
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 0.5rem;
+`;
+
+const StyledLink = styled(Link)`
+  width: 100%;
+  text-decoration: none;
 `;

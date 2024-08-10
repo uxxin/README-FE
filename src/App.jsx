@@ -14,7 +14,6 @@ import Results from './pages/Notice/Check/Results';
 import NoticeRoomProfileEdit from './pages/MyPage/NoticeRoomProfileEdit';
 import NoticeCheckRequests from './pages/Main/NoticeCheckRequests';
 import Penalty from './pages/Main/Penalty';
-import Search from './pages/Notice/Search';
 import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
@@ -84,13 +83,12 @@ function App() {
 
             {/* Notice - 공지 */}
             <Route path="/notice/:roomId" element={<Main />} />
-            <Route path="/notice/search" element={<Search />} />
-            <Route path="/notice//details" element={<Details />} />
-            <Route path="/notice/confirm" element={<Confirmation />} />
-            <Route path="/notice/solve" element={<Solve />} />
-            <Route path="/notice/solve/result" element={<Results />} />
-            <Route path="/notice/write" element={<Write />} />
-            <Route path="/notice/edit" element={<RoomEdit />} />
+            <Route path="/notice/:roomId/details" element={<Details />} />
+            <Route path="/notice/:roomId/confirm" element={<Confirmation />} />
+            <Route path="/notice/:roomId/solve" element={<Solve />} />
+            <Route path="/notice/:roomId/solve/result" element={<Results />} />
+            <Route path="/notice/:roomId/write" element={<Write />} />
+            <Route path="/notice/:roomId/edit" element={<RoomEdit />} />
 
             {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
             <Route path="/notice/entry" element={<NoticeRoomEntry />} />
