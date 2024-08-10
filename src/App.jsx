@@ -27,6 +27,9 @@ import { persistor, store } from './redux/Store.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
+import EditPassword from './pages/MyPage/EditPassword.jsx';
+import Write from './pages/Notice/Write/Write.jsx';
+import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
 import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
 import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
 
@@ -71,6 +74,10 @@ function App() {
               element={<DefaultProfileEdit />}
             />
             <Route
+              path="/my-page/default-edit/password"
+              element={<EditPassword />}
+            />
+            <Route
               path="/my-page/notice-edit"
               element={<NoticeRoomProfileEdit />}
             />
@@ -82,8 +89,11 @@ function App() {
             <Route path="/notice/confirm" element={<Confirmation />} />
             <Route path="/notice/solve" element={<Solve />} />
             <Route path="/notice/solve/result" element={<Results />} />
-            {/*<Route path="/notice/write" element={<Write />} />*/}
+            <Route path="/notice/write" element={<Write />} />
             <Route path="/notice/edit" element={<RoomEdit />} />
+
+            {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
+            <Route path="/notice/entry" element={<NoticeRoomEntry />} />
           </Routes>
         </Router>
       </PersistGate>
