@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import camera from '../../../assets/images/img_upload.svg';
 import imgDelete from '../../../assets/images/img_delete.svg';

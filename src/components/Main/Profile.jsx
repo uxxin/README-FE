@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { ReactComponent as VerificationIcon } from '../../assets/images/vertificationicon.svg';
 import { ReactComponent as PenaltyIcon } from '../../assets/images/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';

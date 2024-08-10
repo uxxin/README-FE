@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // axios를 import 해야 합니다
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../../components/CustomBtn';
 import { Header } from '../../components/Header';
