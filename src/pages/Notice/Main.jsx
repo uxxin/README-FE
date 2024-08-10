@@ -77,10 +77,11 @@ const Main = () => {
     const getNoticeData = async () => {
       try {
         const response = await getNotices(params.roomId);
+        setIsManager(response.data.result.isRoomAdmin);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
-          setNoticeData(response.data.result.data);
+          setNoticeData(response.data.result.posts);
         }
       } catch (error) {
         console.log(error);
@@ -99,6 +100,7 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
+  console.log(visibleCount);
   return (
     <MainContainer>
       <Header props={headerProps}></Header>
@@ -110,10 +112,7 @@ const Main = () => {
         <Notice>
           {isManager ? (
             <>
-              {noticeData.slice(0, visibleCount).map((post, index) => (
-                <ManagerNoticePreview props={post} />
-              ))}
-              {noticeData.slice(0, visibleCount).map((post, index) => (
+              {noticeData.map((post) => (
                 <ManagerNoticePreview props={post} />
               ))}
             </>
@@ -125,7 +124,7 @@ const Main = () => {
                   postData={unconfirmedNoticeData}
                 />
               )}
-              {noticeData.slice(0, visibleCount).map((post, index) => (
+              {noticeData.map((post) => (
                 <NoticePreview props={post} />
               ))}
             </>
@@ -145,7 +144,7 @@ const Main = () => {
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
-            <StyledLink to="check-req" showDivs={showDivs}>
+            <StyledLink to="confirm" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>

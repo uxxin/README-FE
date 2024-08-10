@@ -1,25 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import { QuizFormatLabel } from './QuizFormatLabel';
-import { RequestStatusLabel } from './RequestStatusLabel';
-import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
-import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
-import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
-import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
+import { Link } from 'react-router-dom';
 
 export const ManagerNoticePreview = ({ props }) => {
   const managerProps = { ...props, isManager: true };
   return (
     <>
       <Container>
-        <NoticeTitle props={managerProps} preview={true} />
-        <BottomContainer>
-          <NoticeContent>{props.content}</NoticeContent>
-          {props.postImage !== null && (
-            <Thumbnail src="src\assets\images\defaultprofileimage.png" />
-          )}
-        </BottomContainer>
+        <NoticeTitle props={managerProps} />
+        <StyledLink to="details">
+          <BottomContainer>
+            <NoticeContent>{props.content}</NoticeContent>
+            {props.postImage !== null ? (
+              <Thumbnail src="/src/assets/images/defaultprofileimage.png" />
+            ) : (
+              <Thumbnail src={props.postImage} />
+            )}
+          </BottomContainer>
+        </StyledLink>
       </Container>
     </>
   );
@@ -66,4 +65,9 @@ const Thumbnail = styled.img`
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 0.5rem;
+`;
+
+const StyledLink = styled(Link)`
+  width: 100%;
+  text-decoration: none;
 `;
