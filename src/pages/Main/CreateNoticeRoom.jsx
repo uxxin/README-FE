@@ -17,6 +17,7 @@ export const CreateNoticeRoom = () => {
   const isFormValid = leaderName && roomName && password && penaltyCount;
 
   const handleCreateClick = async () => {
+    navigate('/create-notice-room/success');
     if (isFormValid) {
       const RoomData = {
         room_image: image,
@@ -73,7 +74,6 @@ export const CreateNoticeRoom = () => {
           text="생성하기"
           background={isFormValid ? '#509BF7' : '#BDBDBD'}
           border="none"
-          link="/create-notice-room/success"
           onClick={handleCreateClick}
         />
       </ButtonContainer>

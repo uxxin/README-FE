@@ -112,6 +112,14 @@ export const MemberInvite = () => {
     admin_nickname: '',
   });
 
+  const handleGoMemberList = () => {
+    navigate(`/notice/${roomId}/member`);
+  };
+
+  const handleGoNotice = () => {
+    navigate(`/notice/${roomId}`);
+  };
+
   useEffect(() => {
     const fetchInvite = async () => {
       try {
@@ -168,14 +176,14 @@ export const MemberInvite = () => {
             text="멤버목록으로 이동"
             border="none"
             background="#509BF7"
-            link={`/notice/${roomId}/member`}
+            onClick={handleGoMemberList}
           />
 
           <CustomBtn
             text="공지방으로 이동"
             border="0.5px solid #509BF7"
             background="#FFFFFF"
-            link={`/notice/${roomId}`}
+            onClick={handleGoNotice}
           />
         </ButtonWrapper>
       </Container>

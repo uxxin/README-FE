@@ -1,8 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../CustomBtn';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateBtn = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/success');
+  };
+
   return (
     <Container>
       <ButtonWrapper>
@@ -10,7 +16,7 @@ export const CreateBtn = () => {
           text="생성하기"
           border="0.5px solid #509BF7"
           background="#FFFFFF"
-          link="/success"
+          onClick={handleClick}
         />
       </ButtonWrapper>
     </Container>

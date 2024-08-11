@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../CustomBtn';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -57,11 +57,16 @@ export const MemberProfile = (props) => {
   const { nickname } = useParams();
   const { penalty_count } = useParams();
 
+  const navigate = useNavigate();
   const location = useLocation();
   const { profile_image = '' } = location.state;
   // const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
 
   const [penaltyCount, setPenaltyCount] = useState(penalty_count);
+
+  const handleClick = () => {
+    navigate('/sign-up');
+  };
 
   console.log('패널티 :', penalty_count);
 
@@ -74,7 +79,7 @@ export const MemberProfile = (props) => {
         text="확인"
         border="0.5px solid #509BF7"
         background="#FFFFFF"
-        link="/sign-up"
+        onClick={handleClick}
       />
     </Container>
   );
