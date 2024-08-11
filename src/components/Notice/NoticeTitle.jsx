@@ -7,11 +7,19 @@ import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_ic
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
 import { patchFixNotice } from '../../api/Notice/noticeMain';
+import { UnconfirmedPeopleModal } from './UnconfirmedPeopleModal';
 
 export const NoticeTitle = ({ props, preview }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const unconfirmedModalClose = () => {
+    setIsModalOpen(false);
+  };
   const modalClose = () => {
     setIsOpen(false);
+  };
+  const modalOpen = () => {
+    setIsModalOpen(true);
   };
   const shareAddress = () => {
     console.log('주소 공유');
@@ -41,6 +49,13 @@ export const NoticeTitle = ({ props, preview }) => {
 
   return (
     <Container>
+      {isModalOpen && (
+        <UnconfirmedPeopleModal
+          postId={props.postId}
+          unconfirmedCount={props.unreadCount}
+          onClose={unconfirmedModalClose}
+        />
+      )}
       <TopContainer>
         <TopLeftSide>
           <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
@@ -56,7 +71,7 @@ export const NoticeTitle = ({ props, preview }) => {
           {props.isManager ? (
             <UncheckedContainer>
               미확인
-              <StyledUncheckedPeople onClick={() => setIsModalOpen(true)} />
+              <StyledUncheckedPeople onClick={modalOpen} />
               {props.unreadCount > 99 ? '99+' : props.unreadCount}
             </UncheckedContainer>
           ) : (

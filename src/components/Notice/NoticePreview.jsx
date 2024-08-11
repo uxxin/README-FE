@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { NoticeTitle } from './NoticeTitle';
 import { Link } from 'react-router-dom';
-export const NoticePreview = ({ props }) => {
+export const NoticePreview = ({ props, isManager }) => {
+  const previewProps = { ...props, isManager: isManager };
   return (
     <>
       <Container>
-        <NoticeTitle props={props} />
+        <NoticeTitle props={previewProps} />
         <StyledLink to="details">
           <BottomContainer>
             <NoticeContent>{props.postBody}</NoticeContent>

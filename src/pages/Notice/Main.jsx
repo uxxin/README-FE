@@ -4,7 +4,6 @@ import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
 import { NoticePreview } from '../../components/Notice/NoticePreview';
-import { ManagerNoticePreview } from '../../components/Notice/ManagerNoticePreview';
 import { ReactComponent as Arrow } from '../../assets/images/top_arrow.svg';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Edit } from '../../assets/images/floating_icon1.svg';
@@ -14,7 +13,6 @@ import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg'
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
 import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
-
 const expand = keyframes`
   from {
     opacity: 0;
@@ -45,8 +43,7 @@ const Main = () => {
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
-  const page = useSelector((state) => state.notice.page);
-  const [visibleCount, setVisibleCount] = useState(10);
+  // const page = useSelector((state) => state.notice.page);
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -78,7 +75,7 @@ const Main = () => {
     const getNoticeData = async () => {
       try {
         const response = await getNotices(params.roomId);
-        setIsManager(response.data.result.isRoomAdmin);
+        // setIsManager(response.data.result.isRoomAdmin);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
@@ -101,7 +98,6 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
-  console.log(visibleCount);
   return (
     <MainContainer>
       <Header props={headerProps}></Header>
@@ -114,8 +110,9 @@ const Main = () => {
           {isManager ? (
             <>
               {noticeData.map((post) => (
-                <ManagerNoticePreview
+                <NoticePreview
                   props={post}
+                  isManager={true}
                   onClick={() => navigate(`/notice/${roomId}/details`)}
                 />
               ))}
@@ -129,7 +126,7 @@ const Main = () => {
                 />
               )}
               {noticeData.map((post) => (
-                <NoticePreview props={post} />
+                <NoticePreview props={post} setIsModalOpen={setIsModalOpen} />
               ))}
             </>
           )}

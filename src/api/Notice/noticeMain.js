@@ -22,6 +22,6 @@ export const patchFixNotice = async (postId) => {
 };
 
 export const getUnconfirmedPeople = async (postId) => {
-  const response = await GetAxiosInstance(`/admin/post/${postId}/unread-users`);
+  const response = await GetAxiosInstance(`/admin/post/${postId}/unread`);
   return response;
 };

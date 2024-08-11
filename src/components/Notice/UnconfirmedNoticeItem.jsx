@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const UnconfirmedNoticeItem = ({ postData }) => {
+  console.log(postData);
   return (
     <Container>
       <TextContainer>
         <RoomName>{postData.roomName}</RoomName>
-        <NoticeTitle>{postData.postTitle}</NoticeTitle>
+        <NoticeTitle to="details">{postData.postTitle}</NoticeTitle>
       </TextContainer>
       <NoticedTime>{postData.updatedAtBefore}</NoticedTime>
     </Container>
@@ -44,7 +46,7 @@ const RoomName = styled.div`
   letter-spacing: -0.015rem;
 `;
 
-const NoticeTitle = styled.div`
+const NoticeTitle = styled(Link)`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -57,6 +59,11 @@ const NoticeTitle = styled.div`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.0175rem;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const NoticedTime = styled.div`
