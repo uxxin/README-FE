@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { QuestionInput } from './QuestionInput';
 import help from '../../../assets/images/help_icon.svg';
@@ -11,6 +11,17 @@ export const Mission = ({
   question,
   setQuestion,
 }) => {
+  const handleStartDateChange = (e) => {
+    const newStartDate = e.target.value;
+    setStartDate(newStartDate);
+  };
+
+  useEffect(() => {
+    setStartDate(startDate || '');
+    setEndDate(endDate || '');
+    setQuestion(question || '');
+  }, [startDate, endDate, question]);
+
   return (
     <Container>
       <Section>
@@ -18,7 +29,7 @@ export const Mission = ({
         <QuestionInput
           placeholder="YY.MM.DD HH:MM"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          onChange={handleStartDateChange}
         />
       </Section>
       <Section>

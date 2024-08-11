@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import { getRecentNotice } from '../../api/Main/home';
 import prevButtonSvg from '../../assets/images/prev_button.svg';
 import nextButtonSvg from '../../assets/images/next_button.svg';
 
@@ -8,24 +8,24 @@ const ITEMS_PER_PAGE = 5; // 한 페이지에 5개씩 표시
 
 export const RecentNotices = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [notices, setNotices] = useState([]);
+  const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
-    const fetchNotices = async () => {
+    (async () => {
       try {
-        const response = await axios.get('/mock/RecentNoticeData.json');
-        const data = response.data;
+        const response = await getRecentNotice(currentPage, ITEMS_PER_PAGE);
+        console.log(response);
 
-        setTotalPages(data.totalPage);
-        setNotices(data.recentPostList);
+        if (response.result.isSuccess) {
+          setNotices(response.result.recentPostList);
+          setIsNext(response.result.isNext);
+        }
       } catch (error) {
-        console.error('공지 데이터를 가져오는 중 오류 발생:', error);
+        console.error('Error fetching recent notices:', error); // 에러 처리
       }
-    };
-
-    fetchNotices();
-  }, []);
+    })();
+  }, [currentPage]);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => {
@@ -36,10 +36,14 @@ export const RecentNotices = () => {
     });
   };
 
+  const totalPages = Math.ceil(notices.length / ITEMS_PER_PAGE) || 1;
+
   const handleNextPage = () => {
-    setCurrentPage((prevPage) =>
-      prevPage + 1 > totalPages ? 1 : prevPage + 1,
-    );
+    if (isNext || currentPage < totalPages) {
+      setCurrentPage((prevPage) =>
+        prevPage + 1 > totalPages ? 1 : prevPage + 1,
+      );
+    }
   };
 
   const currentNotices = notices.slice(

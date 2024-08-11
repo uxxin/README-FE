@@ -1,16 +1,13 @@
-import React from "react";
-import { useEffect,useState } from "react";
-import axios from "axios";
-import { MemberListDetails } from "./MemberListDetails";
+import React from 'react';
+import { useState } from 'react';
+import { MemberListDetails } from './MemberListDetails';
 import CustomModal from '../CustomModal';
-import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { setKeysCount, removeMember } from "../../redux/KeySlice";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { PlusIcon } from "../../assets/images/icons";
-import { Link } from "react-router-dom";
-
+import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { removeMember } from '../../redux/KeySlice';
+import { useNavigate } from 'react-router-dom';
+import { PlusIcon } from '../../assets/images/icons';
+import { Link } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -27,7 +24,6 @@ const ModalOverlay = styled.div`
 
 const ShowMoreIconContainer = styled.div`
   position: relative;
-  z-index: 1;
 `
 
 const SecondModalContent = styled.div`
@@ -39,10 +35,9 @@ const SecondModalContent = styled.div`
   align-items: center;
   gap: 0.125rem;
   border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-light-active, #C9E0FD);
-  background: var(--Primary-light, #F4F9FF);
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  background: var(--Primary-light, #f4f9ff);
   backdrop-filter: blur(40px);
- 
 `;
 
 const ButtonWrapper = styled.div`
@@ -59,8 +54,8 @@ const CloseButton = styled.button`
   align-items: center;
   border: none;
   background: transparent;
-  color:#509BF7;
-  border: 0.33px solid var(--Primary-light-active,#888888);
+  color: #509bf7;
+  border: 0.33px solid var(--Primary-light-active, #888888);
 `;
 
 const ButtonContainer = styled.div`
@@ -74,42 +69,40 @@ const ButtonContainer = styled.div`
   margin-right: 0.8rem;
 `;
 
-
 const ButtonText = styled.span`
-  width: 5.3125rem; 
-  height: 1.1875rem; 
+  width: 5.3125rem;
+  height: 1.1875rem;
   gap: 0;
-  opacity: 1; 
+  opacity: 1;
   box-sizing: border-box;
   font-family: Pretendard;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 1.2rem; 
+  line-height: 1.2rem;
   letter-spacing: -0.02em;
-  text-align: start; 
+  text-align: start;
   margin-left: 0.1rem; /* 버튼과 텍스트 사이의 간격을 조정 */
 `;
 
 const MemberAddBtn = styled.button`
   width: 2.75rem;
-  height: 2.75rem; 
-  margin-right:1.6rem; 
+  height: 2.75rem;
+  margin-right: 1.6rem;
   padding: 0.625rem;
   border-radius: 0.5rem;
   box-sizing: border-box;
-  background: #F4F9FF;
-  border: 0.02rem solid #C9E0FD; 
+  background: #f4f9ff;
+  border: 0.02rem solid #c9e0fd;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 
-
-export const MemberListMap = ({members}) => {
+export const MemberListMap = ({ members }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
- // const { members } = useSelector(state => state.keys);
+  // const { members } = useSelector(state => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -131,8 +124,8 @@ export const MemberListMap = ({members}) => {
       navigate(`/member/profile/${encodedNickname}`, {
         state: {
           profile_image: selectedProfile.profile_image,
-          nickname: selectedProfile.nickname
-        }
+          nickname: selectedProfile.nickname,
+        },
       });
     } else {
       console.error('Selected profile is not defined');
@@ -149,28 +142,16 @@ export const MemberListMap = ({members}) => {
 
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
-      try {
-       await axios.delete("https://read-me.kro.kr/admin/rooms/user_ban", {
-        data: { 
-          nickname: selectedProfile.nickname,
-          room_id: 8
-        },
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzc1NTY0LCJleHAiOjE3MjMzODYzNjR9.xWsdJ7gA8wSG8Kr1B-emWZmWUvHLCXXydSnvzsKnMwc',
-        },
-      });
-        dispatch(removeMember(selectedProfile.nickname));
-        setIsSecondModalOpen(false);
-        setIsModalOpen(false);
-      } catch(err){
-        console.error("추방실패");
-      }
-      }
+      console.log("추방할 리스트:",selectedProfile.nickname)
+      dispatch(removeMember(selectedProfile.nickname));
+      setIsSecondModalOpen(false);
+      setIsModalOpen(false);
+    }
   };
 
   const modalButtons = [
-    { label: "프로필", onClick: handleProfileLinkClick, color: "black" },
-    { label: "추방하기", onClick: handleKickOutClick, color: "red" }
+    { label: '프로필', onClick: handleProfileLinkClick, color: 'black' },
+    { label: '추방하기', onClick: handleKickOutClick, color: 'red' },
   ];
 
   console.log('필터링된 멤버:', members);
@@ -180,22 +161,12 @@ export const MemberListMap = ({members}) => {
     {members && members.length > 0 ? (
       members.map((item, index) => (
         item && item.nickname ? (
-          <div key={index}>
-            <MemberListDetails
-              nickname={item.nickname}
-              profile_image={item.profile_image}
-              onOpenModal={() => handleOpenModal(item)}
-            />
-            {selectedProfile?.nickname === item.nickname && (
-              <ShowMoreIconContainer>
-                <CustomModal
-                  isOpen={isModalOpen}
-                  onClose={handleCloseModal}
-                  buttons={modalButtons}
-                />
-              </ShowMoreIconContainer>
-            )}
-          </div>
+          <MemberListDetails
+            key={index}
+            nickname={item.nickname}
+            profile_image={item.profile_image}
+            onOpenModal={() => handleOpenModal(item)}
+          />
         ) : (
           <p key={index}>유효하지 않은 멤버 데이터</p>
         )
@@ -203,15 +174,23 @@ export const MemberListMap = ({members}) => {
     ) : (
       <p>멤버가 없습니다.</p>
     )}
-   
+     
+     <ShowMoreIconContainer>
+        <CustomModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          buttons={modalButtons}
+        />
+      </ShowMoreIconContainer>
+       
       <ButtonContainer>
-          <Link to="/member/invite">
-            <MemberAddBtn>
-              <PlusIcon />
-            </MemberAddBtn>
-          </Link>
-          <ButtonText>멤버초대하기</ButtonText>
-        </ButtonContainer>
+        <Link to="/member/invite">
+          <MemberAddBtn>
+            <PlusIcon />
+          </MemberAddBtn>
+        </Link>
+        <ButtonText>멤버초대하기</ButtonText>
+      </ButtonContainer>
 
       {isSecondModalOpen && (
         <ModalOverlay onClick={handleSecondModalClose}>

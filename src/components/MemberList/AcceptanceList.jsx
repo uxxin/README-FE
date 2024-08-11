@@ -14,34 +14,33 @@ import {AcceptanceListMap} from './AcceptanceListMap'
 
 
 const Container = styled.div`
-    display: flex;
-    width: 26.75rem;
-    padding-right: 1rem;
-    padding: 0.625rem 1rem;
-    padding-right: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.625rem;
-`
+  display: flex;
+  width: 26.75rem;
+  padding-right: 1rem;
+  padding: 0.625rem 1rem;
+  padding-right: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+`;
 
 const TotalContainer = styled.div`
-    display: flex;
-    width: 26.75rem;
-    padding: 0.625rem 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.625rem;
-`
-
+  display: flex;
+  width: 26.75rem;
+  padding: 0.625rem 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+`;
 
 const MissionTogle = styled.div`
-    display: flex;
-    height: 2.5rem;
-    justify-content: center;
-    align-items: center;
-    align-self: stretch;
-    border-radius: 0.5rem;
-`
+  display: flex;
+  height: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 0.5rem;
+`;
 
 const BarLeftContainer = styled.button`
     border-radius: 0.5rem 0 0 0.5rem; 
@@ -74,29 +73,28 @@ const BarRightContainer = styled.button`
 `;
 
 const CheckContainer = styled.div`
-    display: flex;
-    width: 22rem;
-    padding: 1.5rem 1.25rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.625rem;
-    border-radius: 0.5rem;
-    border: 0.33px solid var(--Primary-light-active, #C9E0FD);
-    background: var(--Primary-light, #F4F9FF);
-    
-`
+  display: flex;
+  width: 22rem;
+  padding: 1.5rem 1.25rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.5rem;
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  background: var(--Primary-light, #f4f9ff);
+`;
 
 const BoxContainer = styled.div`
-    display: flex;
-    padding-right: 2rem;
-    padding-bottom: 1rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.625rem;
-    align-self: stretch;
-    border-bottom: 0.33px solid var(--Primary-light-active, #C9E0FD);
-`
+  display: flex;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+  border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
+`;
 
 export const AcceptanceList = () =>{
     const [checklist,setCheckList] = useState([]);

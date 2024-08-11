@@ -1,3 +1,5 @@
+/*
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { QuizFormatLabel } from './QuizFormatLabel';
@@ -6,17 +8,30 @@ import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
+import { patchFixNotice } from '../../api/Notice/noticeMain';
+import { UnconfirmedPeopleModal } from './UnconfirmedPeopleModal';
 
 export const NoticeTitle = ({ props, preview }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const unconfirmedModalClose = () => {
+    setIsModalOpen(false);
+  };
   const modalClose = () => {
     setIsOpen(false);
+  };
+  const modalOpen = () => {
+    setIsModalOpen(true);
   };
   const shareAddress = () => {
     console.log('주소 공유');
   };
-  const fixNotice = () => {
-    console.log('공지 고정');
+  const fixNotice = async () => {
+    try {
+      await patchFixNotice(props.postId);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const correctNotice = () => {
     console.log('수정');
@@ -33,10 +48,16 @@ export const NoticeTitle = ({ props, preview }) => {
     { label: '수정', onClick: correctNotice, color: '#222222' },
     { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
-  console.log(props);
 
   return (
     <Container>
+      {isModalOpen && (
+        <UnconfirmedPeopleModal
+          postId={props.postId}
+          unconfirmedCount={props.unreadCount}
+          onClose={unconfirmedModalClose}
+        />
+      )}
       <TopContainer>
         <TopLeftSide>
           <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
@@ -52,20 +73,16 @@ export const NoticeTitle = ({ props, preview }) => {
           {props.isManager ? (
             <UncheckedContainer>
               미확인
-              <StyledUncheckedPeople />
-              {props.peopleCount > 99 ? '99+' : props.peopleCount}
+              <StyledUncheckedPeople onClick={modalOpen} />
+              {props.unreadCount > 99 ? '99+' : props.unreadCount}
             </UncheckedContainer>
           ) : (
             <></>
           )}
-          {props.commentCount ? (
-            <CommentIconContainer>
-              <StyledCommentIcon />
-              {props.commentCount > 99 ? '99+' : props.commentCount}
-            </CommentIconContainer>
-          ) : (
-            <></>
-          )}
+          <CommentIconContainer>
+            <StyledCommentIcon />
+            {props.commentCount > 99 ? '99+' : props.commentCount}
+          </CommentIconContainer>
           {preview ? (
             <></>
           ) : (
@@ -195,3 +212,4 @@ const DeadlineText = styled.div`
   line-height: 100%;
   letter-spacing: -0.015rem;
 `;
+*/

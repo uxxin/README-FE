@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NoticeRoom = ({ room }) => {
+const NoticeRoom = ({ room, onClick }) => {
+  const isDeleted = room.state === 'DELETED';
+
   return (
-    <Container>
-      <TopSection>{room.time}</TopSection>
+    <Container isDeleted={isDeleted} onClick={onClick}>
+      <TopSection isDeleted={isDeleted}>
+        {isDeleted ? '삭제된 공지방' : room.latestPostTime}
+      </TopSection>
       <BottomSection>
         <ProfileImage src={room.roomImage} alt="profile" />
         <RoomName>{room.roomName}</RoomName>
-        <UserName>{room.nickName}</UserName>
+        <UserName>{room.nickname}</UserName>
       </BottomSection>
     </Container>
   );
@@ -20,7 +24,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;
-  border: 0.0208rem solid var(--Primary-normal, #509bf7);
+  border: 0.0208rem solid
+    ${({ isDeleted }) => (isDeleted ? '#F5535E' : '#509bf7')};
 `;
 
 const TopSection = styled.div`
@@ -30,8 +35,8 @@ const TopSection = styled.div`
   align-items: center;
   border-top-left-radius: 0.375rem;
   border-top-right-radius: 0.375rem;
-  border: 1px solid var(--Primary-Normal, #509bf7);
-  background: var(--Primary-Normal, #509bf7);
+  border: 1px solid ${({ isDeleted }) => (isDeleted ? '#F5535E' : ' #509bf7')};
+  background: ${({ isDeleted }) => (isDeleted ? '#F5535E' : ' #509bf7')};
   flex-direction: column;
   flex: 1 0 0;
   align-self: stretch;

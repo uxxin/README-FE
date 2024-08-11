@@ -4,10 +4,10 @@ import TypeCheck from '../../../components/Notice/Write/TypeCheck';
 import { PostInput } from '../../../components/Notice/Write/PostInput';
 import { OneButton } from '../../../components/Notice/Write/StepButton';
 
-const Post = ({ onStepChange }) => {
-  const [type, setType] = useState('Quiz');
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+const Post = ({ onNextStep, postType, postTitle, postContent }) => {
+  const [type, setType] = useState(postType || 'Quiz');
+  const [title, setTitle] = useState(postTitle || '');
+  const [content, setContent] = useState(postContent || '');
 
   const handleTypeCheck = (selectedType) => {
     setType(selectedType);
@@ -19,13 +19,17 @@ const Post = ({ onStepChange }) => {
   };
 
   const handleNextClick = () => {
-    onStepChange(type, title, content);
+    onNextStep(type, title, content);
   };
 
   return (
     <Container>
-      <TypeCheck onTypeChange={handleTypeCheck} />
-      <PostInput onInputChange={handleInputChange} />
+      <TypeCheck onTypeChange={handleTypeCheck} postType={postType} />
+      <PostInput
+        onInputChange={handleInputChange}
+        postTitle={postTitle}
+        postContent={postContent}
+      />
       <OneButton
         props={{
           text: '다음',

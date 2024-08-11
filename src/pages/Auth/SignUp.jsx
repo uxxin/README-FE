@@ -4,7 +4,8 @@ import CustomInput from '../../components/CustomInput';
 import styled from 'styled-components';
 import ProgressBar from '../../components/Auth/ProgressBar';
 import { useNavigate } from 'react-router-dom';
-import { confirmCode, createCode, signup } from '../../api/user.js';
+import { confirmCode, createCode, signup } from '../../api/Auth/user';
+import logo from '../../assets/images/logoex.svg';
 
 const nameRegex = /^[가-힣a-zA-Z\s]+$/;
 const nickNameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{1,20}$/;
@@ -83,6 +84,7 @@ const SignUp = () => {
       setIsEmailConfirmed(true);
       setEmailConfirmError('');
     } else {
+      // TODO : 인증코드 틀렸을 때 에러메세지 띄우기
       setEmailConfirmError('인증코드가 일치하지 않습니다.');
     }
   };
@@ -125,8 +127,9 @@ const SignUp = () => {
       <SignUpContainer>
         {signupCompleted ? (
           <>
+            <StyledLogo src={logo} alt="logo" />
             <WelcomeMessage>
-              {`${user} 님 \nRead.me에 오신 것을\n 환영합니다!`}
+              {`${user}`} <Custom>{`님,\n 환영합니다!`}</Custom>
             </WelcomeMessage>
           </>
         ) : (
@@ -398,10 +401,11 @@ const InputWrapper = styled.div`
 const WelcomeMessage = styled.div`
   font-size: 2.25rem;
   font-weight: 700;
-  line-height: 100%;
-  margin: 6.38rem 5.87rem 23.56rem 1.06rem;
+  line-height: 130%;
   white-space: pre-line;
   letter-spacing: -0.045rem;
+  margin: 3rem 13.94rem 28.5rem 2.69rem;
+  gap: 0.62rem;
 `;
 
 const InputWrapperWithButton = styled.div`
@@ -410,6 +414,17 @@ const InputWrapperWithButton = styled.div`
   gap: 0.44rem;
   width: 100%;
   margin-bottom: 1.5rem;
+`;
+
+const StyledLogo = styled.img`
+  width: 21.5625rem;
+  height: 6.875rem;
+  flex-shrink: 0;
+  margin: 3.63rem 3.13rem 0 2.19rem;
+`;
+
+const Custom = styled.span`
+  color: #888;
 `;
 
 export default SignUp;

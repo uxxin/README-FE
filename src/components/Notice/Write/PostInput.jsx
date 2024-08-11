@@ -1,10 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-export const PostInput = ({ onInputChange }) => {
+export const PostInput = ({ onInputChange, postTitle, postContent }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const contentInputRef = useRef(null);
+
+  const handleTitleChange = (event) => {
+    const newTitle = event.target.value;
+    setTitle(newTitle);
+    onInputChange(newTitle, content);
+  };
+
+  const handleContentChange = (event) => {
+    const newContent = event.target.value;
+    setContent(newContent);
+    onInputChange(title, newContent);
+  };
 
   useEffect(() => {
     const textarea = contentInputRef.current;
@@ -12,15 +24,10 @@ export const PostInput = ({ onInputChange }) => {
     textarea.style.height = `${textarea.scrollHeight}px`;
   }, [content]);
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-    onInputChange(event.target.value, content);
-  };
-
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-    onInputChange(title, event.target.value);
-  };
+  useEffect(() => {
+    setTitle(postTitle || '');
+    setContent(postContent || '');
+  }, [postTitle, postContent]);
 
   return (
     <Container>

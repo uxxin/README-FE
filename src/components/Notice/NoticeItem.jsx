@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import NoticeCheck from '../../assets/images/notice_check.svg';
 
 export const NoticeItem = ({ props, imgs, preview }) => {
-  console.log(props);
   return (
     <Container>
       <NoticeTitle props={props} preview={preview} />

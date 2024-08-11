@@ -1,43 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { ReactComponent as VerificationIcon } from '../../assets/images/vertificationicon.svg';
 import { ReactComponent as PenaltyIcon } from '../../assets/images/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';
+import { getMyProfile } from '../../api/Main/home';
 
 export const Profile = () => {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(
     '/assets/images/defaultprofileimage.png',
   );
-  const [name, setName] = useState('이름');
+  const [nickName, setNickname] = useState('이름');
   const [email, setEmail] = useState('이메일@gmail.com');
 
   useEffect(() => {
-    const getProfileData = async () => {
+    (async () => {
       try {
-        const options = {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU5LCJwcm92aWRlciI6IlJFQURNRSIsImlhdCI6MTcyMzEwMDE3NSwiZXhwIjoxNzIzMTEwOTc1fQ.c_hk6yPRxJYYrvDJeM72kpAJavFKjSUq1hhdJ3wrmIo`,
-          },
-        };
-        const response = await axios('https://read-me.kro.kr/user', options);
-        const data = response.data.result;
-
+        const response = await getMyProfile();
         console.log(response);
-        console.log(data);
 
-        setName(data.nickname);
-        setEmail(data.email);
-        setProfileImage(data.profileImage);
+        if (response.isSuccess) {
+          setNickname(response.result.nickname);
+          setEmail(response.result.email);
+          setProfileImage(response.result.profileImage);
+        }
       } catch (error) {
-        console.error('Error fetching profile data:', error);
+        console.log('프로필 조회 에러', error);
       }
-    };
-
-    getProfileData();
+    })();
   }, []);
 
   const handleVerificationClick = () => {
@@ -48,12 +38,16 @@ export const Profile = () => {
     navigate('/penalty');
   };
 
+  const handleProfileClick = () => {
+    navigate('/my-page');
+  };
+
   return (
     <ProfileContainer>
-      <InfoContainer>
+      <InfoContainer onClick={handleProfileClick}>
         <ProfileImage src={profileImage} alt="Profile" />
         <PersonalInfo>
-          <Name>{name}</Name>
+          <Name>{nickName}</Name>
           <Email>{email}</Email>
         </PersonalInfo>
       </InfoContainer>
@@ -83,6 +77,7 @@ const InfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer; /* 클릭 가능한 영역으로 보이도록 설정 */
 `;
 
 const ProfileImage = styled.img`

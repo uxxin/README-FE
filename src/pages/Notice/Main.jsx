@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
 import { NoticePreview } from '../../components/Notice/NoticePreview';
-import { ManagerNoticePreview } from '../../components/Notice/ManagerNoticePreview';
 import { ReactComponent as Arrow } from '../../assets/images/top_arrow.svg';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Edit } from '../../assets/images/floating_icon1.svg';
@@ -13,8 +12,7 @@ import { ReactComponent as RequestList } from '../../assets/images/floating_icon
 import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
-import axios from 'axios';
-
+import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
 const expand = keyframes`
   from {
     opacity: 0;
@@ -38,12 +36,14 @@ const collapse = keyframes`
 `;
 
 const Main = () => {
+  const navigate = useNavigate();
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
+  // const page = useSelector((state) => state.notice.page);
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -51,32 +51,35 @@ const Main = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
   };
+  const handleScroll = () => {
+    const bottom =
+      window.innerHeight + window.scrollY >= document.body.offsetHeight;
+    if (bottom) {
+      setVisibleCount((prev) => prev + 10);
+    }
+  };
 
-  const navigationProps = {
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const headerProps = {
     title: '공지방 메인',
     isSearch: true,
   };
 
   useEffect(() => {
     const getNoticeData = async () => {
-      const option = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
-        },
-      };
-
       try {
-        const response = await axios(
-          `https://read-me.kro.kr/room/${params.roomid}/all`,
-          option,
-        );
-        console.log(response);
+        const response = await getNotices(params.roomId);
+        // setIsManager(response.data.result.isRoomAdmin);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
-          setNoticeData(response.data.result.data);
+          setNoticeData(response.data.result.posts);
         }
       } catch (error) {
         console.log(error);
@@ -86,19 +89,8 @@ const Main = () => {
   }, []);
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
-      const option = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMDQyNzQwLCJleHAiOjE3MjMwNTM1NDB9.qyLncvRlbjvkYcs4jz1UAUT4n3Jxdqda9QcMnvAlVdc`,
-        },
-      };
-
       try {
-        const response = await axios(
-          `https://read-me.kro.kr/room/${params.roomid}/notChecked`,
-          option,
-        );
+        const response = await getUnconfirmedNotices(params.roomId);
         setUnconfirmedNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
@@ -108,7 +100,7 @@ const Main = () => {
   }, []);
   return (
     <MainContainer>
-      <Header props={navigationProps}></Header>
+      <Header props={headerProps}></Header>
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
@@ -116,7 +108,15 @@ const Main = () => {
       ) : (
         <Notice>
           {isManager ? (
-            <ManagerNoticePreview props={previewProps} />
+            <>
+              {noticeData.map((post) => (
+                <NoticePreview
+                  props={post}
+                  isManager={true}
+                  onClick={() => navigate(`/notice/${roomId}/details`)}
+                />
+              ))}
+            </>
           ) : (
             <>
               {unconfirmedNoticeData.length > 0 && (
@@ -125,8 +125,8 @@ const Main = () => {
                   postData={unconfirmedNoticeData}
                 />
               )}
-              {noticeData.map((post, index) => (
-                <NoticePreview postData={post} />
+              {noticeData.map((post) => (
+                <NoticePreview props={post} setIsModalOpen={setIsModalOpen} />
               ))}
             </>
           )}
@@ -145,7 +145,7 @@ const Main = () => {
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
-            <StyledLink to="check-req" showDivs={showDivs}>
+            <StyledLink to="confirm" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>
@@ -183,6 +183,7 @@ const NoNoticeContainer = styled.div`
 `;
 
 const NoNotice = styled.div`
+  width: 90%;
   display: flex;
   padding: 1.5rem 1.25rem;
   flex-direction: column;

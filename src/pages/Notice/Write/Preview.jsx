@@ -3,8 +3,10 @@ import { NoticeItem } from '../../../components/Notice/NoticeItem';
 import styled from 'styled-components';
 import { QuestionPreview } from '../../../components/Notice/Write/QuestionPreview';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
+import { useNavigate } from 'react-router-dom';
 
 const Preview = ({
+  onPrevStep,
   postType,
   title,
   content,
@@ -13,6 +15,8 @@ const Preview = ({
   question,
   answer,
 }) => {
+  const navigate = useNavigate();
+  const roomId = 1;
   const isManager = true;
   const post = [
     {
@@ -24,6 +28,14 @@ const Preview = ({
     },
   ];
   const imageURLs = ['url11.com', 'url12.com'];
+
+  const handlePrevClick = () => {
+    onPrevStep(postType, title, content, startDate, endDate, question, answer);
+  };
+
+  const handlePostClick = () => {
+    navigate(`/notice/:${roomId}`);
+  };
 
   return (
     <Container>
@@ -49,6 +61,8 @@ const Preview = ({
           background2: '#509BF7',
           btn2: '등록하기',
         }}
+        onPrevStep={handlePrevClick}
+        onNextStep={handlePostClick}
       />
     </Container>
   );

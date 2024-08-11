@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Profile } from '../../components/Main/Profile';
 import { RecentNotices } from '../../components/Main/RecentNotices';
-import { OpendNoticeRoom } from '../../components/Main/OpendNoticeRoom';
+import { OpenedNoticeRoom } from '../../components/Main/OpendNoticeRoom';
 import { EnteredNoticeRoom } from '../../components/Main/EnteredNoticeRoom';
 import FixedNotice from '../../components/Main/FixedNotice';
 import styled from 'styled-components';
@@ -24,7 +24,7 @@ const Home = () => {
         <Profile />
         {isFixedNoticeVisible && <FixedNotice onDelete={handleDeleteClick} />}
         <RecentNotices />
-        <OpendNoticeRoom />
+        <OpenedNoticeRoom />
         <EnteredNoticeRoom />
       </Scroll>
     </Container>
@@ -39,7 +39,7 @@ const Logo = styled.img`
 `;
 
 const Container = styled.div`
-  display: flex;
+  //display: flex;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;

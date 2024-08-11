@@ -14,7 +14,6 @@ import Results from './pages/Notice/Check/Results';
 import NoticeRoomProfileEdit from './pages/MyPage/NoticeRoomProfileEdit';
 import NoticeCheckRequests from './pages/Main/NoticeCheckRequests';
 import Penalty from './pages/Main/Penalty';
-import Search from './pages/Notice/Search';
 import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
@@ -27,10 +26,11 @@ import { persistor, store } from './redux/Store.jsx';
 import Solve from './pages/Notice/Check/Solve.jsx';
 import RoomMissionRequests from './pages/Main/RoomMissionRequests.jsx';
 import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
+import EditPassword from './pages/MyPage/EditPassword.jsx';
 import Write from './pages/Notice/Write/Write.jsx';
+import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
 import NoticeListPage from './pages/MemberList/NoticeListPage.jsx';
 import AcceptancePage from './pages/MemberList/AcceptancePage.jsx';
-
 
 function App() {
   return (
@@ -66,8 +66,6 @@ function App() {
             <Route path="/member/acceptance" element={<AcceptancePage />} />
             <Route path="/member/noticelist" element={<NoticeListPage />} />
 
-            
-
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />
             <Route
@@ -75,19 +73,25 @@ function App() {
               element={<DefaultProfileEdit />}
             />
             <Route
+              path="/my-page/default-edit/password"
+              element={<EditPassword />}
+            />
+            <Route
               path="/my-page/notice-edit"
               element={<NoticeRoomProfileEdit />}
             />
 
             {/* Notice - 공지 */}
-            <Route path="/notice" element={<Main />} />
-            <Route path="/notice/search" element={<Search />} />
-            <Route path="/notice/details" element={<Details />} />
-            <Route path="/notice/confirm" element={<Confirmation />} />
-            <Route path="/notice/solve" element={<Solve />} />
-            <Route path="/notice/solve/result" element={<Results />} />
-            <Route path="/notice/write" element={<Write />} />
-            <Route path="/notice/edit" element={<RoomEdit />} />
+            <Route path="/notice/:roomId" element={<Main />} />
+            <Route path="/notice/:roomId/details" element={<Details />} />
+            <Route path="/notice/:roomId/confirm" element={<Confirmation />} />
+            <Route path="/notice/:roomId/solve" element={<Solve />} />
+            <Route path="/notice/:roomId/solve/result" element={<Results />} />
+            <Route path="/notice/:roomId/write" element={<Write />} />
+            <Route path="/notice/:roomId/edit" element={<RoomEdit />} />
+
+            {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
+            <Route path="/notice/entry" element={<NoticeRoomEntry />} />
           </Routes>
         </Router>
       </PersistGate>

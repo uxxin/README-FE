@@ -1,34 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { QuizFormatLabel } from './QuizFormatLabel';
-import { RequestStatusLabel } from './RequestStatusLabel';
-import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
-import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
-import CustomModal from '../CustomModal';
 import { NoticeTitle } from './NoticeTitle';
-export const NoticePreview = ({ postData }) => {
-  const modalClose = () => {
-    setIsOpen(false);
-  };
-  const shareAddress = () => {
-    console.log('주소 공유');
-  };
-  const fixNotice = () => {
-    console.log('공지 고정');
-  };
-  const modalButtons = [
-    { label: '주소 공유', onClick: shareAddress, color: '#222222' },
-    { label: '메인에 고정', onClick: fixNotice, color: '#222222' },
-  ];
-  const [isOpen, setIsOpen] = useState(false);
+import { Link } from 'react-router-dom';
+export const NoticePreview = ({ props, isManager }) => {
+  const previewProps = { ...props, isManager: isManager };
   return (
     <>
       <Container>
-        <NoticeTitle props={postData} preview={true} />
-        <BottomContainer>
-          <NoticeContent>{postData.postBody}</NoticeContent>
-          <Thumbnail src={postData.postImage} />
-        </BottomContainer>
+        <NoticeTitle props={previewProps} />
+        <StyledLink to="details">
+          <BottomContainer>
+            <NoticeContent>{props.postBody}</NoticeContent>
+            {props.postImage !== null ? (
+              <Thumbnail src="/src/assets/images/defaultprofileimage.png" />
+            ) : (
+              <Thumbnail src={props.postImage} />
+            )}
+          </BottomContainer>
+        </StyledLink>
       </Container>
     </>
   );
@@ -79,4 +68,9 @@ const Thumbnail = styled.img`
   width: 3.75rem;
   height: 3.75rem;
   border-radius: 0.5rem;
+`;
+
+const StyledLink = styled(Link)`
+  width: 100%;
+  text-decoration: none;
 `;
