@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { PointerBtn } from "../../assets/images/icons";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const BoxContainer = styled.div`
     display: flex;
-    padding-right: 1rem;
     padding: 0.625rem 1rem 6.25rem 1rem;
     flex-direction: column;
     justify-content: center;
@@ -12,7 +13,7 @@ const BoxContainer = styled.div`
 
 const Container = styled.div`
     display: flex;
-    width: 24.8125rem;
+    width: 23.4125rem;
     padding: 0.625rem;
     flex-direction: column;
     align-items: flex-start;
@@ -49,6 +50,8 @@ const DueDate = styled.span`
     gap: 0.25rem;
     align-self: stretch;
     border-bottom: 0.33px solid var(--Primary-Normal, #509BF7);
+    color: #509BF7;
+
 `
 const ContentFrame = styled.div`
     display: flex;
@@ -81,25 +84,56 @@ const ContentImg = styled.img`
     background: url(<path-to-image>) lightgray 50% / cover no-repeat;
 `
 
+const MiniBox = styled.button`
+    width: Fill (64px)px;
+    height: Hug (28px)px;
+    padding: 6px 10px 6px 10px;
+    gap: 8px;
+    border-radius: 8px;
+    border: none;
+    opacity: 0px;
+    background: #509BF7;
+    margin-left: auto;
+`
+
+const TextColor = styled.span`
+    color: var(--Basic-White, var(--Basic-White, #FFF));
+margin-left: 0.5rem;
+/* Pretendard/regular/16 */
+font-family: Pretendard;
+font-size: 1rem;
+font-style: normal;
+font-weight: 400;
+line-height: 100%; /* 1rem */
+letter-spacing: -0.02rem;
+`
+
 
 
 export const NoticeList = () =>{
+
+    const navigate =  useNavigate();
+
+    const handleEnterPost = () =>{
+        navigate("/member/checklist")
+    }
+
     return(    
         <BoxContainer>
     <Container>
         <ContentContainer>
             <Title>공지글의 예시제목</Title>
-            <DueDate>yy</DueDate>
+            <DueDate>yy.MM.dd HH:MM</DueDate>
             <ContentFrame>
                 <Content>
                     공지글의 예시내용입니다.
                 </Content>
                 <ContentImg></ContentImg>
             </ContentFrame>
+            <MiniBox onClick={handleEnterPost} ><PointerBtn/><TextColor>5건</TextColor></MiniBox>
         </ContentContainer>
     
     </Container>
     </BoxContainer>
-
     )
 }

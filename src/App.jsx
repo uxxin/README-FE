@@ -59,8 +59,8 @@ function App() {
             <Route path="/penalty/:roomId" element={<NoticeRoomPenaltys />} />
 
             {/* MemberList - 멤버 목록 */}
-            <Route path="/member" element={<MemberList />} />
-            <Route path="/member/invite" element={<Invite />} />
+            <Route path="/member/:roomId" element={<MemberList />} />
+            <Route path="/member/:roomId/invite" element={<Invite />} />
             <Route path="/member/profile/:nickname" element={<Profile />} />
             <Route path="/member/checklist" element={<CheckListPage />} />
             <Route path="/member/acceptance" element={<AcceptancePage />} />

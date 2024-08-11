@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../CustomBtn';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 const TotalContainer = styled.div`
   padding-right: 1rem;
@@ -89,24 +92,69 @@ const ButtonWrapper = styled.div`
   box-sizing: border-box;
 `;
 
+const InfoText = styled.span`
+  margin-left:0.62rem;
+  font-family: Noto Sans;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.34px;
+  text-align: left;
+  color: var(--Basic-Black, #000000);
+
+
+`
+
 export const MemberInvite = () => {
+  const { roomId } = useParams(); 
+
+  const [invite, setInvite] = useState({
+    room_image: "",
+    room_invite_url: "",
+    room_name: "",
+    room_password: "",
+    admin_nickname: ""
+  });
+
+
+  useEffect(() => {
+    const fetchInvite = async () => {
+      try {
+        const option = {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`
+          }
+        };
+        const response = await axios.get(`https://read-me.kro.kr/admin/invitation/${roomId}`, option);
+        console.log("전체응답",response.data)
+        const inviteData = response.data.result
+        console.log("URL 정보:", inviteData);
+        setInvite(inviteData);
+      } catch (error) {
+        console.error('Error fetching URL:', error);
+      }
+    };
+    fetchInvite();
+  }, [roomId]); 
+
+
   return (
+
     <TotalContainer>
       <Container>
         <AddContainer>
           <ContainerHead>리드미</ContainerHead>
           <InfoContainer>
             <TextContainer>
-              <TextColor>초대 url</TextColor>
+              <TextColor>초대 url <InfoText>{invite.room_invite_url}</InfoText></TextColor>
             </TextContainer>
             <TextContainer>
-              <TextColor>공지방 이름</TextColor>
+              <TextColor>공지방 이름 <InfoText>{invite.room_name}</InfoText> </TextColor>
             </TextContainer>
             <TextContainer>
-              <TextColor>비밀번호</TextColor>
+              <TextColor>비밀번호 <InfoText>{invite.room_password}</InfoText> </TextColor>
             </TextContainer>
             <TextContainer>
-              <TextColor>대표자</TextColor>
+              <TextColor>대표자  <InfoText>{invite.admin_nickname}</InfoText></TextColor>
             </TextContainer>
           </InfoContainer>
         </AddContainer>
@@ -116,7 +164,7 @@ export const MemberInvite = () => {
               text: '멤버목록으로 이동',
               border: 'none',
               background: '#509BF7',
-              link: '/sign-in',
+              link: '/member',
             }}
           />
 
@@ -125,7 +173,7 @@ export const MemberInvite = () => {
               text: '공지방으로 이동',
               border: '0.5px solid #509BF7',
               background: '#FFFFFF',
-              link: '/sign-up',
+              link: '/member/noticelist',
             }}
           />
         </ButtonWrapper>

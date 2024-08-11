@@ -8,8 +8,8 @@ import axios from "axios";
 
 // 컨테이너 스타일
 const Container = styled.div`
-  padding: 0.625rem 0rem;
-  gap: 3.75rem; /* 60px */
+  padding: 0.625rem 1rem;
+  gap: 3.75rem;
   box-sizing: border-box;
   display: flex;
   width: 26.875rem;
@@ -74,25 +74,13 @@ export const MemberProfile = (props) =>{
   console.log('패널티 :', penalty_count);
 
     
-  useEffect(() => {
-      axios
-          .get('/mock/ProfileData.json')
-          .then((response) => {
-            setPenaltyCount(response.data.penalty_count);
-            console.log('패널티 데이타:', response.data);
-          })
-          .catch((error) => {
-              console.error('Error fetching data:', error);
-          });
-  }, []);
-
-
+ 
   
 
     return(
         <Container>
           <ImgContainer src={profile_image} alt={`${nickname}'s profile`} />
-         <PaneltyCheck>패널티 {props.penalty_count}</PaneltyCheck>
+         <PaneltyCheck>패널티 {penalty_count}</PaneltyCheck>
          
          <CustomBtn
             props={{
