@@ -7,11 +7,11 @@ import { useLocation } from 'react-router-dom';
 
 const CreateNoticeRoomSuccess = () => {
   const location = useLocation();
-  const profileImage = useState(location.state?.roomImage || '');
-  const url = useState(location.state?.roomInviteUrl || '');
-  const roomName = useState(location.state?.roomName || '');
-  const password = useState(location.state?.roomPassword || '');
-  const nickName = useState(location.state?.adminNickname || '');
+  const profileImage = location.state?.roomImage || '';
+  const url = location.state?.roomInviteUrl || '';
+  const roomName = location.state?.roomName || '';
+  const password = location.state?.roomPassword || '';
+  const nickName = location.state?.adminNickname || '';
 
   return (
     <div
