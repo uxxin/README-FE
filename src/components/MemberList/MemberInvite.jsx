@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../CustomBtn';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 const TotalContainer = styled.div`
   padding-right: 1rem;
@@ -102,7 +104,8 @@ const InfoText = styled.span`
 
 `
 
-export const MemberInvite = (props) => {
+export const MemberInvite = () => {
+  const { roomId } = useParams(); 
 
   const [invite, setInvite] = useState({
     room_image: "",
@@ -118,10 +121,10 @@ export const MemberInvite = (props) => {
       try {
         const option = {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzc1NTY0LCJleHAiOjE3MjMzODYzNjR9.xWsdJ7gA8wSG8Kr1B-emWZmWUvHLCXXydSnvzsKnMwc`
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`
           }
         };
-        const response = await axios.get("https://read-me.kro.kr/admin/invitation/8", option);
+        const response = await axios.get(`https://read-me.kro.kr/admin/invitation/${roomId}`, option);
         console.log("전체응답",response.data)
         const inviteData = response.data.result
         console.log("URL 정보:", inviteData);
@@ -130,10 +133,8 @@ export const MemberInvite = (props) => {
         console.error('Error fetching URL:', error);
       }
     };
-  
     fetchInvite();
-  
-  }, []); 
+  }, [roomId]); 
 
 
   return (

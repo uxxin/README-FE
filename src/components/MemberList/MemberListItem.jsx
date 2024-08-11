@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';
+import { useParams } from 'react-router-dom';
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -108,11 +109,12 @@ const ShowMoreIconContainer = styled.div`
   position: relative;
 `;
 
-export const MemberListItem = (props) => {
+export const MemberListItem = () => {
   const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
   const { members } = useSelector((state) => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const { roomId } = useParams();
 
   const [state, setState] = useState({
     search: '',
@@ -138,17 +140,13 @@ export const MemberListItem = (props) => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzc1NTY0LCJleHAiOjE3MjMzODYzNjR9.xWsdJ7gA8wSG8Kr1B-emWZmWUvHLCXXydSnvzsKnMwc`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`
         }};
 
-        const response = await axios.get(`https://read-me.kro.kr/admin/users?roomId=8`, option); //유저정보받아옴, 아미라의 방은 8번
+        const response = await axios.get(`https://read-me.kro.kr/admin/users?roomId=${roomId}`, option); //유저정보받아옴, 아미라의 방은 8번
         const myInfoResponse = await axios.get("https://read-me.kro.kr/user/profile", option); //본인정보
         const adminName = myInfoResponse.data.result;
-      /*  const memberData = response.data.result.map(member => ({
-          ...member,
-          room_id: 8 //roomid 직접 memberData에 설정하겠음
-        }));
-        */
+     
 
         const memberData = response.data.result;
   
@@ -199,7 +197,7 @@ export const MemberListItem = (props) => {
       </MemberIcon>
       <MemberListBox>
         <ButtonContainer>
-          <Link to="/member/invite">
+        <Link to={`/member/${roomId}/invite`}> 
             <MemberAddBtn>
               <PlusIcon />
             </MemberAddBtn>
@@ -216,6 +214,7 @@ export const MemberListItem = (props) => {
           <MemberListMap
             members={state.results}
             onOpenModal={handleOpenModal}
+            roomId = {roomId}
           />
         ) : members && members.length === 0 ? (
           <TextColor>아무도 없어요!</TextColor>

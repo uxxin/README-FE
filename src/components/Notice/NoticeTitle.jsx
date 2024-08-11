@@ -1,5 +1,3 @@
-/*
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { QuizFormatLabel } from './QuizFormatLabel';
@@ -212,4 +210,3 @@ const DeadlineText = styled.div`
   line-height: 100%;
   letter-spacing: -0.015rem;
 `;
-*/
