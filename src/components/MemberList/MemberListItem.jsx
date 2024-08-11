@@ -94,16 +94,15 @@ const TextColor = styled.p`
 
 const CountColor = styled.span`
   //styleName: Pretendard/regular/14;
-font-family: Pretendard;
-font-size: 14px;
-font-weight: 400;
-line-height: 14px;
-letter-spacing: -0.02em;
-text-align: left;
-color: #888888;
-white-space: nowrap;
-`
-
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  color: #888888;
+  white-space: nowrap;
+`;
 
 const ShowMoreIconContainer = styled.div`
   position: relative;
@@ -140,20 +139,33 @@ export const MemberListItem = () => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`
-        }};
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`,
+          },
+        };
 
-        const response = await axios.get(`https://read-me.kro.kr/admin/users?roomId=${roomId}`, option); //유저정보받아옴, 아미라의 방은 8번
-        const myInfoResponse = await axios.get("https://read-me.kro.kr/user/profile", option); //본인정보
+        const response = await axios.get(
+          `https://read-me.kro.kr/admin/users?roomId=${roomId}`,
+          option,
+        ); //유저정보받아옴, 아미라의 방은 8번
+        const myInfoResponse = await axios.get(
+          'https://read-me.kro.kr/user/profile',
+          option,
+        ); //본인정보
         const adminName = myInfoResponse.data.result;
-     
 
         const memberData = response.data.result;
-  
-        console.log("admin 이름:",adminName)
-        console.log("userId가 있나요?", memberData )
-        setState(prevState => ({ ...prevState, results: memberData, allMembers: memberData, adminName:adminName }));
-        dispatch(setKeysCount({ count:memberData.length, members: memberData }));
+
+        console.log('admin 이름:', adminName);
+        console.log('userId가 있나요?', memberData);
+        setState((prevState) => ({
+          ...prevState,
+          results: memberData,
+          allMembers: memberData,
+          adminName: adminName,
+        }));
+        dispatch(
+          setKeysCount({ count: memberData.length, members: memberData }),
+        );
       } catch (error) {
         console.error('Error fetching member list:', error);
       }
@@ -197,7 +209,7 @@ export const MemberListItem = () => {
       </MemberIcon>
       <MemberListBox>
         <ButtonContainer>
-        <Link to={`/member/${roomId}/invite`}> 
+          <Link to={`/notice/${roomId}/invite`}>
             <MemberAddBtn>
               <PlusIcon />
             </MemberAddBtn>
@@ -205,8 +217,7 @@ export const MemberListItem = () => {
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
         <ButtonContainer>
-            <MemberAddBtn>
-            </MemberAddBtn>
+          <MemberAddBtn></MemberAddBtn>
           <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
         </ButtonContainer>
 
@@ -214,7 +225,7 @@ export const MemberListItem = () => {
           <MemberListMap
             members={state.results}
             onOpenModal={handleOpenModal}
-            roomId = {roomId}
+            roomId={roomId}
           />
         ) : members && members.length === 0 ? (
           <TextColor>아무도 없어요!</TextColor>
