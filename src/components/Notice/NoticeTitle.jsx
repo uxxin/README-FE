@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { QuizFormatLabel } from './QuizFormatLabel';
-import { RequestStatusLabel } from './RequestStatusLabel';
+import { QuizFormatLabel } from './NoticeTitle/QuizFormatLabel';
+import { RequestStatusLabel } from './NoticeTitle/RequestStatusLabel';
 import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
 import { patchFixNotice } from '../../api/Notice/noticeMain';
-import { UnconfirmedPeopleModal } from './UnconfirmedPeopleModal';
+import { UnconfirmedPeopleModal } from './NoticeTitle/UnconfirmedPeopleModal';
 
 export const NoticeTitle = ({ props, preview }) => {
   const [isOpen, setIsOpen] = useState(false);
