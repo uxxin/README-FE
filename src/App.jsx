@@ -17,7 +17,7 @@ import Penalty from './pages/Main/Penalty';
 import RoomEdit from './pages/Notice/RoomEdit';
 import Invite from './pages/MemberList/Invite';
 import Profile from './pages/MemberList/Profile';
-import Confirm from './pages/Notice/Confirm';
+import Confirm from './pages/Notice/Confirm/Confirm.jsx';
 import CreateNoticeRoomSuccess from './pages/Main/CreateNoticeRoomSuccess.jsx';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -28,7 +28,7 @@ import NoticeRoomPenaltys from './pages/Main/NoticeRoomPenaltys.jsx';
 import EditPassword from './pages/MyPage/EditPassword.jsx';
 import Write from './pages/Notice/Write/Write.jsx';
 import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
-import AcceptancePage from './pages/Notice/AcceptancePage.jsx';
+import ConfirmRequestApproval from './pages/Notice/Confirm/ConfirmRequestApproval.jsx';
 
 function App() {
   return (
@@ -55,11 +55,6 @@ function App() {
             />
             <Route path="/penalty" element={<Penalty />} />
             <Route path="/penalty/:roomId" element={<NoticeRoomPenaltys />} />
-
-            {/* MemberList - 멤버 목록 */}
-            {/* <Route path="/notice/check-request" element={<NoticeListPage />} />
-            <Route path="/member/checklist" element={<CheckListPage />} />
-            <Route path="/member/acceptance" element={<AcceptancePage />} /> */}
 
             {/* MyPage - 마이페이지 */}
             <Route path="/my-page" element={<MyPage />} />
@@ -88,16 +83,18 @@ function App() {
             <Route path="/notice/:roomId/write" element={<Write />} />
             <Route path="/notice/:roomId/confirm-list" element={<Confirm />} />
             <Route
-              path="/notice/:roomId/confirm-list/:postId"
-              element={<AcceptancePage />}
+              path="/notice/:roomId/confirm-list/approval" //임시 path입니다. api 연결하면서 /notice/:roomId/confirm-list/:postId 같이 변경해야할 것 같습니다.
+              element={<ConfirmRequestApproval />}
             />
+            <Route path="/notice/:roomId/edit" element={<RoomEdit />} />
+
+            {/* MemberList - 멤버 리스트*/}
             <Route path="/notice/:roomId/member" element={<MemberList />} />
             <Route
               path="/notice/:roomId/member/:nickname"
               element={<Profile />}
             />
             <Route path="/notice/:roomId/invite" element={<Invite />} />
-            <Route path="/notice/:roomId/edit" element={<RoomEdit />} />
 
             {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
             <Route path="/notice/entry" element={<NoticeRoomEntry />} />

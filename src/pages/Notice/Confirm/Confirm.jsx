@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header } from '../../components/Header';
-import { ConfirmList } from '../../components/Notice/ConfirmList';
+import { Header } from '../../../components/Header';
+import { ConfirmList } from '../../../components/Notice/Confirm/ConfirmList';
 
 const Confirm = () => {
   return (

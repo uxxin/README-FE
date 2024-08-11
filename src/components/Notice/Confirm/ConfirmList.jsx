@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PointerBtn } from '../../assets/images/icons';
+import { PointerBtn } from '../../../assets/images/icons';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { NoticePreview } from './NoticePreview';
+import { NoticePreview } from '../NoticePreview';
 
 const BoxContainer = styled.div`
   display: flex;
@@ -110,7 +110,7 @@ export const ConfirmList = () => {
   const { roomId, postId } = useParams();
 
   const handleClick = () => {
-    navigate(`/notice/${roomId}/confirm-list/${postId}`);
+    navigate(`/notice/${roomId}/confirm-list/approval`);
   };
 
   const posts = [
