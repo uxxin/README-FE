@@ -22,9 +22,9 @@ export const PenaltyRooms = () => {
     fetchData();
   }, []);
 
-  const handleRoomClick = (roomid, roomName) => {
+  const handleRoomClick = (roomid) => {
     {
-      navigate(`/penalty/${roomid}?roomName=${encodeURIComponent(roomName)}`);
+      navigate(`/penalty/${roomid}`);
     }
   };
 
@@ -38,7 +38,7 @@ export const PenaltyRooms = () => {
                 <PenaltyRoomForm
                   key={room.id}
                   room={room}
-                  onClick={() => handleRoomClick(room.id, room.roomName)}
+                  onClick={() => handleRoomClick(room.id)}
                 />
               ))}
             </Rooms>

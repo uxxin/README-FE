@@ -1,0 +1,127 @@
+import React from 'react';
+import styled from 'styled-components';
+import EXImage from '../../assets/images/exampleimage.png';
+
+const PenaltyNoticeForm = () => {
+  return (
+    <Container>
+      <StatusContainer>
+        <Type>미션</Type>
+        <State>미제출</State>
+      </StatusContainer>
+      <NoticeTitle>공지글 제목 예시다. </NoticeTitle>
+      <DueDate>2023.03.02 - 2024.03.03</DueDate>
+      <NoticeContent>
+        <Content>
+          공지글의 예시 내용입니다. 공지글의 예시 내용입니다. 공지글의 예시
+          내용입니다. 공지글의 예시 내용입니다. 공지글의 예시 내용입니다.
+          공지글의 예시 내용입니다. 공지글의 예시 내용입니다. 공지글의 예시
+          내용입니다. 공지글의 예시 내용입니다. 공지글의 예시 내용입니다.
+          공지글의 예시 내용입니다. 공지글의 예시 내용입니다.{' '}
+        </Content>
+        <NoticeImage src={EXImage} alt="공지 이미지" />
+      </NoticeContent>
+    </Container>
+  );
+};
+
+export default PenaltyNoticeForm;
+
+const Container = styled.div`
+  display: flex;
+  padding: 0.625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  align-self: stretch;
+  border-radius: 0.5rem;
+  border: 0.33px solid #c9e0fd;
+  background: #f4f9ff;
+`;
+
+const StatusContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+`;
+const Type = styled.div`
+  display: flex;
+  padding: 0.375rem 0.625rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 62.4375rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
+  width: 2.5rem;
+  white-space: nowrap;
+  background: #509bf7;
+  color: white;
+`;
+const State = styled.div`
+  display: flex;
+  padding: 0.375rem 0.625rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 62.4375rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
+  width: 2.5rem;
+  white-space: nowrap;
+  background: #e9e9e9;
+`;
+const NoticeTitle = styled.div`
+  align-self: stretch;
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 100%; /* 1.125rem */
+  letter-spacing: -0.0225rem;
+`;
+
+//start랑 end로 나눠야 함.
+const DueDate = styled.div`
+  display: flex;
+  padding-bottom: 0.5rem;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: stretch;
+  border-bottom: 0.33px solid var(--Primary-Normal, #509bf7);
+  overflow: hidden;
+  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 100%; /* 0.75rem */
+  letter-spacing: -0.015rem;
+`;
+const NoticeContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+`;
+const Content = styled.div`
+  height: 3.75rem;
+  overflow: hidden;
+  color: #888;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 120%;
+  letter-spacing: -0.02rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+`;
+
+const NoticeImage = styled.img`
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 0.5rem;
+  background: #888;
+`;
