@@ -8,8 +8,8 @@ import axios from "axios";
 
 // 컨테이너 스타일
 const Container = styled.div`
-  padding: 0.625rem 0rem;
-  gap: 3.75rem; /* 60px */
+  padding: 0.625rem 1rem;
+  gap: 3.75rem;
   box-sizing: border-box;
   display: flex;
   width: 26.875rem;
@@ -62,7 +62,6 @@ const PaneltyCheck = styled.div`
 
 export const MemberProfile = (props) =>{
   const { nickname } = useParams(); 
-  const {uesrId} = useParams(); //userId를 useParams으로 받아올 수가 없음.
   const { penalty_count } = useParams(); 
 
   const location = useLocation();
@@ -75,19 +74,7 @@ export const MemberProfile = (props) =>{
   console.log('패널티 :', penalty_count);
 
     
-  useEffect(() => {
-      axios
-      .get(`https://read-me.kro.kr/admin/profile/${userId}`) 
-          .then((response) => {
-            setPenaltyCount(response.data.result.penalty_count);
-            console.log('패널티 데이타:', response.data);
-          })
-          .catch((error) => {
-              console.error('Error fetching data:', error);
-          });
-  }, []);
-
-
+ 
   
 
     return(

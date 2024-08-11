@@ -141,15 +141,22 @@ export const MemberListItem = (props) => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMjgyMjg1LCJleHAiOjE3MjMyOTMwODV9.DXYDnt9KW-rbrke807arRXyyyDXKOMHAi2FBIuZQS-Y`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzc1NTY0LCJleHAiOjE3MjMzODYzNjR9.xWsdJ7gA8wSG8Kr1B-emWZmWUvHLCXXydSnvzsKnMwc`
         }};
 
-        const response = await axios.get("https://read-me.kro.kr/admin/users?roomId=8", option); //유저정보받아옴, 아미라의 방은 8번
+        const response = await axios.get(`https://read-me.kro.kr/admin/users?roomId=8`, option); //유저정보받아옴, 아미라의 방은 8번
         const myInfoResponse = await axios.get("https://read-me.kro.kr/user/profile", option); //본인정보
         const adminName = myInfoResponse.data.result;
+      /*  const memberData = response.data.result.map(member => ({
+          ...member,
+          room_id: 8 //roomid 직접 memberData에 설정하겠음
+        }));
+        */
+
         const memberData = response.data.result;
+  
         console.log("admin 이름:",adminName)
-        console.log("현재 공지방 안에 있는 사람", memberData )
+        console.log("userId가 있나요?", memberData )
         setState(prevState => ({ ...prevState, results: memberData, allMembers: memberData, adminName:adminName }));
         dispatch(setKeysCount({ count:memberData.length, members: memberData }));
       } catch (error) {
@@ -207,7 +214,7 @@ useEffect(() => {
         <ButtonContainer>
             <MemberAddBtn>
             </MemberAddBtn>
-          <ButtonText>{`본인: ${state.adminName.nickname}`}</ButtonText>
+          <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
         </ButtonContainer>
  
         {state.results && state.results.length > 0 ? (

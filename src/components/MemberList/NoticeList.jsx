@@ -50,6 +50,8 @@ const DueDate = styled.span`
     gap: 0.25rem;
     align-self: stretch;
     border-bottom: 0.33px solid var(--Primary-Normal, #509BF7);
+    color: #509BF7;
+
 `
 const ContentFrame = styled.div`
     display: flex;
@@ -94,6 +96,18 @@ const MiniBox = styled.button`
     margin-left: auto;
 `
 
+const TextColor = styled.span`
+    color: var(--Basic-White, var(--Basic-White, #FFF));
+margin-left: 0.5rem;
+/* Pretendard/regular/16 */
+font-family: Pretendard;
+font-size: 1rem;
+font-style: normal;
+font-weight: 400;
+line-height: 100%; /* 1rem */
+letter-spacing: -0.02rem;
+`
+
 
 
 export const NoticeList = () =>{
@@ -109,18 +123,17 @@ export const NoticeList = () =>{
     <Container>
         <ContentContainer>
             <Title>공지글의 예시제목</Title>
-            <DueDate>yy</DueDate>
+            <DueDate>yy.MM.dd HH:MM</DueDate>
             <ContentFrame>
                 <Content>
                     공지글의 예시내용입니다.
                 </Content>
                 <ContentImg></ContentImg>
             </ContentFrame>
-            <MiniBox onClick={handleEnterPost} ><PointerBtn/>5건</MiniBox>
+            <MiniBox onClick={handleEnterPost} ><PointerBtn/><TextColor>5건</TextColor></MiniBox>
         </ContentContainer>
     
     </Container>
     </BoxContainer>
-
     )
 }

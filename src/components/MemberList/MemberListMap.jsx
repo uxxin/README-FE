@@ -139,8 +139,6 @@ export const MemberListMap = ({members}) => {
     }
   };
 
-
-
   const handleKickOutClick = () => {
     setIsSecondModalOpen(true);
   };
@@ -152,17 +150,21 @@ export const MemberListMap = ({members}) => {
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
       try {
-        await axios.delete("https://read-me.kro.kr/admin/rooms/user-Ban", {
+       await axios.delete("https://read-me.kro.kr/admin/rooms/user_ban", {
+        data: { 
           nickname: selectedProfile.nickname,
-          room_id: selectedProfile.room_id 
-        }); 
+          room_id: 8
+        },
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzc1NTY0LCJleHAiOjE3MjMzODYzNjR9.xWsdJ7gA8wSG8Kr1B-emWZmWUvHLCXXydSnvzsKnMwc',
+        },
+      });
         dispatch(removeMember(selectedProfile.nickname));
         setIsSecondModalOpen(false);
         setIsModalOpen(false);
       } catch(err){
         console.error("추방실패");
       }
-        
       }
   };
 
