@@ -33,9 +33,7 @@ export const UnconfirmedNotice = ({ dispatch, postData }) => {
         maxHeight={maxHeight}
       >
         {postData.length > 0 ? (
-          postData.map((post, index) => (
-            <UnconfirmedNoticeItem postData={post} />
-          ))
+          postData.map((post) => <UnconfirmedNoticeItem postData={post} />)
         ) : (
           <AllNoticeConfirmed>모든 공지를 확인했습니다 ☺️</AllNoticeConfirmed>
         )}
