@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { NoticeTitle } from './NoticeTitle';
 import { Link } from 'react-router-dom';
-export const NoticePreview = ({ props, isManager }) => {
+export const NoticePreview = ({ props, isManager, roomId }) => {
   const previewProps = { ...props, isManager: isManager };
   return (
     <>
       <Container>
-        <NoticeTitle props={previewProps} />
-        <StyledLink to="details">
+        <StyledLink to={`${roomId}/details`}>
+          <NoticeTitle props={previewProps} />
           <BottomContainer>
             <NoticeContent>{props.postBody}</NoticeContent>
             {props.postImage !== null ? (
@@ -73,4 +73,5 @@ const Thumbnail = styled.img`
 const StyledLink = styled(Link)`
   width: 100%;
   text-decoration: none;
+  color: inherit;
 `;
