@@ -78,7 +78,7 @@ export const Header = ({ props }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.header`
   display: flex;
   height: 2.75rem;
   padding: 0.625rem;

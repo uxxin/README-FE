@@ -21,7 +21,7 @@ export const CustomBtn = (props) => {
   );
 };
 
-const StyledCustomBtn = styled.div`
+const StyledCustomBtn = styled.button`
   display: flex;
   width: 100%;
   height: 3.1875rem;
