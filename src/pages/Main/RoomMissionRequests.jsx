@@ -28,12 +28,7 @@ const RoomMissionRequests = () => {
 
   return (
     <>
-      <Header
-        props={{
-          title: roomName,
-          isSearch: false,
-        }}
-      />
+      <Header title={roomName} isSearch={false} />
       <RequestMissions>
         {missions.length > 0 ? (
           missions.map((mission, index) => (

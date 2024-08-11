@@ -10,17 +10,17 @@ const NoticeDetails = () => {
   const isManager = true;
   const post = [
     {
-      postId: 1,
+      postId: 3,
       postType: 'Quiz',
-      postTitle: 'TEST',
-      postBody: 'TESTCONTENT',
-      startDate: '24. 7. 25. 04:24',
-      endDate: '24. 7. 25. 05:24',
-      commentCount: 5,
-      submitState: 'COMPLETE',
+      postTitle: 'test2',
+      postBody: 'testcontent2',
+      startDate: '24. 7. 28. 04:01',
+      endDate: '24. 7. 28. 04:01',
+      commentCount: 4,
+      submitState: 'NOT_COMPLETE',
     },
   ];
-  const imageURLs = ['url11.com', 'url12.com'];
+  const imageURLs = [];
   const data = [
     {
       commentId: 1,
@@ -46,12 +46,12 @@ const NoticeDetails = () => {
       commentBody: 'com.con.5',
       updatedAt: '24. 7. 27. 18:10',
     },
-    {
-      commentId: 7,
-      commentAuthorNickname: 'leeroom1',
-      commentBody: 'com.con.7',
-      updatedAt: '24. 7. 27. 18:11',
-    },
+    // {
+    //   commentId: 7,
+    //   commentAuthorNickname: 'leeroom1',
+    //   commentBody: 'com.con.7',
+    //   updatedAt: '24. 7. 27. 18:11',
+    // },
   ];
 
   useEffect(() => {
@@ -59,8 +59,8 @@ const NoticeDetails = () => {
   }, []);
 
   return (
-    <div className="container" style={{ border: '1px solid blue' }}>
-      <Header props={{ title: '공지방 이름', isSearch: false }} />
+    <div className="container">
+      <Header title="공지방 이름" isSearch={false} />
       <Container>
         {post.length > 0 ? (
           post.map((data) => (

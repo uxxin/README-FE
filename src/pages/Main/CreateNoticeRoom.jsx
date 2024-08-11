@@ -17,6 +17,7 @@ export const CreateNoticeRoom = () => {
   const isFormValid = leaderName && roomName && password && penaltyCount;
 
   const handleCreateClick = async () => {
+    navigate('/create-notice-room/success');
     if (isFormValid) {
       const RoomData = {
         room_image: image,
@@ -54,9 +55,7 @@ export const CreateNoticeRoom = () => {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Header
-          props={{ title: '공지방 생성', isSearch: false, url: '/home' }}
-        />
+        <Header title="공지방 생성" isSearch={false} url="/home" />
         <CreateNoticeRoomForm
           leaderName={leaderName}
           roomName={roomName}
@@ -71,7 +70,12 @@ export const CreateNoticeRoom = () => {
         />
       </div>
       <ButtonContainer>
-        <CustomBtn props={buttonProps} />
+        <CustomBtn
+          text="생성하기"
+          background={isFormValid ? '#509BF7' : '#BDBDBD'}
+          border="none"
+          onClick={handleCreateClick}
+        />
       </ButtonContainer>
     </div>
   );
