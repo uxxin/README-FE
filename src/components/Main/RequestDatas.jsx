@@ -1,42 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import RequestDataForm from './RequestDataForm';
 import { useNavigate } from 'react-router-dom';
+import { getNoticeCheckRequests } from '../../api/Main/noticecheckrequests';
 
 export const RequestDatas = () => {
   const [requestDatas, setRequestDatas] = useState([]);
-  const currentRequestDatas = requestDatas.slice();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const response = await axios.get('mock/mission.json');
-        setRequestDatas(response.data);
-      } catch (error) {
-        console.error('Error fetching Request Datas:', error);
-      }
-    };
+        const response = await getNoticeCheckRequests();
+        console.log(response);
 
-    fetchData();
+        if (response.isSuccess) {
+          setRequestDatas(response.result.rooms);
+        }
+      } catch (error) {
+        console.log('확인요청내역 불러오던 중 에러', error);
+      }
+    })();
   }, []);
 
-  const handleRoomClick = (roomid, roomName) => {
-    {
-      navigate(
-        `/notice-check-req/${roomid}?roomName=${encodeURIComponent(roomName)}`,
-      );
-    }
+  const handleRoomClick = (roomId, roomName) => {
+    navigate(`/notice-check-req/${roomId}`, {
+      state: {
+        roomName: roomName,
+      },
+    });
   };
 
   return (
     <>
-      {currentRequestDatas.length > 0 ? (
+      {requestDatas.length > 0 ? (
         <RequestRoomSection>
           <Container>
             <RequestRooms>
-              {currentRequestDatas.map((room) => (
+              {requestDatas.map((room) => (
                 <RequestDataForm
                   key={room.id}
                   room={room}
@@ -62,7 +63,6 @@ const Container = styled.div`
 const RequestRoomSection = styled.section`
   display: flex;
   flex-direction: column;
-  //align-items: flex-start;
   gap: 0.625rem; /* 10px */
   align-self: stretch;
   width: 100%;
@@ -75,7 +75,6 @@ const RequestRooms = styled.div`
   gap: 0.8125rem;
   align-self: stretch;
   flex-wrap: wrap;
-  //justify-content: space-between;
 `;
 
 const NoDataContainer = styled.div`
@@ -92,11 +91,9 @@ const NoData = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
-
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: #f4f9ff;
-
   color: #000;
   font-size: 1rem;
   font-weight: 500;

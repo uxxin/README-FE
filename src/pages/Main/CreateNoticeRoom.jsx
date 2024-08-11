@@ -14,6 +14,8 @@ export const CreateNoticeRoom = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
+  const isFormValid = leaderName && roomName && password && penaltyCount;
+
   const handleCreateClick = async () => {
     if (isFormValid) {
       const RoomData = {
@@ -26,15 +28,13 @@ export const CreateNoticeRoom = () => {
 
       try {
         const response = await postNoticeRoom(RoomData);
-        console.log('공지방 생성 성공 콘솔:', response);
+        console.log('공지방 생성 성공:', response);
         navigate('/create-notice-room/success', { state: response.result });
       } catch (error) {
         console.log('공지방 생성 중 에러', error);
       }
     }
   };
-
-  const isFormValid = leaderName && roomName && password && penaltyCount;
 
   const buttonProps = {
     text: '생성하기',
