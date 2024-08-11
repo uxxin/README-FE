@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const CustomBtn = ({ props }) => {
+export const CustomBtn = (props) => {
   const navigate = useNavigate();
   const handleClick = () => {
     if (props.background !== '#BDBDBD') {

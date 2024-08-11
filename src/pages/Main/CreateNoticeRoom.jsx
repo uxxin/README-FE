@@ -71,7 +71,13 @@ export const CreateNoticeRoom = () => {
         />
       </div>
       <ButtonContainer>
-        <CustomBtn props={buttonProps} />
+        <CustomBtn
+          text="생성하기"
+          background={isFormValid ? '#509BF7' : '#BDBDBD'}
+          border="none"
+          link="/create-notice-room/success"
+          onClick={handleCreateClick}
+        />
       </ButtonContainer>
     </div>
   );

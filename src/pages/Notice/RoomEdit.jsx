@@ -151,22 +151,18 @@ const RoomEdit = () => {
         </FormContainer>
         <ButtonContainer>
           <EditRoomCustomBtn
-            props={{
-              text: '공지방 삭제하기',
-              background: '#FDD8DB',
-              border: 'none',
-              color: ' #F5535E',
-              onClick: openModal,
-            }}
+            text="공지방 삭제하기"
+            background="#FDD8DB"
+            border="none"
+            color=" #F5535E"
+            onClick={openModal}
           />
           <EditRoomCustomBtn
-            props={{
-              text: '공지방 수정하기',
-              background: '#509BF7',
-              border: 'none',
-              color: '#FFFFFF',
-              onClick: handleUpdateClick,
-            }}
+            text="공지방 수정하기"
+            background="#509BF7"
+            border="none"
+            color="#FFFFFF"
+            onClick={handleUpdateClick}
           />
         </ButtonContainer>
         <CustomModal

@@ -7,12 +7,10 @@ export const CreateBtn = () => {
     <Container>
       <ButtonWrapper>
         <CustomBtn
-          props={{
-            text: '생성하기',
-            border: '0.5px solid #509BF7',
-            background: '#FFFFFF',
-            link: '/success',
-          }}
+          text="생성하기"
+          border="0.5px solid #509BF7"
+          background="#FFFFFF"
+          link="/success"
         />
       </ButtonWrapper>
     </Container>

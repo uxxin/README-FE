@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../../components/CustomBtn';
 import { Header } from '../../components/Header';
@@ -45,20 +45,16 @@ const CreateNoticeRoomSuccess = () => {
       </div>
       <ButtonContainer>
         <CustomBtn
-          props={{
-            text: '공지방으로 이동',
-            background: '#509BF7',
-            border: 'none',
-            link: '/notice',
-          }}
+          text="공지방으로 이동"
+          background="#509BF7"
+          border="none"
+          link="/notice"
         />
         <CustomBtn
-          props={{
-            text: '메인으로 이동',
-            background: '#FFFFFF',
-            border: '0.5px solid #509BF7',
-            link: '/home',
-          }}
+          text="메인으로 이동"
+          background="#FFFFFF"
+          border="0.5px solid #509BF7"
+          link="/home"
         />
       </ButtonContainer>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const EditRoomCustomBtn = ({ props }) => {
+export const EditRoomCustomBtn = (props) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(props.link);
