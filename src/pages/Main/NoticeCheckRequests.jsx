@@ -5,13 +5,7 @@ import RequestDatas from '../../components/Main/RequestDatas';
 const NoticeCheckRequests = () => {
   return (
     <>
-      <Header
-        props={{
-          title: '확인요청내역',
-          isSearch: false,
-          url: '/home',
-        }}
-      />
+      <Header title="확인요청내역" isSearch={false} url="/home" />
       <RequestDatas />
     </>
   );

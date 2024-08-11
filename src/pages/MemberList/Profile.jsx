@@ -7,10 +7,10 @@ const Profile = () => {
   const { nickname } = useParams(); //useParam은 URL을 동적으로 다뤄준다.
   return (
     <div>
-      <Header props={{ title: `${nickname} 프로필보기`, isSearch: true, gap: '1rem' }} />
-      <MemberProfile/>
+      <Header title={`${nickname} 프로필보기`} isSearch={true} gap="1rem" />
+      <MemberProfile />
     </div>
-  )
+  );
 };
 
 export default Profile;

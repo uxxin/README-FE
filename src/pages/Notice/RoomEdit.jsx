@@ -107,13 +107,7 @@ const RoomEdit = () => {
 
   return (
     <>
-      <Header
-        props={{
-          title: '공지방 수정',
-          isSearch: false,
-          url: '/notice',
-        }}
-      />
+      <Header title="공지방 수정" isSearch={false} url="/notice" />
       <Container>
         <ImageContainer>
           <RoomImage src={image || '<path-to-image>'} alt="RoomImage" />

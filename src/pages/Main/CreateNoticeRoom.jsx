@@ -54,9 +54,7 @@ export const CreateNoticeRoom = () => {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Header
-          props={{ title: '공지방 생성', isSearch: false, url: '/home' }}
-        />
+        <Header title="공지방 생성" isSearch={false} url="/home" />
         <CreateNoticeRoomForm
           leaderName={leaderName}
           roomName={roomName}

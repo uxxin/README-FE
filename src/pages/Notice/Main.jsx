@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -99,7 +99,7 @@ const Main = () => {
   }, []);
   return (
     <MainContainer>
-      <Header props={headerProps}></Header>
+      <Header title="공지방 메인" isSearch={true} />
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>

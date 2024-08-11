@@ -28,13 +28,7 @@ const CreateNoticeRoomSuccess = () => {
           flexDirection: 'column',
         }}
       >
-        <Header
-          props={{
-            title: roomName,
-            isSearch: false,
-            url: '/create-notice-room',
-          }}
-        />
+        <Header title={roomName} isSearch={false} url="/create-notice-room" />
         <CreateNoticeRoomSuccessForm
           profileImage={profileImage}
           url={url}
