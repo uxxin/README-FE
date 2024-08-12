@@ -126,6 +126,7 @@ const Title = styled.div`
 const StyledSearchButton = styled(SearchButton)`
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
 `;
 
 const SearchContainer = styled.div`
