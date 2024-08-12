@@ -101,7 +101,7 @@ const NoticeRoomEntry = () => {
 
   return (
     <>
-      <Header props={{ title: '입장하기', isSearch: false, url: '' }} />
+      <Header title="입장하기" isSearch={false} url="" />
       <InputPlusContainer>
         <ContextContainer>
           <ContainerHead>리드미</ContainerHead>

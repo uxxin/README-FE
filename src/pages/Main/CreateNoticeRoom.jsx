@@ -14,7 +14,10 @@ export const CreateNoticeRoom = () => {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
+  const isFormValid = leaderName && roomName && password && penaltyCount;
+
   const handleCreateClick = async () => {
+    navigate('/create-notice-room/success');
     if (isFormValid) {
       const RoomData = {
         room_image: image,
@@ -26,15 +29,13 @@ export const CreateNoticeRoom = () => {
 
       try {
         const response = await postNoticeRoom(RoomData);
-        console.log('공지방 생성 성공 콘솔:', response);
+        console.log('공지방 생성 성공:', response);
         navigate('/create-notice-room/success', { state: response.result });
       } catch (error) {
         console.log('공지방 생성 중 에러', error);
       }
     }
   };
-
-  const isFormValid = leaderName && roomName && password && penaltyCount;
 
   const buttonProps = {
     text: '생성하기',
@@ -54,9 +55,7 @@ export const CreateNoticeRoom = () => {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Header
-          props={{ title: '공지방 생성', isSearch: false, url: '/home' }}
-        />
+        <Header title="공지방 생성" isSearch={false} url="/home" />
         <CreateNoticeRoomForm
           leaderName={leaderName}
           roomName={roomName}
@@ -71,7 +70,12 @@ export const CreateNoticeRoom = () => {
         />
       </div>
       <ButtonContainer>
-        <CustomBtn props={buttonProps} />
+        <CustomBtn
+          text="생성하기"
+          background={isFormValid ? '#509BF7' : '#BDBDBD'}
+          border="none"
+          onClick={handleCreateClick}
+        />
       </ButtonContainer>
     </div>
   );

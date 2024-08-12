@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const RequestDataForm = ({ room, onClick }) => {
-  const displayRequestNum = room.requestnum >= 100 ? '99+' : room.requestnum;
-
+  const displayRequestNum = room.submitCount >= 100 ? '99+' : room.submitCount;
   return (
     <Container onClick={onClick}>
       <TopSection>

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';
+import { useParams } from 'react-router-dom';
 
 // 컨테이너 스타일
 const Container = styled.div`
@@ -24,6 +25,7 @@ const MemberIcon = styled.div`
   height: 0.875rem;
   gap: 0.25rem;
   box-sizing: border-box;
+  white-space: nowrap;
 `;
 
 const MemberListBox = styled.div`
@@ -99,17 +101,19 @@ const CountColor = styled.span`
   letter-spacing: -0.02em;
   text-align: left;
   color: #888888;
+  white-space: nowrap;
 `;
 
 const ShowMoreIconContainer = styled.div`
   position: relative;
 `;
 
-export const MemberListItem = (props) => {
+export const MemberListItem = () => {
   const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
   const { members } = useSelector((state) => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const { roomId } = useParams();
 
   const [state, setState] = useState({
     search: '',
@@ -135,22 +139,24 @@ export const MemberListItem = (props) => {
       try {
         const option = {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMTk3MDM4LCJleHAiOjE3MjMyMDc4Mzh9.hQBMLkITkp4d9kdojiTASKxr8DoAp8qPGve0BErrNkg`,
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`,
           },
         };
 
         const response = await axios.get(
-          'https://read-me.kro.kr/admin/users',
+          `https://read-me.kro.kr/admin/users?roomId=${roomId}`,
           option,
-        );
+        ); //유저정보받아옴, 아미라의 방은 8번
         const myInfoResponse = await axios.get(
           'https://read-me.kro.kr/user/profile',
           option,
-        );
+        ); //본인정보
         const adminName = myInfoResponse.data.result;
+
         const memberData = response.data.result;
+
         console.log('admin 이름:', adminName);
-        console.log('현재 공지방 안에 있는 사람', memberData);
+        console.log('userId가 있나요?', memberData);
         setState((prevState) => ({
           ...prevState,
           results: memberData,
@@ -203,7 +209,7 @@ export const MemberListItem = (props) => {
       </MemberIcon>
       <MemberListBox>
         <ButtonContainer>
-          <Link to="/member/invite">
+          <Link to={`/notice/${roomId}/invite`}>
             <MemberAddBtn>
               <PlusIcon />
             </MemberAddBtn>
@@ -212,13 +218,14 @@ export const MemberListItem = (props) => {
         </ButtonContainer>
         <ButtonContainer>
           <MemberAddBtn></MemberAddBtn>
-          <ButtonText>{`본인: ${state.adminName.nickname}`}</ButtonText>
+          <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
         </ButtonContainer>
 
         {state.results && state.results.length > 0 ? (
           <MemberListMap
             members={state.results}
             onOpenModal={handleOpenModal}
+            roomId={roomId}
           />
         ) : members && members.length === 0 ? (
           <TextColor>아무도 없어요!</TextColor>
