@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom';
 
 
 const TotalContainer = styled.div`
-  padding-right: 1rem;
+
 `;
 
 const Container = styled.div`
-  padding: 1rem;
+  padding: 0.625rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,10 +19,8 @@ const Container = styled.div`
 
 const AddContainer = styled.div`
   flex-direction: column;
-  width: 24.875rem;
   margin: 0 auto;
   margin-top: 0.625rem;
-  max-width: 24.875rem;
   height: auto;
   border-radius: 0.5rem;
   border: 0.02rem solid #509bf7;
@@ -93,7 +91,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const InfoText = styled.span`
-  margin-left:0.62rem;
+  margin-left:0.625rem;
   font-family: Noto Sans;
   font-size: 12px;
   font-weight: 400;
@@ -121,7 +119,7 @@ export const MemberInvite = () => {
       try {
         const option = {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzk3NDUyLCJleHAiOjE3MjM0MDgyNTJ9.F0iwtu45hktDaFjLoBvbY8sQ_H9tDLo5VDA8eHl6i68`
           }
         };
         const response = await axios.get(`https://read-me.kro.kr/admin/invitation/${roomId}`, option);
@@ -164,7 +162,7 @@ export const MemberInvite = () => {
               text: '멤버목록으로 이동',
               border: 'none',
               background: '#509BF7',
-              link: '/member',
+              link: `/member/${roomId}`,
             }}
           />
 

@@ -179,6 +179,7 @@ export const MemberListMap = ({ members }) => {
             <MemberListDetails
               nickname={item.nickname}
               profile_image={item.profile_image}
+            //  userId = {item.userId}
               onOpenModal={() => handleOpenModal(item)}
             />
             {selectedProfile?.nickname === item.nickname && (

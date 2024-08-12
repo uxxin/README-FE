@@ -140,7 +140,7 @@ export const MemberListItem = () => {
       try {
         const option = {
           headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzMzg2MjU3LCJleHAiOjE3MjMzOTcwNTd9.253jZPs5CXCcom3yB25YXeOqJKJ3aQdeutjXfIpAyTI`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzNDM2Njg2LCJleHAiOjE3MjM0NDc0ODZ9.aSWHmerBA8B5kULWA_R0qwAKx6K4iP1sojy7551sp0o`
         }};
 
         const response = await axios.get(`https://read-me.kro.kr/admin/users?roomId=${roomId}`, option); //유저정보받아옴, 아미라의 방은 8번
