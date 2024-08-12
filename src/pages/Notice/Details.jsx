@@ -4,58 +4,63 @@ import styled from 'styled-components';
 import { CommentItem } from '../../components/Notice/CommentItem';
 import CommentWrite from '../../assets/svgs/comment_write.svg';
 import { Header } from '../../components/Header';
+import { getNoticedetails } from '../../api/Notice/details';
+import { useParams } from 'react-router-dom';
 
 const NoticeDetails = () => {
+  const { roomId, postId } = useParams();
   const [width, setWidth] = useState(0);
+  const [post, setPost] = useState([]);
+  const [imageURLs, setImageURLs] = useState([]);
   const isManager = true;
-  const post = [
-    {
-      postId: 3,
-      postType: 'Quiz',
-      postTitle: 'test2',
-      postBody: 'testcontent2',
-      startDate: '24. 7. 28. 04:01',
-      endDate: '24. 7. 28. 04:01',
-      commentCount: 4,
-      submitState: 'NOT_COMPLETE',
-    },
-  ];
-  const imageURLs = [];
-  const data = [
-    {
-      commentId: 1,
-      commentAuthorNickname: 'kimroom1',
-      commentBody: 'com.con.1',
-      updatedAt: '24. 7. 27. 18:08',
-    },
-    {
-      commentId: 3,
-      commentAuthorNickname: 'parkroom1',
-      commentBody: 'com.con.3',
-      updatedAt: '24. 7. 27. 18:09',
-    },
-    {
-      commentId: 4,
-      commentAuthorNickname: 'leeroom1',
-      commentBody: 'com.con.4',
-      updatedAt: '24. 7. 27. 18:09',
-    },
-    {
-      commentId: 5,
-      commentAuthorNickname: null,
-      commentBody: 'com.con.5',
-      updatedAt: '24. 7. 27. 18:10',
-    },
-    // {
-    //   commentId: 7,
-    //   commentAuthorNickname: 'leeroom1',
-    //   commentBody: 'com.con.7',
-    //   updatedAt: '24. 7. 27. 18:11',
-    // },
-  ];
+  // const data = [
+  //   {
+  //     commentId: 1,
+  //     commentAuthorNickname: 'kimroom1',
+  //     commentBody: 'com.con.1',
+  //     updatedAt: '24. 7. 27. 18:08',
+  //   },
+  //   {
+  //     commentId: 3,
+  //     commentAuthorNickname: 'parkroom1',
+  //     commentBody: 'com.con.3',
+  //     updatedAt: '24. 7. 27. 18:09',
+  //   },
+  //   {
+  //     commentId: 4,
+  //     commentAuthorNickname: 'leeroom1',
+  //     commentBody: 'com.con.4',
+  //     updatedAt: '24. 7. 27. 18:09',
+  //   },
+  //   {
+  //     commentId: 5,
+  //     commentAuthorNickname: null,
+  //     commentBody: 'com.con.5',
+  //     updatedAt: '24. 7. 27. 18:10',
+  //   },
+  //   {
+  //     commentId: 7,
+  //     commentAuthorNickname: 'leeroom1',
+  //     commentBody: 'com.con.7',
+  //     updatedAt: '24. 7. 27. 18:11',
+  //   },
+  // ];
 
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
+  }, []);
+
+  useEffect(() => {
+    const getNoticeDetailData = async () => {
+      try {
+        const response = await getNoticedetails(postId);
+        setPost(response.data.result.post);
+        setImageURLs(response.data.result.imageURLs);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeDetailData();
   }, []);
 
   return (
@@ -70,7 +75,7 @@ const NoticeDetails = () => {
           <></>
         )}
 
-        <CommentList>
+        {/* <CommentList>
           {data.length > 0 ? (
             data.map((data) => (
               <CommentItem props={data} key={data.commentId} />
@@ -78,7 +83,7 @@ const NoticeDetails = () => {
           ) : (
             <></>
           )}
-        </CommentList>
+        </CommentList> */}
 
         <CommentInputContainer width={width}>
           <CommentInputFrame>
