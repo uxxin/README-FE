@@ -29,7 +29,7 @@ export default function ThirdStep({
       <FlexBox col gap={0.25} px={1}>
         <FlexBox col gap={0.1875}>
           <h1 className="bold-24">이메일을 입력해주세요.</h1>
-          <FlexBox gap={0.5}>
+          <FlexBox gap={0.5} calc={2}>
             <Input
               id="email"
               type="text"
@@ -49,7 +49,7 @@ export default function ThirdStep({
         </FlexBox>
         <FlexBox col gap={0.1875}>
           <h1 className="bold-24">인증코드를 입력해주세요.</h1>
-          <FlexBox gap={0.5}>
+          <FlexBox gap={0.5} calc={2}>
             <Input
               id="code"
               type="text"

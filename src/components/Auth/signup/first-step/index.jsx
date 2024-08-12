@@ -6,7 +6,7 @@ import Input from '../../../common/input';
 export default function FirstStep({ name, onChange, handleNext }) {
   return (
     <>
-      <FlexBox col gap={0.1875} px={1}>
+      <FlexBox col gap={0.1875} px={1} calc={2}>
         <h1 className="bold-24">이름을 입력해주세요.</h1>
         <Input
           id="name"

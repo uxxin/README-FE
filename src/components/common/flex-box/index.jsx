@@ -6,6 +6,7 @@ export default function FlexBox({
   gap,
   px,
   py,
+  calc,
 }) {
   return (
     <section
@@ -16,7 +17,7 @@ export default function FlexBox({
         justifyContent: justify || 'flex-start',
         alignItems: items || 'flex-start',
         flexDirection: col ? 'column' : 'row',
-        width: 'calc(100dvw - 2rem)',
+        width: `calc(100% - ${calc || 0}rem)`,
       }}
     >
       {children}
