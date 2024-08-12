@@ -7,9 +7,9 @@ export const ButtonContainer = styled.button`
   padding: 1rem 0;
   align-self: stretch;
   align-items: center;
-  width: 100%;
+  width: calc(100% - 2rem);
   color: ${(props) => props.color};
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.bg};
   border: ${(props) => props.border};
 
   &.small {

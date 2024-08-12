@@ -18,7 +18,7 @@ export default function Button({
       className={`${regular ? 'regular-14' : 'medium-16'} ${small && 'small'}
       `}
       color={color}
-      backgroundColor={backgroundColor}
+      bg={backgroundColor}
       border={border}
     >
       {name}
