@@ -16,6 +16,7 @@ export default function FlexBox({
         justifyContent: justify || 'flex-start',
         alignItems: items || 'flex-start',
         flexDirection: col ? 'column' : 'row',
+        width: 'calc(100dvw - 2rem)',
       }}
     >
       {children}

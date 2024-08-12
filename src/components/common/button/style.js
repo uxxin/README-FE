@@ -13,6 +13,6 @@ export const ButtonContainer = styled.button`
   border: ${(props) => props.border};
 
   &.small {
-    width: 25%;
+    width: 20%;
   }
 `;
