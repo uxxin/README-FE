@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { CommentItem } from '../../components/Notice/CommentItem';
 import CommentWrite from '../../assets/svgs/comment_write.svg';
 import { Header } from '../../components/Header';
-import { getNoticedetails } from '../../api/Notice/details';
+import { getNoticeComments, getNoticedetails } from '../../api/Notice/details';
 import { useParams } from 'react-router-dom';
 
 const NoticeDetails = () => {
@@ -12,39 +12,8 @@ const NoticeDetails = () => {
   const [width, setWidth] = useState(0);
   const [post, setPost] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
+  const [comments, setComments] = useState([]);
   const isManager = true;
-  // const data = [
-  //   {
-  //     commentId: 1,
-  //     commentAuthorNickname: 'kimroom1',
-  //     commentBody: 'com.con.1',
-  //     updatedAt: '24. 7. 27. 18:08',
-  //   },
-  //   {
-  //     commentId: 3,
-  //     commentAuthorNickname: 'parkroom1',
-  //     commentBody: 'com.con.3',
-  //     updatedAt: '24. 7. 27. 18:09',
-  //   },
-  //   {
-  //     commentId: 4,
-  //     commentAuthorNickname: 'leeroom1',
-  //     commentBody: 'com.con.4',
-  //     updatedAt: '24. 7. 27. 18:09',
-  //   },
-  //   {
-  //     commentId: 5,
-  //     commentAuthorNickname: null,
-  //     commentBody: 'com.con.5',
-  //     updatedAt: '24. 7. 27. 18:10',
-  //   },
-  //   {
-  //     commentId: 7,
-  //     commentAuthorNickname: 'leeroom1',
-  //     commentBody: 'com.con.7',
-  //     updatedAt: '24. 7. 27. 18:11',
-  //   },
-  // ];
 
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
@@ -63,6 +32,18 @@ const NoticeDetails = () => {
     getNoticeDetailData();
   }, []);
 
+  useEffect(() => {
+    const getNoticeCommentData = async () => {
+      try {
+        const response = await getNoticeComments(postId);
+        setComments(response.data.result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeCommentData();
+  }, []);
+
   return (
     <div className="container">
       <Header title="공지방 이름" isSearch={false} />
@@ -75,15 +56,15 @@ const NoticeDetails = () => {
           <></>
         )}
 
-        {/* <CommentList>
-          {data.length > 0 ? (
-            data.map((data) => (
+        <CommentList>
+          {comments.length > 0 ? (
+            comments.map((data) => (
               <CommentItem props={data} key={data.commentId} />
             ))
           ) : (
             <></>
           )}
-        </CommentList> */}
+        </CommentList>
 
         <CommentInputContainer width={width}>
           <CommentInputFrame>
