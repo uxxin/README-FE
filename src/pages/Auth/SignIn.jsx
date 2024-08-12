@@ -56,16 +56,13 @@ const SignIn = () => {
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  padding: 1.87rem 1rem;
+  padding: 0 1rem;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   gap: 0.75rem;
-  position: relative;
 `;
 
 const CommonButton = styled.button`
@@ -75,7 +72,7 @@ const CommonButton = styled.button`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  width: 100%;
+  width: calc(100% - 2rem);
 `;
 
 const SignInButton = styled(CommonButton)`
@@ -90,25 +87,24 @@ const SignupButton = styled(CommonButton)`
   border: 0.5px solid #509bf7;
 `;
 
-const NotAuth = styled.div`
-  align-self: stretch;
+const NotAuth = styled.span`
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 100%;
-  letter-spacing: -0.0175rem;
+  width: max-content;
 `;
 
 const ButtonWrapper = styled.div`
   width: 100%;
   position: fixed;
-  max-width: 397px;
+  max-width: 429px;
   bottom: 3.37rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledLogo = styled.img`
   width: 21.5625rem;
   height: 6.875rem;
-  flex-shrink: 0;
   margin: 2.88rem auto 3.25rem auto;
 `;
 
