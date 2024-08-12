@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { QuizFormatLabel } from './QuizFormatLabel';
-import { RequestStatusLabel } from './RequestStatusLabel';
+import { QuizFormatLabel } from './NoticeTitle/QuizFormatLabel';
+import { RequestStatusLabel } from './NoticeTitle/RequestStatusLabel';
 import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
 import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
 import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
 import CustomModal from '../CustomModal';
 import { patchFixNotice } from '../../api/Notice/noticeMain';
-import { UnconfirmedPeopleModal } from './UnconfirmedPeopleModal';
+import { UnconfirmedPeopleModal } from './NoticeTitle/UnconfirmedPeopleModal';
+import { Link } from 'react-router-dom';
 
 export const NoticeTitle = ({ props, preview }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,11 @@ export const NoticeTitle = ({ props, preview }) => {
       )}
       <TopContainer>
         <TopLeftSide>
-          <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
+          {props.postType ? (
+            <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
+          ) : (
+            <></>
+          )}
           {props.submitState ? (
             <RequestStatusLabel
               requestStatus={props.submitState}
@@ -77,14 +82,24 @@ export const NoticeTitle = ({ props, preview }) => {
           ) : (
             <></>
           )}
-          <CommentIconContainer>
-            <StyledCommentIcon />
-            {props.commentCount > 99 ? '99+' : props.commentCount}
-          </CommentIconContainer>
+          {props.commentCount ? (
+            <CommentIconContainer>
+              <StyledCommentIcon />
+              {props.commentCount > 99 ? '99+' : props.commentCount}
+            </CommentIconContainer>
+          ) : (
+            <></>
+          )}
           {preview ? (
             <></>
           ) : (
-            <ShowmoreIconContainer>
+            <ShowmoreIconContainer
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setIsOpen((prev) => !prev);
+              }}
+            >
               <StyledShowmoreIcon
                 onClick={(e) => {
                   e.stopPropagation();
@@ -108,12 +123,14 @@ export const NoticeTitle = ({ props, preview }) => {
           )}
         </TopRightSide>
       </TopContainer>
-      {props.postTitle}
-      <DeadlineContainer>
-        <DeadlineText>
-          {props.startDate} - {props.endDate}
-        </DeadlineText>
-      </DeadlineContainer>
+      <StyledLink>
+        {props.postTitle}
+        <DeadlineContainer>
+          <DeadlineText>
+            {props.startDate} - {props.endDate}
+          </DeadlineText>
+        </DeadlineContainer>
+      </StyledLink>
     </Container>
   );
 };
@@ -161,6 +178,7 @@ const UncheckedContainer = styled.div`
 const StyledUncheckedPeople = styled(UncheckedPeople)`
   width: 0.75rem;
   height: 0.75rem;
+  cursor: pointer;
 `;
 
 const CommentIconContainer = styled.div`
@@ -186,6 +204,7 @@ const StyledShowmoreIcon = styled(ShowmoreIcon)`
 
 const ShowmoreIconContainer = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 const DeadlineContainer = styled.div`
@@ -195,6 +214,7 @@ const DeadlineContainer = styled.div`
   gap: 0.25rem;
   align-self: stretch;
   border-bottom: 0.33px solid var(--Primary-Normal, #509bf7);
+  margin-top: 0.5rem;
 `;
 
 const DeadlineText = styled.div`
@@ -209,4 +229,13 @@ const DeadlineText = styled.div`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  width: 100%;
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0225rem;
 `;

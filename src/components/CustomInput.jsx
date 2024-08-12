@@ -9,6 +9,7 @@ const CustomInput = ({
   charCount,
   type = 'text',
   readOnly = false,
+  disabled = false,
 }) => {
   return (
     <Container>
@@ -20,6 +21,7 @@ const CustomInput = ({
         onBlur={onBlur}
         maxLength={charCount ? 20 : undefined}
         readOnly={readOnly}
+        disabled={disabled}
       />
       {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
     </Container>
@@ -43,9 +45,8 @@ const Input = styled.input`
   background: none;
   font-family: 'Pretendard';
   font-size: 1.125rem;
-  font-style: normal;
   font-weight: 700;
-  line-height: 100%; /* 1.125rem */
+  line-height: 100%;
   letter-spacing: -0.0225rem;
   color: #509bf7;
   ::placeholder {

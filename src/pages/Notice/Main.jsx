@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -36,17 +36,15 @@ const collapse = keyframes`
 `;
 
 const Main = () => {
-  const navigate = useNavigate();
+  const { roomId } = useParams();
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
-  // const page = useSelector((state) => state.notice.page);
 
   const dispatch = useDispatch();
-  const params = useParams();
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -74,13 +72,14 @@ const Main = () => {
   useEffect(() => {
     const getNoticeData = async () => {
       try {
-        const response = await getNotices(params.roomId);
-        // setIsManager(response.data.result.isRoomAdmin);
+        const response = await getNotices(roomId);
+        setIsManager(response.data.result.isRoomAdmin);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
           setNoticeData(response.data.result.posts);
         }
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -90,7 +89,7 @@ const Main = () => {
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
       try {
-        const response = await getUnconfirmedNotices(params.roomId);
+        const response = await getUnconfirmedNotices(roomId);
         setUnconfirmedNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
@@ -100,7 +99,7 @@ const Main = () => {
   }, []);
   return (
     <MainContainer>
-      <Header props={headerProps}></Header>
+      <Header title="공지방 메인" isSearch={true} />
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
@@ -110,11 +109,7 @@ const Main = () => {
           {isManager ? (
             <>
               {noticeData.map((post) => (
-                <NoticePreview
-                  props={post}
-                  isManager={true}
-                  onClick={() => navigate(`/notice/${roomId}/details`)}
-                />
+                <NoticePreview props={post} isManager={true} roomId={roomId} />
               ))}
             </>
           ) : (
@@ -194,10 +189,7 @@ const NoNotice = styled.div`
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   color: #000;
-
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;

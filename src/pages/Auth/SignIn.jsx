@@ -12,7 +12,8 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    if (e) e.preventDefault(); // 폼 제출 방지
     try {
       const response = await login(email, password);
       const token = response.data.result.accessToken;
@@ -22,33 +23,36 @@ const SignIn = () => {
       navigate('/home');
     } catch (error) {
       console.error('로그인 실패:', error);
+      alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
     }
   };
 
   return (
     <Root>
       <StyledLogo src={logo} alt="logo" />
-      <InputContainer>
-        <CustomInput
-          placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.currentTarget.value)}
-        />
-        <CustomInput
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
-          charCount={true}
-        />
-      </InputContainer>
-      <ButtonWrapper>
-        <SignInButton onClick={handleLogin}>로그인</SignInButton>
-        <NotAuth>아직 회원이 아니신가요?</NotAuth>
-        <SignupButton onClick={() => navigate('/sign-up')}>
-          회원가입
-        </SignupButton>
-      </ButtonWrapper>
+      <form onSubmit={handleLogin}>
+        <InputContainer>
+          <CustomInput
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.currentTarget.value)}
+          />
+          <CustomInput
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.currentTarget.value)}
+            charCount={true}
+          />
+        </InputContainer>
+        <ButtonWrapper>
+          <SignInButton type="submit">로그인</SignInButton>{' '}
+          <NotAuth>아직 회원이 아니신가요?</NotAuth>
+          <SignupButton onClick={() => navigate('/sign-up')}>
+            회원가입
+          </SignupButton>
+        </ButtonWrapper>
+      </form>
     </Root>
   );
 };
