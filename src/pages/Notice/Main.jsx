@@ -101,7 +101,7 @@ const Main = () => {
                 />
               )}
               {noticeData.map((post) => (
-                <NoticePreview props={post} setIsModalOpen={setIsModalOpen} />
+                <NoticePreview props={post} />
               ))}
             </>
           )}
