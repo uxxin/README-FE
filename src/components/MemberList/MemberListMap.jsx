@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { removeMember } from '../../redux/KeySlice';
 import { useNavigate } from 'react-router-dom';
-import { PlusIcon } from '../../assets/images/icons';
+import { PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
 
 const ModalOverlay = styled.div`

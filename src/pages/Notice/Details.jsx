@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NoticeItem } from '../../components/Notice/NoticeItem';
 import styled from 'styled-components';
 import { CommentItem } from '../../components/Notice/CommentItem';
-import CommentWrite from '../../assets/images/comment_write.svg';
+import CommentWrite from '../../assets/svgs/comment_write.svg';
 import { Header } from '../../components/Header';
 
 const NoticeDetails = () => {

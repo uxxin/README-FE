@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { HumanIcon, PlusIcon } from '../../assets/images/icons';
+import { HumanIcon, PlusIcon } from '../../assets/svgs/icons';
 import CustomInput from '../CustomInput';
 import { Link } from 'react-router-dom';
 import { MemberListMap } from './MemberListMap';

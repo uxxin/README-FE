@@ -10,7 +10,7 @@ import {
   PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../axios/axios.method';
-import defaultProfileSrc from '../../assets/images/default_profile_8.png';
+import defaultProfileSrc from '../../assets/pngs/default_profile_8.png';
 
 const NoticeRoomProfileEdit = () => {
   const { state } = useLocation();

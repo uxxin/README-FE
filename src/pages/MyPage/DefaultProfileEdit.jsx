@@ -6,7 +6,7 @@ import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
 import Input from '../../components/common/input';
 import { Link, useNavigate } from 'react-router-dom';
 import FloatingButton from '../../components/MyPage/floating-button';
-import defaultProfileSrc from '../../assets/images/default_profile_8.png';
+import defaultProfileSrc from '../../assets/pngs/default_profile_8.png';
 import {
   GetAxiosInstance,
   PatchAxiosInstance,

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import defaultProfileSrc from '../../../assets/images/default_profile_3.png';
+import defaultProfileSrc from '../../../assets/pngs/default_profile_3.png';
 import settingSrc from '../../../assets/svgs/setting.svg';
 import { ProfileContainer } from './style';
 import Image from '../image';

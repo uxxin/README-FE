@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SpinButton } from '../../assets/images/spin_icon.svg';
+import { ReactComponent as SpinButton } from '../../assets/svgs/spin_icon.svg';
 import { UnconfirmedNoticeItem } from '../Notice/UnconfirmedNoticeItem';
 import { useSelector } from 'react-redux';
 import { setIsRotated } from '../../redux/Notice/NoticeActions';

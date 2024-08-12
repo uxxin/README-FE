@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getRecentNotice } from '../../api/Main/home';
-import prevButtonSvg from '../../assets/images/prev_button.svg';
-import nextButtonSvg from '../../assets/images/next_button.svg';
+import prevButtonSvg from '../../assets/svgs/prev_button.svg';
+import nextButtonSvg from '../../assets/svgs/next_button.svg';
 
 const ITEMS_PER_PAGE = 5; // 한 페이지에 5개씩 표시
 

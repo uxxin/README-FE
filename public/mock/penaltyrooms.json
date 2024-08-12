@@ -3,7 +3,7 @@
         "id": 1,
         "maxPenalty": 10,
         "penaltyNum": 5,
-        "roomImage": "../src/assets/images/defaultprofileimage.png",
+        "roomImage": "../src/assets/pngs/defaultprofileimage.png",
         "nickName": "더기/양유진-Web",
         "roomName": "리드미 공지방"
     },
@@ -11,7 +11,7 @@
         "id": 2,
         "maxPenalty": 15,
         "penaltyNum": 8,
-        "roomImage": "../src/assets/images/defaultprofileimage.png",
+        "roomImage": "../src/assets/pngs/defaultprofileimage.png",
         "nickName": "-6th 인하대 Web",
         "roomName": "너디너리 공지방"
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "maxPenalty": 20,
         "penaltyNum": 7,
-        "roomImage": "../src/assets/images/defaultprofileimage.png",
+        "roomImage": "../src/assets/pngs/defaultprofileimage.png",
         "nickName": "더기/양유진",
         "roomName": "인하대 전체 공지방"
     },
@@ -27,7 +27,7 @@
         "id": 4,
         "maxPenalty": 25,
         "penaltyNum": 14,
-        "roomImage": "../src/assets/images/defaultprofileimage.png",
+        "roomImage": "../src/assets/pngs/defaultprofileimage.png",
         "nickName": "정보통신공학/양유진",
         "roomName": "인하대 전체 공지방"
     }

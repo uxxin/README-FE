@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import camera from '../../../assets/images/img_upload.svg';
-import imgDelete from '../../../assets/images/img_delete.svg';
+import camera from '../../../assets/svgs/img_upload.svg';
+import imgDelete from '../../../assets/svgs/img_delete.svg';
 
-export const ImgUpload = () => {
+export const ImgUpload = ({ onUpload }) => {
   const [images, setImages] = useState([]);
 
   const handleImageChange = (event) => {
@@ -19,6 +19,12 @@ export const ImgUpload = () => {
   const handleDelete = (imageToDelete) => {
     setImages(images.filter((image) => image !== imageToDelete));
   };
+
+  useEffect(() => {
+    if (onUpload) {
+      onUpload(images);
+    }
+  }, [images, onUpload]);
 
   return (
     <UploadContainer>

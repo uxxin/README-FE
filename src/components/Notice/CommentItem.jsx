@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ShowmoreIcon from '../../assets/images/show_more_icon.svg';
+import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 
 export const CommentItem = ({ props }) => {
   return (
