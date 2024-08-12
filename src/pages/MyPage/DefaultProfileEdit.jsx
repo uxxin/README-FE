@@ -3,7 +3,7 @@ import Header from '../../components/common/header';
 import { DefaultProfileEditContainer } from '../../styles/MyPage/style';
 import Image from '../../components/MyPage/image';
 import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
-import Input from '../../components/MyPage/input';
+import Input from '../../components/common/input';
 import { Link, useNavigate } from 'react-router-dom';
 import FloatingButton from '../../components/MyPage/floating-button';
 import defaultProfileSrc from '../../assets/images/default_profile_8.png';
