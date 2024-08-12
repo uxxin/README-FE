@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { UnconfirmedPeopleItem } from './UnconfirmedPeopleItem';
-import { ReactComponent as SmallIcon } from '../../../assets/images/small_icon.svg';
+import { ReactComponent as SmallIcon } from '../../../assets/svgs/small_icon.svg';
 import { getUnconfirmedPeople } from '../../../api/Notice/noticeMain';
 
 export const UnconfirmedPeopleModal = ({

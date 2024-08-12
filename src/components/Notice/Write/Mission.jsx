@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { QuestionInput } from './QuestionInput';
-import help from '../../../assets/images/help_icon.svg';
+import help from '../../../assets/svgs/help_icon.svg';
 
 export const Mission = ({
   startDate,

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getOpenedRoom } from '../../api/Main/home';
 import NoticeRoom from './NoticeRoom';
-import addButton from '../../assets/images/addicon.svg';
-import prevButtonSvg from '../../assets/images/prev_button.svg';
-import nextButtonSvg from '../../assets/images/next_button.svg';
+import addButton from '../../assets/svgs/addicon.svg';
+import prevButtonSvg from '../../assets/svgs/prev_button.svg';
+import nextButtonSvg from '../../assets/svgs/next_button.svg';
 
 const ITEMS_PER_PAGE = 6;
 

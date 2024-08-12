@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Check from '../../../assets/images/post_type_check.svg';
+import Check from '../../../assets/svgs/post_type_check.svg';
 
 export const TypeCheck = ({ onTypeChange, postType }) => {
   const [selectedType, setSelectedType] = useState('Quiz');

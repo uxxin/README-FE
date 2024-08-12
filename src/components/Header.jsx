@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as BackButton } from '../assets/images/back_button.svg';
-import { ReactComponent as SearchButton } from '../assets/images/search_button.svg';
-import CloseButton from '../assets/images/close_button.svg';
+import { ReactComponent as BackButton } from '../assets/svgs/back_button.svg';
+import { ReactComponent as SearchButton } from '../assets/svgs/search_button.svg';
+import CloseButton from '../assets/svgs/close_button.svg';
 
 export const Header = (props) => {
   /*

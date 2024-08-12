@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NoticeTitle } from './NoticeTitle';
 import { Link } from 'react-router-dom';
-import NoticeCheck from '../../assets/images/notice_check.svg';
+import NoticeCheck from '../../assets/svgs/notice_check.svg';
 
 export const NoticePreview = ({
   props,
@@ -21,7 +21,7 @@ export const NoticePreview = ({
           {props.postImage !== null ? (
             <Thumbnail src={props.postImage} />
           ) : (
-            <Thumbnail src="/src/assets/images/defaultprofileimage.png" />
+            <Thumbnail src="/src/assets/pngs/defaultprofileimage.png" />
           )}
         </BottomContainer>
       </StyledLink>

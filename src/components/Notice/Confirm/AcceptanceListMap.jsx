@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import {
-  SlideButton,
-  CheckButton,
-  XButton,
-} from '../../../assets/images/icons';
+import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { useDispatch } from 'react-redux';
 import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';

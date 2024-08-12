@@ -1,6 +1,6 @@
 import FlexBox from '../../../common/flex-box';
 import { useEffect } from 'react';
-import logo from '../../../../assets/images/logoex.svg';
+import logo from '../../../../assets/svgs/logoex.svg';
 import { Logo, WelcomeText } from './style';
 
 export default function CompleteStep({ nickname }) {

@@ -1,7 +1,7 @@
 // CreateNoticeRoomSuccessForm.jsx
 import React from 'react';
 import styled from 'styled-components';
-import exampleProfileImage from '../../assets/images/exampleimage.png';
+import exampleProfileImage from '../../assets/pngs/exampleimage.png';
 
 const CreateNoticeRoomSuccessForm = ({
   profileImage,

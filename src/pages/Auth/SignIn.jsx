@@ -4,7 +4,7 @@ import CustomInput from '../../components/CustomInput.jsx';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../api/Auth/user.js';
-import logo from '../../assets/images/logoex.svg';
+import logo from '../../assets/svgs/logoex.svg';
 
 const SignIn = () => {
   const navigate = useNavigate();

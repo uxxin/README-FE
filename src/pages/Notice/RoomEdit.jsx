@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CustomInput from '../../components/CustomInput';
 import { EditRoomCustomBtn } from '../../components/Main/EditRoomCustomBtn';
-import toAlbumBtnIcon from '../../assets/images/albumbutton.svg';
+import toAlbumBtnIcon from '../../assets/svgs/albumbutton.svg';
 import { Header } from '../../components/Header';
 import CustomModal from '../../components/CustomModal';
 

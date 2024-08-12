@@ -1,4 +1,4 @@
-import arrowLeftSrc from '../../../assets/images/back_button.svg';
+import arrowLeftSrc from '../../../assets/svgs/back_button.svg';
 import { useNavigate } from 'react-router-dom';
 import { HeaderContainer } from './style';
 
