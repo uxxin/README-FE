@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/MyPage/header';
+import Header from '../../components/common/header';
 import { MypageContainer } from '../../styles/MyPage/style';
 import Profile from '../../components/MyPage/profile';
 import { GetAxiosInstance } from '../../axios/axios.method';

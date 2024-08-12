@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/MyPage/header';
+import Header from '../../components/common/header';
 import { EditPasswordContainer } from '../../styles/MyPage/style';
 import Input from '../../components/MyPage/input';
 import useDebounce from '../../hooks/use-debounce';

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Header from '../../components/MyPage/header';
+import Header from '../../components/common/header';
 import { DefaultProfileEditContainer } from '../../styles/MyPage/style';
 import Image from '../../components/MyPage/image';
 import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
