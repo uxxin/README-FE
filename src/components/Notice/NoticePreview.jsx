@@ -12,10 +12,9 @@ export const NoticePreview = ({
   preview,
   onClick,
 }) => {
-  const previewProps = { ...props, isManager: isManager };
   return (
     <Container>
-      <NoticeTitle props={previewProps} preview={preview} />
+      <NoticeTitle {...props} isManager={isManager} preview={preview} />
       <StyledLink to={`/notice/${roomId}/details`}>
         <BottomContainer>
           <NoticeContent>{props.postBody}</NoticeContent>
