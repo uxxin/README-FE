@@ -12,24 +12,26 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const response = await login(email, password);
       const token = response.data.result.accessToken;
 
       localStorage.setItem('token', token);
 
-      navigate('/home');
+      window.location.replace('/home');
     } catch (error) {
-      console.error('로그인 실패:', error);
+      alert('이메일/비밀번호를 확인해주세요.');
     }
   };
 
   return (
     <Root>
       <StyledLogo src={logo} alt="logo" />
-      <InputContainer>
+      <InputContainer onSubmit={handleLogin}>
         <CustomInput
+          type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.currentTarget.value)}
@@ -41,14 +43,14 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.currentTarget.value)}
           charCount={true}
         />
+        <ButtonWrapper>
+          <SignInButton onClick={handleLogin}>로그인</SignInButton>
+          <NotAuth>아직 회원이 아니신가요?</NotAuth>
+          <SignupButton onClick={() => navigate('/sign-up')}>
+            회원가입
+          </SignupButton>
+        </ButtonWrapper>
       </InputContainer>
-      <ButtonWrapper>
-        <SignInButton onClick={handleLogin}>로그인</SignInButton>
-        <NotAuth>아직 회원이 아니신가요?</NotAuth>
-        <SignupButton onClick={() => navigate('/sign-up')}>
-          회원가입
-        </SignupButton>
-      </ButtonWrapper>
     </Root>
   );
 };
@@ -59,7 +61,7 @@ const Root = styled.div`
   padding: 0 1rem;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;

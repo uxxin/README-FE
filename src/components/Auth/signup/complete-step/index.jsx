@@ -1,14 +1,12 @@
 import FlexBox from '../../../common/flex-box';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from '../../../../assets/images/logoex.svg';
 import { Logo, WelcomeText } from './style';
 
 export default function CompleteStep({ nickname }) {
-  const navigate = useNavigate();
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/home');
+      window.location.replace('/home');
       clearTimeout(timer);
     }, 2000);
   }, []);
