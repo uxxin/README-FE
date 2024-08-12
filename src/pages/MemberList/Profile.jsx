@@ -4,13 +4,13 @@ import { Header } from '../../components/Header';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {
-  const { nickname } = useParams(); //useParam은 URL을 동적으로 다뤄준다.
+  const { nickname } = useParams(); 
   return (
     <div>
-      <Header props={{ title: `${nickname} 프로필보기`, isSearch: true, gap: '1rem' }} />
-      <MemberProfile/>
+      <Header title={`${nickname} 프로필보기`} isSearch={true} gap="1rem" />
+      <MemberProfile />
     </div>
-  )
+  );
 };
 
 export default Profile;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -36,7 +36,7 @@ const collapse = keyframes`
 `;
 
 const Main = () => {
-  const navigate = useNavigate();
+  const { roomId } = useParams();
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
@@ -46,7 +46,6 @@ const Main = () => {
   // const page = useSelector((state) => state.notice.page);
 
   const dispatch = useDispatch();
-  const params = useParams();
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -74,7 +73,7 @@ const Main = () => {
   useEffect(() => {
     const getNoticeData = async () => {
       try {
-        const response = await getNotices(params.roomId);
+        const response = await getNotices(roomId);
         // setIsManager(response.data.result.isRoomAdmin);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
@@ -90,7 +89,7 @@ const Main = () => {
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
       try {
-        const response = await getUnconfirmedNotices(params.roomId);
+        const response = await getUnconfirmedNotices(roomId);
         setUnconfirmedNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
@@ -100,7 +99,7 @@ const Main = () => {
   }, []);
   return (
     <MainContainer>
-      <Header props={headerProps}></Header>
+      <Header title="공지방 메인" isSearch={true} />
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
@@ -110,11 +109,7 @@ const Main = () => {
           {isManager ? (
             <>
               {noticeData.map((post) => (
-                <NoticePreview
-                  props={post}
-                  isManager={true}
-                  onClick={() => navigate(`/notice/${roomId}/details`)}
-                />
+                <NoticePreview props={post} isManager={true} roomId={roomId} />
               ))}
             </>
           ) : (

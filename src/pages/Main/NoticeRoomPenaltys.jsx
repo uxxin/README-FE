@@ -5,12 +5,7 @@ import { Header } from '../../components/Header';
 const NoticeRoomPenaltys = () => {
   return (
     <>
-      <Header
-        props={{
-          title: '페널티',
-          isSearch: false,
-        }}
-      />
+      <Header title="페널티" isSearch={false} />
       <Container>
         <TotalPenalty>누적 페널티</TotalPenalty>
       </Container>

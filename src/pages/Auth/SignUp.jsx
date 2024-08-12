@@ -123,7 +123,7 @@ const SignUp = () => {
 
   return (
     <>
-      <Header props={{ title: '회원가입', isSearch: false }} />
+      <Header title="회원가입" isSearch={false} />
       <SignUpContainer>
         {signupCompleted ? (
           <>

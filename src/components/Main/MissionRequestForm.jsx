@@ -7,12 +7,12 @@ import returnIcon from '../../assets/images/returnicon.svg';
 const MissionRequestForm = ({ mission }) => {
   if (!mission) return null;
 
-  // 댓글이 50자 이상일 경우 자르고 ...으로 처리
-  const truncateComent = (coment, maxLength) => {
-    if (coment.length > maxLength) {
-      return coment.slice(0, maxLength) + '...';
+  // content가 50자 이상일 경우 자르고 ...으로 처리 (css로 처리하면 50자 설정 아니라 이렇게 작성)
+  const truncateContent = (content, maxLength) => {
+    if (content.length > maxLength) {
+      return content.slice(0, maxLength) + '...';
     }
-    return coment;
+    return content;
   };
 
   // requeststate 값을 상태 텍스트로 매핑
@@ -30,7 +30,7 @@ const MissionRequestForm = ({ mission }) => {
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = mission.missionImage || [];
+  const images = mission.images || [];
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
@@ -43,7 +43,7 @@ const MissionRequestForm = ({ mission }) => {
   };
 
   const handleNoticeClick = () => {
-    // 공지돌아가기 버튼 클릭 시 동작
+    // 공지돌아가기 버튼 클릭 시 동작 내용 적기
     console.log('공지돌아가기 버튼 클릭');
   };
 
@@ -54,24 +54,19 @@ const MissionRequestForm = ({ mission }) => {
   return (
     <Container>
       <TopSection>
-        <ProfileImage src={mission.admin_profileImage} alt="profile" />
+        <ProfileImage src={mission.profileImage} alt="profile" />
         <Info>
-          <NickName>{mission.admin_nickName}</NickName>
-          <Coment>{truncateComent(mission.coment, 50)}</Coment>
+          <NickName>{mission.nickname}</NickName>
+          <Coment>{truncateContent(mission.content, 50)}</Coment>
         </Info>
       </TopSection>
       <BottomSection>
         {images.length > 1 && currentIndex != 0 && (
-          <PrevButton
-            src={prevButton}
-            alt="Previous"
-            onClick={handlePrev}
-            //disabled={currentIndex === 0}
-          />
+          <PrevButton src={prevButton} alt="Previous" onClick={handlePrev} />
         )}
         <ImageContainer>
           <UploadedMission src={images[currentIndex]} alt="Mission" />
-          {mission.requestState === 'reject' && (
+          {mission.submitState === 'reject' && (
             <>
               <Overlay />
               <NoticeButton onClick={handleNoticeClick}>
@@ -82,15 +77,10 @@ const MissionRequestForm = ({ mission }) => {
           )}
         </ImageContainer>
         {images.length > 1 && currentIndex !== images.length - 1 && (
-          <NextButton
-            src={nextButton}
-            alt="Next"
-            onClick={handleNext}
-            //disabled={currentIndex === images.length - 1}
-          />
+          <NextButton src={nextButton} alt="Next" onClick={handleNext} />
         )}
-        <RequestState state={mission.requestState}>
-          {getRequestStateText(mission.requestState)}
+        <RequestState state={mission.submitState}>
+          {getRequestStateText(mission.submitState)}
         </RequestState>
       </BottomSection>
     </Container>
