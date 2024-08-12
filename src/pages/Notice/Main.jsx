@@ -66,6 +66,7 @@ const Main = () => {
     };
     getNoticeData();
   }, []);
+
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
       try {
@@ -77,9 +78,11 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
+
   return (
     <MainContainer>
       <Header title="공지방 메인" isSearch={true} />
+
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
@@ -101,12 +104,13 @@ const Main = () => {
                 />
               )}
               {noticeData.map((post) => (
-                <NoticePreview props={post} />
+                <NoticePreview props={post} roomId={roomId} />
               ))}
             </>
           )}
         </Notice>
       )}
+
       {isManager && (
         <FloatingButtonContainer>
           <FloatingDivContainer showDivs={showDivs}>
@@ -115,22 +119,26 @@ const Main = () => {
                 <StyledEdit />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="/member" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="confirm" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="write" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledWrite />
               </FloatingDiv>
             </StyledLink>
           </FloatingDivContainer>
+
           <FloatingButton onClick={handleFloatingButtonClick}>
             <StyledArrow flipped={isFlipped} />
           </FloatingButton>
