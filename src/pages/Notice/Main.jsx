@@ -75,7 +75,7 @@ const Main = () => {
     const getNoticeData = async () => {
       try {
         const response = await getNotices(params.roomId);
-        // setIsManager(response.data.result.isRoomAdmin);
+        setIsManager(response.data.result.isRoomAdmin);
         if (!response.data || !response.data.result) {
           setIsNoticeNull(true);
         } else {
@@ -126,7 +126,7 @@ const Main = () => {
                 />
               )}
               {noticeData.map((post) => (
-                <NoticePreview props={post} setIsModalOpen={setIsModalOpen} />
+                <NoticePreview props={post} />
               ))}
             </>
           )}
