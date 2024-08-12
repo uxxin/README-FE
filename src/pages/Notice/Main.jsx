@@ -49,37 +49,17 @@ const Main = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
   };
-  const handleScroll = () => {
-    const bottom =
-      window.innerHeight + window.scrollY >= document.body.offsetHeight;
-    if (bottom) {
-      setVisibleCount((prev) => prev + 10);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const headerProps = {
-    title: '공지방 메인',
-    isSearch: true,
-  };
 
   useEffect(() => {
     const getNoticeData = async () => {
       try {
         const response = await getNotices(roomId);
         setIsManager(response.data.result.isRoomAdmin);
-        if (!response.data || !response.data.result) {
+        if (!response.data.isSuccess) {
           setIsNoticeNull(true);
         } else {
           setNoticeData(response.data.result.posts);
         }
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -279,11 +259,14 @@ const StyledLink = styled(Link)`
   animation: ${(props) => (props.showDivs ? expand : collapse)} 0.5s forwards;
 `;
 
-const FloatingDiv = styled.div`
+const FloatingDiv = styled.button`
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
   background: ${(props) => props.color};
+  padding: 0;
+  border: none;
+  margin: 0;
   color: white;
   display: flex;
   justify-content: center;
