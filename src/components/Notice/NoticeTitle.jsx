@@ -10,7 +10,7 @@ import { patchFixNotice } from '../../api/Notice/noticeMain';
 import { UnconfirmedPeopleModal } from './NoticeTitle/UnconfirmedPeopleModal';
 import { Link } from 'react-router-dom';
 
-export const NoticeTitle = ({ props, preview }) => {
+export const NoticeTitle = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const unconfirmedModalClose = () => {
@@ -88,7 +88,7 @@ export const NoticeTitle = ({ props, preview }) => {
               {props.commentCount > 99 ? '99+' : props.commentCount}
             </CommentIconContainer>
           )}
-          {!preview && (
+          {!props.preview && (
             <ShowmoreIconContainer>
               <ShowmoreButton onClick={() => setIsOpen((prev) => !prev)}>
                 <StyledShowmoreIcon />
