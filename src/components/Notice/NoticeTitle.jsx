@@ -103,7 +103,7 @@ export const NoticeTitle = (props) => {
           )}
         </TopRightSide>
       </TopContainer>
-      <StyledLink>
+      <StyledLink to={`/notice/${props.roomId}/details`}>
         {props.postTitle}
         <DeadlineContainer>
           <DeadlineText>
