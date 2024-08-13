@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { SlideButton, CheckButton, XButton } from '../../assets/images/icons';
+import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { useDispatch } from 'react-redux';
-import { acceptance, rejection } from '../../redux/CheckSlice';
+import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+`;
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -22,11 +30,7 @@ const TextContainer = styled.div`
 const ProfileName = styled.span`
   align-self: stretch;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-
-  /* Pretendard/medium/16 */
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 1.2rem */
   letter-spacing: -0.02rem;
@@ -36,10 +40,7 @@ const ProfileInfo = styled.span`
   align-self: stretch;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
 
-  /* Pretendard/regular/12 */
-  font-family: Pretendard;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
@@ -55,7 +56,7 @@ const ImgContainer = styled.img`
 `;
 
 const ContentContainer = styled.div`
-  width: 24.875rem;
+  align-self: stretch;
   height: 12.5rem;
   justify-content: flex-end; //슬라이드버튼을 오른쪽 끝에 오게 만든다.
   align-items: center;
@@ -94,8 +95,13 @@ const NoButton = styled.button`
   border-radius: 0rem 0.5rem 0.5rem 0rem;
 `;
 
-export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
-  console.log('CheckListMap rendered');
+export const AcceptanceListMap = ({
+  submit_id,
+  user_info,
+  content,
+  image_URL,
+}) => {
+  console.log('AcceptanceListMap rendered');
   const { nickname, profile_image } = user_info;
   const dispatch = useDispatch();
   const requiredList = useSelector((state) => state.check.requiredList);
@@ -115,7 +121,7 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
   }, [requiredList]);
 
   return (
-    <div>
+    <Container>
       <ProfileContainer>
         <ImgContainer src={profile_image} alt="Profile" />
         <TextContainer>
@@ -124,19 +130,8 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
         </TextContainer>
       </ProfileContainer>
       <ContentContainer>
-        {' '}
-        <SlideButton />{' '}
+        <SlideButton />
       </ContentContainer>
-      <SecondButtonContainer>
-        <YesButton onClick={handleAcceptance}>
-          <CheckButton />
-          수락
-        </YesButton>
-        <NoButton onClick={handleRejection}>
-          <XButton />
-          거절
-        </NoButton>
-      </SecondButtonContainer>
-    </div>
+    </Container>
   );
 };

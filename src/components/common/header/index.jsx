@@ -1,4 +1,4 @@
-import arrorLeftSrc from '../../../assets/images/back_button.svg';
+import arrowLeftSrc from '../../../assets/svgs/back_button.svg';
 import { useNavigate } from 'react-router-dom';
 import { HeaderContainer } from './style';
 
@@ -10,7 +10,7 @@ export default function Header({ title, back, backFun, rightEle, rightFun }) {
     <HeaderContainer className="bold-18">
       {back && (
         <button onClick={handleBack} className="left">
-          <img src={arrorLeftSrc} alt="뒤로가기" />
+          <img src={arrowLeftSrc} alt="뒤로가기" />
         </button>
       )}
       <span>{title}</span>

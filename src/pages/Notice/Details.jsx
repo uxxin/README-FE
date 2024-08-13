@@ -2,65 +2,51 @@ import React, { useEffect, useState } from 'react';
 import { NoticeItem } from '../../components/Notice/NoticeItem';
 import styled from 'styled-components';
 import { CommentItem } from '../../components/Notice/CommentItem';
-import CommentWrite from '../../assets/images/comment_write.svg';
+import CommentWrite from '../../assets/svgs/comment_write.svg';
 import { Header } from '../../components/Header';
+import { getNoticeComments, getNoticedetails } from '../../api/Notice/details';
+import { useParams } from 'react-router-dom';
 
 const NoticeDetails = () => {
+  const { roomId, postId } = useParams();
   const [width, setWidth] = useState(0);
+  const [post, setPost] = useState([]);
+  const [imageURLs, setImageURLs] = useState([]);
+  const [comments, setComments] = useState([]);
   const isManager = true;
-  const post = [
-    {
-      postId: 1,
-      postType: 'Quiz',
-      postTitle: 'TEST',
-      postBody: 'TESTCONTENT',
-      startDate: '24. 7. 25. 04:24',
-      endDate: '24. 7. 25. 05:24',
-      commentCount: 5,
-      submitState: 'COMPLETE',
-    },
-  ];
-  const imageURLs = ['url11.com', 'url12.com'];
-  const data = [
-    {
-      commentId: 1,
-      commentAuthorNickname: 'kimroom1',
-      commentBody: 'com.con.1',
-      updatedAt: '24. 7. 27. 18:08',
-    },
-    {
-      commentId: 3,
-      commentAuthorNickname: 'parkroom1',
-      commentBody: 'com.con.3',
-      updatedAt: '24. 7. 27. 18:09',
-    },
-    {
-      commentId: 4,
-      commentAuthorNickname: 'leeroom1',
-      commentBody: 'com.con.4',
-      updatedAt: '24. 7. 27. 18:09',
-    },
-    {
-      commentId: 5,
-      commentAuthorNickname: null,
-      commentBody: 'com.con.5',
-      updatedAt: '24. 7. 27. 18:10',
-    },
-    {
-      commentId: 7,
-      commentAuthorNickname: 'leeroom1',
-      commentBody: 'com.con.7',
-      updatedAt: '24. 7. 27. 18:11',
-    },
-  ];
 
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
   }, []);
 
+  useEffect(() => {
+    const getNoticeDetailData = async () => {
+      try {
+        const response = await getNoticedetails(postId);
+        setPost(response.data.result.post);
+        setImageURLs(response.data.result.imageURLs);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeDetailData();
+  }, []);
+
+  useEffect(() => {
+    const getNoticeCommentData = async () => {
+      try {
+        const response = await getNoticeComments(postId);
+        setComments(response.data.result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeCommentData();
+  }, []);
+
   return (
-    <div className="container" style={{ border: '1px solid blue' }}>
-      <Header props={{ title: '공지방 이름', isSearch: false }} />
+    <div className="container">
+      <Header title="공지방 이름" isSearch={false} />
       <Container>
         {post.length > 0 ? (
           post.map((data) => (
@@ -71,8 +57,8 @@ const NoticeDetails = () => {
         )}
 
         <CommentList>
-          {data.length > 0 ? (
-            data.map((data) => (
+          {comments.length > 0 ? (
+            comments.map((data) => (
               <CommentItem props={data} key={data.commentId} />
             ))
           ) : (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import prevButton from '../../assets/images/dark_prev_button.svg';
-import nextButton from '../../assets/images/dark_next_button.svg';
-import returnIcon from '../../assets/images/returnicon.svg';
+import prevButton from '../../assets/svgs/dark_prev_button.svg';
+import nextButton from '../../assets/svgs/dark_next_button.svg';
+import returnIcon from '../../assets/svgs/returnicon.svg';
 
 const MissionRequestForm = ({ mission }) => {
   if (!mission) return null;

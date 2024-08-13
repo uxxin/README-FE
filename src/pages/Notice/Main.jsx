@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
 import { NoticePreview } from '../../components/Notice/NoticePreview';
-import { ReactComponent as Arrow } from '../../assets/images/top_arrow.svg';
+import { ReactComponent as Arrow } from '../../assets/svgs/top_arrow.svg';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Edit } from '../../assets/images/floating_icon1.svg';
-import { ReactComponent as MemberList } from '../../assets/images/floating_icon2.svg';
-import { ReactComponent as RequestList } from '../../assets/images/floating_icon3.svg';
-import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
+import { ReactComponent as Edit } from '../../assets/svgs/floating_icon1.svg';
+import { ReactComponent as MemberList } from '../../assets/svgs/floating_icon2.svg';
+import { ReactComponent as RequestList } from '../../assets/svgs/floating_icon3.svg';
+import { ReactComponent as Write } from '../../assets/svgs/floating_icon4.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
 import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
@@ -36,47 +36,26 @@ const collapse = keyframes`
 `;
 
 const Main = () => {
-  const navigate = useNavigate();
+  const { roomId } = useParams();
   const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
-  // const page = useSelector((state) => state.notice.page);
 
   const dispatch = useDispatch();
-  const params = useParams();
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
-  };
-  const handleScroll = () => {
-    const bottom =
-      window.innerHeight + window.scrollY >= document.body.offsetHeight;
-    if (bottom) {
-      setVisibleCount((prev) => prev + 10);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const headerProps = {
-    title: '공지방 메인',
-    isSearch: true,
   };
 
   useEffect(() => {
     const getNoticeData = async () => {
       try {
-        const response = await getNotices(params.roomId);
-        // setIsManager(response.data.result.isRoomAdmin);
-        if (!response.data || !response.data.result) {
+        const response = await getNotices(roomId);
+        setIsManager(response.data.result.isRoomAdmin);
+        if (!response.data.isSuccess) {
           setIsNoticeNull(true);
         } else {
           setNoticeData(response.data.result.posts);
@@ -87,10 +66,11 @@ const Main = () => {
     };
     getNoticeData();
   }, []);
+
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
       try {
-        const response = await getUnconfirmedNotices(params.roomId);
+        const response = await getUnconfirmedNotices(roomId);
         setUnconfirmedNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
@@ -98,9 +78,11 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
+
   return (
     <MainContainer>
-      <Header props={headerProps}></Header>
+      <Header title="공지방 메인" isSearch={true} />
+
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
@@ -110,11 +92,7 @@ const Main = () => {
           {isManager ? (
             <>
               {noticeData.map((post) => (
-                <NoticePreview
-                  props={post}
-                  isManager={true}
-                  onClick={() => navigate(`/notice/${roomId}/details`)}
-                />
+                <NoticePreview props={post} isManager={true} roomId={roomId} />
               ))}
             </>
           ) : (
@@ -126,12 +104,13 @@ const Main = () => {
                 />
               )}
               {noticeData.map((post) => (
-                <NoticePreview props={post} setIsModalOpen={setIsModalOpen} />
+                <NoticePreview props={post} roomId={roomId} />
               ))}
             </>
           )}
         </Notice>
       )}
+
       {isManager && (
         <FloatingButtonContainer>
           <FloatingDivContainer showDivs={showDivs}>
@@ -140,22 +119,26 @@ const Main = () => {
                 <StyledEdit />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="/member" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="confirm" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="write" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledWrite />
               </FloatingDiv>
             </StyledLink>
           </FloatingDivContainer>
+
           <FloatingButton onClick={handleFloatingButtonClick}>
             <StyledArrow flipped={isFlipped} />
           </FloatingButton>
@@ -194,10 +177,7 @@ const NoNotice = styled.div`
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   color: #000;
-
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;
@@ -287,11 +267,14 @@ const StyledLink = styled(Link)`
   animation: ${(props) => (props.showDivs ? expand : collapse)} 0.5s forwards;
 `;
 
-const FloatingDiv = styled.div`
+const FloatingDiv = styled.button`
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
   background: ${(props) => props.color};
+  padding: 0;
+  border: none;
+  margin: 0;
   color: white;
   display: flex;
   justify-content: center;

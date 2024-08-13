@@ -5,7 +5,7 @@ import { OpenedNoticeRoom } from '../../components/Main/OpendNoticeRoom';
 import { EnteredNoticeRoom } from '../../components/Main/EnteredNoticeRoom';
 import FixedNotice from '../../components/Main/FixedNotice';
 import styled from 'styled-components';
-import logoImage from '../../assets/images/logoex.svg';
+import logoImage from '../../assets/svgs/logoex.svg';
 
 const Home = () => {
   const [isFixedNoticeVisible, setIsFixedNoticeVisible] = useState(true);

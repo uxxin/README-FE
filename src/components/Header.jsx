@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as BackButton } from '../assets/images/back_button.svg';
-import { ReactComponent as SearchButton } from '../assets/images/search_button.svg';
-import CloseButton from '../assets/images/close_button.svg';
+import { ReactComponent as BackButton } from '../assets/svgs/back_button.svg';
+import { ReactComponent as SearchButton } from '../assets/svgs/search_button.svg';
+import CloseButton from '../assets/svgs/close_button.svg';
 
-export const Header = ({ props }) => {
+export const Header = (props) => {
   /*
   props = {
     title: '페이지 상단 노출 제목',
@@ -78,7 +78,7 @@ export const Header = ({ props }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.header`
   display: flex;
   height: 2.75rem;
   padding: 0.625rem;
@@ -126,6 +126,7 @@ const Title = styled.div`
 const StyledSearchButton = styled(SearchButton)`
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
 `;
 
 const SearchContainer = styled.div`

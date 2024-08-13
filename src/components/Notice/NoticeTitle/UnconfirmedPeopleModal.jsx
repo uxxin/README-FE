@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { UnconfirmedPeopleItem } from './UnconfirmedPeopleItem';
-import { ReactComponent as SmallIcon } from '../../assets/images/small_icon.svg';
-import { getUnconfirmedPeople } from '../../api/Notice/noticeMain';
+import { ReactComponent as SmallIcon } from '../../../assets/svgs/small_icon.svg';
+import { getUnconfirmedPeople } from '../../../api/Notice/noticeMain';
 
 export const UnconfirmedPeopleModal = ({
   postId,
@@ -102,6 +102,7 @@ const RightContainer = styled.div`
   font-weight: 700;
   line-height: 100%; /* 0.875rem */
   letter-spacing: -0.0175rem;
+  cursor: pointer;
 `;
 
 const StyledSmallIcon = styled(SmallIcon)`

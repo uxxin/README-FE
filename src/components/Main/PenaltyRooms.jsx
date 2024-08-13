@@ -15,17 +15,20 @@ export const PenaltyRooms = () => {
         const response = await axios.get('mock/penaltyrooms.json');
         setPenaltyRooms(response.data);
       } catch (error) {
-        console.error('Error fetching Penatly Datas:', error);
+        console.error('페널티 있는 방 불러오는 중 오류:', error);
       }
     };
 
     fetchData();
   }, []);
 
-  const handleRoomClick = (roomid) => {
-    {
-      navigate(`/penalty/${roomid}`);
-    }
+  const handleRoomClick = (room) => {
+    navigate(`/penalty/${room.id}`, {
+      state: {
+        maxPenalty: room.maxPenalty,
+        penaltyCount: room.penaltyCount,
+      },
+    });
   };
 
   return (
@@ -38,7 +41,7 @@ export const PenaltyRooms = () => {
                 <PenaltyRoomForm
                   key={room.id}
                   room={room}
-                  onClick={() => handleRoomClick(room.id)}
+                  onClick={() => handleRoomClick(room)}
                 />
               ))}
             </Rooms>

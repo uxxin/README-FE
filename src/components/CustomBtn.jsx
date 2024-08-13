@@ -1,27 +1,19 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const CustomBtn = ({ props }) => {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    if (props.background !== '#BDBDBD') {
-      navigate(props.link);
-    }
-  };
-
+export const CustomBtn = (props) => {
   return (
     <StyledCustomBtn
       border={props.border}
       background={props.background}
-      onClick={handleClick}
+      onClick={props.onClick}
     >
       {props.text}
     </StyledCustomBtn>
   );
 };
 
-const StyledCustomBtn = styled.div`
+const StyledCustomBtn = styled.button`
   display: flex;
   width: 100%;
   height: 3.1875rem;

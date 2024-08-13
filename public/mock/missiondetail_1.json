@@ -2,34 +2,34 @@
   {
     "id": 1,
     "admin_nickName": "인하대-리우/송민혁-Server",
-    "admin_profileImage": "../src/assets/images/defaultprofileimage.png",
+    "admin_profileImage": "../src/assets/pngs/defaultprofileimage.png",
     "coment": "아아아아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ",
     "requestState": "reject",
     "missionImage": [
-      "../src/assets/images/missionimage.png"
+      "../src/assets/pngs/missionimage.png"
     ]
   },
   {
     "id": 2,
     "admin_nickName": "리우/송민혁-회장",
-    "admin_profileImage": "../src/assets/images/defaultprofileimage.png",
+    "admin_profileImage": "../src/assets/pngs/defaultprofileimage.png",
     "coment": "이 글자는 50글자가 넘어가는 중. 아아아아아아아 이 글자는 50글자가 넘어가는 중. 아아아아아아아 이 글자는 50글자가 넘어가는 중. 아아아아아아아 이 글자는 50글자가 넘어가는 중. 아아아아아아아",
     "requestState": "complete",
     "missionImage": [
-      "../src/assets/images/missionimage.png",
-      "../src/assets/images/missionimage2.png",
-      "../src/assets/images/missionimage3.png"
+      "../src/assets/pngs/missionimage.png",
+      "../src/assets/pngs/missionimage2.png",
+      "../src/assets/pngs/missionimage3.png"
     ]
   },
   {
     "id": 3,
     "admin_nickName": "숩/한수빈",
-    "admin_profileImage": "../src/assets/images/defaultprofileimage.png",
+    "admin_profileImage": "../src/assets/pngs/defaultprofileimage.png",
     "coment": "이 글자는 50글자가 넘어가는 중. 아아아아아아아 이 글자는 50글자가 넘어가는 중. 아아아아아아아 이 글자는 50글자가 넘어가는 중. 아아아아아아아 이 글자는 50글자가 넘어가는 중. 아아아아아아아",
     "requestState": "pending",
     "missionImage": [
-      "../src/assets/images/missionimage2.png",
-      "../src/assets/images/missionimage3.png"
+      "../src/assets/pngs/missionimage2.png",
+      "../src/assets/pngs/missionimage3.png"
     ]
   }
 ]

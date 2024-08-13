@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import PenaltyNoticeForm from './PenaltyNoticeForm';
+import axios from 'axios';
 
 const PenaltyDetails = () => {
-  const maxPenaltyCount = 10;
-  const penaltyCount = 3;
+  const [penaltyData, setPenaltyData] = useState(null);
+  const [maxPenalty, setMaxPenalty] = useState(null);
+  const [penaltyCount, setPenaltyCount] = useState(null);
+
+  const location = useLocation();
+  const { state } = location;
+
+  useEffect(() => {
+    if (state) {
+      setMaxPenalty(state.maxPenalty);
+      setPenaltyCount(state.penaltyCount);
+    }
+
+    const fetchPenaltyData = async () => {
+      try {
+        const response = await axios.get('/mock/penaltydetails.json');
+        setPenaltyData(response.data);
+      } catch (error) {
+        console.error('페널티 데이터 불러오는 중 오류:', error);
+      }
+    };
+
+    fetchPenaltyData();
+  }, [state]);
+
   return (
     <Container>
       <TotalPenalty>
         누적 페널티 <PenaltyValue>{penaltyCount}</PenaltyValue>/
-        <MaxPenaltyValue>{maxPenaltyCount}</MaxPenaltyValue>
+        <MaxPenaltyValue>{maxPenalty}</MaxPenaltyValue>
       </TotalPenalty>
-      <PenaltyNoticeForm />
+      {penaltyData &&
+        penaltyData.map((data, index) => (
+          <PenaltyNoticeForm key={index} {...data} />
+        ))}
     </Container>
   );
 };
@@ -40,7 +68,7 @@ const TotalPenalty = styled.div`
   text-align: right;
   font-size: 1rem;
   font-weight: 600;
-  line-height: 100%; /* 1rem */
+  line-height: 100%;
   letter-spacing: -0.02rem;
 `;
 

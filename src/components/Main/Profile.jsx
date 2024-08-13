@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as VerificationIcon } from '../../assets/images/vertificationicon.svg';
-import { ReactComponent as PenaltyIcon } from '../../assets/images/penaltyicon.svg';
+import { ReactComponent as VerificationIcon } from '../../assets/svgs/vertificationicon.svg';
+import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';
 import { getMyProfile } from '../../api/Main/home';
 
 export const Profile = () => {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(
-    '/assets/images/defaultprofileimage.png',
+    '/assets/pngs/defaultprofileimage.png',
   );
   const [nickName, setNickname] = useState('이름');
   const [email, setEmail] = useState('이메일@gmail.com');

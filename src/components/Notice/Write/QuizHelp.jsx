@@ -22,7 +22,7 @@ const Container = styled.div`
   align-items: center;
   width: 10.125rem;
   height: 2.44275rem;
-  background: url(../../../assets/images/bg_earn_point_info.png) no-repeat
-    center center;
+  background: url(../../../assets/pngs/bg_earn_point_info.png) no-repeat center
+    center;
   background-size: cover;
 `;

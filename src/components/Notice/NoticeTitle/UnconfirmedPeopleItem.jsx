@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export const UnconfirmedPeopleItem = ({ props }) => {
   return (
     <Container>
       {props.profile_image !== null ? (
-        <Thumbnail src="/src/assets/images/defaultprofileimage.png" />
+        <Thumbnail src="/src/assets/pngs/defaultprofileimage.png" />
       ) : (
         <Thumbnail src={props.profile_image} />
       )}

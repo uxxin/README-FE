@@ -1,16 +1,16 @@
 import { useMemo, useRef, useState } from 'react';
-import Header from '../../components/MyPage/header';
+import Header from '../../components/common/header';
 import { NoticeRoomProfileEditContainer } from '../../styles/MyPage/style';
 import Image from '../../components/MyPage/image';
 import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
-import Input from '../../components/MyPage/input';
+import Input from '../../components/common/input';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FloatingButton from '../../components/MyPage/floating-button';
 import {
   PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../axios/axios.method';
-import defaultProfileSrc from '../../assets/images/default_profile_8.png';
+import defaultProfileSrc from '../../assets/pngs/default_profile_8.png';
 
 const NoticeRoomProfileEdit = () => {
   const { state } = useLocation();

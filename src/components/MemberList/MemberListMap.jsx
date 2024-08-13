@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { removeMember } from '../../redux/KeySlice';
 import { useNavigate } from 'react-router-dom';
-import { PlusIcon } from '../../assets/images/icons';
+import { PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
@@ -25,7 +25,7 @@ const ModalOverlay = styled.div`
 const ShowMoreIconContainer = styled.div`
   position: relative;
   z-index: 9999;
-`
+`;
 
 const SecondModalContent = styled.div`
   display: flex;
@@ -104,14 +104,13 @@ const ThirdModalContent = styled(SecondModalContent)`
   /* 색상 및 크기가 SecondModalContent와 동일하도록 유지 */
 `;
 
-
 export const MemberListMap = ({ members }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { members } = useSelector(state => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
-  const [isThirdModalOpen,setIsThirdModalOpen] = useState(false);
+  const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
 
   console.log('넘어오는 프롭스:', members); // 확인용
@@ -128,7 +127,7 @@ export const MemberListMap = ({ members }) => {
   const handleProfileLinkClick = () => {
     if (selectedProfile) {
       const encodedNickname = encodeURIComponent(selectedProfile.nickname);
-      navigate(`/member/profile/${encodedNickname}`, {
+      navigate(`/notice/:roomId/member/${encodedNickname}`, {
         state: {
           profile_image: selectedProfile.profile_image,
           nickname: selectedProfile.nickname,
@@ -149,7 +148,7 @@ export const MemberListMap = ({ members }) => {
 
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
-      console.log("추방할 리스트:",selectedProfile.nickname)
+      console.log('추방할 리스트:', selectedProfile.nickname);
       dispatch(removeMember(selectedProfile.nickname));
       setIsSecondModalOpen(false);
       setIsModalOpen(false);
@@ -157,11 +156,9 @@ export const MemberListMap = ({ members }) => {
     }
   };
 
-  const handleThirdModalClose = () =>{
+  const handleThirdModalClose = () => {
     setIsThirdModalOpen(false);
-  }
-
-
+  };
 
   const modalButtons = [
     { label: '프로필', onClick: handleProfileLinkClick, color: 'black' },
@@ -172,35 +169,33 @@ export const MemberListMap = ({ members }) => {
 
   return (
     <div>
-    {members && members.length > 0 ? (
-      members.map((item, index) => (
-        item && item.nickname ? (
-          <div key={index}>
-            <MemberListDetails
-              nickname={item.nickname}
-              profile_image={item.profile_image}
-              onOpenModal={() => handleOpenModal(item)}
-            />
-            {selectedProfile?.nickname === item.nickname && (
-              <ShowMoreIconContainer>
-                <CustomModal
-                  isOpen={isModalOpen}
-                  onClose={handleCloseModal}
-                  buttons={modalButtons}
-                />
-              </ShowMoreIconContainer>
-            )}
-          </div>
-        ) : (
-          <p key={index}>유효하지 않은 멤버 데이터</p>
+      {members && members.length > 0 ? (
+        members.map((item, index) =>
+          item && item.nickname ? (
+            <div key={index}>
+              <MemberListDetails
+                nickname={item.nickname}
+                profile_image={item.profile_image}
+                onOpenModal={() => handleOpenModal(item)}
+              />
+              {selectedProfile?.nickname === item.nickname && (
+                <ShowMoreIconContainer>
+                  <CustomModal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    buttons={modalButtons}
+                  />
+                </ShowMoreIconContainer>
+              )}
+            </div>
+          ) : (
+            <p key={index}>유효하지 않은 멤버 데이터</p>
+          ),
         )
-      ))
-    ) : (
-      <p>멤버가 없습니다.</p>
-    )}
-   
-  
-       
+      ) : (
+        <p>멤버가 없습니다.</p>
+      )}
+
       <ButtonContainer>
         <Link to="/member/invite">
           <MemberAddBtn>
@@ -222,7 +217,7 @@ export const MemberListMap = ({ members }) => {
         </ModalOverlay>
       )}
 
-    {isThirdModalOpen && (
+      {isThirdModalOpen && (
         <ModalOverlay onClick={handleThirdModalClose}>
           <ThirdModalContent onClick={(e) => e.stopPropagation()}>
             <p>{selectedProfile?.nickname}님이 추방되었습니다.</p>

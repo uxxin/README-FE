@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import CustomInput from '../../components/CustomInput';
 import { EditRoomCustomBtn } from '../../components/Main/EditRoomCustomBtn';
-import toAlbumBtnIcon from '../../assets/images/albumbutton.svg';
+import toAlbumBtnIcon from '../../assets/svgs/albumbutton.svg';
 import { Header } from '../../components/Header';
 import CustomModal from '../../components/CustomModal';
 
@@ -107,13 +107,7 @@ const RoomEdit = () => {
 
   return (
     <>
-      <Header
-        props={{
-          title: '공지방 수정',
-          isSearch: false,
-          url: '/notice',
-        }}
-      />
+      <Header title="공지방 수정" isSearch={false} url="/notice" />
       <Container>
         <ImageContainer>
           <RoomImage src={image || '<path-to-image>'} alt="RoomImage" />
@@ -151,22 +145,18 @@ const RoomEdit = () => {
         </FormContainer>
         <ButtonContainer>
           <EditRoomCustomBtn
-            props={{
-              text: '공지방 삭제하기',
-              background: '#FDD8DB',
-              border: 'none',
-              color: ' #F5535E',
-              onClick: openModal,
-            }}
+            text="공지방 삭제하기"
+            background="#FDD8DB"
+            border="none"
+            color=" #F5535E"
+            onClick={openModal}
           />
           <EditRoomCustomBtn
-            props={{
-              text: '공지방 수정하기',
-              background: '#509BF7',
-              border: 'none',
-              color: '#FFFFFF',
-              onClick: handleUpdateClick,
-            }}
+            text="공지방 수정하기"
+            background="#509BF7"
+            border="none"
+            color="#FFFFFF"
+            onClick={handleUpdateClick}
           />
         </ButtonContainer>
         <CustomModal

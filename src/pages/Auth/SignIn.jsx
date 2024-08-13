@@ -4,7 +4,7 @@ import CustomInput from '../../components/CustomInput.jsx';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../api/Auth/user.js';
-import logo from '../../assets/images/logoex.svg';
+import logo from '../../assets/svgs/logoex.svg';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -12,24 +12,26 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const response = await login(email, password);
       const token = response.data.result.accessToken;
 
       localStorage.setItem('token', token);
 
-      navigate('/home');
+      window.location.replace('/home');
     } catch (error) {
-      console.error('로그인 실패:', error);
+      alert('이메일/비밀번호를 확인해주세요.');
     }
   };
 
   return (
     <Root>
       <StyledLogo src={logo} alt="logo" />
-      <InputContainer>
+      <InputContainer onSubmit={handleLogin}>
         <CustomInput
+          type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.currentTarget.value)}
@@ -41,14 +43,14 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.currentTarget.value)}
           charCount={true}
         />
+        <ButtonWrapper>
+          <SignInButton onClick={handleLogin}>로그인</SignInButton>
+          <NotAuth>아직 회원이 아니신가요?</NotAuth>
+          <SignupButton onClick={() => navigate('/sign-up')}>
+            회원가입
+          </SignupButton>
+        </ButtonWrapper>
       </InputContainer>
-      <ButtonWrapper>
-        <SignInButton onClick={handleLogin}>로그인</SignInButton>
-        <NotAuth>아직 회원이 아니신가요?</NotAuth>
-        <SignupButton onClick={() => navigate('/sign-up')}>
-          회원가입
-        </SignupButton>
-      </ButtonWrapper>
     </Root>
   );
 };
@@ -56,16 +58,13 @@ const SignIn = () => {
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  padding: 1.87rem 1rem;
+  padding: 0 1rem;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   gap: 0.75rem;
-  position: relative;
 `;
 
 const CommonButton = styled.button`
@@ -75,7 +74,7 @@ const CommonButton = styled.button`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  width: 100%;
+  width: calc(100% - 2rem);
 `;
 
 const SignInButton = styled(CommonButton)`
@@ -90,25 +89,24 @@ const SignupButton = styled(CommonButton)`
   border: 0.5px solid #509bf7;
 `;
 
-const NotAuth = styled.div`
-  align-self: stretch;
+const NotAuth = styled.span`
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 100%;
-  letter-spacing: -0.0175rem;
+  width: max-content;
 `;
 
 const ButtonWrapper = styled.div`
   width: 100%;
   position: fixed;
-  max-width: 397px;
+  max-width: 429px;
   bottom: 3.37rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledLogo = styled.img`
   width: 21.5625rem;
   height: 6.875rem;
-  flex-shrink: 0;
   margin: 2.88rem auto 3.25rem auto;
 `;
 

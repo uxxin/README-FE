@@ -1,25 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import EXImage from '../../assets/images/exampleimage.png';
 
-const PenaltyNoticeForm = () => {
+const PenaltyNoticeForm = ({
+  type,
+  state,
+  noticetitle,
+  duedate,
+  content,
+  noticeimage,
+}) => {
   return (
     <Container>
       <StatusContainer>
-        <Type>미션</Type>
-        <State>미제출</State>
+        <Type type={type}>{type}</Type>
+        <State state={state}>{state}</State>
       </StatusContainer>
-      <NoticeTitle>공지글 제목 예시다. </NoticeTitle>
-      <DueDate>2023.03.02 - 2024.03.03</DueDate>
+      <NoticeTitle>{noticetitle}</NoticeTitle>
+      <DueDate>{duedate}</DueDate>
       <NoticeContent>
-        <Content>
-          공지글의 예시 내용입니다. 공지글의 예시 내용입니다. 공지글의 예시
-          내용입니다. 공지글의 예시 내용입니다. 공지글의 예시 내용입니다.
-          공지글의 예시 내용입니다. 공지글의 예시 내용입니다. 공지글의 예시
-          내용입니다. 공지글의 예시 내용입니다. 공지글의 예시 내용입니다.
-          공지글의 예시 내용입니다. 공지글의 예시 내용입니다.{' '}
-        </Content>
-        <NoticeImage src={EXImage} alt="공지 이미지" />
+        <Content>{content}</Content>
+        <NoticeImage src={noticeimage || ''} alt="공지 이미지" />
       </NoticeContent>
     </Container>
   );
@@ -44,6 +44,7 @@ const StatusContainer = styled.div`
   align-items: flex-start;
   gap: 0.5rem;
 `;
+
 const Type = styled.div`
   display: flex;
   padding: 0.375rem 0.625rem;
@@ -56,9 +57,11 @@ const Type = styled.div`
   letter-spacing: -0.0175rem;
   width: 2.5rem;
   white-space: nowrap;
-  background: #509bf7;
-  color: white;
+  background: ${({ type }) => (type === '미션' ? '#509BF7' : '#FFF')};
+  border: ${({ type }) => (type === '퀴즈' ? '2px solid #509BF7' : 'none')};
+  color: ${({ type }) => (type === '미션' ? 'white' : '#509BF7')};
 `;
+
 const State = styled.div`
   display: flex;
   padding: 0.375rem 0.625rem;
@@ -71,8 +74,10 @@ const State = styled.div`
   letter-spacing: -0.0175rem;
   width: 2.5rem;
   white-space: nowrap;
-  background: #e9e9e9;
+  background: ${({ state }) => (state === '미제출' ? '#E9E9E9' : '#FDD8DB')};
+  color: ${({ state }) => (state === '미제출' ? 'black' : '#F5535E')};
 `;
+
 const NoticeTitle = styled.div`
   align-self: stretch;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
@@ -82,7 +87,6 @@ const NoticeTitle = styled.div`
   letter-spacing: -0.0225rem;
 `;
 
-//start랑 end로 나눠야 함.
 const DueDate = styled.div`
   display: flex;
   padding-bottom: 0.5rem;
@@ -98,14 +102,18 @@ const DueDate = styled.div`
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
 `;
+
 const NoticeContent = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.625rem;
   align-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
 `;
+
 const Content = styled.div`
+  flex: 1;
   height: 3.75rem;
   overflow: hidden;
   color: #888;

@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PenaltyRoomForm = ({ room, onClick }) => {
-  const isPenaltyHigh = room.penaltyNum > room.maxPenalty / 2;
+  const isPenaltyHigh = room.penaltyCount > room.maxPenalty / 2;
 
   return (
     <Container isPenaltyHigh={isPenaltyHigh} onClick={onClick}>
       <TopSection isPenaltyHigh={isPenaltyHigh}>
-        {room.penaltyNum} / {room.maxPenalty}
+        {room.penaltyCount} / {room.maxPenalty}
       </TopSection>
       <BottomSection>
         <ProfileImage src={room.roomImage} alt="profile" />
