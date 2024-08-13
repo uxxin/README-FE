@@ -6,18 +6,11 @@ import axios from 'axios';
 
 const PenaltyDetails = () => {
   const [penaltyData, setPenaltyData] = useState(null);
-  const [maxPenalty, setMaxPenalty] = useState(null);
-  const [penaltyCount, setPenaltyCount] = useState(null);
-
   const location = useLocation();
   const { state } = location;
+  const penalty = state || { penaltyCount: 0, maxPenalty: 0 };
 
   useEffect(() => {
-    if (state) {
-      setMaxPenalty(state.maxPenalty);
-      setPenaltyCount(state.penaltyCount);
-    }
-
     const fetchPenaltyData = async () => {
       try {
         const response = await axios.get('/mock/penaltydetails.json');
@@ -28,13 +21,13 @@ const PenaltyDetails = () => {
     };
 
     fetchPenaltyData();
-  }, [state]);
+  }, []);
 
   return (
     <Container>
       <TotalPenalty>
-        누적 페널티 <PenaltyValue>{penaltyCount}</PenaltyValue>/
-        <MaxPenaltyValue>{maxPenalty}</MaxPenaltyValue>
+        누적 페널티 <PenaltyValue>{penalty.penaltyCount}</PenaltyValue>/
+        <MaxPenaltyValue>{penalty.maxPenalty}</MaxPenaltyValue>
       </TotalPenalty>
       {penaltyData &&
         penaltyData.map((data, index) => (

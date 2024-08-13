@@ -27,7 +27,6 @@ export const CreateNoticeRoom = () => {
 
       try {
         const response = await postNoticeRoom(RoomData);
-        console.log('공지방 생성 성공 콘솔:', response);
         navigate('/create-notice-room/success', { state: response.result });
       } catch (error) {
         console.log('공지방 생성 중 에러', error);
@@ -36,14 +35,6 @@ export const CreateNoticeRoom = () => {
   };
 
   const isFormValid = leaderName && roomName && password && penaltyCount;
-
-  const buttonProps = {
-    text: '생성하기',
-    background: isFormValid ? '#509BF7' : '#BDBDBD',
-    border: 'none',
-    link: '/create-notice-room/success',
-    //onclick 넣기
-  };
 
   return (
     <div
