@@ -2,21 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 
-export const CommentItem = (props) => {
-  console.log(props.props);
+export const CommentItem = ({ props }) => {
+  console.log(props);
   return (
     <Container>
-      <Profile src={props.props.commentAuthorProfileImage} alt="profile" />
+      <Profile src={props.commentAuthorProfileImage} alt="profile" />
       <Comment>
-        <Nickname>{props.props.commentAuthorNickname}</Nickname>
-        <Content>{props.props.commentBody}</Content>
-        <Date>{props.props.createdAt}</Date>
+        <Nickname>{props.commentAuthorNickname}</Nickname>
+        <Content>{props.commentBody}</Content>
+        <Date>{props.createdAt}</Date>
       </Comment>
-      {props.props.isCommentMine ? (
-        <More src={ShowmoreIcon} alt="more" />
-      ) : (
-        <></>
-      )}
+      {props.isCommentMine ? <More src={ShowmoreIcon} alt="more" /> : <></>}
     </Container>
   );
 };
