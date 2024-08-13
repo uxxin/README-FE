@@ -3,21 +3,22 @@ import { NoticeItem } from '../../../components/Notice/NoticeItem';
 import styled from 'styled-components';
 import { QuestionPreview } from '../../../components/Notice/Write/QuestionPreview';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { createNotice } from '../../../api/Notice/write';
 
 const Preview = ({
   onPrevStep,
   postType,
   title,
   content,
+  imageURLs,
   startDate,
   endDate,
   question,
   answer,
 }) => {
   const navigate = useNavigate();
-  const roomId = 1;
-  const isManager = true;
+  const { roomId } = useParams(); // const isManager = true;
   const post = [
     {
       postType: postType,
@@ -27,21 +28,35 @@ const Preview = ({
       endDate: endDate,
     },
   ];
-  const imageURLs = ['url11.com', 'url12.com'];
+  // const imageURLs = [];
 
   const handlePrevClick = () => {
-    onPrevStep(postType, title, content, startDate, endDate, question, answer);
+    onPrevStep(
+      postType,
+      title,
+      content,
+      imageURLs,
+      startDate,
+      endDate,
+      question,
+      answer,
+    );
   };
 
-  const handlePostClick = () => {
-    navigate(`/notice/:${roomId}`);
+  const handlePostClick = async () => {
+    navigate(`/notice/${roomId}`);
   };
 
   return (
     <Container>
       {post.length > 0 ? (
-        post.map((data) => (
-          <NoticeItem props={data} imgs={imageURLs} preview={true} />
+        post.map((data, key) => (
+          <NoticeItem
+            key={title}
+            props={data}
+            imgs={imageURLs}
+            preview={true}
+          />
         ))
       ) : (
         <></>

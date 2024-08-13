@@ -8,6 +8,11 @@ const Post = ({ onNextStep, postType, postTitle, postContent }) => {
   const [type, setType] = useState(postType || 'Quiz');
   const [title, setTitle] = useState(postTitle || '');
   const [content, setContent] = useState(postContent || '');
+  const [imageURLs, setImageURLs] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
 
   const handleTypeCheck = (selectedType) => {
     setType(selectedType);
@@ -19,7 +24,16 @@ const Post = ({ onNextStep, postType, postTitle, postContent }) => {
   };
 
   const handleNextClick = () => {
-    onNextStep(type, title, content);
+    onNextStep(
+      type,
+      title,
+      content,
+      imageURLs,
+      startDate,
+      endDate,
+      question,
+      answer,
+    );
   };
 
   return (

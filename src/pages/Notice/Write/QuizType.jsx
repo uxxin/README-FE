@@ -10,18 +10,29 @@ const QuizType = ({
   postType,
   postTitle,
   postContent,
+  imageURLs: uploadedImages,
   startDate: inputStartDate,
   endDate: inputEndDate,
   question: inputQuestion,
   answer: inputAnswer,
 }) => {
+  const [imageURLs, setImageURLs] = useState(uploadedImages || []);
   const [startDate, setStartDate] = useState(inputStartDate || '');
   const [endDate, setEndDate] = useState(inputEndDate || '');
   const [question, setQuestion] = useState(inputQuestion || '');
   const [answer, setAnswer] = useState(inputAnswer || '');
 
   const handlePrevClick = () => {
-    onPrevStep(postType, postTitle, postContent);
+    onPrevStep(
+      postType,
+      postTitle,
+      postContent,
+      uploadedImages,
+      inputStartDate,
+      inputEndDate,
+      inputQuestion,
+      inputAnswer,
+    );
   };
 
   const handleNextClick = () => {
@@ -29,6 +40,7 @@ const QuizType = ({
       postType,
       postTitle,
       postContent,
+      imageURLs,
       startDate,
       endDate,
       question,
@@ -36,16 +48,20 @@ const QuizType = ({
     );
   };
 
-  useEffect(() => {
-    setStartDate(startDate || '');
-    setEndDate(endDate || '');
-    setQuestion(question || '');
-    setAnswer(answer || '');
-  }, [startDate, endDate, question, answer]);
+  const handleImageUpload = (uploadedImages) => {
+    setImageURLs(uploadedImages);
+  };
+
+  // useEffect(() => {
+  //   setStartDate(inputStartDate || '');
+  //   setEndDate(inputEndDate || '');
+  //   setQuestion(inputQuestion || '');
+  //   setAnswer(inputAnswer || '');
+  // }, [inputStartDate, inputEndDate, inputQuestion, inputAnswer]);
 
   return (
     <Container>
-      <ImgUpload />
+      <ImgUpload onUpload={handleImageUpload} />
       <Quiz
         startDate={startDate}
         setStartDate={setStartDate}
