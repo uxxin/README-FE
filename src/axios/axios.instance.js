@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
       throw new Error('토큰 없음');
     }
 
-    config.headers['Authorization'] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzNDcxODc2LCJleHAiOjE3MjM0ODI2NzZ9.t1hXq8GbXMuuYJlLW59q88VaZCFLIcS17le0__Ezzac`;
+    config.headers['Authorization'] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzNTI3NDc4LCJleHAiOjE3MjM1MzgyNzh9.A0X0QVHnMQm9lZ1z8otZ0TP09wA_Ff94ZmpUk_KNHO4`;
 
     return config;
   },

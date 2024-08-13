@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CustomBtn } from '../CustomBtn';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { createRoutesFromChildren, useParams } from 'react-router-dom';
+import { getMemberInvitation } from '../../api/Member/memberListCheck';
 
 const TotalContainer = styled.div`
-
 `;
 
 const Container = styled.div`
-  padding: 0.625rem;
+  padding: 0.625rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,9 +17,9 @@ const Container = styled.div`
 `;
 
 const AddContainer = styled.div`
+  width: 100%;
   flex-direction: column;
   margin: 0 auto;
-  margin-top: 0.625rem;
   height: auto;
   border-radius: 0.5rem;
   border: 0.02rem solid #509bf7;
@@ -28,7 +28,7 @@ const AddContainer = styled.div`
 `;
 
 const ContainerHead = styled.div`
-  width: 24.875rem;
+  width: 100%;
   height: 2rem;
   padding: 0.5rem 0.8125rem;
   border-radius: 0.5rem 0.5rem 0 0;
@@ -38,14 +38,12 @@ const ContainerHead = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 23.625rem;
-  height: 9.875rem;
+  width: 100%;
+
   margin-top: 11.25rem;
-  margin-bottom: 4px;
   color: black;
   box-sizing: border-box;
-  padding: 0 0.8125rem;
-  bottom: 4px;
+  padding: 0.625rem;
 `;
 
 const TextContainer = styled.div`
@@ -59,6 +57,22 @@ const TextContainer = styled.div`
   gap: 0.625rem;
   align-self: stretch;
   white-space: nowrap;
+  position: relative;
+  margin-bottom: 0.375rem;
+`;
+
+const TextLastContainer = styled.div`
+  width: 100%;
+  height: 2.1875rem;
+  color: black;
+  box-sizing: border-box;
+  display: flex;
+  padding: 0.625rem;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+  white-space: nowrap;
+  position: relative;
 `;
 
 const TextColor = styled.span`
@@ -78,9 +92,8 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.81rem;
-  width: 23.625rem;
+  width: 100%;
   align-items: center;
-  margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
   display: flex;
@@ -98,6 +111,14 @@ const InfoText = styled.span`
   text-align: left;
   color: var(--Basic-Black, #000000);
 `;
+
+const CopyBtn = styled.button`
+  position: absolute;
+  right: 0; 
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+ `
 
 export const MemberInvite = () => {
   const { roomId } = useParams();
@@ -118,25 +139,23 @@ export const MemberInvite = () => {
     navigate(`/notice/${roomId}`);
   };
 
+  const handleCopyClipBoard = async (url) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      console.log(url)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     const fetchInvite = async () => {
-      try {
-        const option = {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzNDQyMDY5LCJleHAiOjE3MjM0NTI4Njl9.7bHqEhrPWtnTSUjrXImiCPtotRw-HRrZUvFOpFeBb58`
-          }
-        };
-        const response = await axios.get(
-          `https://read-me.kro.kr/admin/invitation/${roomId}`,
-          option,
-        );
-        console.log('전체응답', response.data);
-        const inviteData = response.data.result;
+        const response = await getMemberInvitation(roomId)
+        
+        console.log('전체응답', response);
+        const inviteData = response.result;
         console.log('URL 정보:', inviteData);
         setInvite(inviteData);
-      } catch (error) {
-        console.error('Error fetching URL:', error);
-      }
     };
     fetchInvite();
   }, [roomId]);
@@ -149,7 +168,7 @@ export const MemberInvite = () => {
           <InfoContainer>
             <TextContainer>
               <TextColor>
-                초대 url <InfoText>{invite.room_invite_url}</InfoText>
+                초대 url <InfoText>{invite.room_invite_url}</InfoText><CopyBtn onClick={() => handleCopyClipBoard(invite.room_invite_url)}>🔍</CopyBtn>
               </TextColor>
             </TextContainer>
             <TextContainer>
@@ -162,14 +181,14 @@ export const MemberInvite = () => {
                 비밀번호 <InfoText>{invite.room_password}</InfoText>{' '}
               </TextColor>
             </TextContainer>
-            <TextContainer>
+            <TextLastContainer>
               <TextColor>
                 대표자 <InfoText>{invite.admin_nickname}</InfoText>
               </TextColor>
-            </TextContainer>
+            </TextLastContainer>
           </InfoContainer>
         </AddContainer>
-        <ButtonWrapper>
+      <ButtonWrapper>
           <CustomBtn
             text="멤버목록으로 이동"
             border="none"
@@ -183,7 +202,7 @@ export const MemberInvite = () => {
             background="#FFFFFF"
             onClick={handleGoNotice}
           />
-        </ButtonWrapper>
+   </ButtonWrapper>
       </Container>
     </TotalContainer>
   );
