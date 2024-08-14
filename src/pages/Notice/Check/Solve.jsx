@@ -2,7 +2,7 @@ import React from 'react';
 
 const Solve = ({ postType }) => {
   return (
-    <div>{postType === 'Mission' ? <div>Mission</div> : <div>Quiz</div>}</div>
+    <div>{postType === 'MISSION' ? <div>Mission</div> : <div>Quiz</div>}</div>
   );
 };
 

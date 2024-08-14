@@ -84,7 +84,7 @@ const Write = () => {
             postAnswer={answer}
           />
         ) : step === 2 ? (
-          type === 'Quiz' ? (
+          type === 'QUIZ' ? (
             <QuizType
               onPrevStep={handlePrevStep}
               onNextStep={handleNextStep}

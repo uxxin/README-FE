@@ -57,6 +57,7 @@ export const NoticeTitle = (props) => {
     onClose: modalClose,
     buttons: props.isManager ? managerModal : memberModal,
   };
+  console.log(props.postType);
 
   return (
     <Container>

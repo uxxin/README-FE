@@ -5,7 +5,7 @@ import { PostInput } from '../../../components/Notice/Write/PostInput';
 import { OneButton } from '../../../components/Notice/Write/StepButton';
 
 const Post = ({ onNextStep, postType, postTitle, postContent }) => {
-  const [type, setType] = useState(postType || 'Quiz');
+  const [type, setType] = useState(postType || 'QUIZ');
   const [title, setTitle] = useState(postTitle || '');
   const [content, setContent] = useState(postContent || '');
   const [imageURLs, setImageURLs] = useState([]);
