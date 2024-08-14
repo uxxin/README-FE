@@ -48,12 +48,6 @@ const MissionType = ({
     setImageURLs(uploadedImages);
   };
 
-  // useEffect(() => {
-  //   setStartDate(inputStartDate || '');
-  //   setEndDate(inputEndDate || '');
-  //   setQuestion(inputQuestion || '');
-  // }, [inputStartDate, inputEndDate, inputQuestion]);
-
   return (
     <Container>
       <ImgUpload onUpload={handleImageUpload} />

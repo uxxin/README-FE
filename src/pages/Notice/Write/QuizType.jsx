@@ -52,13 +52,6 @@ const QuizType = ({
     setImageURLs(uploadedImages);
   };
 
-  // useEffect(() => {
-  //   setStartDate(inputStartDate || '');
-  //   setEndDate(inputEndDate || '');
-  //   setQuestion(inputQuestion || '');
-  //   setAnswer(inputAnswer || '');
-  // }, [inputStartDate, inputEndDate, inputQuestion, inputAnswer]);
-
   return (
     <Container>
       <ImgUpload onUpload={handleImageUpload} />
