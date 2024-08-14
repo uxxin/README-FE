@@ -55,7 +55,7 @@ const Main = () => {
       try {
         const response = await getNotices(roomId);
         setIsManager(response.data.result.isRoomAdmin);
-        if (!response.data.isSuccess) {
+        if (response.data.result.posts.length === 0) {
           setIsNoticeNull(true);
         } else {
           setNoticeData(response.data.result.posts);
@@ -86,13 +86,7 @@ const Main = () => {
         </NoNoticeContainer>
       ) : (
         <Notice>
-          {isManager ? (
-            <>
-              {noticeData.map((post) => (
-                <NoticePreview props={post} isManager={true} roomId={roomId} />
-              ))}
-            </>
-          ) : (
+          {!isManager && (
             <>
               {unconfirmedNoticeData.length > 0 && (
                 <UnconfirmedNotice
@@ -100,11 +94,11 @@ const Main = () => {
                   postData={unconfirmedNoticeData}
                 />
               )}
-              {noticeData.map((post) => (
-                <NoticePreview props={post} />
-              ))}
             </>
           )}
+          {noticeData.map((post) => (
+            <NoticePreview props={post} isManager={isManager} />
+          ))}
         </Notice>
       )}
       {isManager && (
