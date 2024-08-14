@@ -67,7 +67,7 @@ const QuizType = ({
       />
       <TwoButton
         props={{
-          border1: '#509BF7',
+          border1: '1px solid #509BF7',
           background1: '#FFFFFF',
           btn1: '이전',
           border2: 'none',

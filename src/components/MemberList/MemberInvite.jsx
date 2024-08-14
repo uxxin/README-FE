@@ -156,12 +156,12 @@ export const MemberInvite = () => {
             </TextContainer>
             <TextContainer>
               <TextColor>
-                공지방 이름 <InfoText>{invite.room_name}</InfoText>{' '}
+                공지방 이름 <InfoText>{invite.room_name}</InfoText>
               </TextColor>
             </TextContainer>
             <TextContainer>
               <TextColor>
-                비밀번호 <InfoText>{invite.room_password}</InfoText>{' '}
+                비밀번호 <InfoText>{invite.room_password}</InfoText>
               </TextColor>
             </TextContainer>
             <TextContainer>
