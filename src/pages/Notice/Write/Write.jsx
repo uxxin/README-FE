@@ -60,7 +60,6 @@ const Write = () => {
     setQuestion(inputQuestion || question);
     setAnswer(inputAnswer || answer);
   };
-  console.log(type, title, content, startDate, endDate, question, answer);
 
   return (
     <div>
