@@ -18,6 +18,14 @@ export const ProfileContainer = styled.section`
     }
   }
 
+  .setting-logout {
+    display: flex;
+    gap: 0.625rem;
+
+    .logout {
+      color: var(--color-caption);
+    }
+  }
   button {
     border: none;
     background-color: #ffffff;
