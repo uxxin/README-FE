@@ -27,7 +27,7 @@ export const Mission = ({
       <Section>
         <Title>시작 기한</Title>
         <QuestionInput
-          placeholder="YY.MM.DD HH:MM"
+          placeholder="YY.MM.DD"
           value={startDate}
           onChange={handleStartDateChange}
         />
@@ -35,7 +35,7 @@ export const Mission = ({
       <Section>
         <Title>마감 기한</Title>
         <QuestionInput
-          placeholder="YY.MM.DD HH:MM"
+          placeholder="YY.MM.DD"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />
