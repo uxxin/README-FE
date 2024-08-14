@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 
 export const CommentItem = ({ props }) => {
+  console.log(props);
   return (
     <Container>
-      <Profile src="" alt="profile" />
+      <Profile src={props.commentAuthorProfileImage} alt="profile" />
       <Comment>
         <Nickname>{props.commentAuthorNickname}</Nickname>
         <Content>{props.commentBody}</Content>
-        <Date>{props.updatedAt}</Date>
+        <Date>{props.createdAt}</Date>
       </Comment>
-      <More src={ShowmoreIcon} alt="more" />
+      {props.isCommentMine ? <More src={ShowmoreIcon} alt="more" /> : <></>}
     </Container>
   );
 };

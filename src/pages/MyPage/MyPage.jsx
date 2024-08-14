@@ -25,7 +25,11 @@ const MyPage = () => {
     <>
       <Header title="마이페이지" back />
       <MypageContainer>
-        <Profile nickname={user.nickname} profileImage={user.profileImage} />
+        <Profile
+          nickname={user.nickname}
+          profileImage={user.profileImage}
+          defaultProfile
+        />
         <div className="divider" />
         <section className="profiles">
           <span className="regular-14">공지방 프로필</span>
