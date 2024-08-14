@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 export const NoticeTitle = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const unconfirmedModalClose = () => {
     setIsModalOpen(false);
   };
@@ -22,9 +23,11 @@ export const NoticeTitle = (props) => {
   const modalOpen = () => {
     setIsModalOpen(true);
   };
+
   const shareAddress = () => {
     console.log('주소 공유');
   };
+
   const fixNotice = async () => {
     try {
       await patchFixNotice(props.postId);
@@ -38,6 +41,7 @@ export const NoticeTitle = (props) => {
   const deleteNotice = () => {
     console.log('삭제');
   };
+
   const memberModal = [
     { label: '주소 공유', onClick: shareAddress, color: '#222222' },
     { label: '메인에 고정', onClick: fixNotice, color: '#222222' },
@@ -47,11 +51,13 @@ export const NoticeTitle = (props) => {
     { label: '수정', onClick: correctNotice, color: '#222222' },
     { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
+
   const modalProps = {
     isOpen: isOpen,
     onClose: modalClose,
     buttons: props.isManager ? managerModal : memberModal,
   };
+
   return (
     <Container>
       {isModalOpen && (
@@ -103,7 +109,7 @@ export const NoticeTitle = (props) => {
           )}
         </TopRightSide>
       </TopContainer>
-      <StyledLink to={`/notice/${props.roomId}/details`}>
+      <StyledLink to={`/notice/${props.roomId}/${props.postId}`}>
         {props.postTitle}
         <DeadlineContainer>
           <DeadlineText>

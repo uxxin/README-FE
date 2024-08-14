@@ -6,9 +6,9 @@ import NoticeCheck from '../../assets/svgs/notice_check.svg';
 export const NoticeItem = ({ props, imgs, preview }) => {
   return (
     <Container>
-      <NoticeTitle props={props} preview={preview} />
+      <NoticeTitle {...props} preview={preview} />
       <NoticeContent>{props.postBody}</NoticeContent>
-      {props.postImage == [] ? <Thumbnail src={imgs[0]} /> : <></>}
+      {imgs.length > 0 && <Thumbnail src={imgs[0]} />}
       {preview ? (
         <></>
       ) : (
