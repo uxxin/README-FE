@@ -60,6 +60,7 @@ const Main = () => {
         } else {
           setNoticeData(response.data.result.posts);
         }
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
