@@ -44,10 +44,13 @@ const Main = () => {
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
   const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(true);
+  const isNoticeNull = noticeData.length === 0;
+  const dispatch = useDispatch();
+
   const handlePenaltyModalClose = () => {
     setIsPenaltyModalOpen(false);
   };
-  const dispatch = useDispatch();
+
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -77,7 +80,7 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
-  const isNoticeNull = noticeData.length === 0;
+
   return (
     <MainContainer>
       <Header title="공지방 메인" isSearch={true} />
