@@ -38,7 +38,6 @@ const collapse = keyframes`
 
 const Main = () => {
   const { roomId } = useParams();
-  const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
@@ -59,11 +58,7 @@ const Main = () => {
       try {
         const response = await getNotices(roomId);
         setIsManager(response.data.result.isRoomAdmin);
-        if (response.data.result.posts.length === 0) {
-          setIsNoticeNull(true);
-        } else {
-          setNoticeData(response.data.result.posts);
-        }
+        setNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
       }
@@ -82,7 +77,7 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
-
+  const isNoticeNull = noticeData.length === 0;
   return (
     <MainContainer>
       <Header title="공지방 메인" isSearch={true} />
