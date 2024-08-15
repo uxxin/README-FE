@@ -30,11 +30,7 @@ export const PenaltyRooms = () => {
 
   const handleRoomClick = (room) => {
     navigate(`/penalty/${room.id}`, {
-      state: {
-        maxPenaltyCount: room.maxPenaltyCount,
-        penaltyCount: room.penaltyCount,
-        roomId: room.id,
-      },
+      state: room,
     });
   };
 

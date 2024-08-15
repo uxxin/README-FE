@@ -11,7 +11,7 @@ const PenaltyDetails = () => {
   const {
     penaltyCount = 0,
     maxPenaltyCount = 0,
-    roomId,
+    id: roomId,
   } = location.state || {};
 
   useEffect(() => {

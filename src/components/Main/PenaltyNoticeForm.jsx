@@ -10,16 +10,13 @@ const PenaltyNoticeForm = ({
   content,
   image,
 }) => {
-  const displayType =
-    type === 'MISSION' ? '미션' : type === 'QUIZ' ? '퀴즈' : type;
+  const displayType = type === 'MISSION' ? '미션' : '퀴즈';
   const displayState =
     submitState === 'NOT_COMPLETE'
       ? '미제출'
       : submitState === 'REJECT'
         ? '거절'
-        : submitState === 'PENDING'
-          ? '검토 중'
-          : submitState;
+        : '검토 중';
 
   return (
     <Container>
