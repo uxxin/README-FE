@@ -37,7 +37,7 @@ export const ConfirmStatusSwitch = ({ onStateChange }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
+  padding: 1rem;
 `;
 
 const MissionTogle = styled.div`

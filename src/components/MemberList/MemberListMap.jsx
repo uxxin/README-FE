@@ -5,9 +5,10 @@ import CustomModal from '../CustomModal';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { removeMember } from '../../redux/KeySlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
+import { getMemberBan } from '../../api/Member/memberListCheck';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -66,9 +67,7 @@ const ButtonContainer = styled.div`
   white-space: nowrap;
   align-items: center;
   gap: 0.625rem;
-  margin-bottom: 0.625rem;
   align-self: stretch;
-  margin-right: 0.8rem;
 `;
 
 const ButtonText = styled.span`
@@ -83,13 +82,12 @@ const ButtonText = styled.span`
   line-height: 1.2rem;
   letter-spacing: -0.02em;
   text-align: start;
-  margin-left: 0.1rem; /* 버튼과 텍스트 사이의 간격을 조정 */
 `;
 
 const MemberAddBtn = styled.button`
   width: 2.75rem;
   height: 2.75rem;
-  margin-right: 1.6rem;
+  margin-right: 0.8rem; //이거 어떻게 할지 정하기
   padding: 0.625rem;
   border-radius: 0.5rem;
   box-sizing: border-box;
@@ -105,6 +103,7 @@ const ThirdModalContent = styled(SecondModalContent)`
 `;
 
 export const MemberListMap = ({ members }) => {
+  const {roomId} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { members } = useSelector(state => state.keys);
@@ -113,7 +112,7 @@ export const MemberListMap = ({ members }) => {
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
 
-  console.log('넘어오는 프롭스:', members); // 확인용
+  console.log('넘어오는 프롭스:', members); // 확인용(여기 지금 userId나옴)
 
   const handleOpenModal = (profile) => {
     setSelectedProfile(profile);
@@ -124,15 +123,18 @@ export const MemberListMap = ({ members }) => {
     setIsModalOpen(false);
   };
 
+  
+
   const handleProfileLinkClick = () => {
     if (selectedProfile) {
-      const encodedNickname = encodeURIComponent(selectedProfile.nickname);
-      navigate(`/notice/:roomId/member/${encodedNickname}`, {
+      const userId = encodeURIComponent(selectedProfile.userId);
+      navigate(`/notice/${roomId}/member/${userId}`, {
         state: {
           profile_image: selectedProfile.profile_image,
           nickname: selectedProfile.nickname,
+          userId: selectedProfile.userId
         },
-      });
+      });console.log("state로 덤길 셀렉티드 nickname",selectedProfile.nickname)
     } else {
       console.error('Selected profile is not defined');
     }
@@ -148,6 +150,12 @@ export const MemberListMap = ({ members }) => {
 
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
+      try{
+        const bannedMember = await getMemberBan(selectedProfile.nickname, roomId)
+        console.log("추방당한 멤버",bannedMember)
+      }catch(err){
+        console.log("추방실패")
+      };
       console.log('추방할 리스트:', selectedProfile.nickname);
       dispatch(removeMember(selectedProfile.nickname));
       setIsSecondModalOpen(false);
@@ -197,7 +205,7 @@ export const MemberListMap = ({ members }) => {
       )}
 
       <ButtonContainer>
-        <Link to="/member/invite">
+        <Link to={`/notice/${roomId}/invite`}>
           <MemberAddBtn>
             <PlusIcon />
           </MemberAddBtn>

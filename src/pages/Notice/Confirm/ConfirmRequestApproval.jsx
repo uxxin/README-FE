@@ -16,22 +16,14 @@ const ConfirmRequestApproval = () => {
   return (
     <div>
       <Header title="확인 요청 내역" isSearch={true} gap="1rem" />
-      <Container>
+    
         <ConfirmStatusSwitch onStateChange={handleStateChange} />
         {state === 'waiting' ? <CheckList /> : <AcceptanceList />}
-        <AcceptanceList />
-      </Container>
+   
+  
     </div>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  padding: 0.625rem 1rem 5.8432rem;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.625rem;
-`;
 
 export default ConfirmRequestApproval;

@@ -8,48 +8,35 @@ import { useSelector } from 'react-redux';
 import { setRequiredListCount } from '../../../redux/CheckSlice';
 
 const Container = styled.div`
+  width: 100%;
+  padding: 0.625rem 1rem;
   display: flex;
-  /* width: 26.75rem; */
-  /* padding-right: 1rem; */
-  /* padding: 0.625rem 1rem; */
-  /* padding-right: 1rem; */
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.625rem;
-`;
-
-const TotalContainer = styled.div`
-  display: flex;
-  /* width: 26.75rem; */
-  /* padding: 0.625rem 1rem; */
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.625rem;
+  box-sizing: border-box;
 `;
 
 const CheckContainer = styled.div`
+  width: 100%;
   display: flex;
-  /* width: 22rem; */
-  /* padding: 1.5rem 1.25rem; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.625rem;
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
+  flex-grow: 1; 
+  flex-shrink: 1; 
+  height: 4.188rem;
 `;
 
 const BoxContainer = styled.div`
   display: flex;
-  /* padding-right: 2rem;
-  padding-bottom: 1rem; */
   flex-direction: column;
   align-items: center;
-  gap: 0.625rem;
   align-self: stretch;
-  border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
 `;
+
 
 export const CheckList = () => {
   const [checklist, setCheckList] = useState([]);
@@ -98,6 +85,7 @@ export const CheckList = () => {
                 content={item.content}
                 image_URL={item.image_URL}
               />
+              
             ))
           )}
         </BoxContainer>
