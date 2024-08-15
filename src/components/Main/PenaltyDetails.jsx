@@ -2,35 +2,40 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import PenaltyNoticeForm from './PenaltyNoticeForm';
-import axios from 'axios';
+import { getPenaltyPosts } from '../../api/Main/penalty';
 
 const PenaltyDetails = () => {
-  const [penaltyData, setPenaltyData] = useState(null);
+  const [penaltyDatas, setPenaltyDatas] = useState(null);
   const location = useLocation();
-  const { state } = location;
-  const penalty = state || { penaltyCount: 0, maxPenalty: 0 };
+
+  const {
+    penaltyCount = 0,
+    maxPenaltyCount = 0,
+    roomId,
+  } = location.state || {};
 
   useEffect(() => {
-    const fetchPenaltyData = async () => {
+    (async () => {
       try {
-        const response = await axios.get('/mock/penaltydetails.json');
-        setPenaltyData(response.data);
+        const response = await getPenaltyPosts(roomId);
+        console.log(response);
+
+        if (response.isSuccess) {
+          setPenaltyDatas(response.result.posts);
+        }
       } catch (error) {
-        console.error('페널티 데이터 불러오는 중 오류:', error);
+        console.log('페널티 데이터 불러오는 중 오류', error);
       }
-    };
-
-    fetchPenaltyData();
-  }, []);
-
+    })();
+  }, [roomId]);
   return (
     <Container>
       <TotalPenalty>
-        누적 페널티 <PenaltyValue>{penalty.penaltyCount}</PenaltyValue>/
-        <MaxPenaltyValue>{penalty.maxPenalty}</MaxPenaltyValue>
+        누적 페널티 <PenaltyValue>{penaltyCount}</PenaltyValue>/
+        <MaxPenaltyValue>{maxPenaltyCount}</MaxPenaltyValue>
       </TotalPenalty>
-      {penaltyData &&
-        penaltyData.map((data, index) => (
+      {penaltyDatas &&
+        penaltyDatas.map((data, index) => (
           <PenaltyNoticeForm key={index} {...data} />
         ))}
     </Container>

@@ -15,7 +15,11 @@ export const RequestDatas = () => {
         console.log(response);
 
         if (response.isSuccess) {
-          setRequestDatas(response.result.rooms);
+          //확인요청내역 0개보다 큰 경우만 뜨도록
+          const Rooms = response.result.rooms.filter(
+            (room) => room.submitCount > 0,
+          );
+          setRequestDatas(Rooms);
         }
       } catch (error) {
         console.log('확인요청내역 불러오던 중 에러', error);

@@ -2,17 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 const PenaltyRoomForm = ({ room, onClick }) => {
-  const isPenaltyHigh = room.penaltyCount > room.maxPenalty / 2;
+  const isPenaltyHigh = room.penaltyCount > room.maxPenaltyCount / 2;
 
   return (
     <Container isPenaltyHigh={isPenaltyHigh} onClick={onClick}>
       <TopSection isPenaltyHigh={isPenaltyHigh}>
-        {room.penaltyCount} / {room.maxPenalty}
+        {room.penaltyCount} / {room.maxPenaltyCount}
       </TopSection>
       <BottomSection>
         <ProfileImage src={room.roomImage} alt="profile" />
         <RoomName>{room.roomName}</RoomName>
-        <UserName>{room.nickName}</UserName>
+        <UserName>{room.nickname}</UserName>
       </BottomSection>
     </Container>
   );
@@ -47,9 +47,8 @@ const TopSection = styled.div`
   text-align: center;
   font-size: 0.75rem;
   font-weight: 400;
-  line-height: 100%; /* 0.75rem */
+  line-height: 100%;
   letter-spacing: -0.015rem;
-  position: relative; /* 추가된 부분 */
 `;
 
 const BottomSection = styled.div`
@@ -86,10 +85,6 @@ const RoomName = styled.div`
   line-height: 0.875rem;
   letter-spacing: -0.0175rem;
   height: 1.75rem;
-
-  display: flex; //두 번 정의 수정 필요
-  align-items: center;
-  justify-content: center;
 `;
 
 const UserName = styled.div`

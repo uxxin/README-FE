@@ -3,23 +3,37 @@ import styled from 'styled-components';
 
 const PenaltyNoticeForm = ({
   type,
-  state,
-  noticetitle,
-  duedate,
+  submitState,
+  title,
+  startDate,
+  endDate,
   content,
-  noticeimage,
+  image,
 }) => {
+  const displayType =
+    type === 'MISSION' ? '미션' : type === 'QUIZ' ? '퀴즈' : type;
+  const displayState =
+    submitState === 'NOT_COMPLETE'
+      ? '미제출'
+      : submitState === 'REJECT'
+        ? '거절'
+        : submitState === 'PENDING'
+          ? '검토 중'
+          : submitState;
+
   return (
     <Container>
       <StatusContainer>
-        <Type type={type}>{type}</Type>
-        <State state={state}>{state}</State>
+        <Type type={type}>{displayType}</Type>
+        <State state={submitState}>{displayState}</State>
       </StatusContainer>
-      <NoticeTitle>{noticetitle}</NoticeTitle>
-      <DueDate>{duedate}</DueDate>
+      <NoticeTitle>{title}</NoticeTitle>
+      <DueDate>
+        {startDate} - {endDate}
+      </DueDate>
       <NoticeContent>
         <Content>{content}</Content>
-        <NoticeImage src={noticeimage || ''} alt="공지 이미지" />
+        <NoticeImage src={image || ''} alt="공지 이미지" />
       </NoticeContent>
     </Container>
   );
@@ -57,9 +71,9 @@ const Type = styled.div`
   letter-spacing: -0.0175rem;
   width: 2.5rem;
   white-space: nowrap;
-  background: ${({ type }) => (type === '미션' ? '#509BF7' : '#FFF')};
-  border: ${({ type }) => (type === '퀴즈' ? '2px solid #509BF7' : 'none')};
-  color: ${({ type }) => (type === '미션' ? 'white' : '#509BF7')};
+  background: ${({ type }) => (type === 'MISSION' ? '#509BF7' : '#FFF')};
+  border: ${({ type }) => (type === 'QUIZ' ? '2px solid #509BF7' : 'none')};
+  color: ${({ type }) => (type === 'MISSION' ? 'white' : '#509BF7')};
 `;
 
 const State = styled.div`
@@ -74,8 +88,22 @@ const State = styled.div`
   letter-spacing: -0.0175rem;
   width: 2.5rem;
   white-space: nowrap;
-  background: ${({ state }) => (state === '미제출' ? '#E9E9E9' : '#FDD8DB')};
-  color: ${({ state }) => (state === '미제출' ? 'black' : '#F5535E')};
+  background: ${({ state }) =>
+    state === 'NOT_COMPLETE'
+      ? '#E9E9E9'
+      : state === 'PENDING'
+        ? '#E9E9E9'
+        : state === 'REJECT'
+          ? '#FDD8DB'
+          : 'transparent'};
+  color: ${({ state }) =>
+    state === 'NOT_COMPLETE'
+      ? '#888'
+      : state === 'PENDING'
+        ? '#222'
+        : state === 'REJECT'
+          ? '#F5535E'
+          : '#000'};
 `;
 
 const NoticeTitle = styled.div`
