@@ -53,14 +53,7 @@ const Preview = ({
 
   const handlePostClick = async () => {
     try {
-      console.log(postData);
-      const response = await createNotice(postData);
-
-      if (response.status === 200) {
-        navigate(`/notice/${roomId}`);
-      } else {
-        console.error('공지글 생성 요청 실패:', response);
-      }
+      navigate(`/notice/${roomId}`);
     } catch (error) {
       console.error('공지글 생성 오류 발생:', error);
     }
