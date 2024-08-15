@@ -111,7 +111,7 @@ function App() {
               <Route path="/notice/:roomId/invite" element={<Invite />} />
 
               {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
-              <Route path="/notice/entry" element={<NoticeRoomEntry />} />
+              <Route path="/notice/entry/:url" element={<NoticeRoomEntry />} />
             </Route>
           </Routes>
         </Router>
