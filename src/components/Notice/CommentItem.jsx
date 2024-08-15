@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 
 export const CommentItem = ({ props }) => {
-  console.log(props);
+  // console.log(props);
   return (
     <Container>
       <Profile src={props.commentAuthorProfileImage} alt="profile" />
