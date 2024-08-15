@@ -45,7 +45,7 @@ const NoticeRoomEntry = () => {
         const { isAlreadyJoinedRoom, ...restData } = result;
         if (isAlreadyJoinedRoom) {
           // 이미 입장한 방일 경우
-          navigate('/notice');
+          navigate(`/notice/${roomData.roomId}`);
         }
         // 최초 입장이면 정보 입력하기
         setRoomData(restData);
