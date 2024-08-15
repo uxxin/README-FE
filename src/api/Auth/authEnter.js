@@ -3,35 +3,31 @@ import {
   PostAxiosInstance,
 } from '../../axios/axios.method.js';
 
-export const roomInfo = async (roomName, roomImage, admin_Nickname) => {
-  const response = await GetAxiosInstance('/room/enter/{roomId}', {
-    roomName: roomName,
-    roomImage: roomImage,
-    admin_Nickname: admin_Nickname,
+export const roomInfo = async (url) => {
+  const response = await GetAxiosInstance(`/room/enter/${url}`);
+
+  return response;
+};
+
+export const registerUser = async (nickname, roomId) => {
+  const response = await PostAxiosInstance(`/room/enter/${roomId}`, {
+    nickname,
   });
 
   return response;
 };
 
-export const registerUser = async (isSuccess) => {
-  const response = await PostAxiosInstance('/room/enter/{roomId}', {
-    isSuccess: isSuccess,
+export const passwordCheck = async (content, roomId) => {
+  const response = await PostAxiosInstance(`/room/${roomId}/checkPassword`, {
+    content,
   });
 
   return response;
 };
 
-export const passwordCheck = async (isValid) => {
-  const response = await PostAxiosInstance('/room/{roomId}/checkPassword', {
-    isValid: isValid,
-  });
-
-  return response;
-};
-
-export const nicknameCheck = async (isDuplicate) => {
-  const response = await PostAxiosInstance('/user/profile/{roomId}/nickname', {
-    isDuplicate: isDuplicate,
+export const nicknameCheck = async (nickname, roomId) => {
+  const response = await PostAxiosInstance(`/user/profile/${roomId}/nickname`, {
+    nickname,
   });
 
   return response;

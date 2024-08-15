@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '../../components/Header.jsx';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   nicknameCheck,
   passwordCheck,
@@ -14,10 +14,14 @@ const NoticeRoomEntry = () => {
   const navigate = useNavigate();
 
   const [isPasswordChecked, setIsPasswordChecked] = useState(false); // 인증 버튼 상태 관리
+  const { url } = useParams();
 
-  const [roomName, setRoomName] = useState('');
-  const [roomImage, setRoomImage] = useState('');
-  const [adminNickname, setAdminNickname] = useState('');
+  const [roomData, setRoomData] = useState({
+    roomId: 0,
+    roomName: '',
+    roomImage: '',
+    adminNickname: '',
+  });
 
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
@@ -25,18 +29,30 @@ const NoticeRoomEntry = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isNicknameValid, setIsNicknameValid] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState({
+    pwSuccess: '',
+    pwError: '',
+    nnSuccess: '',
+    nnError: '',
+  });
+
   const [isEntryEnabled, setIsEntryEnabled] = useState(false);
 
   // 공지방 정보 가져오기
   useEffect(() => {
     const fetchRoomInfo = async () => {
       try {
-        const response = await roomInfo();
-        const { roomName, roomImage, admin_Nickname } = response.data;
-        setRoomName(roomName);
-        setRoomImage(roomImage);
-        setAdminNickname(admin_Nickname);
+        const response = await roomInfo(url);
+        const {
+          data: { result },
+        } = response;
+        const { isAlreadyJoinedRoom, ...restData } = result;
+        if (isAlreadyJoinedRoom) {
+          // 이미 입장한 방일 경우
+          navigate(`/notice/${roomData.roomId}`);
+        }
+        // 최초 입장이면 정보 입력하기
+        setRoomData(restData);
       } catch (error) {
         console.error('공지방 정보를 가져오는 데 실패했습니다:', error);
       }
@@ -48,35 +64,60 @@ const NoticeRoomEntry = () => {
   // 비밀번호 확인
   const handlePasswordCheck = async () => {
     try {
-      const response = await passwordCheck(password);
-      if (response.data.isValid) {
+      const response = await passwordCheck(password, roomData.roomId);
+      if (response.data.result.isValid) {
         setIsPasswordValid(true);
         setIsPasswordChecked(true); // 비밀번호 인증 성공 시 버튼 상태 업데이트
-        setErrorMessage('인증되었습니다.');
+        setMessage((prev) => ({
+          // 성공메세지
+          ...prev,
+          pwError: '',
+          pwSuccess: '인증되었습니다.',
+        }));
       } else {
         setIsPasswordValid(false);
-        setErrorMessage('비밀번호가 일치하지 않습니다.');
+        setMessage((prev) => ({
+          ...prev,
+          pwError: '비밀번호가 일치하지 않습니다.',
+          pwSuccess: '',
+        }));
       }
     } catch (error) {
       console.error('비밀번호 확인에 실패했습니다:', error);
-      setErrorMessage('비밀번호 확인에 실패했습니다.');
+      setMessage((prev) => ({
+        ...prev,
+        pwError: '비밀번호 확인에 실패했습니다.',
+        pwSuccess: '',
+      }));
     }
   };
 
   // 닉네임 중복 확인
   const handleNicknameCheck = async () => {
     try {
-      const response = await nicknameCheck(nickname);
-      if (!response.data.isDuplicate) {
+      const response = await nicknameCheck(nickname, roomData.roomId);
+      if (!response.data.result.isDuplicate) {
         setIsNicknameValid(true);
-        setErrorMessage('사용 가능한 닉네임입니다.');
+        setMessage((prev) => ({
+          ...prev,
+          nnError: '',
+          nnSuccess: '사용 가능한 닉네임입니다.',
+        }));
       } else {
         setIsNicknameValid(false);
-        setErrorMessage('이미 사용 중인 닉네임입니다.');
+        setMessage((prev) => ({
+          ...prev,
+          nnError: '이미 사용중인 닉네임입니다.',
+          nnSuccess: '',
+        }));
       }
     } catch (error) {
-      console.error('닉네임 중복 확인에 실패했습니다:', error);
-      setErrorMessage('닉네임 중복 확인에 실패했습니다.');
+      console.error('닉네임 중복 확인에 실패했습니다.', error);
+      setMessage((prev) => ({
+        ...prev,
+        nnError: '닉네임 중복 확인에 실패했습니다.',
+        nnSuccess: '',
+      }));
     }
   };
 
@@ -92,8 +133,8 @@ const NoticeRoomEntry = () => {
   // 입장하기
   const handleEntry = async () => {
     try {
-      await registerUser(true);
-      navigate('/notice');
+      await registerUser(nickname, roomData.roomId);
+      navigate(`/notice/${roomData.roomId}`);
     } catch (error) {
       console.error('입장하는 데 실패했습니다:', error);
     }
@@ -106,14 +147,16 @@ const NoticeRoomEntry = () => {
         <ContextContainer>
           <ContainerHead>리드미</ContainerHead>
           <InfoContainer>
-            <RoomImg style={{ backgroundImage: `url(${roomImage})` }}></RoomImg>
+            <RoomImg
+              style={{ backgroundImage: `url(${roomData.roomImage})` }}
+            ></RoomImg>
             <TextContainer>
               <TextTitle>공지방 이름</TextTitle>
-              <TextContent>{roomName}</TextContent>
+              <TextContent>{roomData.roomName}</TextContent>
             </TextContainer>
             <TextContainer>
               <TextTitle>공지방 대표</TextTitle>
-              <TextContent>{adminNickname}</TextContent>
+              <TextContent>{roomData.adminNickname}</TextContent>
             </TextContainer>
           </InfoContainer>
         </ContextContainer>
@@ -124,15 +167,21 @@ const NoticeRoomEntry = () => {
               placeholder="입력하세요."
               value={password}
               onChange={(e) => setPassword(e.currentTarget.value)}
+              type="password"
+              disabled={isPasswordChecked} // 인증 완료 시 입력 비활성화
             />
             <ConfirmButton
               onClick={handlePasswordCheck}
               disabled={isPasswordChecked} // 인증 완료 시 버튼 비활성화
+              className={`${isPasswordChecked ? 'long-text' : ''}`}
             >
               {isPasswordChecked ? '인증완료' : '인증'}
             </ConfirmButton>
           </InputWrapper>
-          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+          {isPasswordValid && (
+            <SuccessMessage>{message.pwSuccess}</SuccessMessage>
+          )}
+          {!isPasswordValid && <ErrorMessage>{message.pwError}</ErrorMessage>}
         </PasswordWrapper>
 
         {/* 비밀번호가 맞으면 닉네임 설정 필드 표시 */}
@@ -145,12 +194,18 @@ const NoticeRoomEntry = () => {
                 value={nickname}
                 onChange={(e) => setNickname(e.currentTarget.value)}
               />
-              <ConfirmButton onClick={handleNicknameCheck}>인증</ConfirmButton>
+              <ConfirmButton onClick={handleNicknameCheck}>확인</ConfirmButton>
             </InputWrapper>
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {!isNicknameValid && (
+              <NicknameErrorMessage>{message.nnError}</NicknameErrorMessage>
+            )}
+            {isNicknameValid && (
+              <NicknameSuccessMessage>
+                {message.nnSuccess}
+              </NicknameSuccessMessage>
+            )}
           </NicknameWrapper>
         )}
-
         <ButtonContainer>
           <Button onClick={handleEntry} disabled={!isEntryEnabled}>
             입장하기
@@ -162,7 +217,23 @@ const NoticeRoomEntry = () => {
 };
 
 const ErrorMessage = styled.div`
-  color: red;
+  color: var(--color-danger);
+  text-align: start;
+  width: 100%;
+`;
+
+const SuccessMessage = styled.div`
+  color: var(--color-success);
+  text-align: start;
+  width: 100%;
+`;
+const NicknameErrorMessage = styled.div`
+  color: var(--color-warning);
+  text-align: start;
+  width: 100%;
+`;
+const NicknameSuccessMessage = styled.div`
+  color: var(--color-success);
   text-align: start;
   width: 100%;
 `;
@@ -180,8 +251,8 @@ const ContextContainer = styled.div`
   max-width: 24.875rem;
   height: auto;
   border-radius: 0.5rem;
-  border: 0.02rem solid #509bf7;
-  background: #f4f9ff;
+  border: 0.02rem solid var(--color-primary-normal);
+  background: var(--color-primary-light);
   box-sizing: border-box;
 `;
 
@@ -190,8 +261,8 @@ const ContainerHead = styled.div`
   height: 2rem;
   padding: 0.5rem 0.8125rem;
   border-radius: 0.5rem 0.5rem 0 0;
-  background: #509bf7;
-  color: #ffffff;
+  background: var(--color-primary-normal);
+  color: var(--color-white);
   box-sizing: border-box;
 `;
 
@@ -210,7 +281,7 @@ const RoomImg = styled.div`
   width: 12.5rem;
   height: 12.5rem;
   border-radius: 0.5rem;
-  background: lightgray url(<path-to-image>) no-repeat 50% 50%;
+  background: var(--color-empty) url(<path-to-image>) no-repeat 50% 50%;
 `;
 
 const TextContainer = styled.div`
@@ -235,7 +306,7 @@ const TextTitle = styled.span`
   line-height: 1rem;
   letter-spacing: -0.02em;
   text-align: left;
-  color: #3c74b9;
+  color: var(--color-primary-dark);
 `;
 
 const TextContent = styled.span`
@@ -246,7 +317,7 @@ const TextContent = styled.span`
   letter-spacing: -0.02em;
   text-align: left;
   overflow: hidden;
-  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  color: var(--color-default);
   text-overflow: ellipsis;
   font-size: 0.75rem;
   line-height: normal;
@@ -267,15 +338,18 @@ const ConfirmButton = styled.button`
   gap: 0.625rem;
   border-radius: 0.5rem;
   border: none;
-  background: #509bf7;
-  color: white;
-  height: 3.625rem;
-  width: 3.625rem;
-  padding: 1rem 0;
+  background: var(--color-primary-normal);
+  color: var(--color-white);
+  align-self: stretch;
+  padding: 1.38rem 1.06rem;
 
   &:disabled {
-    background: #bdbdbd;
-    color: #ffffff;
+    background: var(--color-empty);
+    color: var(--color-white);
+  }
+
+  &.long-text {
+    padding: 1.38rem 0.31rem;
   }
 `;
 
@@ -309,14 +383,14 @@ const Button = styled.button`
   align-items: center;
   border-radius: 0.5rem;
   border: none;
-  background: #509bf7;
-  color: white;
+  background: var(--color-primary-normal);
+  color: var(--color-white);
   height: 3.1875rem;
   width: 24.875rem;
 
   &:disabled {
-    background: #bdbdbd;
-    color: #ffffff;
+    background: var(--color-empty);
+    color: var(--color-white);
   }
 `;
 
