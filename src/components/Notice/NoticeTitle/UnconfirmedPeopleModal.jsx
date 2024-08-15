@@ -100,7 +100,6 @@ const RightContainer = styled.div`
   font-weight: 700;
   line-height: 100%; /* 0.875rem */
   letter-spacing: -0.0175rem;
-  cursor: pointer;
 `;
 
 const StyledSmallIcon = styled(SmallIcon)`
