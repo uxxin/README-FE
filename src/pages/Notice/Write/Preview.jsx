@@ -18,17 +18,25 @@ const Preview = ({
   answer,
 }) => {
   const navigate = useNavigate();
-  const { roomId } = useParams(); // const isManager = true;
-  const post = [
-    {
-      postType: postType,
-      postTitle: title,
-      postBody: content,
-      startDate: startDate,
-      endDate: endDate,
-    },
-  ];
-  // const imageURLs = [];
+  const { roomId } = useParams();
+  const post = {
+    postType: postType,
+    postTitle: title,
+    postBody: content,
+    startDate: startDate,
+    endDate: endDate,
+  };
+  const postData = {
+    room_id: roomId,
+    type: postType,
+    title: title,
+    content: content,
+    start_date: startDate,
+    end_date: endDate,
+    question: question,
+    quiz_answer: postType === 'QUIZ' ? answer : '',
+    imgURLs: imageURLs,
+  };
 
   const handlePrevClick = () => {
     onPrevStep(
@@ -44,32 +52,33 @@ const Preview = ({
   };
 
   const handlePostClick = async () => {
-    navigate(`/notice/${roomId}`);
+    try {
+      console.log(postData);
+      const response = await createNotice(postData);
+
+      if (response.status === 200) {
+        navigate(`/notice/${roomId}`);
+      } else {
+        console.error('공지글 생성 요청 실패:', response);
+      }
+    } catch (error) {
+      console.error('공지글 생성 오류 발생:', error);
+    }
   };
 
   return (
     <Container>
-      {post.length > 0 ? (
-        post.map((data, key) => (
-          <NoticeItem
-            key={title}
-            props={data}
-            imgs={imageURLs}
-            preview={true}
-          />
-        ))
-      ) : (
-        <></>
-      )}
+      <NoticeItem props={post} imgs={imageURLs} preview={true} />
 
       <QuestionPreview
         postType={postType}
         question={question}
         answer={answer}
       />
+
       <TwoButton
         props={{
-          border1: '#509BF7',
+          border1: '1px solid #509BF7',
           background1: '#FFFFFF',
           btn1: '수정하기',
           border2: 'none',
