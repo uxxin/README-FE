@@ -23,22 +23,23 @@ const Solve = () => {
   const [content, setContent] = useState('');
   const [submitState, setSubmitState] = useState('');
 
-  const handleUploadImage = (e) => {
+  const handleUploadImage = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
       setSendData((prevSendData) => [...prevSendData, ...files]);
+
       const newImages = files.map((file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
         return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
           reader.onload = () => {
             resolve(reader.result);
           };
         });
       });
-      Promise.all(newImages).then((loadedImages) => {
-        setImages((prevImages) => [...prevImages, ...loadedImages]);
-      });
+
+      const loadedImages = await Promise.all(newImages);
+      setImages((prevImages) => [...prevImages, ...loadedImages]);
     }
   };
 
