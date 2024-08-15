@@ -13,7 +13,7 @@ import {
 const NoticeRoomEntry = () => {
   const navigate = useNavigate();
 
-  const [isPasswordChecked, setIsPasswordChecked] = useState(false); // 인증 버튼 상태 관리
+  const [isPasswordChecked, setIsPasswordChecked] = useState(false);
   const { url } = useParams();
 
   const [roomData, setRoomData] = useState({
@@ -38,7 +38,6 @@ const NoticeRoomEntry = () => {
 
   const [isEntryEnabled, setIsEntryEnabled] = useState(false);
 
-  // 공지방 정보 가져오기
   useEffect(() => {
     const fetchRoomInfo = async () => {
       try {
@@ -48,10 +47,8 @@ const NoticeRoomEntry = () => {
         } = response;
         const { isAlreadyJoinedRoom, ...restData } = result;
         if (isAlreadyJoinedRoom) {
-          // 이미 입장한 방일 경우
           navigate(`/notice/${roomData.roomId}`);
         }
-        // 최초 입장이면 정보 입력하기
         setRoomData(restData);
       } catch (error) {
         console.error('공지방 정보를 가져오는 데 실패했습니다:', error);
@@ -61,15 +58,13 @@ const NoticeRoomEntry = () => {
     fetchRoomInfo();
   }, []);
 
-  // 비밀번호 확인
   const handlePasswordCheck = async () => {
     try {
       const response = await passwordCheck(password, roomData.roomId);
       if (response.data.result.isValid) {
         setIsPasswordValid(true);
-        setIsPasswordChecked(true); // 비밀번호 인증 성공 시 버튼 상태 업데이트
+        setIsPasswordChecked(true);
         setMessage((prev) => ({
-          // 성공메세지
           ...prev,
           pwError: '',
           pwSuccess: '인증되었습니다.',
@@ -92,7 +87,6 @@ const NoticeRoomEntry = () => {
     }
   };
 
-  // 닉네임 중복 확인
   const handleNicknameCheck = async () => {
     try {
       const response = await nicknameCheck(nickname, roomData.roomId);
@@ -121,7 +115,6 @@ const NoticeRoomEntry = () => {
     }
   };
 
-  // 입장하기 버튼 활성화
   useEffect(() => {
     if (isPasswordValid && isNicknameValid) {
       setIsEntryEnabled(true);
@@ -130,7 +123,6 @@ const NoticeRoomEntry = () => {
     }
   }, [isPasswordValid, isNicknameValid]);
 
-  // 입장하기
   const handleEntry = async () => {
     try {
       await registerUser(nickname, roomData.roomId);
@@ -147,9 +139,9 @@ const NoticeRoomEntry = () => {
         <ContextContainer>
           <ContainerHead>리드미</ContainerHead>
           <InfoContainer>
-            <RoomImg
-              style={{ backgroundImage: `url(${roomData.roomImage})` }}
-            ></RoomImg>
+            <ImgContainer>
+              <RoomImg src={roomData.roomImage} />
+            </ImgContainer>
             <TextContainer>
               <TextTitle>공지방 이름</TextTitle>
               <TextContent>{roomData.roomName}</TextContent>
@@ -168,11 +160,11 @@ const NoticeRoomEntry = () => {
               value={password}
               onChange={(e) => setPassword(e.currentTarget.value)}
               type="password"
-              disabled={isPasswordChecked} // 인증 완료 시 입력 비활성화
+              disabled={isPasswordChecked}
             />
             <ConfirmButton
               onClick={handlePasswordCheck}
-              disabled={isPasswordChecked} // 인증 완료 시 버튼 비활성화
+              disabled={isPasswordChecked}
               className={`${isPasswordChecked ? 'long-text' : ''}`}
             >
               {isPasswordChecked ? '인증완료' : '인증'}
@@ -184,7 +176,6 @@ const NoticeRoomEntry = () => {
           {!isPasswordValid && <ErrorMessage>{message.pwError}</ErrorMessage>}
         </PasswordWrapper>
 
-        {/* 비밀번호가 맞으면 닉네임 설정 필드 표시 */}
         {isPasswordValid && (
           <NicknameWrapper>
             <Label>닉네임 설정</Label>
@@ -227,11 +218,13 @@ const SuccessMessage = styled.div`
   text-align: start;
   width: 100%;
 `;
+
 const NicknameErrorMessage = styled.div`
   color: var(--color-warning);
   text-align: start;
   width: 100%;
 `;
+
 const NicknameSuccessMessage = styled.div`
   color: var(--color-success);
   text-align: start;
@@ -247,7 +240,7 @@ const InputPlusContainer = styled.div`
 `;
 
 const ContextContainer = styled.div`
-  width: 24.875rem;
+  width: 100%;
   max-width: 24.875rem;
   height: auto;
   border-radius: 0.5rem;
@@ -257,7 +250,7 @@ const ContextContainer = styled.div`
 `;
 
 const ContainerHead = styled.div`
-  width: 24.875rem;
+  width: 100%;
   height: 2rem;
   padding: 0.5rem 0.8125rem;
   border-radius: 0.5rem 0.5rem 0 0;
@@ -267,7 +260,7 @@ const ContainerHead = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 24.8125rem;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   padding: 0.625rem;
@@ -277,11 +270,16 @@ const InfoContainer = styled.div`
   align-self: stretch;
 `;
 
-const RoomImg = styled.div`
-  width: 12.5rem;
+const ImgContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RoomImg = styled.img`
   height: 12.5rem;
+  width: 100%;
   border-radius: 0.5rem;
-  background: var(--color-empty) url(<path-to-image>) no-repeat 50% 50%;
 `;
 
 const TextContainer = styled.div`
@@ -310,8 +308,6 @@ const TextTitle = styled.span`
 `;
 
 const TextContent = styled.span`
-  height: 1rem;
-  gap: 0.62rem;
   opacity: 1;
   font-weight: 400;
   letter-spacing: -0.02em;
