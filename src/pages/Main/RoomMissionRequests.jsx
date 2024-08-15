@@ -31,8 +31,12 @@ const RoomMissionRequests = () => {
       <Header title={roomName} isSearch={false} />
       <RequestMissions>
         {missions.length > 0 ? (
-          missions.map((mission, index) => (
-            <MissionRequestForm key={index} mission={mission} />
+          missions.map((mission) => (
+            <MissionRequestForm
+              key={mission.postId}
+              mission={mission}
+              roomId={roomId}
+            />
           ))
         ) : (
           <NoMissions>확인미션내역 존재 X</NoMissions>
@@ -41,9 +45,7 @@ const RoomMissionRequests = () => {
     </>
   );
 };
-//NoMissions 부분은 나올 수 없음.
 
-//key={mission.id}해야 안정
 export default RoomMissionRequests;
 
 const RequestMissions = styled.div`

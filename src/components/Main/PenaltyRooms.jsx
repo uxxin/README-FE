@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import PenaltyRoomForm from './PenaltyRoomForm';
 import { useNavigate } from 'react-router-dom';
+import { getPenaltyRoom } from '../../api/Main/penalty';
 
 export const PenaltyRooms = () => {
   const [penaltyRooms, setPenaltyRooms] = useState([]);
@@ -10,22 +10,28 @@ export const PenaltyRooms = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const response = await axios.get('mock/penaltyrooms.json');
-        setPenaltyRooms(response.data);
-      } catch (error) {
-        console.error('Error fetching Penatly Datas:', error);
-      }
-    };
+        const response = await getPenaltyRoom();
+        console.log(response);
 
-    fetchData();
+        if (response.isSuccess) {
+          // penaltyCount가 0보다 큰 방만
+          const penaltyRooms = response.result.rooms.filter(
+            (room) => room.penaltyCount > 0,
+          );
+          setPenaltyRooms(penaltyRooms);
+        }
+      } catch (error) {
+        console.log('페널티 있는 공지방 불러오던 중 에러', error);
+      }
+    })();
   }, []);
 
-  const handleRoomClick = (roomid, roomName) => {
-    {
-      navigate(`/penalty/${roomid}?roomName=${encodeURIComponent(roomName)}`);
-    }
+  const handleRoomClick = (room) => {
+    navigate(`/penalty/${room.id}`, {
+      state: room,
+    });
   };
 
   return (
@@ -38,7 +44,7 @@ export const PenaltyRooms = () => {
                 <PenaltyRoomForm
                   key={room.id}
                   room={room}
-                  onClick={() => handleRoomClick(room.id, room.roomName)}
+                  onClick={() => handleRoomClick(room)}
                 />
               ))}
             </Rooms>
@@ -60,8 +66,7 @@ const Container = styled.div`
 const RoomSection = styled.section`
   display: flex;
   flex-direction: column;
-  //align-items: flex-start;
-  gap: 0.625rem; /* 10px */
+  gap: 0.625rem;
   align-self: stretch;
   width: 100%;
 `;
