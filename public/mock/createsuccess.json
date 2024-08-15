@@ -3,7 +3,7 @@
 		 "admin_nickname" : "단체 대표자(관리자) 이름" , 
 		 "room_name" : "리드미 공지방" , 
 		 "room_password" : "1234" , 
-		 "room_image" :"../src/assets/images/exampleimage.png" ,
+		 "room_image" :"../src/assets/pngs/exampleimage.png" ,
 		 "max_penalty" : 3,
 		 "id" : 34,
          "room_url" : "https:/아아/아아"
@@ -12,7 +12,7 @@
 		 "admin_nickname" : "리우/송민혁" , 
 		 "room_name" : "리드미 공지방" , 
 		 "room_password" : "123" , 
-		 "room_image" :"../src/assets/images/exampleimage.png" ,
+		 "room_image" :"../src/assets/pngs/exampleimage.png" ,
 		 "max_penalty" : 3,
 		 "id" : 27,
          "room_url" : "https:/아아"

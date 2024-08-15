@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({ baseURL: 'https://read-me.kro.kr' });
+const axiosInstance = axios.create({ baseURL: import.meta.env.VITE_BASE_URL });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
@@ -8,10 +8,12 @@ axiosInstance.interceptors.request.use(
 
     if (!accessToken) {
       // 토큰이 없을 경우 로그아웃 처리
+      localStorage.clear();
+      window.location.href = '/';
       throw new Error('토큰 없음');
     }
 
-    config.headers['Authorization'] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyNDMsInByb3ZpZGVyIjoiUkVBRE1FIiwiaWF0IjoxNzIzNTI3NDc4LCJleHAiOjE3MjM1MzgyNzh9.A0X0QVHnMQm9lZ1z8otZ0TP09wA_Ff94ZmpUk_KNHO4`;
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
 
     return config;
   },

@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  SlideButton,
-  CheckButton,
-  XButton,
-} from '../../../assets/images/icons';
+import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { CheckListMap } from './CheckListMap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';

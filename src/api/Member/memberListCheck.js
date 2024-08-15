@@ -10,11 +10,11 @@ export const getMemberList = async (searchInput, roomId) => {
           roomId: roomId
         }
       });
-      console.log(response.data);
+      console.log('response', response);
       return response.data;
     } catch (error) {
       console.error('Error fetching member list:', error);
-      throw error; // 호출 측으로 에러를 전달
+      throw error; 
     }
   };
 
@@ -45,3 +45,15 @@ export const getMemberBan = async (nickname, roomId) => {
       throw error;
     }
   };
+
+  export const getPenalty = async(roomId,userId) =>{
+    const response = await GetAxiosInstance(`/admin/profile`,{
+      params:{
+        roomId : roomId,
+        userId : userId
+      }
+    })
+    console.log("불러온패널티데이터",response.data)
+    return response.data;
+  }
+

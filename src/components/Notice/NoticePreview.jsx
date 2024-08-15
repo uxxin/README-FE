@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NoticeTitle } from './NoticeTitle';
 import { Link } from 'react-router-dom';
-import NoticeCheck from '../../assets/images/notice_check.svg';
+import NoticeCheck from '../../assets/svgs/notice_check.svg';
 
 export const NoticePreview = ({
   props,
@@ -12,30 +12,30 @@ export const NoticePreview = ({
   preview,
   onClick,
 }) => {
-  const previewProps = { ...props, isManager: isManager };
   return (
-    <>
-      <Container>
-        <StyledLink to={`/notice/${roomId}/details`}>
-          <NoticeTitle props={previewProps} preview={preview} />
-          <BottomContainer>
-            <NoticeContent>{props.postBody}</NoticeContent>
-            {props.postImage !== null ? (
-              <Thumbnail src="/src/assets/images/defaultprofileimage.png" />
-            ) : (
-              <Thumbnail src={props.postImage} />
-            )}
-          </BottomContainer>
-        </StyledLink>
-        {btnText ? (
-          <NoticeCheckButton onClick={onClick}>
-            <NoticeCheckIcon src={NoticeCheck} /> {btnText}
-          </NoticeCheckButton>
-        ) : (
-          <></>
-        )}
-      </Container>
-    </>
+    <Container>
+      <NoticeTitle
+        {...props}
+        isManager={isManager}
+        roomId={roomId}
+        preview={preview}
+      />
+      <StyledLink to={`/notice/${roomId}/${props.postId}`}>
+        <BottomContainer>
+          <NoticeContent>{props.postBody}</NoticeContent>
+          {props.postImage !== null ? (
+            <Thumbnail src={props.postImage} />
+          ) : (
+            <Thumbnail src="/src/assets/pngs/defaultprofileimage.png" />
+          )}
+        </BottomContainer>
+      </StyledLink>
+      {btnText && (
+        <NoticeCheckButton onClick={onClick}>
+          <NoticeCheckIcon src={NoticeCheck} /> {btnText}
+        </NoticeCheckButton>
+      )}
+    </Container>
   );
 };
 
@@ -44,7 +44,6 @@ const Container = styled.div`
   padding: 0.625rem;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.625rem;
   align-self: stretch;
   border-radius: 0.5rem;
   border: 0.33px solid var(--Blue-light-active, #c9e0fd);
@@ -62,6 +61,7 @@ const BottomContainer = styled.div`
   align-items: center;
   gap: 0.625rem;
   align-self: stretch;
+  margin-top: 0.5rem;
 `;
 const NoticeContent = styled.div`
   height: 3.75rem;

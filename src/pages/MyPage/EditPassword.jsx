@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/MyPage/header';
+import Header from '../../components/common/header';
 import { EditPasswordContainer } from '../../styles/MyPage/style';
-import Input from '../../components/MyPage/input';
+import Input from '../../components/common/input';
 import useDebounce from '../../hooks/use-debounce';
 import FloatingButton from '../../components/MyPage/floating-button';
 import { useNavigate } from 'react-router-dom';

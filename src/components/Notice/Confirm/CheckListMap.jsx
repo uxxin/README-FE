@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import {
-  SlideButton,
-  CheckButton,
-  XButton,
-} from '../../../assets/images/icons';
+import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { useDispatch } from 'react-redux';
 import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
@@ -21,7 +17,7 @@ const ProfileContainer = styled.div`
   align-items: center;
   gap: 0.5rem;
   flex: 1 0 0;
-  align-self: stretch;
+  
 `;
 
 const TextContainer = styled.div`
@@ -58,10 +54,41 @@ const ImgContainer = styled.img`
   border-radius: 0.75rem;
 `;
 
+const ContentContainer = styled.div`
+  width: 100%;
+  box-sizing: border-box; 
+  height: 12.5rem;
+  justify-content: center; 
+  align-items: center;
+  display: flex;
+  position: relative; 
+  margin-bottom: 0.625rem;
+  margin-top: 0.625rem;
+`;
+
+const NextPageBtn = styled.button`
+  width: 2rem; 
+  height: 2rem; 
+  position: absolute; 
+  top: 50%; 
+  right: 0.625rem; 
+  transform: translateY(-50%); 
+  padding: 0;
+  gap: 0;
+  border-radius: 50%; 
+  opacity: 0.8; 
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 10; 
+`;
+
+
 
 const SecondButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
   align-items: center;
   align-self: stretch;
   border-radius: 0.5rem;
@@ -93,34 +120,6 @@ const NoButton = styled.button`
   border-radius: 0rem 0.5rem 0.5rem 0rem;
 `;
 
-const ContentContainer = styled.div`
-  width: 100%;
-  box-sizing: border-box; 
-  height: 12.5rem;
-  justify-content: center; 
-  align-items: center;
-  display: flex;
-  position: relative; 
-  margin-bottom: 0.625rem;
-  margin-top: 0.625rem;
-`;
-
-const NextPageBtn = styled.button`
-  width: 2rem; 
-  height: 2rem; 
-  position: absolute; 
-  top: 50%; 
-  right: 0.625rem; 
-  transform: translateY(-50%); 
-  padding: 0;
-  gap: 0;
-  border-radius: 50%; 
-  opacity: 0.8; 
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 10; // 버튼이 이미지 위에 오도록 설정
-`;
 
 const StyledImage = styled.img`
   width: 100%;
@@ -133,8 +132,8 @@ const BorderContainer = styled.div`
     border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
 `
 
+
 export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
-  console.log('CheckListMap rendered');
   const { nickname, profile_image } = user_info;
   const dispatch = useDispatch();
   const requiredList = useSelector((state) => state.check.requiredList);
@@ -144,7 +143,6 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
   const pageLimit = 1;
 
   useEffect(() => {
-    // 이미지 URL 배열의 길이에 따라 totalPage를 설정합니다.
     setTotalPage(image_URL.length);
   }, [image_URL]);
 
@@ -183,12 +181,10 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
   }, [requiredList]);
 
   return (
-    <div>
  
       <TotalContainer>
         <BorderContainer>
-      <ProfileContainer>
-    
+        <ProfileContainer>
         <ImgContainer src={profile_image} alt="Profile" />
         <TextContainer>
           <ProfileName>{nickname}</ProfileName>
@@ -196,8 +192,10 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
         </TextContainer>
       </ProfileContainer>
       <ContentContainer>
-            <StyledImage src={image_URL[page - 1]} alt="Content" />
-        <NextPageBtn onClick = {nextPage}><SlideButton /></NextPageBtn>
+        <StyledImage src={image_URL[page - 1]} alt="Content" />
+        <NextPageBtn onClick={nextPage}>
+          <SlideButton />
+        </NextPageBtn>
       </ContentContainer>
       <SecondButtonContainer>
         <YesButton onClick={handleAcceptance}>
@@ -211,7 +209,5 @@ export const CheckListMap = ({ submit_id, user_info, content, image_URL }) => {
       </SecondButtonContainer>
       </BorderContainer>
       </TotalContainer>
-     
-    </div>
   );
 };

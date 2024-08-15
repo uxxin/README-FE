@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { QuizFormatLabel } from './NoticeTitle/QuizFormatLabel';
 import { RequestStatusLabel } from './NoticeTitle/RequestStatusLabel';
-import { ReactComponent as CommentIcon } from '../../assets/images/comment_icon.svg';
-import { ReactComponent as ShowmoreIcon } from '../../assets/images/show_more_icon.svg';
-import { ReactComponent as UncheckedPeople } from '../../assets/images/unchecked_people.svg';
+import { ReactComponent as CommentIcon } from '../../assets/svgs/comment_icon.svg';
+import { ReactComponent as ShowmoreIcon } from '../../assets/svgs/show_more_icon.svg';
+import { ReactComponent as UncheckedPeople } from '../../assets/svgs/unchecked_people.svg';
 import CustomModal from '../CustomModal';
 import { patchFixNotice } from '../../api/Notice/noticeMain';
 import { UnconfirmedPeopleModal } from './NoticeTitle/UnconfirmedPeopleModal';
+import { Link } from 'react-router-dom';
 
-export const NoticeTitle = ({ props, preview }) => {
+export const NoticeTitle = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const unconfirmedModalClose = () => {
     setIsModalOpen(false);
   };
@@ -21,9 +23,11 @@ export const NoticeTitle = ({ props, preview }) => {
   const modalOpen = () => {
     setIsModalOpen(true);
   };
+
   const shareAddress = () => {
     console.log('주소 공유');
   };
+
   const fixNotice = async () => {
     try {
       await patchFixNotice(props.postId);
@@ -37,6 +41,7 @@ export const NoticeTitle = ({ props, preview }) => {
   const deleteNotice = () => {
     console.log('삭제');
   };
+
   const memberModal = [
     { label: '주소 공유', onClick: shareAddress, color: '#222222' },
     { label: '메인에 고정', onClick: fixNotice, color: '#222222' },
@@ -46,6 +51,12 @@ export const NoticeTitle = ({ props, preview }) => {
     { label: '수정', onClick: correctNotice, color: '#222222' },
     { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
   ];
+
+  const modalProps = {
+    isOpen: isOpen,
+    onClose: modalClose,
+    buttons: props.isManager ? managerModal : memberModal,
+  };
 
   return (
     <Container>
@@ -58,70 +69,54 @@ export const NoticeTitle = ({ props, preview }) => {
       )}
       <TopContainer>
         <TopLeftSide>
-          {props.postType ? (
+          {props.postType && (
             <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
-          ) : (
-            <></>
           )}
-          {props.submitState ? (
+          {props.submitState && (
             <RequestStatusLabel
               requestStatus={props.submitState}
             ></RequestStatusLabel>
-          ) : (
-            <></>
           )}
         </TopLeftSide>
         <TopRightSide>
-          {props.isManager ? (
+          {props.isManager && (
             <UncheckedContainer>
               미확인
-              <StyledUncheckedPeople onClick={modalOpen} />
+              <StyledUncheckedPeople onClick={modalOpen}>
+                <UncheckedPeople />
+              </StyledUncheckedPeople>
               {props.unreadCount > 99 ? '99+' : props.unreadCount}
             </UncheckedContainer>
-          ) : (
-            <></>
           )}
-          {props.commentCount ? (
+          {props.commentCount >= 0 && (
             <CommentIconContainer>
               <StyledCommentIcon />
               {props.commentCount > 99 ? '99+' : props.commentCount}
             </CommentIconContainer>
-          ) : (
-            <></>
           )}
-          {preview ? (
-            <></>
-          ) : (
+          {!props.preview && (
             <ShowmoreIconContainer>
-              <StyledShowmoreIcon
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsOpen((prev) => !prev);
-                }}
-              />
+              <ShowmoreButton onClick={() => setIsOpen((prev) => !prev)}>
+                <StyledShowmoreIcon />
+              </ShowmoreButton>
+
               {props.isManager ? (
-                <CustomModal
-                  isOpen={isOpen}
-                  onClose={modalClose}
-                  buttons={managerModal}
-                />
+                <CustomModal {...modalProps} />
               ) : (
-                <CustomModal
-                  isOpen={isOpen}
-                  onClose={modalClose}
-                  buttons={memberModal}
-                />
+                <CustomModal {...modalProps} />
               )}
             </ShowmoreIconContainer>
           )}
         </TopRightSide>
       </TopContainer>
-      {props.postTitle}
-      <DeadlineContainer>
-        <DeadlineText>
-          {props.startDate} - {props.endDate}
-        </DeadlineText>
-      </DeadlineContainer>
+      <StyledLink to={`/notice/${props.roomId}/${props.postId}`}>
+        {props.postTitle}
+        <DeadlineContainer>
+          <DeadlineText>
+            {props.startDate} - {props.endDate}
+          </DeadlineText>
+        </DeadlineContainer>
+      </StyledLink>
     </Container>
   );
 };
@@ -166,9 +161,14 @@ const UncheckedContainer = styled.div`
   line-height: 100%;
   letter-spacing: -0.0175rem;
 `;
-const StyledUncheckedPeople = styled(UncheckedPeople)`
+const StyledUncheckedPeople = styled.button`
   width: 0.75rem;
   height: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
 `;
 
 const CommentIconContainer = styled.div`
@@ -186,7 +186,15 @@ const StyledCommentIcon = styled(CommentIcon)`
   width: 0.875rem;
   height: 0.75rem;
 `;
-
+const ShowmoreButton = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+`;
 const StyledShowmoreIcon = styled(ShowmoreIcon)`
   width: 1.5rem;
   height: 1.5rem;
@@ -203,6 +211,7 @@ const DeadlineContainer = styled.div`
   gap: 0.25rem;
   align-self: stretch;
   border-bottom: 0.33px solid var(--Primary-Normal, #509bf7);
+  margin-top: 0.5rem;
 `;
 
 const DeadlineText = styled.div`
@@ -217,4 +226,13 @@ const DeadlineText = styled.div`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  width: 100%;
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0225rem;
 `;

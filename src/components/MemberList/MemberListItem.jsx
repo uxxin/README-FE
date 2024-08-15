@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { HumanIcon, PlusIcon } from '../../assets/images/icons';
+import { HumanIcon, PlusIcon } from '../../assets/svgs/icons';
 import CustomInput from '../CustomInput';
 import { Link } from 'react-router-dom';
 import { MemberListMap } from './MemberListMap';
@@ -23,16 +23,13 @@ const Container = styled.div`
 `;
 
 const MemberIcon = styled.div`
-  width: 1.5625rem;
-  height: 0.875rem;
-  gap: 0.25rem;
-  box-sizing: border-box;
   white-space: nowrap;
+  margin-top:0.375rem;
+  margin-bottom:0.375rem;
 `;
 
 const MemberListBox = styled.div`
   padding: 1rem 0.625rem;
-  margin-top: 2%;
   gap: 0.625rem;
   border-width: 0.0625rem 0;
   border-style: solid;
@@ -51,11 +48,10 @@ const ButtonContainer = styled.div`
   gap: 0.625rem;
   margin-bottom: 0.625rem;
   align-self: stretch;
-  margin-right: 0.8rem;
-`;
+ `
 
 const ButtonText = styled.span`
-  width: 5.3125rem;
+  width: 5.3125rem; //100%로 할지 정하기
   height: 1.1875rem;
   gap: 0;
   opacity: 1;
@@ -65,13 +61,12 @@ const ButtonText = styled.span`
   line-height: 1.2rem;
   letter-spacing: -0.02em;
   text-align: start;
-  margin-left: 0.1rem; /* 버튼과 텍스트 사이의 간격을 조정 */
 `;
 
 const MemberAddBtn = styled.button`
   width: 2.75rem;
   height: 2.75rem;
-  margin-right: 1.6rem;
+  margin-right: 0.8rem;
   padding: 0.625rem;
   border-radius: 0.5rem;
   box-sizing: border-box;
@@ -93,7 +88,6 @@ const TextColor = styled.p`
 `;
 
 const CountColor = styled.span`
-  //styleName: Pretendard/regular/14;
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
@@ -104,10 +98,10 @@ const CountColor = styled.span`
 `;
 
 const InputContainer = styled.div`
-    display: flex;
+  display: flex;
   flex: 1;
   align-items: center;
-  padding: 1.25rem 1.12rem;
+  padding: 0.75rem 0.625rem;
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
   background: var(--Primary-Light, #f4f9ff);
@@ -121,14 +115,14 @@ const SearchInput = styled.input`
   outline: none;
   background: none;
   font-family: 'Pretendard';
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 100%; /* 1.125rem */
-  letter-spacing: -0.0225rem;
+  letter-spacing: -0.02rem;
   color: #509bf7;
   ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
+    color: var(--Text-emtpy, var(--Grayscale-Gray4, #BDBDBD));
   }
 `
 
@@ -144,7 +138,7 @@ cursor: pointer;
 
 
 export const MemberListItem = () => {
-  const keysCount = useSelector((state) => state.keys.count); // 상태 읽기
+  const keysCount = useSelector((state) => state.keys.count); 
   const { members } = useSelector((state) => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -242,7 +236,7 @@ export const MemberListItem = () => {
     <Container>
         <InputContainer>
         <SearchInput
-          placeholder={'이름을 입력하세요'}
+          placeholder={'입력하세요'}
           value={searchInput}
           onChange={handleInputChange}
         />

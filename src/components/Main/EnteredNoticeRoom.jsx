@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getEnteredRoom } from '../../api/Main/home';
 import NoticeRoom from './NoticeRoom';
-import prevButtonSvg from '../../assets/images/prev_button.svg';
-import nextButtonSvg from '../../assets/images/next_button.svg';
+import prevButtonSvg from '../../assets/svgs/prev_button.svg';
+import nextButtonSvg from '../../assets/svgs/next_button.svg';
 import { useNavigate } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 6;
@@ -13,6 +13,7 @@ export const EnteredNoticeRoom = () => {
   const [noticeRooms, setNoticeRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isNext, setIsNext] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     (async () => {
@@ -23,14 +24,13 @@ export const EnteredNoticeRoom = () => {
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
+          setTotalPages(response.result.totalPages);
         }
       } catch (error) {
-        console.error('Error fetching entered rooms:', error); // 에러 처리
+        console.error('Error fetching entered rooms:', error);
       }
     })();
   }, [currentPage]);
-
-  const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));

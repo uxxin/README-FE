@@ -3,11 +3,12 @@ import styled from 'styled-components';
 
 const NoticeRoom = ({ room, onClick }) => {
   const isDeleted = room.state === 'DELETED';
+  const latestPostTime = room.latestPostTime ? room.latestPostTime : '-';
 
   return (
     <Container isDeleted={isDeleted} onClick={onClick}>
       <TopSection isDeleted={isDeleted}>
-        {isDeleted ? '삭제된 공지방' : room.latestPostTime}
+        {isDeleted ? '삭제된 공지방' : latestPostTime}
       </TopSection>
       <BottomSection>
         <ProfileImage src={room.roomImage} alt="profile" />
@@ -26,6 +27,7 @@ const Container = styled.div`
   border-radius: 0.5rem;
   border: 0.0208rem solid
     ${({ isDeleted }) => (isDeleted ? '#F5535E' : '#509bf7')};
+  cursor: pointer;
 `;
 
 const TopSection = styled.div`

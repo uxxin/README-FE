@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { getOpenedRoom } from '../../api/Main/home';
 import NoticeRoom from './NoticeRoom';
-import addButton from '../../assets/images/addicon.svg';
-import prevButtonSvg from '../../assets/images/prev_button.svg';
-import nextButtonSvg from '../../assets/images/next_button.svg';
+import addButton from '../../assets/svgs/addicon.svg';
+import prevButtonSvg from '../../assets/svgs/prev_button.svg';
+import nextButtonSvg from '../../assets/svgs/next_button.svg';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -14,6 +14,7 @@ export const OpenedNoticeRoom = () => {
   const [noticeRooms, setNoticeRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isNext, setIsNext] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     (async () => {
@@ -24,14 +25,13 @@ export const OpenedNoticeRoom = () => {
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
+          setTotalPages(response.result.totalPages); // Update total pages from respone
         }
       } catch (error) {
         console.error('Error fetching opened rooms:', error);
       }
     })();
   }, [currentPage]);
-
-  const totalPages = Math.ceil(noticeRooms.length / ITEMS_PER_PAGE) || 1;
 
   const handleAddButtonClick = () => {
     navigate('/create-notice-room');
@@ -142,7 +142,6 @@ const NoticeRooms = styled.div`
   align-items: flex-start;
   align-content: flex-start;
   align-self: stretch;
-  //border: 0.0625rem solid red; //디버깅용 테두리
 `;
 
 const AddButtonImage = styled.img`

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { UnconfirmedPeopleItem } from './UnconfirmedPeopleItem';
-import { ReactComponent as SmallIcon } from '../../../assets/images/small_icon.svg';
+import { ReactComponent as SmallIcon } from '../../../assets/svgs/small_icon.svg';
 import { getUnconfirmedPeople } from '../../../api/Notice/noticeMain';
 
 export const UnconfirmedPeopleModal = ({
@@ -54,7 +54,6 @@ const Container = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 0.5rem;
 `;
 const Modal = styled.div`
   width: 80%;
@@ -63,7 +62,6 @@ const Modal = styled.div`
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
 
   background: var(--Basic-White, #fff);
 `;

@@ -3,7 +3,7 @@
     "id": 1,
     "roomName": "6기 데모데이 공지방",
     "nickName": "인하대-리우/송민혁-Server",
-    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "roomImage": "../src/assets/pngs/defaultprofileimage.png",
     "requestnum": "99"
 
   },
@@ -11,21 +11,21 @@
     "id": 2,
     "roomName": "인하대 umc 공지방",
     "nickName": "리우/송민혁-회장",
-    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "roomImage": "../src/assets/pngs/defaultprofileimage.png",
     "requestnum": "7"
   },
   {
     "id": 3,
     "roomName": "리드미 공지방",
     "nickName": "숩/한수빈",
-    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "roomImage": "../src/assets/pngs/defaultprofileimage.png",
     "requestnum": "102"
   },
   {
     "id": 4,
     "roomName": "6기 데모데이 공지방",
     "nickName": "인하대-리우/송민혁-Server",
-    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "roomImage": "../src/assets/pngs/defaultprofileimage.png",
     "requestnum": "99"
 
   },
@@ -33,7 +33,7 @@
     "id": 5,
     "roomName": "인하대 umc 공지방",
     "nickName": "리우/송민혁-회장",
-    "roomImage": "../src/assets/images/defaultprofileimage.png",
+    "roomImage": "../src/assets/pngs/defaultprofileimage.png",
     "requestnum": "7"
   }
 ]

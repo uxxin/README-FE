@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getRecentNotice } from '../../api/Main/home';
-import prevButtonSvg from '../../assets/images/prev_button.svg';
-import nextButtonSvg from '../../assets/images/next_button.svg';
+import prevButtonSvg from '../../assets/svgs/prev_button.svg';
+import nextButtonSvg from '../../assets/svgs/next_button.svg';
 
 const ITEMS_PER_PAGE = 5; // 한 페이지에 5개씩 표시
 
@@ -10,6 +11,9 @@ export const RecentNotices = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [notices, setNotices] = useState([]);
   const [isNext, setIsNext] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -17,12 +21,13 @@ export const RecentNotices = () => {
         const response = await getRecentNotice(currentPage, ITEMS_PER_PAGE);
         console.log(response);
 
-        if (response.result.isSuccess) {
+        if (response.isSuccess) {
           setNotices(response.result.recentPostList);
           setIsNext(response.result.isNext);
+          setTotalPages(response.result.totalPages);
         }
       } catch (error) {
-        console.error('Error fetching recent notices:', error); // 에러 처리
+        console.error('Error fetching recent notices:', error);
       }
     })();
   }, [currentPage]);
@@ -36,14 +41,16 @@ export const RecentNotices = () => {
     });
   };
 
-  const totalPages = Math.ceil(notices.length / ITEMS_PER_PAGE) || 1;
-
   const handleNextPage = () => {
     if (isNext || currentPage < totalPages) {
       setCurrentPage((prevPage) =>
         prevPage + 1 > totalPages ? 1 : prevPage + 1,
       );
     }
+  };
+
+  const handleNoticeClick = (roomId, postId) => {
+    navigate(`/notice/${roomId}/${postId}`);
   };
 
   const currentNotices = notices.slice(
@@ -58,7 +65,7 @@ export const RecentNotices = () => {
   const displayedNotices = [
     ...currentNotices,
     ...Array.from({ length: emptyRows }, () => ({
-      room_name: '',
+      roomName: '',
       title: '',
       createdAt: '',
     })),
@@ -71,11 +78,15 @@ export const RecentNotices = () => {
         {displayedNotices.map((notice, index) => (
           <NoticeItem
             key={index}
-            isEmpty={!notice.room_name && !notice.title && !notice.createdAt}
+            isEmpty={!notice.roomName && !notice.title && !notice.createdAt}
           >
             <NoticeContent>
-              <NoticeName>{notice.room_name}</NoticeName>
-              <NoticeText>{notice.title}</NoticeText>
+              <NoticeName>{notice.roomName}</NoticeName>
+              <NoticeText
+                onClick={() => handleNoticeClick(notice.roomId, notice.postId)} // Add onClick handler
+              >
+                {notice.title}
+              </NoticeText>
             </NoticeContent>
             <NoticeTime>{notice.createdAt}</NoticeTime>
           </NoticeItem>
@@ -161,6 +172,7 @@ const NoticeText = styled.div`
   overflow: hidden;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
+  cursor: pointer; /* Add pointer cursor to indicate it's clickable */
 
   font-size: 0.875rem; /* 14px */
   font-weight: 400;

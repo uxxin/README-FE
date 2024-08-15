@@ -4,12 +4,13 @@ import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
 import { NoticePreview } from '../../components/Notice/NoticePreview';
-import { ReactComponent as Arrow } from '../../assets/images/top_arrow.svg';
+import { ReactComponent as Arrow } from '../../assets/svgs/top_arrow.svg';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Edit } from '../../assets/images/floating_icon1.svg';
-import { ReactComponent as MemberList } from '../../assets/images/floating_icon2.svg';
-import { ReactComponent as RequestList } from '../../assets/images/floating_icon3.svg';
-import { ReactComponent as Write } from '../../assets/images/floating_icon4.svg';
+import { ReactComponent as Edit } from '../../assets/svgs/floating_icon1.svg';
+import { ReactComponent as MemberList } from '../../assets/svgs/floating_icon2.svg';
+import { ReactComponent as RequestList } from '../../assets/svgs/floating_icon3.svg';
+import { ReactComponent as Write } from '../../assets/svgs/floating_icon4.svg';
+import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penalty_icon.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
 import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
@@ -37,55 +38,51 @@ const collapse = keyframes`
 
 const Main = () => {
   const { roomId } = useParams();
-  const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
-  // const page = useSelector((state) => state.notice.page);
-
+  const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(true);
+  const [offset, setOffset] = useState(1.25);
+  const isNoticeNull = noticeData.length === 0;
   const dispatch = useDispatch();
-  const handleFloatingButtonClick = () => {
-    dispatch(setShowDivs(!showDivs));
-    dispatch(setFlipped(!isFlipped));
-  };
-  const handleScroll = () => {
-    const bottom =
-      window.innerHeight + window.scrollY >= document.body.offsetHeight;
-    if (bottom) {
-      setVisibleCount((prev) => prev + 10);
-    }
+
+  const updatePosition = () => {
+    const bodyRect = document.body.getBoundingClientRect();
+    setOffset(bodyRect.left / 16 + 1.25);
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updatePosition);
     };
   }, []);
 
-  const headerProps = {
-    title: '공지방 메인',
-    isSearch: true,
+  const handlePenaltyModalClose = () => {
+    setIsPenaltyModalOpen(false);
+  };
+
+  const handleFloatingButtonClick = () => {
+    dispatch(setShowDivs(!showDivs));
+    dispatch(setFlipped(!isFlipped));
   };
 
   useEffect(() => {
     const getNoticeData = async () => {
       try {
         const response = await getNotices(roomId);
-        // setIsManager(response.data.result.isRoomAdmin);
-        if (!response.data || !response.data.result) {
-          setIsNoticeNull(true);
-        } else {
-          setNoticeData(response.data.result.posts);
-        }
+        setIsManager(response.data.result.isRoomAdmin);
+        setNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
       }
     };
     getNoticeData();
   }, []);
+
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
       try {
@@ -97,22 +94,41 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
+
   return (
     <MainContainer>
       <Header title="공지방 메인" isSearch={true} />
+      {isPenaltyModalOpen && (
+        <PenaltyContainer>
+          <PenaltyModal>
+            <PenaltyModalTop>
+              <PenaltyText>Penalty</PenaltyText>
+              <StyledPenaltyIcon />
+              <PenaltyCount>
+                <PenaltyCount1>1</PenaltyCount1>
+                <PenaltyCount2>/2</PenaltyCount2>
+              </PenaltyCount>
+              <PenaltyRoomTitle>공지방 이름</PenaltyRoomTitle>
+              <PenaltyWarning>
+                해당 공지글을 확인하지 않아 페널티가 부여됐습니다.
+              </PenaltyWarning>
+            </PenaltyModalTop>
+            <PenaltyButtons>
+              <PenaltyCheck>확인하러 가기</PenaltyCheck>
+              <PenaltyClose onClick={handlePenaltyModalClose}>
+                닫기
+              </PenaltyClose>
+            </PenaltyButtons>
+          </PenaltyModal>
+        </PenaltyContainer>
+      )}
       {isNoticeNull ? (
         <NoNoticeContainer>
           <NoNotice>공지가 없습니다.</NoNotice>
         </NoNoticeContainer>
       ) : (
         <Notice>
-          {isManager ? (
-            <>
-              {noticeData.map((post) => (
-                <NoticePreview props={post} isManager={true} roomId={roomId} />
-              ))}
-            </>
-          ) : (
+          {!isManager && (
             <>
               {unconfirmedNoticeData.length > 0 && (
                 <UnconfirmedNotice
@@ -120,38 +136,43 @@ const Main = () => {
                   postData={unconfirmedNoticeData}
                 />
               )}
-              {noticeData.map((post) => (
-                <NoticePreview props={post} setIsModalOpen={setIsModalOpen} />
-              ))}
             </>
           )}
+          {noticeData.map((post) => (
+            <NoticePreview props={post} isManager={isManager} roomId={roomId} />
+          ))}
         </Notice>
       )}
+
       {isManager && (
         <FloatingButtonContainer>
-          <FloatingDivContainer showDivs={showDivs}>
+          <FloatingDivContainer showDivs={showDivs} offset={offset}>
             <StyledLink to="edit" showDivs={showDivs}>
               <FloatingDiv color="var(--system-warning, #F57D14)">
                 <StyledEdit />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="/member" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="confirm" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="write" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledWrite />
               </FloatingDiv>
             </StyledLink>
           </FloatingDivContainer>
-          <FloatingButton onClick={handleFloatingButtonClick}>
+
+          <FloatingButton onClick={handleFloatingButtonClick} offset={offset}>
             <StyledArrow flipped={isFlipped} />
           </FloatingButton>
         </FloatingButtonContainer>
@@ -189,10 +210,7 @@ const NoNotice = styled.div`
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   color: #000;
-
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;
@@ -205,6 +223,7 @@ const Notice = styled.div`
   align-items: center;
   gap: 1rem;
   background-color: transparent;
+  position: relative;
 `;
 
 const FloatingButtonContainer = styled.div`
@@ -212,9 +231,9 @@ const FloatingButtonContainer = styled.div`
 `;
 
 const FloatingDivContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 1.875rem;
-  right: 1.25rem;
+  right: ${(props) => `${props.offset}rem`};
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -225,9 +244,9 @@ const FloatingDivContainer = styled.div`
 `;
 
 const FloatingButton = styled.button`
-  position: absolute;
+  position: fixed;
   bottom: 1.875rem;
-  right: 1.25rem;
+  right: ${(props) => `${props.offset}rem`};
   width: 3.5rem;
   height: 3.5rem;
   border: none;
@@ -282,11 +301,14 @@ const StyledLink = styled(Link)`
   animation: ${(props) => (props.showDivs ? expand : collapse)} 0.5s forwards;
 `;
 
-const FloatingDiv = styled.div`
+const FloatingDiv = styled.button`
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
   background: ${(props) => props.color};
+  padding: 0;
+  border: none;
+  margin: 0;
   color: white;
   display: flex;
   justify-content: center;
@@ -294,4 +316,146 @@ const FloatingDiv = styled.div`
   font-size: 24px;
   cursor: pointer;
   transition: bottom 0.5s ease-out;
+`;
+const PenaltyContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 17.875rem 2.6875rem 17.9375rem 2.6875rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--Background-dimmed60, rgba(34, 34, 34, 0.6));
+  box-sizing: border-box;
+  z-index: 1000;
+`;
+
+const StyledPenaltyIcon = styled(PenaltyIcon)`
+  width: 10.125rem;
+  height: 9.1875rem;
+`;
+
+const PenaltyModal = styled.div`
+  display: flex;
+  padding-top: 1.1875rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 0.33px solid var(--System-Danger, #f5535e);
+  background: var(--system-danger-light, #fdd8db);
+  backdrop-filter: blur(40px);
+  position: absolute;
+  top: 10rem;
+`;
+
+const PenaltyModalTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0rem 1rem 0.9375rem 1rem;
+`;
+
+const PenaltyText = styled.div`
+  color: var(--system-danger, var(--System-Danger, #f5535e));
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.03rem;
+`;
+const PenaltyCount = styled.div`
+  display: flex;
+`;
+const PenaltyCount1 = styled.span`
+  color: var(--system-danger, var(--Grayscale-Gray7, #f5535e));
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
+`;
+const PenaltyCount2 = styled.span`
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
+`;
+
+const PenaltyRoomTitle = styled.button`
+  display: flex;
+  padding: 0.125rem 0.625rem;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border: none;
+  border-radius: 6.1875rem;
+  background: var(--System-Danger, #f5535e);
+  color: var(--Basic-White, var(--Basic-White, #fff));
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.015rem;
+`;
+
+const PenaltyWarning = styled.div`
+  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.015rem;
+`;
+const PenaltyButtons = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const PenaltyCheck = styled.button`
+  width: 100%;
+  display: flex;
+  padding: 0.875rem 0rem;
+  margin: 0;
+  border: none;
+  border-top: 0.333px solid var(--Grayscale-Gray5, #888);
+  background-color: var(--Basic-White, var(--Basic-White, #fff));
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  color: var(--system-danger, var(--System-Danger, #f5535e));
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.02rem;
+`;
+
+const PenaltyClose = styled.button`
+  width: 100%;
+  display: flex;
+  padding: 0.875rem 0rem;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  border: none;
+  border-top: 0.333px solid var(--Grayscale-Gray5, #888);
+  color: var(--Text-caption, var(--Grayscale-Gray5, #888));
+  background-color: var(--Basic-White, var(--Basic-White, #fff));
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.02rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 `;

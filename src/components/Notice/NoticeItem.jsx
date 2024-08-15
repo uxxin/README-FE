@@ -1,14 +1,14 @@
 import React from 'react';
 import { NoticeTitle } from './NoticeTitle';
 import styled from 'styled-components';
-import NoticeCheck from '../../assets/images/notice_check.svg';
+import NoticeCheck from '../../assets/svgs/notice_check.svg';
 
 export const NoticeItem = ({ props, imgs, preview }) => {
   return (
     <Container>
-      <NoticeTitle props={props} preview={preview} />
+      <NoticeTitle {...props} preview={preview} />
       <NoticeContent>{props.postBody}</NoticeContent>
-      {props.postImage !== null ? <Thumbnail src={imgs[0]} /> : <></>}
+      {imgs.length > 0 && <Thumbnail src={imgs[0]} />}
       {preview ? (
         <></>
       ) : (

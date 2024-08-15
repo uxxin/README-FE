@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DotsIcon } from '../../assets/images/icons';
+import { DotsIcon } from '../../assets/svgs/icons';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const ButtonText = styled.span`
   font-weight: 500;
   line-height: 1.2rem;
   letter-spacing: -0.02em;
-  text-align: start; 
+  text-align: start;
   margin-left: 0.05rem;
 `;
 

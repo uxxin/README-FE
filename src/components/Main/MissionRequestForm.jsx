@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import prevButton from '../../assets/images/dark_prev_button.svg';
-import nextButton from '../../assets/images/dark_next_button.svg';
-import returnIcon from '../../assets/images/returnicon.svg';
+import prevButton from '../../assets/svgs/dark_prev_button.svg';
+import nextButton from '../../assets/svgs/dark_next_button.svg';
+import returnIcon from '../../assets/svgs/returnicon.svg';
+import { useNavigate } from 'react-router-dom';
 
-const MissionRequestForm = ({ mission }) => {
-  if (!mission) return null;
+const MissionRequestForm = ({ mission, roomId }) => {
+  const navigate = useNavigate();
 
-  // content가 50자 이상일 경우 자르고 ...으로 처리 (css로 처리하면 50자 설정 아니라 이렇게 작성)
   const truncateContent = (content, maxLength) => {
-    if (content.length > maxLength) {
+    if (content && content.length > maxLength) {
       return content.slice(0, maxLength) + '...';
     }
     return content;
   };
 
-  // requeststate 값을 상태 텍스트로 매핑
   const getRequestStateText = (state) => {
     switch (state) {
-      case 'complete':
+      case 'COMPLETE':
         return '승인';
-      case 'pending':
+      case 'PENDING':
         return '검토 중';
-      case 'reject':
+      case 'REJECT':
         return '거절';
       default:
         return '상태 미정';
@@ -43,13 +42,8 @@ const MissionRequestForm = ({ mission }) => {
   };
 
   const handleNoticeClick = () => {
-    // 공지돌아가기 버튼 클릭 시 동작 내용 적기
-    console.log('공지돌아가기 버튼 클릭');
+    navigate(`/notice/${roomId}/${mission.postId}`);
   };
-
-  useEffect(() => {
-    console.log('Current Index:', currentIndex);
-  }, [currentIndex]);
 
   return (
     <Container>
@@ -61,12 +55,12 @@ const MissionRequestForm = ({ mission }) => {
         </Info>
       </TopSection>
       <BottomSection>
-        {images.length > 1 && currentIndex != 0 && (
+        {images.length > 1 && currentIndex !== 0 && (
           <PrevButton src={prevButton} alt="Previous" onClick={handlePrev} />
         )}
         <ImageContainer>
           <UploadedMission src={images[currentIndex]} alt="Mission" />
-          {mission.submitState === 'reject' && (
+          {mission.submitState === 'REJECT' && (
             <>
               <Overlay />
               <NoticeButton onClick={handleNoticeClick}>
@@ -205,11 +199,11 @@ const RequestState = styled.div`
 
   background: ${({ state }) => {
     switch (state) {
-      case 'complete':
+      case 'COMPLETE':
         return '#E3F2EF';
-      case 'pending':
+      case 'PENDING':
         return '#E9E9E9';
-      case 'reject':
+      case 'REJECT':
         return '#FDD8DB';
       default:
         return '#E9E9E9';
@@ -218,11 +212,11 @@ const RequestState = styled.div`
 
   color: ${({ state }) => {
     switch (state) {
-      case 'complete':
+      case 'COMPLETE':
         return '#00A881';
-      case 'pending':
+      case 'PENDING':
         return '#222';
-      case 'reject':
+      case 'REJECT':
         return '#F5535E';
       default:
         return '#222';
