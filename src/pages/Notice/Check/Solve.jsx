@@ -22,7 +22,7 @@ const Solve = () => {
   const [imageURLs, setImageURLs] = useState([]);
   const [content, setContent] = useState('');
   const [submitState, setSubmitState] = useState('');
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const handleUploadImage = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -78,6 +78,16 @@ const Solve = () => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
     setSendData((prevSendData) => prevSendData.filter((_, i) => i !== index));
   };
+
+  useEffect(() => {
+    if (submitData && submitData.type === 'QUIZ') {
+      if (content.length > 0) setIsButtonDisabled(false);
+      else setIsButtonDisabled(true);
+    } else {
+      if (content.length > 0 && images.length > 0) setIsButtonDisabled(false);
+      else setIsButtonDisabled(true);
+    }
+  }, [images, content]);
 
   useEffect(() => {
     const getSubmit = async () => {
@@ -166,7 +176,9 @@ const Solve = () => {
           </>
         )}
         <SubmitButtonContainer>
-          <Submit onClick={submitAllData}>제출</Submit>
+          <Submit onClick={submitAllData} disabled={isButtonDisabled}>
+            제출
+          </Submit>
         </SubmitButtonContainer>
       </Container>
     </>
@@ -302,13 +314,18 @@ const Submit = styled.button`
   align-items: center;
   border-radius: 0.5rem;
   border: none;
-  background: var(--Grayscale-Gray4, #bdbdbd);
+  background: var(--Primary-Normal, #509bf7);
   color: var(--Basic-White, var(--Basic-White, #fff));
   text-align: center;
   font-size: 1rem;
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.02rem;
+  cursor: pointer;
+  &:disabled {
+    background: var(--Grayscale-Gray4, #bdbdbd);
+    cursor: none;
+  }
 `;
 
 const PhotoContainer = styled.div`
