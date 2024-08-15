@@ -30,6 +30,7 @@ import Write from './pages/Notice/Write/Write.jsx';
 import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
 import ConfirmRequestApproval from './pages/Notice/Confirm/ConfirmRequestApproval.jsx';
 import Layout from './components/layout/index.jsx';
+import Redirect from './pages/Auth/Redirect.jsx';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               {/* Auth - 로그인&회원가입 */}
               <Route path="/" element={<SignIn />} />
+              <Route path="/redirect" element={<Redirect />} />
               <Route path="/sign-up" element={<SignUp />} />
 
               {/* Home - 메인 */}
