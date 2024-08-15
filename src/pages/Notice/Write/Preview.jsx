@@ -53,6 +53,7 @@ const Preview = ({
 
   const handlePostClick = async () => {
     try {
+      await createNotice(postData);
       navigate(`/notice/${roomId}`);
     } catch (error) {
       console.error('공지글 생성 오류 발생:', error);
