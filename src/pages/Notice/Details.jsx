@@ -49,6 +49,13 @@ const NoticeDetails = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleComment();
+    }
+  };
+
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
   }, []);
@@ -86,6 +93,7 @@ const NoticeDetails = () => {
               placeholder="입력하세요."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
             <CommentWriteIcon
               src={CommentWrite}
