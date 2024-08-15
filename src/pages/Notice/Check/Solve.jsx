@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { Header } from '../../../components/Header';
 import { ReactComponent as SmallCamera } from '../../../assets/svgs/small_camera.svg';
 import { ReactComponent as DeletePhoto } from '../../../assets/svgs/delete_photo.svg';
+import { ReactComponent as AddPhoto } from '../../../assets/svgs/add_photo.svg';
 import {
   getSubmitInfo,
   submitAll,
-  submitNotice,
+  submitImage,
 } from '../../../api/Notice/noticeSubmit';
 const Solve = () => {
   const headerProps = {
@@ -21,6 +22,7 @@ const Solve = () => {
   const [imageURLs, setImageURLs] = useState([]);
   const [content, setContent] = useState('');
   const [submitState, setSubmitState] = useState('');
+
   const handleUploadImage = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -39,28 +41,43 @@ const Solve = () => {
       });
     }
   };
+
   const handleTextChange = (e) => {
     setContent(e.target.value);
   };
+
   const submitImages = async () => {
     const newImageURLs = [];
     for (let i = 0; i < sendData.length; i++) {
       const formData = new FormData();
-      formData.append('image', sendData[i]);
+      formData.append('file', sendData[i]);
       try {
-        const response = await submitNotice(formData);
-        newImageURLs.push(response.result);
+        const response = await submitImage(formData);
+        newImageURLs.push(response.data.result.image);
       } catch (error) {
         console.error(`Error uploading image ${i + 1}:`, error);
       }
     }
-    setImageURLs((prevImageURLs) => [...prevImageURLs, ...newImageURLs]);
+    const updatedImageURLs = [...imageURLs, ...newImageURLs];
+    setImageURLs(updatedImageURLs);
+    return updatedImageURLs;
   };
+
   const submitAllData = async () => {
-    submitImages();
-    const response = await submitAll(content, ImageURLs, params.postId);
-    setSubmitState = response.data.result.submitState;
+    try {
+      const finalImageURLs = await submitImages();
+      const response = await submitAll(content, finalImageURLs, postId);
+      setSubmitState(response.data.result.submitState);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const deletePhoto = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setSendData((prevSendData) => prevSendData.filter((_, i) => i !== index));
+  };
+
   useEffect(() => {
     const getSubmit = async () => {
       try {
@@ -81,12 +98,12 @@ const Solve = () => {
             <Question>
               Q.
               <br />
-              퀴즈퀴즈퀴즈퀴즈퀴즈퀴즈퀴즈퀴즈
+              {submitData.question}
             </Question>
             <Answer>
               A.
               <br />
-              <Input />
+              <Input type="text" onChange={handleTextChange} maxLength={20} />
             </Answer>
           </TopContainer>
         ) : (
@@ -95,12 +112,14 @@ const Solve = () => {
               <Question>
                 Q.
                 <br />
-                미션미션미션
+                {submitData ? submitData.question : '질문이 없습니다.'}
               </Question>
               <SubmitPhotoContainer></SubmitPhotoContainer>
             </MissionTopContainer>
             <PhotoContainer>
-              <SubmitNotice>인증 사진 제출</SubmitNotice>
+              <SubmitNotice>
+                인증 사진 제출 &#40;{images.length}/5&#41;
+              </SubmitNotice>
               {images.length === 0 && (
                 <SubmitPhoto>
                   <label>
@@ -116,6 +135,7 @@ const Solve = () => {
               )}
               {images.map((image, index) => (
                 <PhotoFrame>
+                  <StyledDeletePhoto onClick={() => deletePhoto(index)} />
                   <PhotoImage
                     key={index}
                     src={image}
@@ -123,11 +143,29 @@ const Solve = () => {
                   />
                 </PhotoFrame>
               ))}
+              {images.length > 0 && images.length < 5 && (
+                <label>
+                  <PhotoSubmitInput
+                    type="file"
+                    accept="image/*"
+                    onChange={handleUploadImage}
+                    multiple
+                  />
+                  <AddPhoto />
+                </label>
+              )}
             </PhotoContainer>
+            <OthersContainer>
+              <Others>기타 사항</Others>
+              <OthersInputContainer>
+                <Input type="text" onChange={handleTextChange} maxLength={50} />
+                <MaxLetterCount>&#40;{content.length}/50&#41;</MaxLetterCount>
+              </OthersInputContainer>
+            </OthersContainer>
           </>
         )}
         <SubmitButtonContainer>
-          <Submit>제출</Submit>
+          <Submit onClick={submitAllData}>제출</Submit>
         </SubmitButtonContainer>
       </Container>
     </>
@@ -287,8 +325,49 @@ const PhotoFrame = styled.div`
   justify-content: center;
   align-items: center;
   align-self: stretch;
+  position: relative;
 `;
 const PhotoImage = styled.img`
   height: 15.25rem;
   width: 100%;
+  border-radius: 0.5rem;
+`;
+
+const StyledDeletePhoto = styled(DeletePhoto)`
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+`;
+
+const Others = styled.div`
+  color: var(--GrayScale-gray6, var(--Grayscale-Gray6, #444));
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.025rem;
+  width: 100%;
+`;
+
+const OthersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 0.5rem;
+  margin-bottom: 10rem;
+`;
+
+const MaxLetterCount = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: var(--Text-caption, var(--Grayscale-Gray5, #888));
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.015rem;
+`;
+
+const OthersInputContainer = styled.div`
+  position: relative;
 `;

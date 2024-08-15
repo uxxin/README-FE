@@ -84,7 +84,7 @@ function App() {
               <Route path="/notice/:roomId/:postId" element={<Details />} />
 
               {/* Notice - 공지 - 일반멤버 */}
-              <Route path="/notice/:roomId/solve" element={<Solve />} />
+              <Route path="/notice/:roomId/:postId/solve" element={<Solve />} />
               <Route
                 path="/notice/:roomId/solve/result"
                 element={<Results />}
