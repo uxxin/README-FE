@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '../../components/Header.jsx';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   nicknameCheck,
   passwordCheck,
@@ -14,10 +14,14 @@ const NoticeRoomEntry = () => {
   const navigate = useNavigate();
 
   const [isPasswordChecked, setIsPasswordChecked] = useState(false); // 인증 버튼 상태 관리
+  const { url } = useParams();
 
-  const [roomName, setRoomName] = useState('');
-  const [roomImage, setRoomImage] = useState('');
-  const [adminNickname, setAdminNickname] = useState('');
+  const [roomData, setRoomData] = useState({
+    roomId: 0,
+    roomName: '',
+    roomImage: '',
+    adminNickname: '',
+  });
 
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
@@ -26,17 +30,25 @@ const NoticeRoomEntry = () => {
   const [isNicknameValid, setIsNicknameValid] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [nickErrorMessage, setNickErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState(''); // 성공 메시지 상태 추가
   const [isEntryEnabled, setIsEntryEnabled] = useState(false);
 
   // 공지방 정보 가져오기
   useEffect(() => {
     const fetchRoomInfo = async () => {
       try {
-        const response = await roomInfo();
-        const { roomName, roomImage, admin_Nickname } = response.data;
-        setRoomName(roomName);
-        setRoomImage(roomImage);
-        setAdminNickname(admin_Nickname);
+        const response = await roomInfo(url);
+        const {
+          data: { result },
+        } = response;
+        const { isAlreadyJoinedRoom, ...restData } = result;
+        if (isAlreadyJoinedRoom) {
+          // 이미 입장한 방일 경우
+          navigate('/notice');
+        }
+        // 최초 입장이면 정보 입력하기
+        setRoomData(restData);
       } catch (error) {
         console.error('공지방 정보를 가져오는 데 실패했습니다:', error);
       }
@@ -48,35 +60,38 @@ const NoticeRoomEntry = () => {
   // 비밀번호 확인
   const handlePasswordCheck = async () => {
     try {
-      const response = await passwordCheck(password);
-      if (response.data.isValid) {
+      const response = await passwordCheck(password, roomData.roomId);
+      if (response.data.result.isValid) {
         setIsPasswordValid(true);
         setIsPasswordChecked(true); // 비밀번호 인증 성공 시 버튼 상태 업데이트
-        setErrorMessage('인증되었습니다.');
+        setSuccessMessage('인증되었습니다.'); // 성공 메시지 설정
+        setErrorMessage(''); // 에러 메시지 초기화
       } else {
         setIsPasswordValid(false);
         setErrorMessage('비밀번호가 일치하지 않습니다.');
+        setSuccessMessage(''); // 성공 메시지 초기화
       }
     } catch (error) {
       console.error('비밀번호 확인에 실패했습니다:', error);
       setErrorMessage('비밀번호 확인에 실패했습니다.');
+      setSuccessMessage(''); // 성공 메시지 초기화
     }
   };
 
   // 닉네임 중복 확인
   const handleNicknameCheck = async () => {
     try {
-      const response = await nicknameCheck(nickname);
-      if (!response.data.isDuplicate) {
+      const response = await nicknameCheck(nickname, roomData.roomId);
+      if (!response.data.result.isDuplicate) {
         setIsNicknameValid(true);
-        setErrorMessage('사용 가능한 닉네임입니다.');
+        setNickErrorMessage('사용 가능한 닉네임입니다.');
       } else {
         setIsNicknameValid(false);
-        setErrorMessage('이미 사용 중인 닉네임입니다.');
+        setNickErrorMessage('이미 사용 중인 닉네임입니다.');
       }
     } catch (error) {
       console.error('닉네임 중복 확인에 실패했습니다:', error);
-      setErrorMessage('닉네임 중복 확인에 실패했습니다.');
+      setNickErrorMessage('닉네임 중복 확인에 실패했습니다.');
     }
   };
 
@@ -92,8 +107,8 @@ const NoticeRoomEntry = () => {
   // 입장하기
   const handleEntry = async () => {
     try {
-      await registerUser(true);
-      navigate('/notice');
+      await registerUser(nickname, roomData.roomId);
+      navigate(`/notice/${roomData.roomId}`);
     } catch (error) {
       console.error('입장하는 데 실패했습니다:', error);
     }
@@ -106,14 +121,16 @@ const NoticeRoomEntry = () => {
         <ContextContainer>
           <ContainerHead>리드미</ContainerHead>
           <InfoContainer>
-            <RoomImg style={{ backgroundImage: `url(${roomImage})` }}></RoomImg>
+            <RoomImg
+              style={{ backgroundImage: `url(${roomData.roomImage})` }}
+            ></RoomImg>
             <TextContainer>
               <TextTitle>공지방 이름</TextTitle>
-              <TextContent>{roomName}</TextContent>
+              <TextContent>{roomData.roomName}</TextContent>
             </TextContainer>
             <TextContainer>
               <TextTitle>공지방 대표</TextTitle>
-              <TextContent>{adminNickname}</TextContent>
+              <TextContent>{roomData.adminNickname}</TextContent>
             </TextContainer>
           </InfoContainer>
         </ContextContainer>
@@ -124,14 +141,18 @@ const NoticeRoomEntry = () => {
               placeholder="입력하세요."
               value={password}
               onChange={(e) => setPassword(e.currentTarget.value)}
+              type="password"
+              disabled={isPasswordChecked} // 인증 완료 시 입력 비활성화
             />
             <ConfirmButton
               onClick={handlePasswordCheck}
               disabled={isPasswordChecked} // 인증 완료 시 버튼 비활성화
+              className={`${isPasswordChecked ? 'long-text' : ''}`}
             >
               {isPasswordChecked ? '인증완료' : '인증'}
             </ConfirmButton>
           </InputWrapper>
+          {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
           {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </PasswordWrapper>
 
@@ -145,12 +166,18 @@ const NoticeRoomEntry = () => {
                 value={nickname}
                 onChange={(e) => setNickname(e.currentTarget.value)}
               />
-              <ConfirmButton onClick={handleNicknameCheck}>인증</ConfirmButton>
+              <ConfirmButton onClick={handleNicknameCheck}>확인</ConfirmButton>
             </InputWrapper>
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {nickErrorMessage && !isNicknameValid && (
+              <NicknameErrorMessage>{nickErrorMessage}</NicknameErrorMessage>
+            )}
+            {nickErrorMessage && isNicknameValid && (
+              <NicknameSuccessMessage>
+                {nickErrorMessage}
+              </NicknameSuccessMessage>
+            )}
           </NicknameWrapper>
         )}
-
         <ButtonContainer>
           <Button onClick={handleEntry} disabled={!isEntryEnabled}>
             입장하기
@@ -163,6 +190,22 @@ const NoticeRoomEntry = () => {
 
 const ErrorMessage = styled.div`
   color: red;
+  text-align: start;
+  width: 100%;
+`;
+
+const SuccessMessage = styled.div`
+  color: var(--color-success);
+  text-align: start;
+  width: 100%;
+`;
+const NicknameErrorMessage = styled.div`
+  color: var(--color-warning);
+  text-align: start;
+  width: 100%;
+`;
+const NicknameSuccessMessage = styled.div`
+  color: var(--color-success);
   text-align: start;
   width: 100%;
 `;
@@ -246,7 +289,7 @@ const TextContent = styled.span`
   letter-spacing: -0.02em;
   text-align: left;
   overflow: hidden;
-  color: var(--Text-default, var(--Grayscale-Gray7, #222));
+  color: var(--color-default);
   text-overflow: ellipsis;
   font-size: 0.75rem;
   line-height: normal;
@@ -269,13 +312,16 @@ const ConfirmButton = styled.button`
   border: none;
   background: #509bf7;
   color: white;
-  height: 3.625rem;
-  width: 3.625rem;
-  padding: 1rem 0;
+  align-self: stretch;
+  padding: 1.38rem 1.06rem;
 
   &:disabled {
     background: #bdbdbd;
     color: #ffffff;
+  }
+
+  &.long-text {
+    padding: 1.38rem 0.31rem;
   }
 `;
 
