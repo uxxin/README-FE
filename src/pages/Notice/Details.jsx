@@ -12,13 +12,31 @@ import {
 import { useParams } from 'react-router-dom';
 
 const NoticeDetails = () => {
-  const { roomId, postId } = useParams();
+  const { postId } = useParams();
   const [width, setWidth] = useState(0);
   const [post, setPost] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
-  const isManager = true;
+
+  const getNoticeDetailData = async () => {
+    try {
+      const response = await getNoticedetails(postId);
+      setPost(response.data.result.post);
+      setImageURLs(response.data.result.imageURLs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getNoticeCommentData = async () => {
+    try {
+      const response = await getNoticeComments(postId);
+      setComments(response.data.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleComment = async () => {
     try {
@@ -35,38 +53,9 @@ const NoticeDetails = () => {
     setWidth(document.querySelector('.container')?.clientWidth);
   }, []);
 
-  // useEffect(() => {
-  const getNoticeDetailData = async () => {
-    try {
-      const response = await getNoticedetails(postId);
-      console.log(response);
-      setPost(response.data.result.post);
-      setImageURLs(response.data.result.imageURLs);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  //   getNoticeDetailData();
-  // }, []);
-
-  // useEffect(() => {
-  const getNoticeCommentData = async () => {
-    try {
-      const response = await getNoticeComments(postId);
-      console.log(response);
-      setComments(response.data.result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  //   getNoticeCommentData();
-  // }, []);
-
   useEffect(() => {
-    (async () => {
-      await getNoticeDetailData();
-      await getNoticeCommentData();
-    })();
+    getNoticeDetailData();
+    getNoticeCommentData();
   }, []);
 
   return (
