@@ -42,8 +42,7 @@ const NoticeDetails = () => {
     try {
       await createNoticeComment(postId, comment);
       setComment('');
-      await getNoticeDetailData();
-      await getNoticeCommentData();
+      Promise.all([getNoticeCommentData(), getNoticeDetailData()]);
     } catch (error) {
       console.error('댓글 작성 오류:', error);
     }
