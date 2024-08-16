@@ -38,7 +38,7 @@ export const MemberInvite = () => {
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: invite.room_name,
+        title: 'READ.ME',
         description: `${invite.room_name} 공지방에 참여하세요!\n비밀번호는 ${invite.room_password} 입니다.`,
         imageUrl: invite.room_image || '',
         link: {
