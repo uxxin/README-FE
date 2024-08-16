@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 const NoticeDetails = () => {
   const { postId } = useParams();
   const [width, setWidth] = useState(0);
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState();
   const [imageURLs, setImageURLs] = useState([]);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
@@ -22,7 +22,7 @@ const NoticeDetails = () => {
   const getNoticeDetailData = async () => {
     try {
       const response = await getNoticedetails(postId);
-      setPost(response.data.result.post);
+      setPost(response.data.result.post[0]);
       setImageURLs(response.data.result.imageURLs);
     } catch (error) {
       console.log(error);
@@ -60,20 +60,14 @@ const NoticeDetails = () => {
   }, []);
 
   useEffect(() => {
-    Promise.all([getNoticeCommentData(), getNoticeDetailData()]);
+    Promise.all([getNoticeDetailData(), getNoticeCommentData()]);
   }, []);
 
   return (
     <div className="container">
       <Header title="공지방 이름" isSearch={false} />
       <Container>
-        {post.length > 0 ? (
-          post.map((data) => (
-            <NoticeItem props={data} key={data.postId} imgs={imageURLs} />
-          ))
-        ) : (
-          <></>
-        )}
+        <NoticeItem props={post} imgs={imageURLs} />
 
         <CommentList>
           {comments.length > 0 ? (
