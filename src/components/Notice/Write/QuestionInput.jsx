@@ -38,9 +38,6 @@ const Input = styled.input`
   line-height: 120%; /* 1.2rem */
   letter-spacing: -0.02rem;
   color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;
 
 const CharCount = styled.span`

@@ -10,7 +10,7 @@ import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';
 import { useParams } from 'react-router-dom';
-import { getMyInfo} from '../../api/Member/memberListCheck';
+import { getMyInfo } from '../../api/Member/memberListCheck';
 import { getMemberList } from '../../api/Member/memberListCheck';
 
 // 컨테이너 스타일
@@ -24,8 +24,8 @@ const Container = styled.div`
 
 const MemberIcon = styled.div`
   white-space: nowrap;
-  margin-top:0.375rem;
-  margin-bottom:0.375rem;
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
 `;
 
 const MemberListBox = styled.div`
@@ -48,7 +48,7 @@ const ButtonContainer = styled.div`
   gap: 0.625rem;
   margin-bottom: 0.625rem;
   align-self: stretch;
- `
+`;
 
 const ButtonText = styled.span`
   width: 5.3125rem; //100%로 할지 정하기
@@ -107,7 +107,6 @@ const InputContainer = styled.div`
   background: var(--Primary-Light, #f4f9ff);
 `;
 
-
 //inputBox
 const SearchInput = styled.input`
   border: none;
@@ -121,30 +120,25 @@ const SearchInput = styled.input`
   line-height: 100%; /* 1.125rem */
   letter-spacing: -0.02rem;
   color: #509bf7;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #BDBDBD));
-  }
-`
+`;
 
 const SearchButton = styled.button`
-width: 1.5rem;
-height: 1.5rem;
-background: var(--Primary-Light, #f4f9ff);
-color: #509bf7;
-border: none;
-cursor: pointer;
-`
-
-
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--Primary-Light, #f4f9ff);
+  color: #509bf7;
+  border: none;
+  cursor: pointer;
+`;
 
 export const MemberListItem = () => {
-  const keysCount = useSelector((state) => state.keys.count); 
+  const keysCount = useSelector((state) => state.keys.count);
   const { members } = useSelector((state) => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { roomId } = useParams();
 
-  const [searchInput,setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
 
   const [state, setState] = useState({
     search: '',
@@ -153,7 +147,7 @@ export const MemberListItem = () => {
     adminName: [],
   });
 
-//  const debouncedSearch = Debounce(state.search, 300);
+  //  const debouncedSearch = Debounce(state.search, 300);
 
   useEffect(() => {
     if (members && members.length >= 0) {
@@ -165,23 +159,27 @@ export const MemberListItem = () => {
     }
   }, [members]);
 
-  
   useEffect(() => {
     const fetchMemberList = async () => {
       try {
         const memberData = await getMemberList('', roomId);
         const adminData = await getMyInfo();
-        
+
         console.log('admin 이름:', adminData.result);
         console.log('userId가 있나요?', memberData.result);
-        
+
         setState((prevState) => ({
           ...prevState,
           results: memberData.result,
           allMembers: memberData.result,
           adminName: adminData.result,
         }));
-        dispatch(setKeysCount({ count: memberData.result.length, members: memberData.result }));
+        dispatch(
+          setKeysCount({
+            count: memberData.result.length,
+            members: memberData.result,
+          }),
+        );
       } catch (error) {
         console.error('Error fetching member list:', error);
       }
@@ -208,7 +206,6 @@ export const MemberListItem = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  
 
   /*
   const handleSearch = (e) => {
@@ -234,7 +231,7 @@ export const MemberListItem = () => {
 
   return (
     <Container>
-        <InputContainer>
+      <InputContainer>
         <SearchInput
           placeholder={'입력하세요'}
           value={searchInput}
