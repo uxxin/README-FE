@@ -42,7 +42,7 @@ const NoticeDetails = () => {
     try {
       await createNoticeComment(postId, comment);
       setComment('');
-      Promise.all([getNoticeCommentData(), getNoticeDetailData()]);
+      await Promise.all([getNoticeDetailData(), getNoticeCommentData()]);
     } catch (error) {
       console.error('댓글 작성 오류:', error);
     }
@@ -60,8 +60,7 @@ const NoticeDetails = () => {
   }, []);
 
   useEffect(() => {
-    getNoticeDetailData();
-    getNoticeCommentData();
+    Promise.all([getNoticeCommentData(), getNoticeDetailData()]);
   }, []);
 
   return (
