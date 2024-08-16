@@ -44,8 +44,22 @@ const Main = () => {
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
   const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(true);
+  const [offset, setOffset] = useState(1.25);
   const isNoticeNull = noticeData.length === 0;
   const dispatch = useDispatch();
+
+  const updatePosition = () => {
+    const bodyRect = document.body.getBoundingClientRect();
+    setOffset(bodyRect.left / 16 + 1.25);
+  };
+
+  useEffect(() => {
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+    };
+  }, []);
 
   const handlePenaltyModalClose = () => {
     setIsPenaltyModalOpen(false);
@@ -132,7 +146,7 @@ const Main = () => {
 
       {isManager && (
         <FloatingButtonContainer>
-          <FloatingDivContainer showDivs={showDivs}>
+          <FloatingDivContainer showDivs={showDivs} offset={offset}>
             <StyledLink to="edit" showDivs={showDivs}>
               <FloatingDiv color="var(--system-warning, #F57D14)">
                 <StyledEdit />
@@ -158,7 +172,7 @@ const Main = () => {
             </StyledLink>
           </FloatingDivContainer>
 
-          <FloatingButton onClick={handleFloatingButtonClick}>
+          <FloatingButton onClick={handleFloatingButtonClick} offset={offset}>
             <StyledArrow flipped={isFlipped} />
           </FloatingButton>
         </FloatingButtonContainer>
@@ -209,6 +223,7 @@ const Notice = styled.div`
   align-items: center;
   gap: 1rem;
   background-color: transparent;
+  position: relative;
 `;
 
 const FloatingButtonContainer = styled.div`
@@ -216,9 +231,9 @@ const FloatingButtonContainer = styled.div`
 `;
 
 const FloatingDivContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 1.875rem;
-  right: 1.25rem;
+  right: ${(props) => `${props.offset}rem`};
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -229,9 +244,9 @@ const FloatingDivContainer = styled.div`
 `;
 
 const FloatingButton = styled.button`
-  position: absolute;
+  position: fixed;
   bottom: 1.875rem;
-  right: 1.25rem;
+  right: ${(props) => `${props.offset}rem`};
   width: 3.5rem;
   height: 3.5rem;
   border: none;

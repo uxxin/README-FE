@@ -30,6 +30,7 @@ import Write from './pages/Notice/Write/Write.jsx';
 import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
 import ConfirmRequestApproval from './pages/Notice/Confirm/ConfirmRequestApproval.jsx';
 import Layout from './components/layout/index.jsx';
+import Redirect from './pages/Auth/Redirect.jsx';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               {/* Auth - 로그인&회원가입 */}
               <Route path="/" element={<SignIn />} />
+              <Route path="/redirect" element={<Redirect />} />
               <Route path="/sign-up" element={<SignUp />} />
 
               {/* Home - 메인 */}
@@ -84,7 +86,7 @@ function App() {
               <Route path="/notice/:roomId/:postId" element={<Details />} />
 
               {/* Notice - 공지 - 일반멤버 */}
-              <Route path="/notice/:roomId/solve" element={<Solve />} />
+              <Route path="/notice/:roomId/:postId/solve" element={<Solve />} />
               <Route
                 path="/notice/:roomId/solve/result"
                 element={<Results />}
@@ -111,7 +113,7 @@ function App() {
               <Route path="/notice/:roomId/invite" element={<Invite />} />
 
               {/* 공지방 입장 화면 확인용 코드입니다 추후 지우겠습니다. */}
-              <Route path="/notice/entry" element={<NoticeRoomEntry />} />
+              <Route path="/notice/entry/:url" element={<NoticeRoomEntry />} />
             </Route>
           </Routes>
         </Router>

@@ -9,49 +9,39 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setRequiredListCount } from '../../../redux/CheckSlice';
 import { AcceptanceListMap } from './AcceptanceListMap';
+import Main from '../../../pages/Notice/Main';
 
 const Container = styled.div`
-  display: flex;
-  /* padding-right: 1rem;
+  width: 100%;
   padding: 0.625rem 1rem;
-  padding-right: 1rem; */
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.625rem;
-`;
-
-const TotalContainer = styled.div`
   display: flex;
-  /* width: 26.75rem;
-  padding: 0.625rem 1rem; */
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.625rem;
+  box-sizing: border-box;
 `;
 
 const CheckContainer = styled.div`
+  width: 100%;
   display: flex;
-  /* width: 22rem;
-  padding: 1.5rem 1.25rem; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.625rem;
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
+  flex-grow: 1; 
+  flex-shrink: 1; 
+  height: 4.188rem;
 `;
 
 const BoxContainer = styled.div`
   display: flex;
-  /* padding-right: 2rem;
-  padding-bottom: 1rem; */
   flex-direction: column;
   align-items: center;
-  gap: 0.625rem;
   align-self: stretch;
-  border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
 `;
+
+
 
 export const AcceptanceList = () => {
   const [checklist, setCheckList] = useState([]);
@@ -90,10 +80,12 @@ export const AcceptanceList = () => {
     <div>
       <Container>
         <BoxContainer>
+        
           {requiredList.length === 0 ? (
             <CheckContainer>확인요청내역 없음</CheckContainer>
           ) : (
             requiredList.map((item) => (
+              
               <AcceptanceListMap
                 key={item.submit_id}
                 submit_id={item.submit_id}
@@ -101,8 +93,10 @@ export const AcceptanceList = () => {
                 content={item.content}
                 image_URL={item.image_URL}
               />
+             
             ))
           )}
+         
         </BoxContainer>
       </Container>
     </div>

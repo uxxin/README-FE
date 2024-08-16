@@ -5,12 +5,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../api/Auth/user.js';
 import logo from '../../assets/svgs/logoex.svg';
+import KakaoLoginButton from '../../components/common/kakao-login/index.jsx';
 
 const SignIn = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const apiKey = import.meta.env.VITE_KAKAO_REST_API_KEY;
+  const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  const kakaoLoginPage = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${apiKey}&redirect_uri=${redirectUri}&response_type=code`;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +29,11 @@ const SignIn = () => {
     } catch (error) {
       alert('이메일/비밀번호를 확인해주세요.');
     }
+  };
+
+  const handleKakaoLogin = (e) => {
+    e.preventDefault();
+    window.location.href = kakaoLoginPage;
   };
 
   return (
@@ -44,6 +54,9 @@ const SignIn = () => {
           charCount={true}
         />
         <ButtonWrapper>
+          <KakaoLoginButton onClick={handleKakaoLogin}>
+            카카오톡으로 계속하기
+          </KakaoLoginButton>
           <SignInButton onClick={handleLogin}>로그인</SignInButton>
           <NotAuth>아직 회원이 아니신가요?</NotAuth>
           <SignupButton onClick={() => navigate('/sign-up')}>
@@ -77,8 +90,20 @@ const CommonButton = styled.button`
   width: calc(100% - 2rem);
 `;
 
+// const KakaoLogin = styled(Link)`
+//   text-decoration: none;
+//   color: rgba(0, 0, 0, 0.85);
+//   padding: 1rem 0;
+//   border-radius: 0.5rem;
+//   width: calc(100% - 2rem);
+//   background-color: #fee500;
+//   display: flex;
+//   justify-content: center;
+//   gap: 0.5rem;
+// `;
+
 const SignInButton = styled(CommonButton)`
-  margin-bottom: 0.625rem;
+  margin: 0.625rem 0;
   background-color: #509bf7;
   color: #ffffff;
 `;

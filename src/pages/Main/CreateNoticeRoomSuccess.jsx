@@ -13,9 +13,10 @@ const CreateNoticeRoomSuccess = () => {
   const roomName = location.state?.roomName || '';
   const password = location.state?.roomPassword || '';
   const nickName = location.state?.adminNickname || '';
+  const roomId = location.state?.roomId || '';
 
   const handleNoticeClick = () => {
-    navigate('/notice');
+    navigate(`/notice/${roomId}`);
   };
 
   const handleHomeClick = () => {
