@@ -25,7 +25,7 @@ export const Quiz = ({
       <Section>
         <Title>시작 기한</Title>
         <QuestionInput
-          placeholder="YY.MM.DD HH:MM"
+          placeholder="YY.MM.DD"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
         />
@@ -33,7 +33,7 @@ export const Quiz = ({
       <Section>
         <Title>마감 기한</Title>
         <QuestionInput
-          placeholder="YY.MM.DD HH:MM"
+          placeholder="YY.MM.DD"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         />

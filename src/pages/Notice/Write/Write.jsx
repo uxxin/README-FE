@@ -5,12 +5,14 @@ import Post from './Post';
 import Preview from './Preview';
 import QuizType from './QuizType';
 import MissionType from './MissionType';
+import { useParams } from 'react-router-dom';
 
 const Write = () => {
   const [step, setStep] = useState(1);
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [imageURLs, setImageURLs] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [question, setQuestion] = useState('');
@@ -20,49 +22,52 @@ const Write = () => {
     selectedType,
     inputTitle,
     inputContent,
+    uploadImages,
     inputStartDate,
     inputEndDate,
     inputQuestion,
     inputAnswer,
   ) => {
     setStep((prevState) => Math.max(prevState - 1, 1));
-    setType(selectedType);
-    setTitle(inputTitle);
-    setContent(inputContent);
-    setStartDate(inputStartDate);
-    setEndDate(inputEndDate);
-    setQuestion(inputQuestion);
-    setAnswer(inputAnswer);
+    setType(selectedType || type);
+    setTitle(inputTitle || title);
+    setContent(inputContent || content);
+    setImageURLs(uploadImages || imageURLs);
+    setStartDate(inputStartDate || startDate);
+    setEndDate(inputEndDate || endDate);
+    setQuestion(inputQuestion || question);
+    setAnswer(inputAnswer || answer);
   };
+  const { roomId } = useParams();
 
   const handleNextStep = (
     selectedType,
     inputTitle,
     inputContent,
+    uploadImages,
     inputStartDate,
     inputEndDate,
     inputQuestion,
     inputAnswer,
   ) => {
     setStep((prevState) => Math.min(prevState + 1, 3));
-    setType(selectedType);
-    setTitle(inputTitle);
-    setContent(inputContent);
-    setStartDate(inputStartDate);
-    setEndDate(inputEndDate);
-    setQuestion(inputQuestion);
-    setAnswer(inputAnswer);
+    setType(selectedType || type);
+    setTitle(inputTitle || title);
+    setContent(inputContent || content);
+    setImageURLs(uploadImages || imageURLs);
+    setStartDate(inputStartDate || startDate);
+    setEndDate(inputEndDate || endDate);
+    setQuestion(inputQuestion || question);
+    setAnswer(inputAnswer || answer);
   };
 
   return (
     <div>
       <Header
-        props={{
-          title: '공지 작성',
-          isSearch: false,
-          url: '/notice',
-          write: true,
-        }}
+        title="공지 작성"
+        isSearch={false}
+        url={`/notice/${roomId}`}
+        write={true}
       />
       <Container>
         {step === 1 ? (
@@ -71,15 +76,21 @@ const Write = () => {
             postType={type}
             postTitle={title}
             postContent={content}
+            uploadedImg={imageURLs}
+            postStartDate={startDate}
+            postEndDate={endDate}
+            postQuestion={question}
+            postAnswer={answer}
           />
         ) : step === 2 ? (
-          type === 'Quiz' ? (
+          type === 'QUIZ' ? (
             <QuizType
               onPrevStep={handlePrevStep}
               onNextStep={handleNextStep}
               postType={type}
               postTitle={title}
               postContent={content}
+              imageURLs={imageURLs}
               startDate={startDate}
               endDate={endDate}
               question={question}
@@ -92,6 +103,7 @@ const Write = () => {
               postType={type}
               postTitle={title}
               postContent={content}
+              imageURLs={imageURLs}
               startDate={startDate}
               endDate={endDate}
               question={question}
@@ -104,6 +116,7 @@ const Write = () => {
             postType={type}
             title={title}
             content={content}
+            imageURLs={imageURLs}
             startDate={startDate}
             endDate={endDate}
             question={question}
