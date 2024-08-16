@@ -116,6 +116,10 @@
     font-weight: 400;
     line-height: 100%;
   }
+
+  input::placeholder {
+    color: var(--color-empty);
+  }
 }
 
 body {
