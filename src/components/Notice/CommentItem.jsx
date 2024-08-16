@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
+// import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
+import { ReactComponent as ShowmoreIcon } from '../../assets/svgs/show_more_icon.svg';
+import CustomModal from '../CustomModal';
 
 export const CommentItem = ({ props }) => {
-  // console.log(props);
+  const [isOpen, setIsOpen] = useState(false);
+  const modalClose = () => {
+    setIsOpen(false);
+  };
+  const deleteComment = () => {
+    console.log('삭제');
+  };
+  const modalProps = {
+    isOpen: isOpen,
+    onClose: modalClose,
+    buttons: [
+      {
+        label: '삭제',
+        onClick: deleteComment,
+        color: '#F5535E',
+      },
+    ],
+  };
+
   return (
     <Container>
       <Profile src={props.commentAuthorProfileImage} alt="profile" />
@@ -12,7 +32,15 @@ export const CommentItem = ({ props }) => {
         <Content>{props.commentBody}</Content>
         <Date>{props.createdAt}</Date>
       </Comment>
-      {props.isCommentMine ? <More src={ShowmoreIcon} alt="more" /> : <></>}
+      {props.isCommentMine && (
+        <ShowmoreIconContainer>
+          <ShowmoreButton onClick={() => setIsOpen((prev) => !prev)}>
+            <StyledShowmoreIcon />
+          </ShowmoreButton>
+
+          <CustomModal {...modalProps} />
+        </ShowmoreIconContainer>
+      )}
     </Container>
   );
 };
@@ -78,4 +106,23 @@ const More = styled.img`
   height: 0.875rem;
   justify-content: center;
   align-items: center;
+`;
+
+const ShowmoreIconContainer = styled.div`
+  position: relative;
+`;
+
+const ShowmoreButton = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+`;
+
+const StyledShowmoreIcon = styled(ShowmoreIcon)`
+  width: 1.5rem;
+  height: 1.5rem;
 `;
