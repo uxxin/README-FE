@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
-import { ReactComponent as ShowmoreIcon } from '../../assets/svgs/show_more_icon.svg';
+import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 import CustomModal from '../CustomModal';
 
 export const CommentItem = ({ props }) => {
@@ -35,7 +34,7 @@ export const CommentItem = ({ props }) => {
       {props.isCommentMine && (
         <ShowmoreIconContainer>
           <ShowmoreButton onClick={() => setIsOpen((prev) => !prev)}>
-            <StyledShowmoreIcon />
+            <img src={ShowmoreIcon} alt="more" />
           </ShowmoreButton>
 
           <CustomModal {...modalProps} />
@@ -100,14 +99,6 @@ const Date = styled.div`
   letter-spacing: -0.015rem;
 `;
 
-const More = styled.img`
-  display: flex;
-  width: 0.875rem;
-  height: 0.875rem;
-  justify-content: center;
-  align-items: center;
-`;
-
 const ShowmoreIconContainer = styled.div`
   position: relative;
 `;
@@ -120,9 +111,4 @@ const ShowmoreButton = styled.button`
   padding: 0;
   margin: 0;
   cursor: pointer;
-`;
-
-const StyledShowmoreIcon = styled(ShowmoreIcon)`
-  width: 1.5rem;
-  height: 1.5rem;
 `;
