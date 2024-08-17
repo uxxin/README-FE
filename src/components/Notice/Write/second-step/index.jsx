@@ -6,6 +6,7 @@ import FloatingBox from '../../../common/floating-box';
 import FlexBox from '../../../common/flex-box';
 import Button from '../../../common/button';
 import Calendar from './calendar';
+import { format } from 'date-fns';
 
 const SecondStep = ({
   handlePrevStep,
@@ -14,7 +15,7 @@ const SecondStep = ({
   handleUpdatePostData,
   isQuiz,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [calendar, setCalendar] = useState({ type: '', isOpen: false });
   const disabled =
     !postData.startDate ||
     !postData.endDate ||
@@ -25,8 +26,25 @@ const SecondStep = ({
     handleUpdatePostData({ type: 'imageURLs', value: uploadedImages });
   };
 
-  const handleOpenCalendar = () => {
-    setIsOpen(true);
+  const handleInput = (e, type) => {
+    const { value } = e.target;
+    handleUpdatePostData({ type, value });
+  };
+
+  const handleOpenCalendar = (e, type) => {
+    e.stopPropagation();
+    setCalendar({ type, isOpen: true });
+  };
+
+  const handleCloseCalendar = () => {
+    setCalendar((prev) => ({ type: prev.type, isOpen: false }));
+  };
+
+  const handleUpdateDate = (date) => {
+    handleUpdatePostData({
+      type: [calendar.type],
+      value: format(date, 'yy.MM.dd'),
+    });
   };
 
   return (
@@ -37,7 +55,7 @@ const SecondStep = ({
           <span className={`text-wrap ${postData.startDate && 'activate'}`}>
             시작 기한
           </span>
-          <button onClick={handleOpenCalendar}>
+          <button onClick={(e) => handleOpenCalendar(e, 'startDate')}>
             {postData.startDate || 'YY.MM.DD'}
           </button>
         </div>
@@ -45,7 +63,7 @@ const SecondStep = ({
           <span className={`text-wrap ${postData.endDate && 'activate'}`}>
             마감 기한
           </span>
-          <button onClick={handleOpenCalendar}>
+          <button onClick={(e) => handleOpenCalendar(e, 'endDate')}>
             {postData.endDate || 'YY.MM.DD'}
           </button>
         </div>
@@ -55,7 +73,12 @@ const SecondStep = ({
             <Tooltip />
           </div>
           <div className="input-wrap">
-            <input placeholder="퀴즈를 입력하세요" />({postData.question.length}
+            <input
+              placeholder="퀴즈를 입력하세요"
+              value={postData.question}
+              onChange={(e) => handleInput(e, 'question')}
+            />
+            ({postData.question.length}
             /20)
           </div>
         </div>
@@ -63,8 +86,12 @@ const SecondStep = ({
           <div className="common-wrap">
             <span className="text-wrap">정답</span>
             <div className="input-wrap">
-              <input placeholder="정답을 입력하세요" />(
-              {postData.question.length}
+              <input
+                placeholder="정답을 입력하세요"
+                value={postData.answer}
+                onChange={(e) => handleInput(e, 'answer')}
+              />
+              ({postData.question.length}
               /20)
             </div>
           </div>
@@ -72,18 +99,17 @@ const SecondStep = ({
       </Container>
       <FloatingBox>
         <FlexBox gap={0.625} calc={2}>
-          <Button name="이전" type="outline" />
-          <Button name="다음" disabled={disabled} />
+          <Button name="이전" type="outline" onClick={handlePrevStep} />
+          <Button name="다음" disabled={disabled} onClick={handleNextStep} />
         </FlexBox>
       </FloatingBox>
-      {true && (
-        <Calendar
-          date={postData.startDate}
-          setDate={setDate}
-          open={isOpen}
-          handleClose={handleNext}
-        />
-      )}
+      <Calendar
+        date={postData}
+        type={calendar.type}
+        setDate={handleUpdateDate}
+        open={calendar.isOpen}
+        handleClose={handleCloseCalendar}
+      />
     </>
   );
 };

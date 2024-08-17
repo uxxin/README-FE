@@ -1,13 +1,19 @@
-import { CalendarStyled, Overlay } from 'components/Calendar/style';
+import { CalendarStyled, Overlay } from './style';
 import React, { useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale/ko';
 import { createPortal } from 'react-dom';
-import { ReactComponent as ArrowRight } from 'assets/common/icon_chevron_right.svg';
-import { ReactComponent as ArrowLeft } from 'assets/common/icon_chevron_left.svg';
+import { ReactComponent as ArrowLeft } from '../../../../../assets/svgs/back_button.svg';
+import { ReactComponent as ArrowRight } from '../../../../../assets/svgs/arrow_right.svg';
+import { addDays } from 'date-fns';
 
-export default function Calendar({ date, setDate, open, handleClose }) {
-  date = new Date(date ?? new Date());
+export default function Calendar({ date, type, setDate, open, handleClose }) {
+  const isStartDate = type === 'startDate';
+  const startDate = isStartDate ? date.startDate : date.endDate;
+  const minDate = isStartDate
+    ? new Date()
+    : (date.startDate && addDays(`20${date.startDate}`, 1)) || new Date();
+  const newDate = startDate ? new Date(`20${startDate}`) : new Date();
   const activeColor = () => {
     const outsideMonth = document.querySelectorAll(
       '.react-datepicker__day--outside-month',
@@ -20,31 +26,23 @@ export default function Calendar({ date, setDate, open, handleClose }) {
     setDate(date);
   };
 
-  const handleReset = () => {
-    handleClose(true);
-  };
-
   useEffect(activeColor, []);
 
   return (
     open &&
     createPortal(
-      <Overlay
-        onTouchStart={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <Overlay>
         <CalendarStyled>
           <DatePicker
-            onClickOutside={handleReset}
+            onClickOutside={handleClose}
             dateFormatCalendar="yyyy년 MM월"
-            selected={date}
+            selected={newDate}
             onChange={handleSelectDate}
-            startDate={date ?? new Date()}
+            startDate={newDate ?? new Date()}
             locale={ko}
             inline
             onMonthChange={activeColor}
-            minDate={new Date()}
+            minDate={minDate}
             renderCustomHeader={({
               date,
               decreaseMonth,
@@ -60,7 +58,7 @@ export default function Calendar({ date, setDate, open, handleClose }) {
                 >
                   <ArrowLeft />
                 </button>
-                <div className="date-font">
+                <div className="bold-20">
                   {date.getFullYear()}년 {date.getMonth() + 1}월
                 </div>
                 <button

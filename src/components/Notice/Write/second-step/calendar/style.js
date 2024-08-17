@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Overlay = styled.div`
+  left: 0;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -12,8 +13,8 @@ export const Overlay = styled.div`
 `;
 
 export const CalendarStyled = styled.div`
-  width: max-content;
-  border-radius: 1.6rem;
+  max-width: 20.5rem;
+  border-radius: 0.625rem;
   overflow: hidden;
 
   .react-datepicker__aria-live {
@@ -23,41 +24,46 @@ export const CalendarStyled = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem;
-    font-weight: 700;
-
-    .date-font {
-      font-size: 2.8rem;
-    }
+    padding: 1rem 1rem 1.13rem;
 
     button {
       cursor: pointer;
+      padding: 0;
+      border: none;
+      background-color: #ffffff;
+
+      &:disabled {
+        color: var(--color-disabled);
+      }
     }
   }
 
   /* Calendar CSS */
   .react-datepicker {
     .react-datepicker__day-names {
-      padding: 0 2rem;
+      padding: 0 1rem;
       display: flex;
+      gap: 1.33rem;
 
       .react-datepicker__day-name {
-        font-size: 2.8rem;
         flex: 1;
         text-align: center;
-      }
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 100%;
+        max-width: 1.375rem;
 
-      > :first-child {
-        color: var(--color-error);
-      }
-
-      > :last-child {
-        color: var(--color-green);
+        &:first-child {
+          color: var(--color-danger);
+        }
+        &:last-child {
+          color: var(--color-primary-normal);
+        }
       }
     }
     .react-datepicker__header {
       background-color: white;
-      border-radius: 1.6rem 1.6rem 0 0;
+      border-radius: 0.625rem 0.625rem 0 0;
       border-bottom: none;
     }
     .react-datepicker__month-container {
@@ -72,21 +78,24 @@ export const CalendarStyled = styled.div`
         display: flex;
         flex-direction: column;
         background-color: #ffffff;
-        border-radius: 0 0 1.6rem 1.6rem;
-        padding: 2rem;
-        gap: 1.6rem;
+        border-radius: 0 0 0.625rem 0.625rem;
+        padding: 1rem;
+        gap: 1rem;
 
         .react-datepicker__week {
           display: flex;
+          gap: 1.33rem;
         }
         .react-datepicker__day {
           cursor: pointer;
-          font-size: 2.4rem;
-          width: 4rem;
-          height: 4rem;
+          font-size: 1.125rem;
+          font-weight: 500;
+          line-height: 100%;
+          width: 1.375rem;
           display: flex;
           align-items: center;
           justify-content: center;
+
           &:hover {
             border-radius: 100%;
             background-color: var(--color-yellow-2);

@@ -43,12 +43,14 @@ const FirstStep = ({ handleNextStep, postData, handleUpdatePostData }) => {
         <section className="title-content">
           <input
             className="bold-18"
+            value={postData.title}
             onChange={handleInputChange}
             placeholder="제목을 입력하세요."
           />
           <textarea
             ref={textareaRef}
             className="medium-16"
+            value={postData.content}
             onChange={handleContentChange}
             rows={1}
             placeholder="내용을 입력하세요."
