@@ -24,7 +24,7 @@ export const ImgUpload = ({ onUpload }) => {
     if (onUpload) {
       onUpload(images);
     }
-  }, [images, onUpload]);
+  }, [images]);
 
   return (
     <UploadContainer>

@@ -1,13 +1,11 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import TypeCheck from '../../../components/Notice/Write/TypeCheck';
-import { PostInput } from '../../../components/Notice/Write/PostInput';
-import Button from '../../../components/common/button';
-import { ReactComponent as CheckSvg } from '../../../assets/svgs/post_type_check.svg';
+import Button from '../../../common/button';
+import { ReactComponent as CheckSvg } from '../../../../assets/svgs/post_type_check.svg';
 
-const DEFAULT_HEIGHT = 35;
+const DEFAULT_HEIGHT = 39;
 
-const Post = ({ handleNextStep, postData, handleUpdatePostData }) => {
+const FirstStep = ({ handleNextStep, postData, handleUpdatePostData }) => {
   const textareaRef = useRef(DEFAULT_HEIGHT);
   const disabled = postData.title === '' || postData.content === '';
   const handleTypeCheck = (selectedType) => {
@@ -126,8 +124,9 @@ const Floating = styled.div`
   display: flex;
   justify-content: center;
   position: fixed;
+  max-width: 429px;
   bottom: 0;
   padding-bottom: 3.37rem;
 `;
 
-export default Post;
+export default FirstStep;
