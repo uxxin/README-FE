@@ -13,6 +13,7 @@ const SecondStep = ({
   handleNextStep,
   postData,
   handleUpdatePostData,
+  handleImageUpload,
   isQuiz,
 }) => {
   const [calendar, setCalendar] = useState({ type: '', isOpen: false });
@@ -21,10 +22,6 @@ const SecondStep = ({
     !postData.endDate ||
     !postData.question.length ||
     (isQuiz && !postData.answer.length);
-
-  const handleImageUpload = (uploadedImages) => {
-    handleUpdatePostData({ type: 'imageURLs', value: uploadedImages });
-  };
 
   const handleInput = (e, type) => {
     const { value } = e.target;
@@ -51,7 +48,8 @@ const SecondStep = ({
     <>
       <Container>
         <ImgUpload
-          onUpload={handleImageUpload}
+          handleUpdatePostData={handleUpdatePostData}
+          handleImageUpload={handleImageUpload}
           imageURLs={postData.imageURLs}
         />
         <div className="common-wrap">

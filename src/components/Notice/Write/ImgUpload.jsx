@@ -3,19 +3,20 @@ import styled from 'styled-components';
 import camera from '../../../assets/svgs/img_upload.svg';
 import imgDelete from '../../../assets/svgs/img_delete.svg';
 
-export const ImgUpload = ({ onUpload, imageURLs }) => {
-  const handleImageChange = (event) => {
-    const files = Array.from(event.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
-    onUpload([...imageURLs, ...newImages].slice(0, 10));
-  };
-
+export const ImgUpload = ({
+  handleUpdatePostData,
+  handleImageUpload,
+  imageURLs,
+}) => {
   const handleClick = () => {
     document.getElementById('fileInput').click();
   };
 
   const handleDelete = (imageToDelete) => {
-    onUpload(imageURLs.filter((image) => image !== imageToDelete));
+    handleUpdatePostData({
+      type: 'imageURLs',
+      value: imageURLs.filter((image) => image !== imageToDelete),
+    });
   };
 
   return (
@@ -28,7 +29,7 @@ export const ImgUpload = ({ onUpload, imageURLs }) => {
               type="file"
               accept="image/*"
               multiple
-              onChange={handleImageChange}
+              onChange={handleImageUpload}
               id="fileInput"
             />
             <CameraIcon onClick={handleClick}>

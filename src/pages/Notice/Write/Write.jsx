@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Header } from '../../../components/Header';
 import Post from '../../../components/Notice/Write/first-step';
-import Preview from './Preview';
 import { useParams } from 'react-router-dom';
 import SecondStep from '../../../components/Notice/Write/second-step';
 import ThirdStep from '../../../components/Notice/Write/third-step';
+import { PostAxiosInstance } from '../../../axios/axios.method';
 
 const Write = () => {
   const [step, setStep] = useState(1);
@@ -22,6 +22,30 @@ const Write = () => {
 
   const handleUpdatePostData = ({ type, value }) => {
     setPostData((prev) => ({ ...prev, [type]: value }));
+  };
+
+  const handleImageUpload = async (e) => {
+    const formData = new FormData();
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      files.forEach((file) => {
+        formData.append('file', file);
+      });
+
+      const s3Response = await PostAxiosInstance('/user/s3/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      handleUpdatePostData({
+        type: 'imageURLs',
+        value: [...postData.imageURLs, ...s3Response.data.result.images].slice(
+          0,
+          10,
+        ),
+      });
+    }
   };
 
   const handlePrevStep = () => {
@@ -56,6 +80,7 @@ const Write = () => {
         <SecondStep
           handlePrevStep={handlePrevStep}
           handleNextStep={handleNextStep}
+          handleImageUpload={handleImageUpload}
           postData={postData}
           handleUpdatePostData={handleUpdatePostData}
           isQuiz={postData.type === 'QUIZ'}
@@ -65,7 +90,7 @@ const Write = () => {
         <ThirdStep
           handlePrevStep={handlePrevStep}
           postData={postData}
-          handleUpdatePostData={handleUpdatePostData}
+          handleCreatePost={handleCreatePost}
         />
       )}
     </>
