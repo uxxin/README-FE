@@ -5,6 +5,102 @@ import axios from 'axios';
 import { createRoutesFromChildren, useParams } from 'react-router-dom';
 import { getMemberInvitation } from '../../api/Member/memberListCheck';
 
+export const MemberInvite = () => {
+  const { roomId } = useParams();
+
+  const [invite, setInvite] = useState({
+    room_image: '',
+    room_invite_url: '',
+    room_name: '',
+    room_password: '',
+    admin_nickname: '',
+  });
+
+  const handleGoMemberList = () => {
+    navigate(`/notice/${roomId}/member`);
+  };
+
+  const handleGoNotice = () => {
+    navigate(`/notice/${roomId}`);
+  };
+
+  const handleCopyClipBoard = async (url) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      console.log(url)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const fetchInvite = async () => {
+        const response = await getMemberInvitation(roomId)
+        
+        console.log('전체응답', response);
+        const inviteData = response.result;
+        console.log('URL 정보:', inviteData);
+        setInvite(inviteData);
+    };
+    fetchInvite();
+  }, [roomId]);
+
+  return (
+    <TotalContainer>
+      <Container>
+        <AddContainer>
+          <ContainerHead>리드미</ContainerHead>
+          <ContentWrapper>
+          <ImgContainer>
+          
+          <ImgFile  src={invite.room_image}/>
+          </ImgContainer>
+          <InfoContainer>
+            <TextContainer>
+              <TextColor>
+                초대 url <InfoText>{invite.room_invite_url}</InfoText><CopyBtn onClick={() => handleCopyClipBoard(invite.room_invite_url)}>🔍</CopyBtn>
+              </TextColor>
+            </TextContainer>
+            <TextContainer>
+              <TextColor>
+                공지방 이름 <InfoText>{invite.room_name}</InfoText>{' '}
+              </TextColor>
+            </TextContainer>
+            <TextContainer>
+              <TextColor>
+                비밀번호 <InfoText>{invite.room_password}</InfoText>{' '}
+              </TextColor>
+            </TextContainer>
+            <TextLastContainer>
+              <TextColor>
+                대표자 <InfoText>{invite.admin_nickname}</InfoText>
+              </TextColor>
+            </TextLastContainer>
+          </InfoContainer>
+          </ContentWrapper>
+        </AddContainer>
+      <ButtonWrapper>
+          <CustomBtn
+            text="멤버목록으로 이동"
+            border="none"
+            background="#509BF7"
+            onClick={handleGoMemberList}
+          />
+
+          <CustomBtn
+            text="공지방으로 이동"
+            border="0.5px solid #509BF7"
+            background="#FFFFFF"
+            onClick={handleGoNotice}
+          />
+   </ButtonWrapper>
+      </Container>
+    </TotalContainer>
+  );
+};
+
+
+
 const TotalContainer = styled.div`
 `;
 
@@ -37,13 +133,31 @@ const ContainerHead = styled.div`
   box-sizing: border-box;
 `;
 
+const ImgContainer = styled.div`
+  border-radius: 0.5;
+  width: 12.5rem;
+  height: 12.5rem;
+  align-items: center;  /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  display: flex;      
+  margin: 0 auto;
+`
+
+const ImgFile = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 컨테이너를 가득 채우도록 */
+`
+
 const InfoContainer = styled.div`
   width: 100%;
-
-  margin-top: 11.25rem;
   color: black;
   box-sizing: border-box;
-  padding: 0.625rem;
+  padding-top: 0.25rem;
+`;
+
+const ContentWrapper = styled.div`
+  padding:0.625rem;
 `;
 
 const TextContainer = styled.div`
@@ -119,91 +233,3 @@ const CopyBtn = styled.button`
   border: none;
   cursor: pointer;
  `
-
-export const MemberInvite = () => {
-  const { roomId } = useParams();
-
-  const [invite, setInvite] = useState({
-    room_image: '',
-    room_invite_url: '',
-    room_name: '',
-    room_password: '',
-    admin_nickname: '',
-  });
-
-  const handleGoMemberList = () => {
-    navigate(`/notice/${roomId}/member`);
-  };
-
-  const handleGoNotice = () => {
-    navigate(`/notice/${roomId}`);
-  };
-
-  const handleCopyClipBoard = async (url) => {
-    try {
-      await navigator.clipboard.writeText(url);
-      console.log(url)
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    const fetchInvite = async () => {
-        const response = await getMemberInvitation(roomId)
-        
-        console.log('전체응답', response);
-        const inviteData = response.result;
-        console.log('URL 정보:', inviteData);
-        setInvite(inviteData);
-    };
-    fetchInvite();
-  }, [roomId]);
-
-  return (
-    <TotalContainer>
-      <Container>
-        <AddContainer>
-          <ContainerHead>리드미</ContainerHead>
-          <InfoContainer>
-            <TextContainer>
-              <TextColor>
-                초대 url <InfoText>{invite.room_invite_url}</InfoText><CopyBtn onClick={() => handleCopyClipBoard(invite.room_invite_url)}>🔍</CopyBtn>
-              </TextColor>
-            </TextContainer>
-            <TextContainer>
-              <TextColor>
-                공지방 이름 <InfoText>{invite.room_name}</InfoText>{' '}
-              </TextColor>
-            </TextContainer>
-            <TextContainer>
-              <TextColor>
-                비밀번호 <InfoText>{invite.room_password}</InfoText>{' '}
-              </TextColor>
-            </TextContainer>
-            <TextLastContainer>
-              <TextColor>
-                대표자 <InfoText>{invite.admin_nickname}</InfoText>
-              </TextColor>
-            </TextLastContainer>
-          </InfoContainer>
-        </AddContainer>
-      <ButtonWrapper>
-          <CustomBtn
-            text="멤버목록으로 이동"
-            border="none"
-            background="#509BF7"
-            onClick={handleGoMemberList}
-          />
-
-          <CustomBtn
-            text="공지방으로 이동"
-            border="0.5px solid #509BF7"
-            background="#FFFFFF"
-            onClick={handleGoNotice}
-          />
-   </ButtonWrapper>
-      </Container>
-    </TotalContainer>
-  );
-};

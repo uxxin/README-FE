@@ -107,7 +107,7 @@ function App() {
               {/* MemberList - 멤버 리스트*/}
               <Route path="/notice/:roomId/member" element={<MemberList />} />
               <Route
-                path="/notice/:roomId/member/:nickname"
+                path="/notice/:roomId/member/:userId"
                 element={<Profile />}
               />
               <Route path="/notice/:roomId/invite" element={<Invite />} />

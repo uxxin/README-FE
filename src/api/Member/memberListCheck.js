@@ -1,4 +1,4 @@
-import { DeleteAxiosInstance, GetAxiosInstance } from '../../axios/axios.method.js';
+import { DeleteAxiosInstance, GetAxiosInstance, PatchAxiosInstance } from '../../axios/axios.method.js';
 import { nicknameCheck, roomInfo } from '../Auth/authEnter.js';
 
 //멤버리스트 가져오기(전체, 개인)
@@ -6,7 +6,7 @@ export const getMemberList = async (searchInput, roomId) => {
     try {
       const response = await GetAxiosInstance(`/admin/users`, {
         params: {
-          nickname: searchInput,
+          nickname: '',
           roomId: roomId
         }
       });
@@ -57,3 +57,21 @@ export const getMemberBan = async (nickname, roomId) => {
     return response.data;
   }
 
+  export const getSubmitList = async(roomId) =>{
+    const response = await GetAxiosInstance(`/admin/submit/${roomId}`)
+    console.log("확인요청내역:",response.data)
+    console.log("확인요청내역:",response.data.result)
+    return response.data;
+  }
+
+  export const getSubmitRequest = async (type, roomId) => {
+   
+      const response = await PatchAxiosInstance(`/admin/submit/user-request`, {
+          type: type,
+          roomId: roomId
+        
+      });
+      console.log("확인요청내역 수락 혹은 거절:", response.data);
+      return response.data;
+    
+  };

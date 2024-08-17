@@ -13,6 +13,151 @@ import { useParams } from 'react-router-dom';
 import { getMyInfo} from '../../api/Member/memberListCheck';
 import { getMemberList } from '../../api/Member/memberListCheck';
 
+
+
+
+export const MemberListItem = () => {
+  const keysCount = useSelector((state) => state.keys.count); 
+  const { members } = useSelector((state) => state.keys);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { roomId } = useParams();
+
+  const [searchInput,setSearchInput] = useState("");
+
+  const [state, setState] = useState({
+    search: '',
+    results: [],
+    allMembers: [],
+    adminName: [],
+  });
+
+  const debouncedSearch = Debounce(state.search, 300);
+
+  useEffect(() => {
+    if (members && members.length >= 0) {
+      setState((prevState) => ({
+        ...prevState,
+        results: members,
+        allMembers: members,
+      }));
+    }
+  }, [members]);
+
+  
+  useEffect(() => {
+    const fetchMemberList = async () => {
+      try {
+        const memberData = await getMemberList('', roomId);
+        const adminData = await getMyInfo();
+        
+        console.log('admin 이름:', adminData.result);
+        console.log('userId가 있나요?', memberData.result);
+        
+        setState((prevState) => ({
+          ...prevState,
+          results: memberData.result,
+          allMembers: memberData.result,
+          adminName: adminData.result,
+        }));
+        dispatch(setKeysCount({ count: memberData.result.length, members: memberData.result }));
+      } catch (error) {
+        console.error('Error fetching member list:', error);
+      }
+    };
+    fetchMemberList();
+  }, [dispatch,roomId]); // 추가적인 종속성도 포함
+
+  useEffect(() => {
+    console.log('클릭버튼 누르면 이름 검색댐:', debouncedSearch);
+    if (debouncedSearch && debouncedSearch.trim() !== '' && Array.isArray(state.allMembers)) {
+      const filteredResults = state.allMembers.filter((member) =>
+        member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase()),
+      );
+      console.log('Filtered results:', filteredResults);
+      setState((prevState) => ({ ...prevState, results: filteredResults }));
+    } else {
+      setState((prevState) => ({ ...prevState, results: state.allMembers }));
+    }
+  }, [debouncedSearch, state.allMembers]);
+
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  
+
+  
+  const handleSearch = (e) => {
+    setSearchInput((prevState) => ({ ...prevState, search: e.target.value }));
+  };
+  
+  /*
+
+  const handleSearch = async () => {
+    try {
+      const memberData = await getMemberList(searchInput, roomId);
+      const filteredResults = memberData.result;
+      setState((prevState) => ({ ...prevState, results: filteredResults }));
+    } catch (error) {
+      console.error('Error searching for members:', error);
+    }
+  };
+*/
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleInput = (e) => {
+    setState((prevState) => ({ ...prevState, search: e.target.value }));
+
+  console.log('필터링된 사람:ListItem', state.results);
+}
+
+  return (
+    <Container>
+        <InputContainer>
+        <SearchInput
+          placeholder={'입력하세요'}
+          onChange={handleInput}
+        />
+       
+      </InputContainer>
+      <MemberIcon>
+        <HumanIcon />
+        <CountColor> {keysCount + 1} </CountColor>
+      </MemberIcon>
+      <MemberListBox>
+        <ButtonContainer>
+          <Link to={`/notice/${roomId}/invite`}>
+            <MemberAddBtn>
+              <PlusIcon />
+            </MemberAddBtn>
+          </Link>
+          <ButtonText>멤버초대하기</ButtonText>
+        </ButtonContainer>
+        <ButtonContainer>
+        <MemberNameBtn src={state.adminName.profileImage}/>
+          <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
+        </ButtonContainer>
+
+        {state.results && state.results.length > 0 ? (
+          <MemberListMap
+            members={state.results}
+            onOpenModal={handleOpenModal}
+            roomId={roomId}
+          />
+        ) : members && members.length === 0 ? (
+          <TextColor>아무도 없어요!</TextColor>
+        ) : (
+          <TextColor>검색한 결과가 없어요!</TextColor>
+        )}
+      </MemberListBox>
+    </Container>
+  );
+};
+
+
 // 컨테이너 스타일
 const Container = styled.div`
   max-width: 26.875rem;
@@ -51,7 +196,7 @@ const ButtonContainer = styled.div`
  `
 
 const ButtonText = styled.span`
-  width: 5.3125rem; //100%로 할지 정하기
+  width: 5.3125rem;
   height: 1.1875rem;
   gap: 0;
   opacity: 1;
@@ -64,6 +209,20 @@ const ButtonText = styled.span`
 `;
 
 const MemberAddBtn = styled.button`
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: 0.8rem;
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  background: #f4f9ff;
+  border: 0.02rem solid #c9e0fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MemberAddImgBtn = styled.img`
   width: 2.75rem;
   height: 2.75rem;
   margin-right: 0.8rem;
@@ -125,6 +284,17 @@ const SearchInput = styled.input`
     color: var(--Text-emtpy, var(--Grayscale-Gray4, #BDBDBD));
   }
 `
+const MemberNameBtn = styled.img`
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.5rem;
+  opacity: 1;
+  background: #dddddd;
+  box-sizing: border-box;
+  border: 0.02rem solid #dddddd;
+  margin-right: 0.8rem;
+`;
+
 
 const SearchButton = styled.button`
 width: 1.5rem;
@@ -134,144 +304,3 @@ color: #509bf7;
 border: none;
 cursor: pointer;
 `
-
-
-
-export const MemberListItem = () => {
-  const keysCount = useSelector((state) => state.keys.count); 
-  const { members } = useSelector((state) => state.keys);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const { roomId } = useParams();
-
-  const [searchInput,setSearchInput] = useState("");
-
-  const [state, setState] = useState({
-    search: '',
-    results: [],
-    allMembers: [],
-    adminName: [],
-  });
-
-//  const debouncedSearch = Debounce(state.search, 300);
-
-  useEffect(() => {
-    if (members && members.length >= 0) {
-      setState((prevState) => ({
-        ...prevState,
-        results: members,
-        allMembers: members,
-      }));
-    }
-  }, [members]);
-
-  
-  useEffect(() => {
-    const fetchMemberList = async () => {
-      try {
-        const memberData = await getMemberList('', roomId);
-        const adminData = await getMyInfo();
-        
-        console.log('admin 이름:', adminData.result);
-        console.log('userId가 있나요?', memberData.result);
-        
-        setState((prevState) => ({
-          ...prevState,
-          results: memberData.result,
-          allMembers: memberData.result,
-          adminName: adminData.result,
-        }));
-        dispatch(setKeysCount({ count: memberData.result.length, members: memberData.result }));
-      } catch (error) {
-        console.error('Error fetching member list:', error);
-      }
-    };
-    fetchMemberList();
-  }, [dispatch, roomId, searchInput]); // 추가적인 종속성도 포함
-
-  /* 디바운스용
-  // 검색어에 따라 필터링
-  useEffect(() => {
-    console.log('클릭버튼 누르면 이름 검색댐:', searchInput);
-    if (searchInput && searchInput.trim() !== '' && Array.isArray(state.allMembers)) {
-      const filteredResults = state.allMembers.filter((member) =>
-        member.nickname.toLowerCase().includes(searchInput.toLowerCase()),
-      );
-      console.log('Filtered results:', filteredResults);
-      setState((prevState) => ({ ...prevState, results: filteredResults }));
-    } else {
-      setState((prevState) => ({ ...prevState, results: state.allMembers }));
-    }
-  }, [searchInput, state.allMembers]);
-  */
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-  
-
-  /*
-  const handleSearch = (e) => {
-    setSearchInput((prevState) => ({ ...prevState, search: e.target.value }));
-  };
-  */
-
-  const handleSearch = async () => {
-    try {
-      const memberData = await getMemberList(searchInput, roomId);
-      const filteredResults = memberData.result;
-      setState((prevState) => ({ ...prevState, results: filteredResults }));
-    } catch (error) {
-      console.error('Error searching for members:', error);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setSearchInput(e.target.value);
-  };
-
-  console.log('필터링된 사람:ListItem', state.results);
-
-  return (
-    <Container>
-        <InputContainer>
-        <SearchInput
-          placeholder={'입력하세요'}
-          value={searchInput}
-          onChange={handleInputChange}
-        />
-        <SearchButton onClick={handleSearch}>🔍</SearchButton>
-      </InputContainer>
-      <MemberIcon>
-        <HumanIcon />
-        <CountColor> {keysCount + 1} </CountColor>
-      </MemberIcon>
-      <MemberListBox>
-        <ButtonContainer>
-          <Link to={`/notice/${roomId}/invite`}>
-            <MemberAddBtn>
-              <PlusIcon />
-            </MemberAddBtn>
-          </Link>
-          <ButtonText>멤버초대하기</ButtonText>
-        </ButtonContainer>
-        <ButtonContainer>
-          <MemberAddBtn></MemberAddBtn>
-          <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
-        </ButtonContainer>
-
-        {state.results && state.results.length > 0 ? (
-          <MemberListMap
-            members={state.results}
-            onOpenModal={handleOpenModal}
-            roomId={roomId}
-          />
-        ) : members && members.length === 0 ? (
-          <TextColor>아무도 없어요!</TextColor>
-        ) : (
-          <TextColor>검색한 결과가 없어요!</TextColor>
-        )}
-      </MemberListBox>
-    </Container>
-  );
-};

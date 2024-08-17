@@ -2,6 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { DotsIcon } from '../../assets/svgs/icons';
 
+export const MemberListDetails = (props) => {
+  const { profile_image, nickname } = props;
+
+  console.log('MemberListDetails props:', { profile_image, nickname });
+  return (
+    <ButtonContainer>
+      <MemberNameBtn src={props.profile_image} />
+      <ButtonText>{props.nickname}</ButtonText>
+      <SearchButton onClick={props.onOpenModal}>
+        <DotsIcon />
+      </SearchButton>
+    </ButtonContainer>
+  );
+};
+
+
 const ButtonContainer = styled.div`
   display: flex;
   box-sizing: border-box;
@@ -35,7 +51,7 @@ const MemberNameBtn = styled.img`
   background: #dddddd;
   box-sizing: border-box;
   border: 0.02rem solid #dddddd;
-  margin-right: 1.6rem;
+  margin-right: 0.8rem;
 `;
 
 const SearchButton = styled.button`
@@ -50,17 +66,3 @@ const SearchButton = styled.button`
   margin-left: auto;
 `;
 
-export const MemberListDetails = (props) => {
-  const { profile_image, nickname } = props;
-
-  console.log('MemberListDetails props:', { profile_image, nickname });
-  return (
-    <ButtonContainer>
-      <MemberNameBtn src={props.profile_image} />
-      <ButtonText>{props.nickname}</ButtonText>
-      <SearchButton onClick={props.onOpenModal}>
-        <DotsIcon />
-      </SearchButton>
-    </ButtonContainer>
-  );
-};

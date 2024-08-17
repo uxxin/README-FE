@@ -10,97 +10,6 @@ import { PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
 import { getMemberBan } from '../../api/Member/memberListCheck';
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-`;
-
-const ShowMoreIconContainer = styled.div`
-  position: relative;
-  z-index: 9999;
-`;
-
-const SecondModalContent = styled.div`
-  display: flex;
-  width: 16.875rem;
-  padding-top: 1.1875rem;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.125rem;
-  border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
-  background: var(--Primary-light, #f4f9ff);
-  backdrop-filter: blur(40px);
-  z-index: 10001;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  border-top: 0.333px solid var(--Grayscale-Gray5, #888);
-`;
-
-const CloseButton = styled.button`
-  display: flex;
-  flex: 1;
-  padding: 0.875rem 0;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background: transparent;
-  color: #509bf7;
-  border: 0.33px solid var(--Primary-light-active, #888888);
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  box-sizing: border-box;
-  white-space: nowrap;
-  align-items: center;
-  gap: 0.625rem;
-  align-self: stretch;
-`;
-
-const ButtonText = styled.span`
-  width: 5.3125rem;
-  height: 1.1875rem;
-  gap: 0;
-  opacity: 1;
-  box-sizing: border-box;
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.2rem;
-  letter-spacing: -0.02em;
-  text-align: start;
-`;
-
-const MemberAddBtn = styled.button`
-  width: 2.75rem;
-  height: 2.75rem;
-  margin-right: 0.8rem; //이거 어떻게 할지 정하기
-  padding: 0.625rem;
-  border-radius: 0.5rem;
-  box-sizing: border-box;
-  background: #f4f9ff;
-  border: 0.02rem solid #c9e0fd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ThirdModalContent = styled(SecondModalContent)`
-  /* 색상 및 크기가 SecondModalContent와 동일하도록 유지 */
-`;
 
 export const MemberListMap = ({ members }) => {
   const {roomId} = useParams();
@@ -123,8 +32,6 @@ export const MemberListMap = ({ members }) => {
     setIsModalOpen(false);
   };
 
-  
-
   const handleProfileLinkClick = () => {
     if (selectedProfile) {
       const userId = encodeURIComponent(selectedProfile.userId);
@@ -135,6 +42,7 @@ export const MemberListMap = ({ members }) => {
           userId: selectedProfile.userId
         },
       });console.log("state로 덤길 셀렉티드 nickname",selectedProfile.nickname)
+        console.log("state로 덤길 셀렉티드 nickname",selectedProfile.userId)
     } else {
       console.error('Selected profile is not defined');
     }
@@ -238,3 +146,97 @@ export const MemberListMap = ({ members }) => {
     </div>
   );
 };
+
+
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+`;
+
+const ShowMoreIconContainer = styled.div`
+  position: relative;
+  z-index: 9999;
+`;
+
+const SecondModalContent = styled.div`
+  display: flex;
+  width: 16.875rem;
+  padding-top: 1.1875rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125rem;
+  border-radius: 0.5rem;
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  background: var(--Primary-light, #f4f9ff);
+  backdrop-filter: blur(40px);
+  z-index: 10001;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  border-top: 0.333px solid var(--Grayscale-Gray5, #888);
+`;
+
+const CloseButton = styled.button`
+  display: flex;
+  flex: 1;
+  padding: 0.875rem 0;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: #509bf7;
+  border: 0.33px solid var(--Primary-light-active, #888888);
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  box-sizing: border-box;
+  white-space: nowrap;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+`;
+
+const ButtonText = styled.span`
+  width: 5.3125rem;
+  height: 1.1875rem;
+  gap: 0;
+  opacity: 1;
+  box-sizing: border-box;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2rem;
+  letter-spacing: -0.02em;
+  text-align: start;
+`;
+
+const MemberAddBtn = styled.button`
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-right: 0.8rem; //이거 어떻게 할지 정하기
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  background: #f4f9ff;
+  border: 0.02rem solid #c9e0fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ThirdModalContent = styled(SecondModalContent)`
+  /* 색상 및 크기가 SecondModalContent와 동일하도록 유지 */
+`;
