@@ -54,10 +54,10 @@ const SignIn = () => {
           charCount={true}
         />
         <ButtonWrapper>
+          <SignInButton onClick={handleLogin}>로그인</SignInButton>
           <KakaoLoginButton onClick={handleKakaoLogin}>
             카카오톡으로 계속하기
           </KakaoLoginButton>
-          <SignInButton onClick={handleLogin}>로그인</SignInButton>
           <NotAuth>아직 회원이 아니신가요?</NotAuth>
           <SignupButton onClick={() => navigate('/sign-up')}>
             회원가입
@@ -90,20 +90,7 @@ const CommonButton = styled.button`
   width: calc(100% - 2rem);
 `;
 
-// const KakaoLogin = styled(Link)`
-//   text-decoration: none;
-//   color: rgba(0, 0, 0, 0.85);
-//   padding: 1rem 0;
-//   border-radius: 0.5rem;
-//   width: calc(100% - 2rem);
-//   background-color: #fee500;
-//   display: flex;
-//   justify-content: center;
-//   gap: 0.5rem;
-// `;
-
 const SignInButton = styled(CommonButton)`
-  margin: 0.625rem 0;
   background-color: #509bf7;
   color: #ffffff;
 `;
