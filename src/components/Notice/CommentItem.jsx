@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 import CustomModal from '../CustomModal';
+import { deleteNoticeComment } from '../../api/Notice/details';
 
-export const CommentItem = ({ props }) => {
+export const CommentItem = ({ props, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const modalClose = () => {
     setIsOpen(false);
   };
-  const deleteComment = () => {
-    console.log('삭제');
+  const deleteComment = async () => {
+    try {
+      await deleteNoticeComment(props.commentId);
+      if (onDelete) await onDelete();
+    } catch (error) {
+      console.error('댓글 삭제 오류:', error);
+    }
   };
   const modalProps = {
     isOpen: isOpen,

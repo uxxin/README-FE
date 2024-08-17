@@ -72,7 +72,16 @@ const NoticeDetails = () => {
         <CommentList>
           {comments.length > 0 ? (
             comments.map((data) => (
-              <CommentItem props={data} key={data.commentId} />
+              <CommentItem
+                props={data}
+                key={data.commentId}
+                onDelete={async () => {
+                  await Promise.all([
+                    getNoticeDetailData(),
+                    getNoticeCommentData(),
+                  ]);
+                }}
+              />
             ))
           ) : (
             <></>
