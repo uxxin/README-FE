@@ -6,23 +6,30 @@ import { ReactComponent as SmallCamera } from '../../../assets/svgs/small_camera
 import { ReactComponent as DeletePhoto } from '../../../assets/svgs/delete_photo.svg';
 import { ReactComponent as AddPhoto } from '../../../assets/svgs/add_photo.svg';
 import {
+  getNoticeRoomInfo,
   getSubmitInfo,
   submitAll,
   submitImage,
 } from '../../../api/Notice/noticeSubmit';
+import { useDispatch } from 'react-redux';
+import {
+  setNoticeRoomTitle,
+  setSubmitState,
+} from '../../../redux/Notice/NoticeActions';
 const Solve = () => {
   const headerProps = {
     title: '공지방 이름',
     isSearch: false,
   };
-  const { postId } = useParams();
+  const { params } = useParams();
   const [submitData, setSubmitData] = useState();
   const [sendData, setSendData] = useState([]);
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [content, setContent] = useState('');
-  const [submitState, setSubmitState] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const dispatch = useDispatch();
+
   const handleUploadImage = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -67,8 +74,8 @@ const Solve = () => {
   const submitAllData = async () => {
     try {
       const finalImageURLs = await submitImages();
-      const response = await submitAll(content, finalImageURLs, postId);
-      setSubmitState(response.data.result.submitState);
+      const response = await submitAll(content, finalImageURLs, params.postId);
+      dispatch(setSubmitState(response.data.result.submitState));
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +99,7 @@ const Solve = () => {
   useEffect(() => {
     const getSubmit = async () => {
       try {
-        const response = await getSubmitInfo(postId);
+        const response = await getSubmitInfo(params.postId);
         setSubmitData(response.data.result);
       } catch (error) {
         console.log(error);
@@ -100,6 +107,19 @@ const Solve = () => {
     };
     getSubmit();
   }, []);
+
+  useEffect(() => {
+    const getNoticeRoomTitle = async () => {
+      try {
+        const response = await getNoticeRoomInfo();
+        dispatch(setNoticeRoomTitle(response.title));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getNoticeRoomTitle();
+  }, []);
+
   return (
     <>
       <Header props={headerProps} />

@@ -19,3 +19,8 @@ export const submitAll = async (content, imageURLs, postId) => {
   });
   return response;
 };
+
+export const getNoticeRoomInfo = async (roomId) => {
+  const response = await GetAxiosInstance(`/room/${roomId}`);
+  return response;
+};
