@@ -50,7 +50,10 @@ const SecondStep = ({
   return (
     <>
       <Container>
-        <ImgUpload onUpload={handleImageUpload} />
+        <ImgUpload
+          onUpload={handleImageUpload}
+          imageURLs={postData.imageURLs}
+        />
         <div className="common-wrap">
           <span className={`text-wrap ${postData.startDate && 'activate'}`}>
             시작 기한
@@ -91,7 +94,7 @@ const SecondStep = ({
                 value={postData.answer}
                 onChange={(e) => handleInput(e, 'answer')}
               />
-              ({postData.question.length}
+              ({postData.answer.length}
               /20)
             </div>
           </div>

@@ -69,7 +69,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 0.625rem 1rem calc(3.995rem + 53.19px);
+  padding: 0.625rem 1rem 8.9325rem;
 
   .type {
     display: flex;

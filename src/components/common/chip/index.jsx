@@ -14,6 +14,7 @@ export default function Chip({
       style: {
         padding: '0.38rem 1.13rem',
         borderRadius: '62.4375rem',
+        width: 'fit-content',
         ...chipTheme[theme],
       },
       onClick: onClick,

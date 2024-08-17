@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import camera from '../../../assets/svgs/img_upload.svg';
 import imgDelete from '../../../assets/svgs/img_delete.svg';
 
-export const ImgUpload = ({ onUpload }) => {
-  const [images, setImages] = useState([]);
-
+export const ImgUpload = ({ onUpload, imageURLs }) => {
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     const newImages = files.map((file) => URL.createObjectURL(file));
-    setImages((prevImages) => [...prevImages, ...newImages].slice(0, 10));
+    onUpload([...imageURLs, ...newImages].slice(0, 10));
   };
 
   const handleClick = () => {
@@ -17,20 +15,14 @@ export const ImgUpload = ({ onUpload }) => {
   };
 
   const handleDelete = (imageToDelete) => {
-    setImages(images.filter((image) => image !== imageToDelete));
+    onUpload(imageURLs.filter((image) => image !== imageToDelete));
   };
-
-  useEffect(() => {
-    if (onUpload) {
-      onUpload(images);
-    }
-  }, [images]);
 
   return (
     <UploadContainer>
-      <Label>사진 ({images.length}/10)</Label>
+      <Label>사진 ({imageURLs.length}/10)</Label>
       <ImagesContainer>
-        {images.length < 10 && (
+        {imageURLs.length < 10 && (
           <>
             <HiddenInput
               type="file"
@@ -44,7 +36,7 @@ export const ImgUpload = ({ onUpload }) => {
             </CameraIcon>
           </>
         )}
-        {images.slice(0, 9).map((image, index) => (
+        {imageURLs.slice(0, 9).map((image, index) => (
           <ImagePreview key={index}>
             <Image src={image} alt={`Preview ${index + 1}`} />
             <ImageDelete
