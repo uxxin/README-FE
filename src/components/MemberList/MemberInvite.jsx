@@ -93,7 +93,7 @@ export const MemberInvite = () => {
           </div>
         </div>
       </Container>
-      <FloatingBox gap={0.625}>
+      <FloatingBox>
         <KakaoLoginButton onClick={handleShareUrl}>
           카카오톡으로 공유하기
         </KakaoLoginButton>

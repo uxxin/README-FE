@@ -272,12 +272,14 @@ const InfoContainer = styled.div`
 
 const ImgContainer = styled.div`
   display: flex;
+  height: 12.5rem;
+  width: 12.5rem;
   justify-content: center;
   align-items: center;
 `;
 
 const RoomImg = styled.img`
-  height: 12.5rem;
+  height: 100%;
   width: 100%;
   border-radius: 0.5rem;
 `;
@@ -381,8 +383,8 @@ const Button = styled.button`
   border: none;
   background: var(--color-primary-normal);
   color: var(--color-white);
-  height: 3.1875rem;
-  width: 24.875rem;
+  height: 100%;
+  width: 100%;
 
   &:disabled {
     background: var(--color-empty);
@@ -391,7 +393,8 @@ const Button = styled.button`
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%;
+  width: 24.875rem;
+  height: 3.1875rem;
   display: flex;
   justify-content: center;
   position: absolute;
