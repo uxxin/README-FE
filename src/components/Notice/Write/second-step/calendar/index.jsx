@@ -8,11 +8,11 @@ import { ReactComponent as ArrowRight } from '../../../../../assets/svgs/arrow_r
 import { addDays } from 'date-fns';
 
 export default function Calendar({ date, type, setDate, open, handleClose }) {
-  const isStartDate = type === 'startDate';
-  const startDate = isStartDate ? date.startDate : date.endDate;
+  const isStartDate = type === 'start_date';
+  const startDate = isStartDate ? date.start_date : date.end_date;
   const minDate = isStartDate
     ? new Date()
-    : (date.startDate && addDays(`20${date.startDate}`, 1)) || new Date();
+    : (date.start_date && addDays(`20${date.start_date}`, 1)) || new Date();
   const newDate = startDate ? new Date(`20${startDate}`) : new Date();
   const activeColor = () => {
     const outsideMonth = document.querySelectorAll(

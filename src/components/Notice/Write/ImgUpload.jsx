@@ -6,7 +6,7 @@ import imgDelete from '../../../assets/svgs/img_delete.svg';
 export const ImgUpload = ({
   handleUpdatePostData,
   handleImageUpload,
-  imageURLs,
+  imgURLs,
 }) => {
   const handleClick = () => {
     document.getElementById('fileInput').click();
@@ -14,16 +14,16 @@ export const ImgUpload = ({
 
   const handleDelete = (imageToDelete) => {
     handleUpdatePostData({
-      type: 'imageURLs',
-      value: imageURLs.filter((image) => image !== imageToDelete),
+      type: 'imgURLs',
+      value: imgURLs.filter((image) => image !== imageToDelete),
     });
   };
 
   return (
     <UploadContainer>
-      <Label>사진 ({imageURLs.length}/10)</Label>
+      <Label>사진 ({imgURLs.length}/10)</Label>
       <ImagesContainer>
-        {imageURLs.length < 10 && (
+        {imgURLs.length < 10 && (
           <>
             <HiddenInput
               type="file"
@@ -37,7 +37,7 @@ export const ImgUpload = ({
             </CameraIcon>
           </>
         )}
-        {imageURLs.slice(0, 9).map((image, index) => (
+        {imgURLs.slice(0, 9).map((image, index) => (
           <ImagePreview key={index}>
             <Image src={image} alt={`Preview ${index + 1}`} />
             <ImageDelete

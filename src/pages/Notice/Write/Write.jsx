@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { Header } from '../../../components/Header';
-import Post from '../../../components/Notice/Write/first-step';
 import { useParams } from 'react-router-dom';
+import FirstStep from '../../../components/Notice/Write/first-step';
 import SecondStep from '../../../components/Notice/Write/second-step';
 import ThirdStep from '../../../components/Notice/Write/third-step';
 import { PostAxiosInstance } from '../../../axios/axios.method';
 
 const Write = () => {
   const [step, setStep] = useState(1);
+  const { roomId } = useParams();
   const [postData, setPostData] = useState({
+    room_id: roomId,
     type: 'QUIZ',
     title: '',
     content: '',
-    imageURLs: [],
-    startDate: '',
-    endDate: '',
+    imgURLs: [],
+    start_date: '',
+    end_date: '',
     question: '',
-    answer: '',
+    quiz_answer: '',
   });
-  const { roomId } = useParams();
 
   const handleUpdatePostData = ({ type, value }) => {
     setPostData((prev) => ({ ...prev, [type]: value }));
@@ -39,8 +40,8 @@ const Write = () => {
       });
 
       handleUpdatePostData({
-        type: 'imageURLs',
-        value: [...postData.imageURLs, ...s3Response.data.result.images].slice(
+        type: 'imgURLs',
+        value: [...postData.imgURLs, ...s3Response.data.result.images].slice(
           0,
           10,
         ),
@@ -57,8 +58,9 @@ const Write = () => {
   };
 
   const handleCreatePost = async () => {
-    // 공지글 생성 API 호출
-    window.location.replace(`/notice/${roomId}`);
+    const response = await PostAxiosInstance(`/admin/post`, postData);
+    if (response.data.isSuccess) window.location.replace(`/notice/${roomId}`);
+    else console.error(response.data.message);
   };
 
   return (
@@ -70,7 +72,7 @@ const Write = () => {
         write={true}
       />
       {step === 1 && (
-        <Post
+        <FirstStep
           handleNextStep={handleNextStep}
           postData={postData}
           handleUpdatePostData={handleUpdatePostData}

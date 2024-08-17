@@ -7,22 +7,22 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
     <>
       <Container>
         <div className="content-wrap">
-          <Chip onClick={() => {}} theme={postData.type}>
+          <Chip theme={postData.type}>
             {postData.type === 'QUIZ' ? '퀴즈' : '미션'}
           </Chip>
           <span className="bold-18">{postData.title}</span>
           <span className="regular-12 date">
-            {postData.startDate} - {postData.endDate}
+            {postData.start_date} - {postData.end_date}
           </span>
           <span className="medium-16 content">{postData.content}</span>
-          {postData.imageURLs.length > 0 &&
-            postData.imageURLs.map((url) => (
+          {postData.imgURLs.length > 0 &&
+            postData.imgURLs.map((url) => (
               <img key={url} src={url} alt="미리보기 사진" />
             ))}
         </div>
         <div className="question-answer">
           <span className="bold-18">Q.{postData.question}</span>
-          <span className="medium-16">A.{postData.answer}</span>
+          <span className="medium-16">A.{postData.quiz_answer}</span>
         </div>
       </Container>
       <Floating>

@@ -18,10 +18,10 @@ const SecondStep = ({
 }) => {
   const [calendar, setCalendar] = useState({ type: '', isOpen: false });
   const disabled =
-    !postData.startDate ||
-    !postData.endDate ||
+    !postData.start_date ||
+    !postData.end_date ||
     !postData.question.length ||
-    (isQuiz && !postData.answer.length);
+    (isQuiz && !postData.quiz_answer.length);
 
   const handleInput = (e, type) => {
     const { value } = e.target;
@@ -50,22 +50,24 @@ const SecondStep = ({
         <ImgUpload
           handleUpdatePostData={handleUpdatePostData}
           handleImageUpload={handleImageUpload}
-          imageURLs={postData.imageURLs}
+          imgURLs={postData.imgURLs}
         />
         <div className="common-wrap">
-          <span className={`text-wrap ${postData.startDate && 'activate'}`}>
-            시작 기한
-          </span>
-          <button onClick={(e) => handleOpenCalendar(e, 'startDate')}>
-            {postData.startDate || 'YY.MM.DD'}
+          <span className="text-wrap">시작 기한</span>
+          <button
+            onClick={(e) => handleOpenCalendar(e, 'start_date')}
+            className={`medium-16 ${postData.start_date && 'activate'}`}
+          >
+            {postData.start_date || 'YY.MM.DD'}
           </button>
         </div>
         <div className="common-wrap">
-          <span className={`text-wrap ${postData.endDate && 'activate'}`}>
-            마감 기한
-          </span>
-          <button onClick={(e) => handleOpenCalendar(e, 'endDate')}>
-            {postData.endDate || 'YY.MM.DD'}
+          <span className="text-wrap">마감 기한</span>
+          <button
+            onClick={(e) => handleOpenCalendar(e, 'end_date')}
+            className={`medium-16 ${postData.end_date && 'activate'}`}
+          >
+            {postData.end_date || 'YY.MM.DD'}
           </button>
         </div>
         <div className="common-wrap">
@@ -78,6 +80,7 @@ const SecondStep = ({
               placeholder="퀴즈를 입력하세요"
               value={postData.question}
               onChange={(e) => handleInput(e, 'question')}
+              className="medium-16"
             />
             ({postData.question.length}
             /20)
@@ -89,10 +92,11 @@ const SecondStep = ({
             <div className="input-wrap">
               <input
                 placeholder="정답을 입력하세요"
-                value={postData.answer}
-                onChange={(e) => handleInput(e, 'answer')}
+                value={postData.quiz_answer}
+                onChange={(e) => handleInput(e, 'quiz_answer')}
+                className="medium-16"
               />
-              ({postData.answer.length}
+              ({postData.quiz_answer.length}
               /20)
             </div>
           </div>
