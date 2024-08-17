@@ -7,57 +7,47 @@ import { TwoButton } from '../../../components/Notice/Write/StepButton';
 const MissionType = ({
   onPrevStep,
   onNextStep,
-  postType,
-  postTitle,
-  postContent,
-  imageURLs: uploadedImages,
-  startDate: inputStartDate,
-  endDate: inputEndDate,
-  question: inputQuestion,
+  postData,
+  handleUpdatePostData,
 }) => {
-  const [imageURLs, setImageURLs] = useState(uploadedImages || []);
-  const [startDate, setStartDate] = useState(inputStartDate || '');
-  const [endDate, setEndDate] = useState(inputEndDate || '');
-  const [question, setQuestion] = useState(inputQuestion || '');
-
   const handlePrevClick = () => {
-    onPrevStep(
-      postType,
-      postTitle,
-      postContent,
-      uploadedImages,
-      inputStartDate,
-      inputEndDate,
-      inputQuestion,
-    );
+    // onPrevStep(
+    //   postType,
+    //   postTitle,
+    //   postContent,
+    //   uploadedImages,
+    //   inputStartDate,
+    //   inputEndDate,
+    //   inputQuestion,
+    // );
   };
 
   const handleNextClick = () => {
-    onNextStep(
-      postType,
-      postTitle,
-      postContent,
-      imageURLs,
-      startDate,
-      endDate,
-      question,
-    );
+    // onNextStep(
+    //   postType,
+    //   postTitle,
+    //   postContent,
+    //   imageURLs,
+    //   startDate,
+    //   endDate,
+    //   question,
+    // );
   };
 
   const handleImageUpload = (uploadedImages) => {
-    setImageURLs(uploadedImages);
+    handleUpdatePostData({ type: 'imageURLs', value: uploadedImages });
   };
 
   return (
     <Container>
       <ImgUpload onUpload={handleImageUpload} />
       <Mission
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        question={question}
-        setQuestion={setQuestion}
+        startDate={postData.startDate}
+        setStartDate={() => {}}
+        endDate={postData.endDate}
+        setEndDate={() => {}}
+        question={postData.question}
+        setQuestion={() => {}}
       />
       <TwoButton
         props={{
@@ -65,7 +55,10 @@ const MissionType = ({
           background1: '#FFFFFF',
           btn1: '이전',
           border2: 'none',
-          background2: startDate && endDate && question ? '#509BF7' : '#BDBDBD',
+          background2:
+            postData.startDate && postData.endDate && postData.question
+              ? '#509BF7'
+              : '#BDBDBD',
           btn2: '확인',
         }}
         onPrevStep={handlePrevClick}
