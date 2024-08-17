@@ -27,10 +27,10 @@ export const TwoButton = ({ props, onPrevStep, onNextStep }) => {
   };
 
   const handleNextClick = () => {
-    if (props.background !== '#BDBDBD') {
+    if (props.background2 !== '#BDBDBD') {
       onNextStep();
     } else {
-      alert('제목과 내용을 입력하세요.');
+      alert('날짜와 문제를 입력하세요.');
     }
   };
 

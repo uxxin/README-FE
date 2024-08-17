@@ -6,14 +6,14 @@ import { ReactComponent as CommentIcon } from '../../assets/svgs/comment_icon.sv
 import { ReactComponent as ShowmoreIcon } from '../../assets/svgs/show_more_icon.svg';
 import { ReactComponent as UncheckedPeople } from '../../assets/svgs/unchecked_people.svg';
 import CustomModal from '../CustomModal';
-import { patchFixNotice } from '../../api/Notice/noticeMain';
+import { deleteNotice, patchFixNotice } from '../../api/Notice/noticeMain';
 import { UnconfirmedPeopleModal } from './NoticeTitle/UnconfirmedPeopleModal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const NoticeTitle = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const navigate = useNavigate();
   const unconfirmedModalClose = () => {
     setIsModalOpen(false);
   };
@@ -35,11 +35,16 @@ export const NoticeTitle = (props) => {
       console.log(error);
     }
   };
-  const correctNotice = () => {
-    console.log('수정');
+  const modifyNotice = () => {
+    console.log('수정은 뷰 나오면 연결할게요');
   };
-  const deleteNotice = () => {
-    console.log('삭제');
+  const deleteNotices = async () => {
+    try {
+      const response = await deleteNotice(props.postId);
+      location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const memberModal = [
@@ -48,8 +53,8 @@ export const NoticeTitle = (props) => {
   ];
   const managerModal = [
     { label: '주소 공유', onClick: shareAddress, color: '#222222' },
-    { label: '수정', onClick: correctNotice, color: '#222222' },
-    { label: '삭제', onClick: deleteNotice, color: '#F5535E' },
+    { label: '수정', onClick: modifyNotice, color: '#222222' },
+    { label: '삭제', onClick: deleteNotices, color: '#F5535E' },
   ];
 
   const modalProps = {

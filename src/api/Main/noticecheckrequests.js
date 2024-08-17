@@ -12,6 +12,5 @@ export const getNoticeCheckRequests = async () => {
 export const getRequestDatas = async (roomId) => {
   const response = await GetAxiosInstance(`/user/rooms/missions/${roomId}`);
   console.log(response.data);
-
   return response.data;
 };

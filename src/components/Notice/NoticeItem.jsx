@@ -7,8 +7,8 @@ export const NoticeItem = ({ props, imgs, preview }) => {
   return (
     <Container>
       <NoticeTitle {...props} preview={preview} />
-      <NoticeContent>{props.postBody}</NoticeContent>
-      {imgs.length > 0 && <Thumbnail src={imgs[0]} />}
+      <NoticeContent>{props?.postBody}</NoticeContent>
+      {imgs && imgs.map((img) => <Thumbnail key={img} src={img} />)}
       {preview ? (
         <></>
       ) : (
