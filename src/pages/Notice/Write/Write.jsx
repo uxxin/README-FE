@@ -4,7 +4,10 @@ import { useParams } from 'react-router-dom';
 import FirstStep from '../../../components/Notice/Write/first-step';
 import SecondStep from '../../../components/Notice/Write/second-step';
 import ThirdStep from '../../../components/Notice/Write/third-step';
-import { PostAxiosInstance } from '../../../axios/axios.method';
+import {
+  DeleteAxiosInstance,
+  PostAxiosInstance,
+} from '../../../axios/axios.method';
 
 const Write = () => {
   const [step, setStep] = useState(1);
@@ -49,6 +52,18 @@ const Write = () => {
     }
   };
 
+  const handleDeleteImage = async (url) => {
+    try {
+      await DeleteAxiosInstance(`/user/s3`, { data: { url } });
+      handleUpdatePostData({
+        type: 'imgURLs',
+        value: postData.imgURLs.filter((img) => img !== url),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handlePrevStep = () => {
     setStep((prev) => prev - 1);
   };
@@ -83,6 +98,7 @@ const Write = () => {
           handlePrevStep={handlePrevStep}
           handleNextStep={handleNextStep}
           handleImageUpload={handleImageUpload}
+          handleDeleteImage={handleDeleteImage}
           postData={postData}
           handleUpdatePostData={handleUpdatePostData}
           isQuiz={postData.type === 'QUIZ'}

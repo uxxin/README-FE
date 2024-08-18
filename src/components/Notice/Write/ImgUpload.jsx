@@ -4,19 +4,12 @@ import camera from '../../../assets/svgs/img_upload.svg';
 import imgDelete from '../../../assets/svgs/img_delete.svg';
 
 export const ImgUpload = ({
-  handleUpdatePostData,
   handleImageUpload,
+  handleDeleteImage,
   imgURLs,
 }) => {
   const handleClick = () => {
     document.getElementById('fileInput').click();
-  };
-
-  const handleDelete = (imageToDelete) => {
-    handleUpdatePostData({
-      type: 'imgURLs',
-      value: imgURLs.filter((image) => image !== imageToDelete),
-    });
   };
 
   return (
@@ -43,7 +36,7 @@ export const ImgUpload = ({
             <ImageDelete
               src={imgDelete}
               alt="delete"
-              onClick={() => handleDelete(image)}
+              onClick={() => handleDeleteImage(image)}
             />
           </ImagePreview>
         ))}
