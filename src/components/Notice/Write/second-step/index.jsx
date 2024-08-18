@@ -156,13 +156,10 @@ const Container = styled.div`
     button,
     .input-wrap {
       padding: 0.5rem;
-    }
-
-    button,
-    .input-wrap {
       border-radius: 0.5rem;
       border: 0.0625rem solid var(--color-primary-light-active);
       background-color: var(--color-primary-light);
+      outline: none;
     }
 
     .date-button {
