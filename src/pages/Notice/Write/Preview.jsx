@@ -6,58 +6,41 @@ import { TwoButton } from '../../../components/Notice/Write/StepButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createNotice } from '../../../api/Notice/write';
 
-const Preview = ({
-  onPrevStep,
-  postType,
-  title,
-  content,
-  imageURLs,
-  startDate,
-  endDate,
-  question,
-  answer,
-}) => {
+const Preview = ({ onPrevStep, postData, handleUpdatePostData }) => {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const post = {
-    postType: postType,
-    postTitle: title,
-    postBody: content,
-    startDate: startDate,
-    endDate: endDate,
+    postType: postData.type,
+    postTitle: postData.title,
+    postBody: postData.content,
+    startDate: postData.startDate,
+    endDate: postData.endDate,
   };
-  const postData = {
+  const sendData = {
+    ...postData,
     room_id: roomId,
-    type: postType,
-    title: title,
-    content: content,
-    start_date: startDate,
-    end_date: endDate,
-    question: question,
-    quiz_answer: postType === 'QUIZ' ? answer : '',
-    imgURLs: imageURLs,
   };
 
   const handlePrevClick = () => {
-    onPrevStep(
-      postType,
-      title,
-      content,
-      imageURLs,
-      startDate,
-      endDate,
-      question,
-      answer,
-    );
+    // onPrevStep(
+    //   postType,
+    //   title,
+    //   content,
+    //   imageURLs,
+    //   startDate,
+    //   endDate,
+    //   question,
+    //   answer,
+    // );
   };
 
   const handlePostClick = async () => {
-    try {
-      await createNotice(postData);
-      navigate(`/notice/${roomId}`);
-    } catch (error) {
-      console.error('공지글 생성 오류 발생:', error);
-    }
+    // try {
+    //   await createNotice(sendData);
+    //   navigate(`/notice/${roomId}`);
+    // } catch (error) {
+    //   console.error('공지글 생성 오류 발생:', error);
+    // }
   };
 
   return (
@@ -65,9 +48,9 @@ const Preview = ({
       <NoticeItem props={post} imgs={imageURLs} preview={true} />
 
       <QuestionPreview
-        postType={postType}
-        question={question}
-        answer={answer}
+        postType={postData.type}
+        question={postData.question}
+        answer={postData.answer}
       />
 
       <TwoButton

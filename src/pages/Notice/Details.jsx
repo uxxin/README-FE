@@ -172,9 +172,6 @@ const CommentInput = styled.input`
   font-weight: 500;
   line-height: 120%; /* 1.2rem */
   letter-spacing: -0.02rem;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;
 
 const CommentWriteIcon = styled.img`
