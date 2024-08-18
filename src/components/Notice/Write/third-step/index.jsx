@@ -14,7 +14,7 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
           <span className="regular-12 date">
             {postData.start_date} - {postData.end_date}
           </span>
-          <span className="medium-16 content">{postData.content}</span>
+          <div className="medium-16 content">{postData.content}</div>
           {postData.imgURLs.length > 0 &&
             postData.imgURLs.map((url) => (
               <img key={url} src={url} alt="미리보기 사진" />
@@ -60,6 +60,7 @@ const Container = styled.div`
 
     .content {
       color: var(--color-caption);
+      overflow-wrap: break-word;
     }
   }
 
