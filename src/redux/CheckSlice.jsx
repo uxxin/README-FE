@@ -11,7 +11,7 @@ const CheckSlice = createSlice({
         setRequiredListCount : (state, action) =>{ //리스트 개수세기
             state.count = action.payload.count;
             state.requiredList = action.payload.requiredList
-            state.acceptanceList = action.payload.acceptanceList
+        //    state.acceptanceList = action.payload.acceptanceList
         },
         acceptance : (state, action) =>{ //수락버튼 누르면 작동되는 로직(화면에서 없어지고 데이터가 승인완료된 목록으로 넘어감)
             const acceptItem = state.requiredList.find(item=>item.submit_id===action.payload);
