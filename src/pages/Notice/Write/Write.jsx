@@ -33,7 +33,7 @@ const Write = () => {
         formData.append('file', file);
       });
 
-      const s3Response = await PostAxiosInstance('/user/s3/upload', formData, {
+      const s3Response = await PostAxiosInstance('/user/s3', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
