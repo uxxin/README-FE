@@ -83,7 +83,7 @@ const Container = styled.div`
 
 const Floating = styled.div`
   background-color: #ffffff;
-  width: calc(100% - 2rem);
+  width: calc(100%);
   border-top: 0.0625rem solid var(--color-primary-light-active);
   display: flex;
   justify-content: center;
@@ -91,7 +91,7 @@ const Floating = styled.div`
   max-width: 429px;
   gap: 0.625rem;
   bottom: 0;
-  padding: 1.25rem 1rem 3.37rem;
+  padding: 1.25rem 0 3.37rem;
 `;
 
 export default ThirdStep;

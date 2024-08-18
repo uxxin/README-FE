@@ -60,6 +60,7 @@ const Write = () => {
         value: postData.imgURLs.filter((img) => img !== url),
       });
     } catch (err) {
+      alert('이미지 삭제에 실패했습니다.');
       console.error(err);
     }
   };
