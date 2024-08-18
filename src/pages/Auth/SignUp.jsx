@@ -40,7 +40,7 @@ export default function Signup() {
       try {
         const { passwordCheck, ...userData } = user;
         const response = await axios.post(`${baseUrl}/user/signup`, userData);
-        localStorage.setItem('token', response.result.accessToken);
+        localStorage.setItem('token', response.result.data.accessToken);
         return setPage((prev) => (prev = prev + 1));
       } catch (err) {
         return console.error(err);
