@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import Button from '../../../common/button';
 import FlexBox from '../../../common/flex-box';
 import FloatingBox from '../../../common/floating-box';
@@ -67,12 +68,13 @@ export default function ThirdStep({
               error="인증코드가 일치하지 않습니다."
               success="인증되었습니다."
             />
-            <Button
-              name="확인"
+            <StyledButton
               disabled={!isSent}
               onClick={handleCheckCode}
-              small
-            />
+              className="medium-16"
+            >
+              확인
+            </StyledButton>
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -86,3 +88,17 @@ export default function ThirdStep({
     </>
   );
 }
+
+const StyledButton = styled.button`
+  height: 65px;
+  border-radius: 0.5rem;
+  width: 20%;
+  border: 0.0625rem solid var(--color-primary-normal);
+  background-color: var(--color-primary-normal);
+  color: #ffffff;
+
+  &:disabled {
+    background-color: var(--color-disabled);
+    border: 0.0625rem solid var(--color-disabled);
+  }
+`;
