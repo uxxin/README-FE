@@ -1,42 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import camera from '../../../assets/svgs/img_upload.svg';
 import imgDelete from '../../../assets/svgs/img_delete.svg';
 
-export const ImgUpload = ({ onUpload }) => {
-  const [images, setImages] = useState([]);
-
-  const handleImageChange = (event) => {
-    const files = Array.from(event.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
-    setImages((prevImages) => [...prevImages, ...newImages].slice(0, 10));
-  };
-
+export const ImgUpload = ({
+  handleUpdatePostData,
+  handleImageUpload,
+  imgURLs,
+}) => {
   const handleClick = () => {
     document.getElementById('fileInput').click();
   };
 
   const handleDelete = (imageToDelete) => {
-    setImages(images.filter((image) => image !== imageToDelete));
+    handleUpdatePostData({
+      type: 'imgURLs',
+      value: imgURLs.filter((image) => image !== imageToDelete),
+    });
   };
-
-  useEffect(() => {
-    if (onUpload) {
-      onUpload(images);
-    }
-  }, [images, onUpload]);
 
   return (
     <UploadContainer>
-      <Label>사진 ({images.length}/10)</Label>
+      <Label>사진 ({imgURLs.length}/10)</Label>
       <ImagesContainer>
-        {images.length < 10 && (
+        {imgURLs.length < 10 && (
           <>
             <HiddenInput
               type="file"
               accept="image/*"
               multiple
-              onChange={handleImageChange}
+              onChange={handleImageUpload}
               id="fileInput"
             />
             <CameraIcon onClick={handleClick}>
@@ -44,7 +37,7 @@ export const ImgUpload = ({ onUpload }) => {
             </CameraIcon>
           </>
         )}
-        {images.slice(0, 9).map((image, index) => (
+        {imgURLs.slice(0, 9).map((image, index) => (
           <ImagePreview key={index}>
             <Image src={image} alt={`Preview ${index + 1}`} />
             <ImageDelete

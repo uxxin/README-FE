@@ -75,9 +75,6 @@ const TitleInput = styled.input`
   border: 0.5px solid var(--Primary-normal, #509bf7);
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;
 
 const ContentInput = styled.textarea`
@@ -101,7 +98,4 @@ const ContentInput = styled.textarea`
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   resize: none;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;

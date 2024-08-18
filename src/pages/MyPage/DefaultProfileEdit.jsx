@@ -68,7 +68,7 @@ const DefaultProfileEdit = () => {
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } },
         );
-        profileImage = s3Response.data.result.image;
+        profileImage = s3Response.data.result.images[0];
       }
 
       await PatchAxiosInstance('/user/profile', {

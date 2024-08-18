@@ -151,9 +151,7 @@ const InputText = styled.input`
   background: var(--Blue-light, #f4f9ff);
   ::placeholder {
     overflow: hidden;
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
     text-overflow: ellipsis;
-
     font-size: 1rem;
     font-weight: 500;
     line-height: 120%;

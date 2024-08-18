@@ -49,9 +49,6 @@ const Input = styled.input`
   line-height: 100%;
   letter-spacing: -0.0225rem;
   color: #509bf7;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;
 
 const CharCount = styled.span`
