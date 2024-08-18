@@ -55,6 +55,10 @@ const NoticeDetails = () => {
     }
   };
 
+  const handleDeleteComment = async () => {
+    await Promise.all([getNoticeDetailData(), getNoticeCommentData()]);
+  };
+
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
   }, []);
@@ -75,12 +79,7 @@ const NoticeDetails = () => {
               <CommentItem
                 props={data}
                 key={data.commentId}
-                onDelete={async () => {
-                  await Promise.all([
-                    getNoticeDetailData(),
-                    getNoticeCommentData(),
-                  ]);
-                }}
+                onDelete={handleDeleteComment}
               />
             ))
           ) : (
