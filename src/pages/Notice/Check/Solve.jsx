@@ -70,7 +70,7 @@ const Solve = () => {
     }
     try {
       const response = await submitImage(formData);
-      newImageURLs.push(response.data.result.image);
+      newImageURLs.push(response.data.result.images);
     } catch (error) {
       console.error(`Error uploading image`, error);
     }
