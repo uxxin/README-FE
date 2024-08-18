@@ -7,6 +7,7 @@ import FlexBox from '../../../common/flex-box';
 import Button from '../../../common/button';
 import Calendar from './calendar';
 import { format } from 'date-fns';
+import useOutsideClick from '../../../../hooks/use-outside-click';
 
 const SecondStep = ({
   handlePrevStep,
@@ -17,6 +18,8 @@ const SecondStep = ({
   isQuiz,
 }) => {
   const [calendar, setCalendar] = useState({ type: '', isOpen: false });
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [tooltipRef] = useOutsideClick(() => setIsTooltipOpen(false));
   const disabled =
     !postData.start_date ||
     !postData.end_date ||
@@ -44,6 +47,11 @@ const SecondStep = ({
     });
   };
 
+  const handleOpenTooltip = (e) => {
+    e.stopPropagation();
+    setIsTooltipOpen((prev) => !prev);
+  };
+
   return (
     <>
       <Container>
@@ -56,7 +64,7 @@ const SecondStep = ({
           <span className="text-wrap">시작 기한</span>
           <button
             onClick={(e) => handleOpenCalendar(e, 'start_date')}
-            className={`medium-16 ${postData.start_date && 'activate'}`}
+            className={`medium-16 date-button ${postData.start_date && 'activate'}`}
           >
             {postData.start_date || 'YY.MM.DD'}
           </button>
@@ -65,15 +73,29 @@ const SecondStep = ({
           <span className="text-wrap">마감 기한</span>
           <button
             onClick={(e) => handleOpenCalendar(e, 'end_date')}
-            className={`medium-16 ${postData.end_date && 'activate'}`}
+            className={`medium-16 date-button ${postData.end_date && 'activate'}`}
           >
             {postData.end_date || 'YY.MM.DD'}
           </button>
         </div>
         <div className="common-wrap">
           <div className="text-wrap">
-            <span>퀴즈</span>
-            <Tooltip />
+            <span>{postData.type === 'QUIZ' ? '퀴즈' : '미션'}</span>
+            <button className="tooltip" onClick={handleOpenTooltip}>
+              <Tooltip />
+              {isTooltipOpen && (
+                <div className="tooltip-wrap" ref={tooltipRef}>
+                  <div className="content regular-10">
+                    예시
+                    <br />
+                    1. 우리 팀 회장의 이름은?
+                    <br />
+                    2. 이번 모임 장소는 ㅇㅇ역이다.
+                  </div>
+                  <div className="tip" />
+                </div>
+              )}
+            </button>
           </div>
           <div className="input-wrap">
             <input
@@ -143,13 +165,47 @@ const Container = styled.div`
       background-color: var(--color-primary-light);
     }
 
-    button {
+    .date-button {
       flex: 1;
       text-align: start;
       color: var(--color-empty);
 
       &.activate {
         color: var(--color-primary-normal);
+      }
+    }
+
+    .tooltip {
+      border: none;
+      background-color: #ffffff;
+      padding: 0;
+      display: flex;
+      position: relative;
+
+      .tooltip-wrap {
+        position: absolute;
+        bottom: 1.5rem;
+        text-align: start;
+        width: max-content;
+
+        .content {
+          border-radius: 0.5rem;
+          padding: 0.625rem;
+          background-color: var(--color-gray-1);
+          position: relative;
+          right: 1.6rem;
+          color: var(--color-default);
+        }
+
+        .tip {
+          width: 0;
+          height: 0;
+          border-width: 0.625rem 0.625rem 0;
+          border-style: solid;
+          border-color: #ffffff;
+          border-top: 0.625rem solid var(--color-gray-1);
+          position: relative;
+        }
       }
     }
 
