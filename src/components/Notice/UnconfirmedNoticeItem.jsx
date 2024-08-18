@@ -7,7 +7,9 @@ export const UnconfirmedNoticeItem = ({ postData }) => {
     <Container>
       <TextContainer>
         <RoomName>{postData.roomName}</RoomName>
-        <NoticeTitle to="details">{postData.postTitle}</NoticeTitle>
+        <NoticeTitle to={`${postData.postId}`}>
+          {postData.postTitle}
+        </NoticeTitle>
       </TextContainer>
       <NoticedTime>{postData.updatedAtBefore}</NoticedTime>
     </Container>

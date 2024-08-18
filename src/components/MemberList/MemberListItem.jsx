@@ -10,7 +10,7 @@ import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';
 import { useParams } from 'react-router-dom';
-import { getMyInfo} from '../../api/Member/memberListCheck';
+import { getMyInfo } from '../../api/Member/memberListCheck';
 import { getMemberList } from '../../api/Member/memberListCheck';
 
 
@@ -169,8 +169,8 @@ const Container = styled.div`
 
 const MemberIcon = styled.div`
   white-space: nowrap;
-  margin-top:0.375rem;
-  margin-bottom:0.375rem;
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
 `;
 
 const MemberListBox = styled.div`
@@ -193,7 +193,7 @@ const ButtonContainer = styled.div`
   gap: 0.625rem;
   margin-bottom: 0.625rem;
   align-self: stretch;
- `
+`;
 
 const ButtonText = styled.span`
   width: 5.3125rem;
@@ -265,7 +265,6 @@ const InputContainer = styled.div`
   border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
   background: var(--Primary-Light, #f4f9ff);
 `;
-
 
 //inputBox
 const SearchInput = styled.input`

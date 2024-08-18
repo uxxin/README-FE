@@ -9,25 +9,21 @@ import {
   registerUser,
   roomInfo,
 } from '../../api/Auth/authEnter.js';
+import LoadingSpinner from '../../components/Notice/LoadingSpinner.jsx';
 
 const NoticeRoomEntry = () => {
   const navigate = useNavigate();
-
-  const [isPasswordChecked, setIsPasswordChecked] = useState(false);
   const { url } = useParams();
 
-  const [roomData, setRoomData] = useState({
-    roomId: 0,
-    roomName: '',
-    roomImage: '',
-    adminNickname: '',
-  });
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPasswordChecked, setIsPasswordChecked] = useState(false);
+  const [roomData, setRoomData] = useState(null);
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
 
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [isEntryEnabled, setIsEntryEnabled] = useState(false);
 
   const [message, setMessage] = useState({
     pwSuccess: '',
@@ -35,8 +31,6 @@ const NoticeRoomEntry = () => {
     nnSuccess: '',
     nnError: '',
   });
-
-  const [isEntryEnabled, setIsEntryEnabled] = useState(false);
 
   useEffect(() => {
     const fetchRoomInfo = async () => {
@@ -46,17 +40,21 @@ const NoticeRoomEntry = () => {
           data: { result },
         } = response;
         const { isAlreadyJoinedRoom, ...restData } = result;
+
         if (isAlreadyJoinedRoom) {
-          navigate(`/notice/${roomData.roomId}`);
+          navigate(`/notice/${restData.roomId}`);
+        } else {
+          setRoomData(restData);
+          setIsLoading(false);
         }
-        setRoomData(restData);
       } catch (error) {
         console.error('공지방 정보를 가져오는 데 실패했습니다:', error);
+        setIsLoading(false);
       }
     };
 
     fetchRoomInfo();
-  }, []);
+  }, [navigate, url]);
 
   const handlePasswordCheck = async () => {
     try {
@@ -131,6 +129,19 @@ const NoticeRoomEntry = () => {
       console.error('입장하는 데 실패했습니다:', error);
     }
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!roomData) {
+    return (
+      <>
+        <Header title="입장하기" isSearch={false} url="" />
+        <ErrorMessage>공지방 정보를 불러오는 데 실패했습니다.</ErrorMessage>
+      </>
+    );
+  }
 
   return (
     <>

@@ -153,13 +153,13 @@ const Main = () => {
               </FloatingDiv>
             </StyledLink>
 
-            <StyledLink to="/member" showDivs={showDivs}>
+            <StyledLink to="member" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
 
-            <StyledLink to="confirm" showDivs={showDivs}>
+            <StyledLink to="confirm-list" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>
