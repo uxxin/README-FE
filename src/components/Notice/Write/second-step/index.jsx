@@ -15,6 +15,7 @@ const SecondStep = ({
   postData,
   handleUpdatePostData,
   handleImageUpload,
+  handleDeleteImage,
   isQuiz,
 }) => {
   const [calendar, setCalendar] = useState({ type: '', isOpen: false });
@@ -25,6 +26,7 @@ const SecondStep = ({
     !postData.end_date ||
     !postData.question.length ||
     (isQuiz && !postData.quiz_answer.length);
+  const questionType = isQuiz ? '퀴즈' : '미션';
 
   const handleInput = (e, type) => {
     const { value } = e.target;
@@ -56,8 +58,8 @@ const SecondStep = ({
     <>
       <Container>
         <ImgUpload
-          handleUpdatePostData={handleUpdatePostData}
           handleImageUpload={handleImageUpload}
+          handleDeleteImage={handleDeleteImage}
           imgURLs={postData.imgURLs}
         />
         <div className="common-wrap">
@@ -80,7 +82,7 @@ const SecondStep = ({
         </div>
         <div className="common-wrap">
           <div className="text-wrap">
-            <span>{postData.type === 'QUIZ' ? '퀴즈' : '미션'}</span>
+            <span>{questionType}</span>
             <button className="tooltip" onClick={handleOpenTooltip}>
               <Tooltip />
               {isTooltipOpen && (
@@ -99,7 +101,7 @@ const SecondStep = ({
           </div>
           <div className="input-wrap">
             <input
-              placeholder="퀴즈를 입력하세요"
+              placeholder={`${questionType}를 입력하세요`}
               value={postData.question}
               onChange={(e) => handleInput(e, 'question')}
               className="medium-16"
