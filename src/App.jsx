@@ -10,7 +10,6 @@ import MyPage from './pages/MyPage/MyPage';
 import DefaultProfileEdit from './pages/MyPage/DefaultProfileEdit';
 import Main from './pages/Notice/Main';
 import Details from './pages/Notice/Details';
-import Results from './pages/Notice/Check/Results';
 import NoticeRoomProfileEdit from './pages/MyPage/NoticeRoomProfileEdit';
 import NoticeCheckRequests from './pages/Main/NoticeCheckRequests';
 import Penalty from './pages/Main/Penalty';
@@ -87,10 +86,6 @@ function App() {
 
               {/* Notice - 공지 - 일반멤버 */}
               <Route path="/notice/:roomId/:postId/solve" element={<Solve />} />
-              <Route
-                path="/notice/:roomId/:postId/solve/result"
-                element={<Results />}
-              />
 
               {/* Notice - 공지 - 운영진 */}
               <Route path="/notice/:roomId/write" element={<Write />} />

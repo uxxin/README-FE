@@ -2,6 +2,7 @@ export const SET_SHOW_DIVS = 'SET_SHOW_DIVS';
 export const SET_FLIPPED = 'SET_FLIPPED';
 export const SET_ISROTATED = 'SET_ISROTATED';
 export const SET_SUBMITSTATE = 'SET_SUBMITSTATE';
+export const SET_NOTICEROOMTITLE = 'SET_NOTICEROOMTITLE';
 
 export const setShowDivs = (showDivs) => ({
   type: SET_SHOW_DIVS,
