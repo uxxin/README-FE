@@ -10,6 +10,7 @@ import { ReactComponent as Edit } from '../../assets/svgs/floating_icon1.svg';
 import { ReactComponent as MemberList } from '../../assets/svgs/floating_icon2.svg';
 import { ReactComponent as RequestList } from '../../assets/svgs/floating_icon3.svg';
 import { ReactComponent as Write } from '../../assets/svgs/floating_icon4.svg';
+import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penalty_icon.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
 import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
@@ -38,15 +39,33 @@ const collapse = keyframes`
 
 const Main = () => {
   const { roomId } = useParams();
-  const [isNoticeNull, setIsNoticeNull] = useState(false);
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
   const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(true);
-
+  const [offset, setOffset] = useState(1.25);
+  const isNoticeNull = noticeData.length === 0;
   const dispatch = useDispatch();
+
+  const updatePosition = () => {
+    const bodyRect = document.body.getBoundingClientRect();
+    setOffset(bodyRect.left / 16 + 1.25);
+  };
+
+  useEffect(() => {
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+    };
+  }, []);
+
+  const handlePenaltyModalClose = () => {
+    setIsPenaltyModalOpen(false);
+  };
+
   const handleFloatingButtonClick = () => {
     dispatch(setShowDivs(!showDivs));
     dispatch(setFlipped(!isFlipped));
@@ -60,17 +79,14 @@ const Main = () => {
       try {
         const response = await getNotices(roomId);
         setIsManager(response.data.result.isRoomAdmin);
-        if (!response.data.isSuccess) {
-          setIsNoticeNull(true);
-        } else {
-          setNoticeData(response.data.result.posts);
-        }
+        setNoticeData(response.data.result.posts);
       } catch (error) {
         console.log(error);
       }
     };
     getNoticeData();
   }, []);
+
   useEffect(() => {
     const unconfirmedNoticeData = async () => {
       try {
@@ -82,6 +98,7 @@ const Main = () => {
     };
     unconfirmedNoticeData();
   }, []);
+
   return (
     <MainContainer>
       <Header title="공지방 메인" isSearch={true} />
@@ -115,13 +132,7 @@ const Main = () => {
         </NoNoticeContainer>
       ) : (
         <Notice>
-          {isManager ? (
-            <>
-              {noticeData.map((post) => (
-                <NoticePreview props={post} isManager={true} roomId={roomId} />
-              ))}
-            </>
-          ) : (
+          {!isManager && (
             <>
               {unconfirmedNoticeData.length > 0 && (
                 <UnconfirmedNotice
@@ -129,38 +140,43 @@ const Main = () => {
                   postData={unconfirmedNoticeData}
                 />
               )}
-              {noticeData.map((post) => (
-                <NoticePreview props={post} />
-              ))}
             </>
           )}
+          {noticeData.map((post) => (
+            <NoticePreview props={post} isManager={isManager} roomId={roomId} />
+          ))}
         </Notice>
       )}
+
       {isManager && (
         <FloatingButtonContainer>
-          <FloatingDivContainer showDivs={showDivs}>
+          <FloatingDivContainer showDivs={showDivs} offset={offset}>
             <StyledLink to="edit" showDivs={showDivs}>
               <FloatingDiv color="var(--system-warning, #F57D14)">
                 <StyledEdit />
               </FloatingDiv>
             </StyledLink>
-            <StyledLink to="/member" showDivs={showDivs}>
+
+            <StyledLink to="member" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledMemberList />
               </FloatingDiv>
             </StyledLink>
-            <StyledLink to="confirm" showDivs={showDivs}>
+
+            <StyledLink to="confirm-list" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledRequestList />
               </FloatingDiv>
             </StyledLink>
+
             <StyledLink to="write" showDivs={showDivs}>
               <FloatingDiv color="var(--Primary-dark, #3C74B9)">
                 <StyledWrite />
               </FloatingDiv>
             </StyledLink>
           </FloatingDivContainer>
-          <FloatingButton onClick={handleFloatingButtonClick}>
+
+          <FloatingButton onClick={handleFloatingButtonClick} offset={offset}>
             <StyledArrow flipped={isFlipped} />
           </FloatingButton>
         </FloatingButtonContainer>
@@ -211,6 +227,7 @@ const Notice = styled.div`
   align-items: center;
   gap: 1rem;
   background-color: transparent;
+  position: relative;
 `;
 
 const FloatingButtonContainer = styled.div`
@@ -218,9 +235,9 @@ const FloatingButtonContainer = styled.div`
 `;
 
 const FloatingDivContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 1.875rem;
-  right: 1.25rem;
+  right: ${(props) => `${props.offset}rem`};
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -231,9 +248,9 @@ const FloatingDivContainer = styled.div`
 `;
 
 const FloatingButton = styled.button`
-  position: absolute;
+  position: fixed;
   bottom: 1.875rem;
-  right: 1.25rem;
+  right: ${(props) => `${props.offset}rem`};
   width: 3.5rem;
   height: 3.5rem;
   border: none;
@@ -304,7 +321,10 @@ const FloatingDiv = styled.button`
   cursor: pointer;
   transition: bottom 0.5s ease-out;
 `;
+<<<<<<< HEAD
 
+=======
+>>>>>>> fb23a724b98744b1ee2098c0b8e02e6f04655323
 const PenaltyContainer = styled.div`
   position: absolute;
   top: 0;

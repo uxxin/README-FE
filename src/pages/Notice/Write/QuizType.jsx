@@ -5,69 +5,45 @@ import { Quiz } from '../../../components/Notice/Write/Quiz';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
 
 const QuizType = ({
-  onPrevStep,
-  onNextStep,
-  postType,
-  postTitle,
-  postContent,
-  startDate: inputStartDate,
-  endDate: inputEndDate,
-  question: inputQuestion,
-  answer: inputAnswer,
+  handlePrevStep,
+  handleNextStep,
+  postData,
+  handleUpdatePostData,
 }) => {
-  const [startDate, setStartDate] = useState(inputStartDate || '');
-  const [endDate, setEndDate] = useState(inputEndDate || '');
-  const [question, setQuestion] = useState(inputQuestion || '');
-  const [answer, setAnswer] = useState(inputAnswer || '');
-
-  const handlePrevClick = () => {
-    onPrevStep(postType, postTitle, postContent);
+  const handleImageUpload = (uploadedImages) => {
+    handleUpdatePostData({ type: 'imageURLs', value: uploadedImages });
   };
-
-  const handleNextClick = () => {
-    onNextStep(
-      postType,
-      postTitle,
-      postContent,
-      startDate,
-      endDate,
-      question,
-      answer,
-    );
-  };
-
-  useEffect(() => {
-    setStartDate(startDate || '');
-    setEndDate(endDate || '');
-    setQuestion(question || '');
-    setAnswer(answer || '');
-  }, [startDate, endDate, question, answer]);
 
   return (
     <Container>
-      <ImgUpload />
+      <ImgUpload onUpload={handleImageUpload} />
       <Quiz
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        question={question}
-        setQuestion={setQuestion}
-        answer={answer}
-        setAnswer={setAnswer}
+        startDate={postData.startDate}
+        setStartDate={() => {}}
+        endDate={postData.endDate}
+        setEndDate={() => {}}
+        question={postData.question}
+        setQuestion={() => {}}
+        answer={postData.answer}
+        setAnswer={() => {}}
       />
       <TwoButton
         props={{
-          border1: '#509BF7',
+          border1: '1px solid #509BF7',
           background1: '#FFFFFF',
           btn1: '이전',
           border2: 'none',
           background2:
-            startDate && endDate && question && answer ? '#509BF7' : '#BDBDBD',
+            postData.startDate &&
+            postData.endDate &&
+            postData.question &&
+            answer
+              ? '#509BF7'
+              : '#BDBDBD',
           btn2: '확인',
         }}
-        onPrevStep={handlePrevClick}
-        onNextStep={handleNextClick}
+        onPrevStep={handlePrevStep}
+        onNextStep={handleNextStep}
       />
     </Container>
   );

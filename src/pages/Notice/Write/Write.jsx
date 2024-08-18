@@ -1,122 +1,102 @@
 import React, { useState } from 'react';
 import { Header } from '../../../components/Header';
-import styled from 'styled-components';
-import Post from './Post';
-import Preview from './Preview';
-import QuizType from './QuizType';
-import MissionType from './MissionType';
+import { useParams } from 'react-router-dom';
+import FirstStep from '../../../components/Notice/Write/first-step';
+import SecondStep from '../../../components/Notice/Write/second-step';
+import ThirdStep from '../../../components/Notice/Write/third-step';
+import { PostAxiosInstance } from '../../../axios/axios.method';
 
 const Write = () => {
   const [step, setStep] = useState(1);
-  const [type, setType] = useState('');
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const { roomId } = useParams();
+  const [postData, setPostData] = useState({
+    room_id: roomId,
+    type: 'QUIZ',
+    title: '',
+    content: '',
+    imgURLs: [],
+    start_date: '',
+    end_date: '',
+    question: '',
+    quiz_answer: '',
+  });
 
-  const handlePrevStep = (
-    selectedType,
-    inputTitle,
-    inputContent,
-    inputStartDate,
-    inputEndDate,
-    inputQuestion,
-    inputAnswer,
-  ) => {
-    setStep((prevState) => Math.max(prevState - 1, 1));
-    setType(selectedType);
-    setTitle(inputTitle);
-    setContent(inputContent);
-    setStartDate(inputStartDate);
-    setEndDate(inputEndDate);
-    setQuestion(inputQuestion);
-    setAnswer(inputAnswer);
+  const handleUpdatePostData = ({ type, value }) => {
+    setPostData((prev) => ({ ...prev, [type]: value }));
   };
 
-  const handleNextStep = (
-    selectedType,
-    inputTitle,
-    inputContent,
-    inputStartDate,
-    inputEndDate,
-    inputQuestion,
-    inputAnswer,
-  ) => {
-    setStep((prevState) => Math.min(prevState + 1, 3));
-    setType(selectedType);
-    setTitle(inputTitle);
-    setContent(inputContent);
-    setStartDate(inputStartDate);
-    setEndDate(inputEndDate);
-    setQuestion(inputQuestion);
-    setAnswer(inputAnswer);
+  const handleImageUpload = async (e) => {
+    const formData = new FormData();
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      files.forEach((file) => {
+        formData.append('file', file);
+      });
+
+      const s3Response = await PostAxiosInstance('/user/s3/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      handleUpdatePostData({
+        type: 'imgURLs',
+        value: [...postData.imgURLs, ...s3Response.data.result.images].slice(
+          0,
+          10,
+        ),
+      });
+    }
+  };
+
+  const handlePrevStep = () => {
+    setStep((prev) => prev - 1);
+  };
+
+  const handleNextStep = () => {
+    setStep((prev) => prev + 1);
+  };
+
+  const handleCreatePost = async () => {
+    const response = await PostAxiosInstance(`/admin/post`, postData);
+    if (response.data.isSuccess) window.location.replace(`/notice/${roomId}`);
+    else console.error(response.data.message);
   };
 
   return (
-    <div>
+    <>
       <Header
-        props={{
-          title: '공지 작성',
-          isSearch: false,
-          url: '/notice',
-          write: true,
-        }}
+        title="공지 작성"
+        isSearch={false}
+        url={`/notice/${roomId}`}
+        write={true}
       />
-      <Container>
-        {step === 1 ? (
-          <Post
-            onNextStep={handleNextStep}
-            postType={type}
-            postTitle={title}
-            postContent={content}
-          />
-        ) : step === 2 ? (
-          type === 'Quiz' ? (
-            <QuizType
-              onPrevStep={handlePrevStep}
-              onNextStep={handleNextStep}
-              postType={type}
-              postTitle={title}
-              postContent={content}
-              startDate={startDate}
-              endDate={endDate}
-              question={question}
-              answer={answer}
-            />
-          ) : (
-            <MissionType
-              onPrevStep={handlePrevStep}
-              onNextStep={handleNextStep}
-              postType={type}
-              postTitle={title}
-              postContent={content}
-              startDate={startDate}
-              endDate={endDate}
-              question={question}
-              answer={answer}
-            />
-          )
-        ) : (
-          <Preview
-            onPrevStep={handlePrevStep}
-            postType={type}
-            title={title}
-            content={content}
-            startDate={startDate}
-            endDate={endDate}
-            question={question}
-            answer={answer}
-          />
-        )}
-      </Container>
-    </div>
+      {step === 1 && (
+        <FirstStep
+          handleNextStep={handleNextStep}
+          postData={postData}
+          handleUpdatePostData={handleUpdatePostData}
+        />
+      )}
+      {step === 2 && (
+        <SecondStep
+          handlePrevStep={handlePrevStep}
+          handleNextStep={handleNextStep}
+          handleImageUpload={handleImageUpload}
+          postData={postData}
+          handleUpdatePostData={handleUpdatePostData}
+          isQuiz={postData.type === 'QUIZ'}
+        />
+      )}
+      {step === 3 && (
+        <ThirdStep
+          handlePrevStep={handlePrevStep}
+          postData={postData}
+          handleCreatePost={handleCreatePost}
+        />
+      )}
+    </>
   );
 };
-
-const Container = styled.div`
-  padding: 0.625rem 1rem;
-`;
 
 export default Write;

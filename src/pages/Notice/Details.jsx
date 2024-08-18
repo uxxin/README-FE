@@ -4,75 +4,74 @@ import styled from 'styled-components';
 import { CommentItem } from '../../components/Notice/CommentItem';
 import CommentWrite from '../../assets/svgs/comment_write.svg';
 import { Header } from '../../components/Header';
+import {
+  createNoticeComment,
+  getNoticeComments,
+  getNoticedetails,
+} from '../../api/Notice/details';
+import { useParams } from 'react-router-dom';
 
 const NoticeDetails = () => {
+  const { postId } = useParams();
   const [width, setWidth] = useState(0);
-  const isManager = true;
-  const post = [
-    {
-      postId: 3,
-      postType: 'Quiz',
-      postTitle: 'test2',
-      postBody: 'testcontent2',
-      startDate: '24. 7. 28. 04:01',
-      endDate: '24. 7. 28. 04:01',
-      commentCount: 4,
-      submitState: 'NOT_COMPLETE',
-    },
-  ];
-  const imageURLs = [];
-  const data = [
-    {
-      commentId: 1,
-      commentAuthorNickname: 'kimroom1',
-      commentBody: 'com.con.1',
-      updatedAt: '24. 7. 27. 18:08',
-    },
-    {
-      commentId: 3,
-      commentAuthorNickname: 'parkroom1',
-      commentBody: 'com.con.3',
-      updatedAt: '24. 7. 27. 18:09',
-    },
-    {
-      commentId: 4,
-      commentAuthorNickname: 'leeroom1',
-      commentBody: 'com.con.4',
-      updatedAt: '24. 7. 27. 18:09',
-    },
-    {
-      commentId: 5,
-      commentAuthorNickname: null,
-      commentBody: 'com.con.5',
-      updatedAt: '24. 7. 27. 18:10',
-    },
-    // {
-    //   commentId: 7,
-    //   commentAuthorNickname: 'leeroom1',
-    //   commentBody: 'com.con.7',
-    //   updatedAt: '24. 7. 27. 18:11',
-    // },
-  ];
+  const [post, setPost] = useState();
+  const [imageURLs, setImageURLs] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState('');
+
+  const getNoticeDetailData = async () => {
+    try {
+      const response = await getNoticedetails(postId);
+      setPost(response.data.result.post[0]);
+      setImageURLs(response.data.result.imageURLs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getNoticeCommentData = async () => {
+    try {
+      const response = await getNoticeComments(postId);
+      setComments(response.data.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleComment = async () => {
+    try {
+      await createNoticeComment(postId, comment);
+      setComment('');
+      await Promise.all([getNoticeDetailData(), getNoticeCommentData()]);
+    } catch (error) {
+      console.error('댓글 작성 오류:', error);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleComment();
+    }
+  };
 
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
+  }, []);
+
+  useEffect(() => {
+    Promise.all([getNoticeDetailData(), getNoticeCommentData()]);
   }, []);
 
   return (
     <div className="container">
       <Header title="공지방 이름" isSearch={false} />
       <Container>
-        {post.length > 0 ? (
-          post.map((data) => (
-            <NoticeItem props={data} key={data.postId} imgs={imageURLs} />
-          ))
-        ) : (
-          <></>
-        )}
+        <NoticeItem props={post} imgs={imageURLs} />
 
         <CommentList>
-          {data.length > 0 ? (
-            data.map((data) => (
+          {comments.length > 0 ? (
+            comments.map((data) => (
               <CommentItem props={data} key={data.commentId} />
             ))
           ) : (
@@ -82,8 +81,17 @@ const NoticeDetails = () => {
 
         <CommentInputContainer width={width}>
           <CommentInputFrame>
-            <CommentInput placeholder="입력하세요." />
-            <CommentWriteIcon src={CommentWrite} alt="comment write" />
+            <CommentInput
+              placeholder="입력하세요."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+            <CommentWriteIcon
+              src={CommentWrite}
+              alt="comment write"
+              onClick={handleComment}
+            />
           </CommentInputFrame>
         </CommentInputContainer>
       </Container>
@@ -155,9 +163,6 @@ const CommentInput = styled.input`
   font-weight: 500;
   line-height: 120%; /* 1.2rem */
   letter-spacing: -0.02rem;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;
 
 const CommentWriteIcon = styled.img`

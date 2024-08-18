@@ -3,58 +3,59 @@ import { NoticeItem } from '../../../components/Notice/NoticeItem';
 import styled from 'styled-components';
 import { QuestionPreview } from '../../../components/Notice/Write/QuestionPreview';
 import { TwoButton } from '../../../components/Notice/Write/StepButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { createNotice } from '../../../api/Notice/write';
 
-const Preview = ({
-  onPrevStep,
-  postType,
-  title,
-  content,
-  startDate,
-  endDate,
-  question,
-  answer,
-}) => {
+const Preview = ({ onPrevStep, postData, handleUpdatePostData }) => {
   const navigate = useNavigate();
-  const roomId = 1;
-  const isManager = true;
-  const post = [
-    {
-      postType: postType,
-      postTitle: title,
-      postBody: content,
-      startDate: startDate,
-      endDate: endDate,
-    },
-  ];
-  const imageURLs = ['url11.com', 'url12.com'];
-
-  const handlePrevClick = () => {
-    onPrevStep(postType, title, content, startDate, endDate, question, answer);
+  const { roomId } = useParams();
+  const post = {
+    postType: postData.type,
+    postTitle: postData.title,
+    postBody: postData.content,
+    startDate: postData.startDate,
+    endDate: postData.endDate,
+  };
+  const sendData = {
+    ...postData,
+    room_id: roomId,
   };
 
-  const handlePostClick = () => {
-    navigate(`/notice/:${roomId}`);
+  const handlePrevClick = () => {
+    // onPrevStep(
+    //   postType,
+    //   title,
+    //   content,
+    //   imageURLs,
+    //   startDate,
+    //   endDate,
+    //   question,
+    //   answer,
+    // );
+  };
+
+  const handlePostClick = async () => {
+    // try {
+    //   await createNotice(sendData);
+    //   navigate(`/notice/${roomId}`);
+    // } catch (error) {
+    //   console.error('공지글 생성 오류 발생:', error);
+    // }
   };
 
   return (
     <Container>
-      {post.length > 0 ? (
-        post.map((data) => (
-          <NoticeItem props={data} imgs={imageURLs} preview={true} />
-        ))
-      ) : (
-        <></>
-      )}
+      <NoticeItem props={post} imgs={imageURLs} preview={true} />
 
       <QuestionPreview
-        postType={postType}
-        question={question}
-        answer={answer}
+        postType={postData.type}
+        question={postData.question}
+        answer={postData.answer}
       />
+
       <TwoButton
         props={{
-          border1: '#509BF7',
+          border1: '1px solid #509BF7',
           background1: '#FFFFFF',
           btn1: '수정하기',
           border2: 'none',

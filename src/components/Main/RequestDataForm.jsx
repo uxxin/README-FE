@@ -12,7 +12,7 @@ const RequestDataForm = ({ room, onClick }) => {
       <BottomSection>
         <ProfileImage src={room.roomImage} alt="profile" />
         <RoomName>{room.roomName}</RoomName>
-        <UserName>{room.nickName}</UserName>
+        <UserName>{room.nickname}</UserName>
       </BottomSection>
     </Container>
   );
@@ -47,7 +47,7 @@ const TopSection = styled.div`
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
-  position: relative; /* 추가된 부분 */
+  position: relative;
 `;
 
 const RequestNum = styled.div`
@@ -69,9 +69,9 @@ const RequestNum = styled.div`
   line-height: 90%; /* 0.5625rem */
   letter-spacing: -0.0125rem;
 
-  margin-left: 0.625rem; /* 추가된 부분 */
-  position: absolute; /* 추가된 부분 */
-  right: 0.625rem; /* 추가된 부분 */
+  margin-left: 0.625rem;
+  position: absolute;
+  right: 0.625rem;
 `;
 
 const BottomSection = styled.div`

@@ -27,13 +27,14 @@ const ModalButton = styled.button`
   cursor: pointer;
   width: 7.625rem;
   height: 2.25rem;
-  border-radius: ${({ isTop }) =>
-    isTop ? '0.3125rem 0.3125rem 0 0' : '0 0 0.3125rem 0.3125rem'};
   &:first-child {
-    border-radius: 5px 5px 0 0;
+    border-radius: 0.313rem 0.313rem 0 0;
   }
   &:last-child {
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 0.313rem 0.313rem;
+  }
+  &:first-child:last-child {
+    border-radius: 0.313rem;
   }
 `;
 

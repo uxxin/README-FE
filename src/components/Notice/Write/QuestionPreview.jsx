@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const QuestionPreview = ({ postType, question, answer }) => {
   return (
     <Container>
-      {postType === 'Quiz' ? (
+      {postType === 'QUIZ' ? (
         <>
           <Question>{question}</Question>
           <Answer>{answer}</Answer>
@@ -31,7 +31,7 @@ const Container = styled.div`
 const Question = styled.div`
   align-self: stretch;
   color: ${({ postType }) =>
-    postType === 'Quiz'
+    postType === 'QUIZ'
       ? 'var(--Primary-normal, var(--Primary-Normal, #509bf7))'
       : 'var(--Text-default, var(--Grayscale-Gray7, #222))'};
   font-size: 1.125rem;

@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
+import CustomModal from '../CustomModal';
 
 export const CommentItem = ({ props }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const modalClose = () => {
+    setIsOpen(false);
+  };
+  const deleteComment = () => {
+    console.log('삭제');
+  };
+  const modalProps = {
+    isOpen: isOpen,
+    onClose: modalClose,
+    buttons: [
+      {
+        label: '삭제',
+        onClick: deleteComment,
+        color: '#F5535E',
+      },
+    ],
+  };
+
   return (
     <Container>
-      <Profile src="" alt="profile" />
+      <Profile src={props.commentAuthorProfileImage} alt="profile" />
       <Comment>
         <Nickname>{props.commentAuthorNickname}</Nickname>
         <Content>{props.commentBody}</Content>
-        <Date>{props.updatedAt}</Date>
+        <Date>{props.createdAt}</Date>
       </Comment>
-      <More src={ShowmoreIcon} alt="more" />
+      {props.isCommentMine && (
+        <ShowmoreIconContainer>
+          <ShowmoreButton onClick={() => setIsOpen((prev) => !prev)}>
+            <img src={ShowmoreIcon} alt="more" />
+          </ShowmoreButton>
+
+          <CustomModal {...modalProps} />
+        </ShowmoreIconContainer>
+      )}
     </Container>
   );
 };
@@ -71,10 +99,16 @@ const Date = styled.div`
   letter-spacing: -0.015rem;
 `;
 
-const More = styled.img`
-  display: flex;
-  width: 0.875rem;
-  height: 0.875rem;
-  justify-content: center;
-  align-items: center;
+const ShowmoreIconContainer = styled.div`
+  position: relative;
+`;
+
+const ShowmoreButton = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
 `;
