@@ -12,19 +12,20 @@ import { getSubmitList } from '../../../api/Member/memberListCheck';
 export const ConfirmList = () =>{
   const [requestNum, setRequestNum] = useState([]);
 
-//  const {roomId} = useParams();
-  const roomId = 8;
+  const {roomId} = useParams();
+
     
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getSubmitList(roomId);
-        const userSubmissions = data.result.userSubmissions;
+        console.log(data)
+        const userSubmissions = data.result.UserSubmissions;
         setRequestNum(userSubmissions); 
         console.log('Fetched data:', userSubmissions);
 
         if (userSubmissions.length > 0) {
-          console.log('첫 번째 항목의 title:', userSubmissions[0].title); 
+        //console.log('첫 번째 항목의 title:', userSubmissions[0].title); 
         } 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -41,6 +42,7 @@ export const ConfirmList = () =>{
         requestNum.map((submission, index) => (
           <ConfirmListMap
             key={index}
+            postId={submission.id}
             title={submission.title}
             start_date={submission.start_date}
             end_date={submission.end_date}

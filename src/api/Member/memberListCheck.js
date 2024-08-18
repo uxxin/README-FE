@@ -55,4 +55,23 @@ export const getMemberBan = async (nickname, roomId) => {
     console.log("불러온패널티데이터",response.data)
     return response.data;
   }
+  export const getSubmitList = async(roomId) =>{
+    const response = await GetAxiosInstance(`/admin/submit/${roomId}`)
+    console.log("확인요청내역:",response.data)
+    console.log("확인요청내역:",response.data.result)
+    return response.data;
+  }
+
+  export const getSubmitRequest = async (type, roomId) => {
+   
+      const response = await PatchAxiosInstance(`/admin/submit/user-request`, {
+
+          type: type,
+          roomId: roomId
+        
+      });
+      console.log("확인요청내역 수락 혹은 거절:", response.data);
+      return response.data;
+    
+  };
 

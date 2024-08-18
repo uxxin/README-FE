@@ -22,8 +22,7 @@ export const AcceptanceList = () => {
 
   
 
-//  const {roomId} = useParams();
-  const roomId =8;
+  const {roomId} = useParams();
 
   const dispatch = useDispatch();
 
