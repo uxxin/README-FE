@@ -22,7 +22,9 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
         </div>
         <div className="question-answer">
           <span className="bold-18">Q.{postData.question}</span>
-          <span className="medium-16">A.{postData.quiz_answer}</span>
+          {postData.type === 'QUIZ' && (
+            <span className="medium-16">A.{postData.quiz_answer}</span>
+          )}
         </div>
       </Container>
       <Floating>
