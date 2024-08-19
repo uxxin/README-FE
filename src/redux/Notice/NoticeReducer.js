@@ -3,7 +3,7 @@ import {
   SET_FLIPPED,
   SET_ISROTATED,
   SET_SUBMITSTATE,
-  SET_NOTICEROOMTITLE,
+  SET_ROOMTITLE,
 } from './NoticeActions';
 
 const initialState = {
@@ -12,6 +12,7 @@ const initialState = {
   isRotated: true,
   submitState: '',
   noticeRoomTitle: '',
+  roomTitle: '',
 };
 
 const NoticeReducer = (state = initialState, action) => {
@@ -24,8 +25,8 @@ const NoticeReducer = (state = initialState, action) => {
       return { ...state, isRotated: action.payload };
     case SET_SUBMITSTATE:
       return { ...state, submitState: action.payload };
-    case SET_NOTICEROOMTITLE:
-      return { ...state, noticeRoomTitle: action.payload };
+    case SET_ROOMTITLE:
+      return { ...state, roomTitle: action.payload };
     default:
       return state;
   }
