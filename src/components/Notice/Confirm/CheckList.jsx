@@ -44,10 +44,6 @@ export const CheckList = () => {
   }, [dispatch, roomId,postId]);
   
 
-  console.log('리스트 값:', checklist);
-  console.log('대기요청개수', keysCount);
-  console.log('수락확인된 요청 리스트', acceptanceList);
-
   return (
     <div>
       <Container>

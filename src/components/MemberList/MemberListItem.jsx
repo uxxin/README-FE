@@ -50,9 +50,7 @@ export const MemberListItem = () => {
       try {
         const memberData = await getMemberList('', roomId);
         const adminData = await getMyInfo();
-        
-        console.log('admin 이름:', adminData.result);
-        console.log('userId가 있나요?', memberData.result);
+   
         
         setState((prevState) => ({
           ...prevState,
@@ -66,7 +64,7 @@ export const MemberListItem = () => {
       }
     };
     fetchMemberList();
-  }, [dispatch,roomId]); // 추가적인 종속성도 포함
+  }, [dispatch,roomId]); 
 
   useEffect(() => {
     console.log('클릭버튼 누르면 이름 검색댐:', debouncedSearch);

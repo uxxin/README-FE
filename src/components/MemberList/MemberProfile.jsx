@@ -18,8 +18,6 @@ export const MemberProfile = () => {
   const location = useLocation();
   const { profile_image = '' } = location.state;
   const {nickname} = location.state;
-  console.log("넘어오는 닉네임",nickname)
-  // const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
   const [penaltyData, setPenaltyData] = useState("")
 
 
@@ -32,7 +30,6 @@ export const MemberProfile = () => {
     const fetchPenalty = async () => {
       try {
         const response = await getPenalty(roomId, userId);
-        console.log("패널티 데이터:", response);
         setPenaltyData(response.result); 
       } catch (err) {
         console.error("패널티 데이터 조회 실패", err);
@@ -79,7 +76,7 @@ const ImgWrapper = styled.div`
   gap: 3.75rem;
 `;
 
-// 이미지 컨테이너 스타일
+
 const ImgContainer = styled.img`
   height: 18.75rem;
   object-fit: cover;

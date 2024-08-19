@@ -15,13 +15,11 @@ export const MemberListMap = ({ members }) => {
   const {roomId} = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { members } = useSelector(state => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
 
-  console.log('넘어오는 프롭스:', members); // 확인용(여기 지금 userId나옴)
 
   const handleOpenModal = (profile) => {
     setSelectedProfile(profile);
@@ -41,8 +39,7 @@ export const MemberListMap = ({ members }) => {
           nickname: selectedProfile.nickname,
           userId: selectedProfile.userId
         },
-      });console.log("state로 덤길 셀렉티드 nickname",selectedProfile.nickname)
-        console.log("state로 덤길 셀렉티드 nickname",selectedProfile.userId)
+      });
     } else {
       console.error('Selected profile is not defined');
     }
@@ -60,11 +57,11 @@ export const MemberListMap = ({ members }) => {
     if (selectedProfile) {
       try{
         const bannedMember = await getMemberBan(selectedProfile.nickname, roomId)
-        console.log("추방당한 멤버",bannedMember)
+       
       }catch(err){
         console.log("추방실패")
       };
-      console.log('추방할 리스트:', selectedProfile.nickname);
+      
       dispatch(removeMember(selectedProfile.nickname));
       setIsSecondModalOpen(false);
       setIsModalOpen(false);
@@ -81,7 +78,6 @@ export const MemberListMap = ({ members }) => {
     { label: '추방하기', onClick: handleKickOutClick, color: 'red' },
   ];
 
-  console.log('필터링된 멤버:', members);
 
   return (
     <div>
@@ -155,8 +151,6 @@ export const MemberListMap = ({ members }) => {
 
 const ModalOverlay = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
   display: flex;

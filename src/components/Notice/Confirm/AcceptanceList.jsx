@@ -17,9 +17,8 @@ import { useParams } from 'react-router-dom';
 export const AcceptanceList = () => {
   const [checklist, setCheckList] = useState([]);
   const [pendinglist, setPendingList] = useState([]);
-  const keysCount = useSelector((state) => state.check.count);
-  const requiredList = useSelector((state) => state.check.requiredList) || []; // 기본값을 빈 배열로 설정
-  const acceptanceList = useSelector((state) => state.check.acceptanceList) || []; // 기본값을 빈 배열로 설정
+  const requiredList = useSelector((state) => state.check.requiredList) || []; 
+  const acceptanceList = useSelector((state) => state.check.acceptanceList) || []; 
 
   
 
@@ -35,8 +34,8 @@ export const AcceptanceList = () => {
         const pendingResponse = await getSubmitRequest(roomId,postId,"pending");  
      
         console.log('응답 데이터:', response.result); 
-        const data = response.result || []; // 응답 데이터가 없을 때를 대비
-        const pendingData = pendingResponse.result || []; // 응답 데이터가 없을 때를 대비
+        const data = response.result || []; 
+        const pendingData = pendingResponse.result || [];
         console.log("이게 필요한 승인완료된 리스트",data);
           setCheckList(data);
           setPendingList(pendingData);
@@ -57,16 +56,12 @@ export const AcceptanceList = () => {
 
 
 
-  console.log('리스트 값:', checklist);
- //console.log('대기요청개수', keysCount);
-  console.log('수락확인된 요청 리스트', acceptanceList);
-
   return (
     <div>
       <Container>
         <BoxContainer>
         
-        {Array.isArray(requiredList) && requiredList.length === 0 ? (
+        {requiredList.length === 0 ? (
             <CheckContainer>승인완료된 요청이 없습니다</CheckContainer>
           ) : (
             requiredList.map((item) => (
@@ -75,7 +70,6 @@ export const AcceptanceList = () => {
                 key={item.submitId}
                 submitId={item.submitId}
                 nickname={item.nickname}
-              //  user_info={item.user_info}
                 content={item.content}
                 profileImage={item.profileImage}
               />
