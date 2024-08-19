@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 import Chip from '../../../common/chip';
 
-const ThirdStep = ({
-  handlePrevStep,
-  postData,
-  handleCreatePost,
-  editMode,
-}) => {
+const ThirdStep = ({ handlePrevStep, postData, handlePost, editMode }) => {
   return (
     <>
       <Container>
@@ -33,10 +28,10 @@ const ThirdStep = ({
       </Container>
       <Floating>
         <button className="medium-16 outline left" onClick={handlePrevStep}>
-          {editMode ? '이전' : '수정하기'}
+          이전
         </button>
-        <button className="medium-16 right" onClick={handleCreatePost}>
-          {editMode ? '수정하기' : '다음'}
+        <button className="medium-16 right" onClick={handlePost}>
+          {editMode ? '수정하기' : '등록하기'}
         </button>
       </Floating>
     </>

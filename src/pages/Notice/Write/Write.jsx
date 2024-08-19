@@ -109,7 +109,7 @@ const Write = () => {
         <ThirdStep
           handlePrevStep={handlePrevStep}
           postData={postData}
-          handleCreatePost={handleCreatePost}
+          handlePost={handleCreatePost}
         />
       )}
     </>
