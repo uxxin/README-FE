@@ -28,8 +28,14 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
         </div>
       </Container>
       <Floating>
-        <Button name="수정하기" type="outline" onClick={handlePrevStep} />
-        <Button name="등록하기" onClick={handleCreatePost} />
+        {/* <Button name="수정하기" type="outline" onClick={handlePrevStep} />
+        <Button name="등록하기" onClick={handleCreatePost} /> */}
+        <button className="medium-16 outline" onClick={handlePrevStep}>
+          수정하기
+        </button>
+        <button className="medium-16" onClick={handleCreatePost}>
+          등록하기
+        </button>
       </Floating>
     </>
   );
@@ -85,15 +91,34 @@ const Container = styled.div`
 
 const Floating = styled.div`
   background-color: #ffffff;
-  width: calc(100%);
+  width: 100%;
   border-top: 0.0625rem solid var(--color-primary-light-active);
   display: flex;
-  justify-content: center;
   position: fixed;
   max-width: 429px;
   gap: 0.625rem;
   bottom: 0;
   padding: 1.25rem 0 3.37rem;
+
+  button {
+    border: none;
+    background-color: var(--color-primary-normal);
+    color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 1rem 0;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    margin-right: 1rem;
+
+    &.outline {
+      border: 0.0625rem solid var(--color-primary-normal);
+      color: var(--color-primary-normal);
+      margin-right: 0;
+      margin-left: 1rem;
+      background-color: #ffffff;
+    }
+  }
 `;
 
 export default ThirdStep;
