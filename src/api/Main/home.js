@@ -39,7 +39,7 @@ export const getRecentNotice = async (currentPage, ITEMS_PER_PAGE) => {
 //개설한 공지방 조회
 export const getOpenedRoom = async (currentPage, ITEMS_PER_PAGE) => {
   const response = await GetAxiosInstance(
-    `https://read-me.kro.kr/user/create-room?page=${currentPage}&pageSize=${ITEMS_PER_PAGE}`,
+    `/user/create-room?page=${currentPage}&pageSize=${ITEMS_PER_PAGE}`,
   );
   console.log(response.data);
   return response.data;
