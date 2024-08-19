@@ -61,7 +61,7 @@ const SignIn = () => {
         />
         <ButtonWrapper>
           <SignInButton onClick={handleLogin}>로그인</SignInButton>
-          <KakaoLoginButton onClick={handleKakaoLogin}>
+          <KakaoLoginButton full onClick={handleKakaoLogin}>
             카카오톡으로 계속하기
           </KakaoLoginButton>
           <NotAuth>아직 회원이 아니신가요?</NotAuth>
@@ -93,7 +93,7 @@ const CommonButton = styled.button`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  width: calc(100% - 2rem);
+  width: 100%;
 `;
 
 const SignInButton = styled(CommonButton)`
@@ -114,8 +114,8 @@ const NotAuth = styled.span`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 100%;
-  position: fixed;
+  width: calc(100% - 2rem);
+  position: absolute;
   max-width: 429px;
   bottom: 3.37rem;
   display: flex;
