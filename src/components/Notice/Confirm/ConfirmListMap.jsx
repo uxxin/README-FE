@@ -85,9 +85,9 @@ const ContentContainer = styled.div`
 const TitleBox = styled.div`
     width: 100%;
     height: 1.125rem; 
-    font-size: 1.125rem; /* 18px */
+    font-size: 1.125rem; 
     font-weight: 700;
-    line-height: 1.125rem; /* 18px */
+    line-height: 1.125rem;
     letter-spacing: -0.02em;
     text-align: left;
     margin-bottom: 8px;
@@ -96,14 +96,14 @@ const TitleBox = styled.div`
 const DateBox = styled.div`
     width: 100%;
     height:0.75rem;
-    padding: 0 0 0.5rem 0; /* 8px */
-    gap: 0.25rem; /* 4px */
-    border: 0 0 0.020625rem 0; /* 0.33px */
-    border-bottom: 0.020625rem solid var(--Primary-Normal, #509BF7); /* 0.33px */
+    padding: 0 0 0.5rem 0; 
+    gap: 0.25rem; 
+    border: 0 0 0.020625rem 0; 
+    border-bottom: 0.020625rem solid var(--Primary-Normal, #509BF7); 
     color: var(--Primary-Light,  #509BF7);
-    font-size: 0.75rem; /* 12px */
+    font-size: 0.75rem; 
     font-weight: 400;
-    line-height: 0.75rem; /* 12px */
+    line-height: 0.75rem; 
     letter-spacing: -0.02em;
     text-align: left;
     margin-bottom: 8px;
@@ -125,9 +125,9 @@ const ContentBox = styled.div`
 
 const ContentText = styled.span`
  color: #888888;
-    font-size: 1rem; /* 16px */
+    font-size: 1rem; 
     font-weight: 500;
-    line-height: 1.2rem; /* 19.2px */
+    line-height: 1.2rem; 
     letter-spacing: -0.02em;
     text-align: left;
 
@@ -144,7 +144,6 @@ const ImgBox = styled.img`
 const BottonBox = styled.button`
     margin-top: 0.5rem;
     display: flex;
-   // width: 6.1875rem; 이거뭐지?
     height: 1.75rem;
     justify-content: center;
     align-items: center;
@@ -161,10 +160,10 @@ const BottonBox = styled.button`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: inherit; /* 상위 요소의 색상을 상속받도록 설정 */
+  color: inherit; 
 
   &:visited {
-    color: inherit; /* 방문한 링크 색상 초기화 */
+    color: inherit; 
   }
 `;
 
@@ -175,9 +174,9 @@ const BtnStyle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.25rem; /* 아이콘과 텍스트 사이의 간격을 조절 */
+    gap: 0.25rem; 
     svg {
-        vertical-align: middle; /* SVG의 기본 정렬을 중앙으로 조정 */
+        vertical-align: middle; 
     }
 `;
 

@@ -24,9 +24,7 @@ export const CheckList = () => {
     const fetchCheckList = async () => {
       try {
         const response = await  getSubmitRequest(roomId,postId,"pending");  
-        console.log('응답 데이터:', response.result); 
         const data = response.result
-        console.log("이게 대기중인 리스트:",response.result);
           setCheckList(data);
           dispatch(
             setRequiredListCount({

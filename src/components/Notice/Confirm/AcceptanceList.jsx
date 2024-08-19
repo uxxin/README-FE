@@ -36,7 +36,6 @@ export const AcceptanceList = () => {
         console.log('응답 데이터:', response.result); 
         const data = response.result || []; 
         const pendingData = pendingResponse.result || [];
-        console.log("이게 필요한 승인완료된 리스트",data);
           setCheckList(data);
           setPendingList(pendingData);
           dispatch(
@@ -60,7 +59,6 @@ export const AcceptanceList = () => {
     <div>
       <Container>
         <BoxContainer>
-        
         {requiredList.length === 0 ? (
             <CheckContainer>승인완료된 요청이 없습니다</CheckContainer>
           ) : (

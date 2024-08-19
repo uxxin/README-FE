@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
 import { getSubmitRequest } from '../../../api/Member/memberListCheck';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -18,9 +19,7 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const pageLimit = 1;
-
-
-  const roomId = 8;
+  const {roomId} = useParams();
 
   useEffect(() => {
     setTotalPage(images);
@@ -47,7 +46,6 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
 
     const handleAcceptance = async () => {
       try {
-        console.log('수락한 게시글 id', nickname);
         const acceptedMember = await getSubmitRequest("accept", roomId);
         dispatch(acceptance(nickname));
         console.log("수락된 멤버",acceptedMember)
@@ -58,7 +56,6 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
 
   const handleRejection = async () => {
     try{
-      console.log('거절할 게시글', nickname);
       const deniedMember = await getSubmitRequest("reject", roomId);
       console.log("거절된 멤버",deniedMember)
       dispatch(rejection(nickname));
@@ -68,10 +65,6 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
     }
  
   };
-
-  const handlePagination = () => {
-    currentPage = currentPage+1;
-  }
 
   if (!requiredList.some((item) => item.nickname === nickname)) {
     return null; 
