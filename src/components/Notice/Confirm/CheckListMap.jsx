@@ -21,9 +21,6 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
   const pageLimit = 1;
   const {roomId} = useParams();
 
-  useEffect(() => {
-    setTotalPage(images);
-  }, [images]);
 
 
   useEffect(() => {

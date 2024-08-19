@@ -45,7 +45,7 @@ export const getMemberBan = async (nickname, roomId) => {
   }
 };
 
-  export const getPenalty = async(roomId,userId) =>{
+  export const getPenalty = async({roomId,userId}) =>{
     const response = await GetAxiosInstance(`/admin/profile`,{
       params:{
         roomId : roomId,
@@ -55,15 +55,16 @@ export const getMemberBan = async (nickname, roomId) => {
     console.log("불러온패널티데이터",response.data)
     return response.data;
   }
-  export const getSubmitList = async(roomId) =>{
+  
+  export const getSubmitList = async({roomId}) =>{
     const response = await GetAxiosInstance(`/admin/posts/${roomId}`)
     console.log("확인요청내역:",response.data)
     console.log("확인요청내역:",response.data.result)
     return response.data;
   }
 
-  export const getSubmitRequest = async (roomId,postId,type) => {
-      const response = await GetAxiosInstance(`/admin/submit/${roomId}/${postId}?state=${type}`);
+  export const getSubmitRequest = async ({roomId,postId,status}) => {
+      const response = await GetAxiosInstance(`/admin/submit/${roomId}/${postId}?state=${status}`);
       console.log("확인요청내역 수락 혹은 거절:", response.data);
       return response.data;
   };

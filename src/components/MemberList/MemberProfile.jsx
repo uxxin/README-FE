@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { getPenalty } from '../../api/Member/memberListCheck';
-import Penalty from '../../pages/Main/Penalty';
 
 
 export const MemberProfile = () => {
@@ -16,8 +15,7 @@ export const MemberProfile = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { profile_image = '' } = location.state;
-  const {nickname} = location.state;
+  const { profile_image = '', nickname } = location.state;
   const [penaltyData, setPenaltyData] = useState("")
 
 
@@ -29,7 +27,7 @@ export const MemberProfile = () => {
   useEffect(() => {
     const fetchPenalty = async () => {
       try {
-        const response = await getPenalty(roomId, userId);
+        const response = await getPenalty({roomId, userId});
         setPenaltyData(response.result); 
       } catch (err) {
         console.error("패널티 데이터 조회 실패", err);
@@ -57,7 +55,7 @@ export const MemberProfile = () => {
 };
 
 
-// 컨테이너 스타일
+
 const Container = styled.div`
   width: 100%;
   padding: 0.625rem 1rem;
@@ -87,12 +85,8 @@ const ImgContainer = styled.img`
   margin-top: 3.5625rem;
 `;
 
-const PaneltyWrapper = styled.div`
-  width: 100%;
-  padding: 3rem;
-`
 
-// 패널티 체크 스타일
+
 const PaneltyCheck = styled.div`
   width: calc(100% - 2 * 4rem); 
   display: block;

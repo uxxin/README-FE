@@ -30,8 +30,8 @@ export const AcceptanceList = () => {
   useEffect(() => {
     const fetchCheckList = async () => {
       try {
-        const response = await getSubmitRequest(roomId,postId,"complete");  
-        const pendingResponse = await getSubmitRequest(roomId,postId,"pending");  
+        const response = await getSubmitRequest({roomId,postId,status:"complete"});  
+        const pendingResponse = await getSubmitRequest({roomId,postId,status:"pending"});  
      
         console.log('응답 데이터:', response.result); 
         const data = response.result || []; 
@@ -63,14 +63,9 @@ export const AcceptanceList = () => {
             <CheckContainer>승인완료된 요청이 없습니다</CheckContainer>
           ) : (
             requiredList.map((item) => (
-              
               <AcceptanceListMap
-                key={item.submitId}
-                submitId={item.submitId}
-                nickname={item.nickname}
-                content={item.content}
-                profileImage={item.profileImage}
-              />
+                {...item}
+            />
              
             ))
           )}

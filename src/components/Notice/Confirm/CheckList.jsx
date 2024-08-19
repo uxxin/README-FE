@@ -23,7 +23,7 @@ export const CheckList = () => {
   useEffect(() => {
     const fetchCheckList = async () => {
       try {
-        const response = await  getSubmitRequest(roomId,postId,"pending");  
+        const response = await  getSubmitRequest({roomId,postId,status:"pending"});  
         const data = response.result
           setCheckList(data);
           dispatch(
@@ -51,13 +51,7 @@ export const CheckList = () => {
           ) : (
             requiredList.map((item) => (
               <CheckListMap
-                  key={item.submitId}
-                  submitId = {item.submitId} 
-                  images={item.images}
-                  content = {item.content}
-                  nickname={item.nickname}
-                  profileImage={item.profileImage}
-                  submitState={item.submitState}
+                  {...item}
               />
               
             ))

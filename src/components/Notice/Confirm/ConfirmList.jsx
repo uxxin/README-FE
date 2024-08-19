@@ -18,7 +18,7 @@ export const ConfirmList = () =>{
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getSubmitList(roomId);
+        const data = await getSubmitList({roomId});
         console.log('응답 데이터:', data);
         const confirmList = data.result
         setRequestNum(confirmList); // 상태 업데이트
@@ -35,16 +35,9 @@ export const ConfirmList = () =>{
       {requestNum.length === 0 ? (
       <BoxContainer><CheckContainer>확인요청내역이 없습니다.</CheckContainer></BoxContainer>  
       ) : (
-        requestNum.map((submission, index) => (
+        requestNum.map((item, index) => (
           <ConfirmListMap
-            key={index}
-            postId={submission.postId}
-            title={submission.title}
-            startDate={submission.startDate}
-            endDate={submission.endDate}
-            content={submission.content}
-            image={submission.image}
-            pendingCount={submission.pendingCount}
+          {...item}
           />
         ))
       )}
