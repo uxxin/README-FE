@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../../common/button';
 import { ReactComponent as CheckSvg } from '../../../../assets/svgs/post_type_check.svg';
 
-const DEFAULT_HEIGHT = 39;
+const DEFAULT_HEIGHT = 300;
+const CHANGE_HEIGHT = 320;
 
 const FirstStep = ({ handleNextStep, postData, handleUpdatePostData }) => {
   const textareaRef = useRef(DEFAULT_HEIGHT);
@@ -18,10 +19,21 @@ const FirstStep = ({ handleNextStep, postData, handleUpdatePostData }) => {
   };
   const handleContentChange = (e) => {
     const { value } = e.target;
-    textareaRef.current.style.height = 0;
-    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+    if (!value && textareaRef.current.scrollHeight > CHANGE_HEIGHT) {
+      textareaRef.current.style.height = `${DEFAULT_HEIGHT}px`;
+    } else if (textareaRef.current.scrollHeight > CHANGE_HEIGHT) {
+      textareaRef.current.style.height = 0;
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
     handleUpdatePostData({ type: 'content', value });
   };
+
+  useEffect(() => {
+    if (textareaRef.current.scrollHeight > CHANGE_HEIGHT) {
+      textareaRef.current.style.height = 0;
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, []);
   return (
     <>
       <Container>

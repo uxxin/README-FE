@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Chip from '../../../common/chip';
-import Button from '../../../common/button';
 
 const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
   return (
@@ -14,7 +13,7 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
           <span className="regular-12 date">
             {postData.start_date} - {postData.end_date}
           </span>
-          <span className="medium-16 content">{postData.content}</span>
+          <div className="medium-16 content">{postData.content}</div>
           {postData.imgURLs.length > 0 &&
             postData.imgURLs.map((url) => (
               <img key={url} src={url} alt="미리보기 사진" />
@@ -22,12 +21,18 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
         </div>
         <div className="question-answer">
           <span className="bold-18">Q.{postData.question}</span>
-          <span className="medium-16">A.{postData.quiz_answer}</span>
+          {postData.type === 'QUIZ' && (
+            <span className="medium-16">A.{postData.quiz_answer}</span>
+          )}
         </div>
       </Container>
       <Floating>
-        <Button name="수정하기" type="outline" onClick={handlePrevStep} />
-        <Button name="등록하기" onClick={handleCreatePost} />
+        <button className="medium-16 outline" onClick={handlePrevStep}>
+          수정하기
+        </button>
+        <button className="medium-16" onClick={handleCreatePost}>
+          등록하기
+        </button>
       </Floating>
     </>
   );
@@ -60,6 +65,7 @@ const Container = styled.div`
 
     .content {
       color: var(--color-caption);
+      overflow-wrap: break-word;
     }
   }
 
@@ -82,15 +88,34 @@ const Container = styled.div`
 
 const Floating = styled.div`
   background-color: #ffffff;
-  width: calc(100% - 2rem);
+  width: 100%;
   border-top: 0.0625rem solid var(--color-primary-light-active);
   display: flex;
-  justify-content: center;
   position: fixed;
   max-width: 429px;
   gap: 0.625rem;
   bottom: 0;
-  padding: 1.25rem 1rem 3.37rem;
+  padding: 1.25rem 0 3.37rem;
+
+  button {
+    border: none;
+    background-color: var(--color-primary-normal);
+    color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 1rem 0;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    margin-right: 1rem;
+
+    &.outline {
+      border: 0.0625rem solid var(--color-primary-normal);
+      color: var(--color-primary-normal);
+      margin-right: 0;
+      margin-left: 1rem;
+      background-color: #ffffff;
+    }
+  }
 `;
 
 export default ThirdStep;
