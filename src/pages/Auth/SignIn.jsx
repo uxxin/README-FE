@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CustomInput from '../../components/CustomInput.jsx';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../api/Auth/user.js';
 import logo from '../../assets/svgs/logoex.svg';
 import KakaoLoginButton from '../../components/common/kakao-login/index.jsx';
+import Input from '../../components/common/input/index.jsx';
 
 const SignIn = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState({ email: '', password: '' });
 
   const apiKey = import.meta.env.VITE_KAKAO_REST_API_KEY;
   const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
@@ -20,7 +19,7 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(email, password);
+      const response = await login(user);
       const token = response.data.result.accessToken;
 
       localStorage.setItem('token', token);
@@ -36,26 +35,33 @@ const SignIn = () => {
     window.location.href = kakaoLoginPage;
   };
 
+  const handleChange = (e) => {
+    const { value, id } = e.target;
+    setUser({ ...user, [id]: value });
+  };
+
   return (
     <Root>
       <StyledLogo src={logo} alt="logo" />
       <InputContainer onSubmit={handleLogin}>
-        <CustomInput
-          type="email"
+        <Input
+          id="email"
+          type="text"
           placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.currentTarget.value)}
+          value={user.email}
+          onChange={handleChange}
         />
-        <CustomInput
+        <Input
+          id="password"
           type="password"
           placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
-          charCount={true}
+          value={user.password}
+          maxLength={20}
+          onChange={handleChange}
         />
         <ButtonWrapper>
           <SignInButton onClick={handleLogin}>로그인</SignInButton>
-          <KakaoLoginButton onClick={handleKakaoLogin}>
+          <KakaoLoginButton full onClick={handleKakaoLogin}>
             카카오톡으로 계속하기
           </KakaoLoginButton>
           <NotAuth>아직 회원이 아니신가요?</NotAuth>
@@ -87,7 +93,7 @@ const CommonButton = styled.button`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  width: calc(100% - 2rem);
+  width: 100%;
 `;
 
 const SignInButton = styled(CommonButton)`
@@ -108,8 +114,8 @@ const NotAuth = styled.span`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 100%;
-  position: fixed;
+  width: calc(100% - 2rem);
+  position: absolute;
   max-width: 429px;
   bottom: 3.37rem;
   display: flex;

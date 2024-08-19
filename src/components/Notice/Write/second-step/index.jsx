@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ImgUpload } from '../ImgUpload';
 import styled from 'styled-components';
 import { ReactComponent as Tooltip } from '../../../../assets/svgs/help_icon.svg';
@@ -27,6 +27,28 @@ const SecondStep = ({
     !postData.question.length ||
     (isQuiz && !postData.quiz_answer.length);
   const questionType = isQuiz ? '퀴즈' : '미션';
+
+  const tooltipMessage = useCallback(
+    () =>
+      isQuiz ? (
+        <>
+          예시
+          <br />
+          1. 우리 팀 회장의 이름은?
+          <br />
+          2. 이번 모임 장소는 ㅇㅇ역이다.
+        </>
+      ) : (
+        <>
+          예시
+          <br />
+          1. 닉네임 변경 인증 사진을 남겨주세요.
+          <br />
+          2. 입금 확인증을 올려주세요.
+        </>
+      ),
+    [isQuiz],
+  );
 
   const handleInput = (e, type) => {
     const { value } = e.target;
@@ -87,13 +109,7 @@ const SecondStep = ({
               <Tooltip />
               {isTooltipOpen && (
                 <div className="tooltip-wrap" ref={tooltipRef}>
-                  <div className="content regular-10">
-                    예시
-                    <br />
-                    1. 우리 팀 회장의 이름은?
-                    <br />
-                    2. 이번 모임 장소는 ㅇㅇ역이다.
-                  </div>
+                  <div className="content regular-10">{tooltipMessage()}</div>
                   <div className="tip" />
                 </div>
               )}

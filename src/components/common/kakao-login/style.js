@@ -10,4 +10,8 @@ export const KakaoLogin = styled.button`
   justify-content: center;
   gap: 0.5rem;
   margin: 0.625rem 0;
+
+  &.full {
+    width: 100%;
+  }
 `;
