@@ -4,7 +4,10 @@ import { useParams } from 'react-router-dom';
 import FirstStep from '../../../components/Notice/Write/first-step';
 import SecondStep from '../../../components/Notice/Write/second-step';
 import ThirdStep from '../../../components/Notice/Write/third-step';
-import { PostAxiosInstance } from '../../../axios/axios.method';
+import {
+  DeleteAxiosInstance,
+  PostAxiosInstance,
+} from '../../../axios/axios.method';
 
 const Write = () => {
   const [step, setStep] = useState(1);
@@ -33,7 +36,7 @@ const Write = () => {
         formData.append('file', file);
       });
 
-      const s3Response = await PostAxiosInstance('/user/s3/upload', formData, {
+      const s3Response = await PostAxiosInstance('/user/s3', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -46,6 +49,19 @@ const Write = () => {
           10,
         ),
       });
+    }
+  };
+
+  const handleDeleteImage = async (url) => {
+    try {
+      await DeleteAxiosInstance(`/user/s3`, { data: { url } });
+      handleUpdatePostData({
+        type: 'imgURLs',
+        value: postData.imgURLs.filter((img) => img !== url),
+      });
+    } catch (err) {
+      alert('이미지 삭제에 실패했습니다.');
+      console.error(err);
     }
   };
 
@@ -83,6 +99,7 @@ const Write = () => {
           handlePrevStep={handlePrevStep}
           handleNextStep={handleNextStep}
           handleImageUpload={handleImageUpload}
+          handleDeleteImage={handleDeleteImage}
           postData={postData}
           handleUpdatePostData={handleUpdatePostData}
           isQuiz={postData.type === 'QUIZ'}

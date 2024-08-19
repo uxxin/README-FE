@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ImgUpload } from '../ImgUpload';
 import styled from 'styled-components';
 import { ReactComponent as Tooltip } from '../../../../assets/svgs/help_icon.svg';
@@ -7,6 +7,7 @@ import FlexBox from '../../../common/flex-box';
 import Button from '../../../common/button';
 import Calendar from './calendar';
 import { format } from 'date-fns';
+import useOutsideClick from '../../../../hooks/use-outside-click';
 
 const SecondStep = ({
   handlePrevStep,
@@ -14,14 +15,40 @@ const SecondStep = ({
   postData,
   handleUpdatePostData,
   handleImageUpload,
+  handleDeleteImage,
   isQuiz,
 }) => {
   const [calendar, setCalendar] = useState({ type: '', isOpen: false });
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [tooltipRef] = useOutsideClick(() => setIsTooltipOpen(false));
   const disabled =
     !postData.start_date ||
     !postData.end_date ||
     !postData.question.length ||
     (isQuiz && !postData.quiz_answer.length);
+  const questionType = isQuiz ? '퀴즈' : '미션';
+
+  const tooltipMessage = useCallback(
+    () =>
+      isQuiz ? (
+        <>
+          예시
+          <br />
+          1. 우리 팀 회장의 이름은?
+          <br />
+          2. 이번 모임 장소는 ㅇㅇ역이다.
+        </>
+      ) : (
+        <>
+          예시
+          <br />
+          1. 닉네임 변경 인증 사진을 남겨주세요.
+          <br />
+          2. 입금 확인증을 올려주세요.
+        </>
+      ),
+    [isQuiz],
+  );
 
   const handleInput = (e, type) => {
     const { value } = e.target;
@@ -44,19 +71,24 @@ const SecondStep = ({
     });
   };
 
+  const handleOpenTooltip = (e) => {
+    e.stopPropagation();
+    setIsTooltipOpen((prev) => !prev);
+  };
+
   return (
     <>
       <Container>
         <ImgUpload
-          handleUpdatePostData={handleUpdatePostData}
           handleImageUpload={handleImageUpload}
+          handleDeleteImage={handleDeleteImage}
           imgURLs={postData.imgURLs}
         />
         <div className="common-wrap">
           <span className="text-wrap">시작 기한</span>
           <button
             onClick={(e) => handleOpenCalendar(e, 'start_date')}
-            className={`medium-16 ${postData.start_date && 'activate'}`}
+            className={`medium-16 date-button ${postData.start_date && 'activate'}`}
           >
             {postData.start_date || 'YY.MM.DD'}
           </button>
@@ -65,19 +97,27 @@ const SecondStep = ({
           <span className="text-wrap">마감 기한</span>
           <button
             onClick={(e) => handleOpenCalendar(e, 'end_date')}
-            className={`medium-16 ${postData.end_date && 'activate'}`}
+            className={`medium-16 date-button ${postData.end_date && 'activate'}`}
           >
             {postData.end_date || 'YY.MM.DD'}
           </button>
         </div>
         <div className="common-wrap">
           <div className="text-wrap">
-            <span>퀴즈</span>
-            <Tooltip />
+            <span>{questionType}</span>
+            <button className="tooltip" onClick={handleOpenTooltip}>
+              <Tooltip />
+              {isTooltipOpen && (
+                <div className="tooltip-wrap" ref={tooltipRef}>
+                  <div className="content regular-10">{tooltipMessage()}</div>
+                  <div className="tip" />
+                </div>
+              )}
+            </button>
           </div>
           <div className="input-wrap">
             <input
-              placeholder="퀴즈를 입력하세요"
+              placeholder={`${questionType}를 입력하세요`}
               value={postData.question}
               onChange={(e) => handleInput(e, 'question')}
               className="medium-16"
@@ -134,22 +174,53 @@ const Container = styled.div`
     button,
     .input-wrap {
       padding: 0.5rem;
-    }
-
-    button,
-    .input-wrap {
       border-radius: 0.5rem;
       border: 0.0625rem solid var(--color-primary-light-active);
       background-color: var(--color-primary-light);
+      outline: none;
     }
 
-    button {
+    .date-button {
       flex: 1;
       text-align: start;
       color: var(--color-empty);
 
       &.activate {
         color: var(--color-primary-normal);
+      }
+    }
+
+    .tooltip {
+      border: none;
+      background-color: #ffffff;
+      padding: 0;
+      display: flex;
+      position: relative;
+
+      .tooltip-wrap {
+        position: absolute;
+        bottom: 1.5rem;
+        text-align: start;
+        width: max-content;
+
+        .content {
+          border-radius: 0.5rem;
+          padding: 0.625rem;
+          background-color: var(--color-gray-1);
+          position: relative;
+          right: 1.6rem;
+          color: var(--color-default);
+        }
+
+        .tip {
+          width: 0;
+          height: 0;
+          border-width: 0.625rem 0.625rem 0;
+          border-style: solid;
+          border-color: #ffffff;
+          border-top: 0.625rem solid var(--color-gray-1);
+          position: relative;
+        }
       }
     }
 
