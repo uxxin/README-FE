@@ -98,7 +98,6 @@ function App() {
                 element={<ConfirmRequestApproval />}
               />
               <Route path="/notice/:roomId/edit" element={<RoomEdit />} />
-              {/* <Route path="/roomedit" element={<RoomEdit />} /> */}
 
               {/* MemberList - 멤버 리스트*/}
               <Route path="/notice/:roomId/member" element={<MemberList />} />
