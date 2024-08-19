@@ -1,0 +1,71 @@
+[
+    {
+        "userSubmissions": [
+                {
+                    "title": "test9",
+                    "start_date": "2024-08-11T02:24:00.000Z",
+                    "end_date": "2024-08-10T02:24:03.000Z",
+                    "content": "penaltytestcontent",
+                    "room_image": null,
+                    "pending_count": 2
+                }
+            ],
+            "pendingStates": [
+                {
+                    "profile_image": null,
+                    "nickname": "제이",
+                    "URL": "https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/43dbd401a34c7be69c9be7b123a13e67_exampleimage.png",
+                    "submit_state": "PENDING"
+                },
+                {
+                    "profile_image": null,
+                    "nickname": "레니",
+                    "URL": "https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/451df21dd722f16288179323dab458b5_exampleimage.png",
+                    "submit_state": "PENDING"
+                }
+            ],
+            "completeStates": [
+                {
+                    "profile_image": null,
+                    "nickname": "제이",
+                    "URL": "https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/45425843b018b4ac8d235ad195b35a54_exampleimage.png",
+                    "submit_state": "COMPLETE"
+                }
+            ]
+    },
+    {
+        "userSubmissions": [
+            {
+                "title": "test9",
+                "start_date": "2024-08-11T02:24:00.000Z",
+                "end_date": "2024-08-10T02:24:03.000Z",
+                "content": "penaltytestcontent",
+                "room_image": null,
+                "pending_count": 2
+            }
+        ],
+        "pendingStates": [
+            {
+                "profile_image": null,
+                "nickname": "제이",
+                "URL": "https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/43dbd401a34c7be69c9be7b123a13e67_exampleimage.png",
+                "submit_state": "PENDING"
+            },
+            {
+                "profile_image": null,
+                "nickname": "레니",
+                "URL": "https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/451df21dd722f16288179323dab458b5_exampleimage.png",
+                "submit_state": "PENDING"
+            }
+        ],
+        "completeStates": [
+            {
+                "profile_image": null,
+                "nickname": "제이",
+                "URL": "https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/45425843b018b4ac8d235ad195b35a54_exampleimage.png",
+                "submit_state": "COMPLETE"
+            }
+        ]
+    }
+
+]

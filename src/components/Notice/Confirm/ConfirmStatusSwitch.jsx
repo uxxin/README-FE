@@ -3,15 +3,18 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const ConfirmStatusSwitch = ({ onStateChange }) => {
+export const ConfirmStatusSwitch = ({ onStateChange}) => {
   const navigate = useNavigate();
   const keysCount = useSelector((state) => state.check.count);
   const [state, setState] = useState('waiting');
 
+  console.log("키카운트는 이거임:",keysCount)
+
+
   const handleClick = (newState) => {
     setState(newState);
   };
-
+  
   useEffect(() => {
     onStateChange(state);
   }, [state]);
@@ -37,7 +40,7 @@ export const ConfirmStatusSwitch = ({ onStateChange }) => {
 };
 
 const Container = styled.div`
-  padding: 1rem;
+  padding: 0.625rem 1rem;
 `;
 
 const MissionTogle = styled.div`

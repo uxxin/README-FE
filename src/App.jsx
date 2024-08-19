@@ -94,7 +94,7 @@ function App() {
                 element={<Confirm />}
               />
               <Route
-                path="/notice/:roomId/confirm-list/approval" //임시 path입니다. api 연결하면서 /notice/:roomId/confirm-list/:postId 같이 변경해야할 것 같습니다.
+                path="/notice/:roomId/confirm-list/:postId/approval" //임시 path입니다. api 연결하면서 /notice/:roomId/confirm-list/:postId 같이 변경해야할 것 같습니다.
                 element={<ConfirmRequestApproval />}
               />
               <Route path="/notice/:roomId/edit" element={<RoomEdit />} />
@@ -102,7 +102,7 @@ function App() {
               {/* MemberList - 멤버 리스트*/}
               <Route path="/notice/:roomId/member" element={<MemberList />} />
               <Route
-                path="/notice/:roomId/member/:nickname"
+                path="/notice/:roomId/member/:userId"
                 element={<Profile />}
               />
               <Route path="/notice/:roomId/invite" element={<Invite />} />
