@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from '../../../components/Header';
 import { ReactComponent as SmallCamera } from '../../../assets/svgs/small_camera.svg';
 import { ReactComponent as DeletePhoto } from '../../../assets/svgs/delete_photo.svg';
 import { ReactComponent as AddPhoto } from '../../../assets/svgs/add_photo.svg';
 import {
-  getNoticeRoomInfo,
   getSubmitInfo,
   submitAll,
   submitImage,
@@ -15,10 +14,7 @@ import { ReactComponent as RightAnswer } from '../../../assets/svgs/right_answer
 import { ReactComponent as WrongAnswer } from '../../../assets/svgs/wrong_answer.svg';
 import { ReactComponent as PaperPlane } from '../../../assets/svgs/paperplane.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setNoticeRoomTitle,
-  setSubmitState,
-} from '../../../redux/Notice/NoticeActions';
+import { setSubmitState } from '../../../redux/Notice/NoticeActions';
 const Solve = () => {
   const headerProps = {
     title: '공지방 이름',
@@ -33,7 +29,8 @@ const Solve = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isResult, setIsResult] = useState(false);
   const submitState = useSelector((state) => state.notice.submitState);
-  const noticeRoomTitle = useSelector((state) => state.notice.noticeRoomTitle);
+  const roomTitle = useSelector((state) => state.notice.roomTitle);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleUploadImage = async (e) => {
@@ -61,7 +58,6 @@ const Solve = () => {
   };
 
   const submitImages = async () => {
-    const newImageURLs = [];
     const formData = new FormData();
     if (sendData.length > 0) {
       sendData.forEach((file) => {
@@ -70,13 +66,12 @@ const Solve = () => {
     }
     try {
       const response = await submitImage(formData);
-      newImageURLs.push(response.data.result.images);
+      const updatedImageURLs = [...imageURLs, ...response.data.result.images];
+      setImageURLs(updatedImageURLs);
+      return updatedImageURLs;
     } catch (error) {
-      console.error(`Error uploading image`, error);
+      console.log(`Error uploading image`, error);
     }
-    const updatedImageURLs = [...imageURLs, ...newImageURLs];
-    setImageURLs(updatedImageURLs);
-    return updatedImageURLs;
   };
 
   const submitAllData = async () => {
@@ -95,6 +90,12 @@ const Solve = () => {
     setSendData((prevSendData) => prevSendData.filter((_, i) => i !== index));
   };
 
+  const handleToMainButton = () => {
+    navigate('/home');
+  };
+  const handleToNoticeButton = () => {
+    navigate(`/notice/${params.roomId}/${params.postId}`);
+  };
   useEffect(() => {
     if (submitData && submitData.type === 'QUIZ') {
       if (content.length > 0) setIsButtonDisabled(false);
@@ -116,11 +117,6 @@ const Solve = () => {
     };
     getSubmit();
   }, []);
-  useEffect(() => {
-    console.log(imageURLs);
-    console.log(sendData);
-    console.log(images);
-  }, [imageURLs, sendData, images]);
 
   return (
     <>
@@ -218,30 +214,36 @@ const Solve = () => {
         </>
       ) : (
         <ResultContainer>
-          <ResultHeader>공지방 이름</ResultHeader>
+          <ResultHeader>{roomTitle}</ResultHeader>
           <AnswerContainer>
             {submitData.type === 'QUIZ' ? (
               submitState === 'COMPLETE' ? (
                 <>
-                  <ResponseText>정답 입니다.</ResponseText>
+                  <ResponseText>정답입니다.</ResponseText>
                   <RightAnswer />
                 </>
               ) : (
                 <>
-                  <ResponseText>오답 입니다.</ResponseText>
+                  <ResponseText>오답입니다.</ResponseText>
                   <WrongAnswer />
                 </>
               )
             ) : (
               <>
                 <PaperPlane />
-                <ResponseText>운영진에게 확인요청을 전송했습니다.</ResponseText>
+                <ResponseText>
+                  운영진에게 확인요청을
+                  <br />
+                  전송했습니다.
+                </ResponseText>
               </>
             )}
           </AnswerContainer>
           <ButtonContainer>
-            <GoMainButton>메인으로</GoMainButton>
-            <ReReadNoticeButton>공지 다시 읽기</ReReadNoticeButton>
+            <GoMainButton onClick={handleToMainButton}>메인으로</GoMainButton>
+            <ReReadNoticeButton onClick={handleToNoticeButton}>
+              공지 다시 읽기
+            </ReReadNoticeButton>
           </ButtonContainer>
         </ResultContainer>
       )}
@@ -496,12 +498,14 @@ const AnswerContainer = styled.div`
 
 const ResponseText = styled.div`
   display: flex;
-  width: 105%;
+  width: 200%;
   color: var(--color-gray-7);
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.035rem;
+  text-align: center;
+  justify-content: center;
 `;
 
 const ButtonContainer = styled.div`

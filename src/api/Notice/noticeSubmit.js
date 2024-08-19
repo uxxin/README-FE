@@ -6,7 +6,7 @@ export const getSubmitInfo = async (postId) => {
 };
 
 export const submitImage = async (formData) => {
-  const response = await PostAxiosInstance('/user/s3/upload', formData, {
+  const response = await PostAxiosInstance('/user/s3', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response;
