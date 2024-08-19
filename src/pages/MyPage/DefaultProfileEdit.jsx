@@ -63,11 +63,9 @@ const DefaultProfileEdit = () => {
       if (!image.startsWith('https://s3')) {
         const formData = new FormData();
         formData.append('file', profileImage);
-        const s3Response = await PostAxiosInstance(
-          '/user/s3/upload',
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } },
-        );
+        const s3Response = await PostAxiosInstance('/user/s3', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
         profileImage = s3Response.data.result.images[0];
       }
 
