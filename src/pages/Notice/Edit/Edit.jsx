@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from '../../../components/Header';
 import { useParams } from 'react-router-dom';
 import FirstStep from '../../../components/Notice/Write/first-step';
 import SecondStep from '../../../components/Notice/Write/second-step';
 import ThirdStep from '../../../components/Notice/Write/third-step';
 import {
-  DeleteAxiosInstance,
+  GetAxiosInstance,
+  PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../../axios/axios.method';
+import { format } from 'date-fns';
 
-const Write = () => {
+const Edit = () => {
   const [step, setStep] = useState(1);
-  const { roomId } = useParams();
-  const [postData, setPostData] = useState({
-    room_id: roomId,
+  const { roomId, postId } = useParams();
+  const [deleteImgURLs, setDeleteImgURLs] = useState([]);
+  const [editData, setPostData] = useState({
     type: 'QUIZ',
     title: '',
     content: '',
@@ -44,7 +46,7 @@ const Write = () => {
 
       handleUpdatePostData({
         type: 'imgURLs',
-        value: [...postData.imgURLs, ...s3Response.data.result.images].slice(
+        value: [...editData.imgURLs, ...s3Response.data.result.images].slice(
           0,
           10,
         ),
@@ -53,16 +55,11 @@ const Write = () => {
   };
 
   const handleDeleteImage = async (url) => {
-    try {
-      await DeleteAxiosInstance(`/user/s3`, { data: { url } });
-      handleUpdatePostData({
-        type: 'imgURLs',
-        value: postData.imgURLs.filter((img) => img !== url),
-      });
-    } catch (err) {
-      alert('이미지 삭제에 실패했습니다.');
-      console.error(err);
-    }
+    handleUpdatePostData({
+      type: 'imgURLs',
+      value: editData.imgURLs.filter((img) => img !== url),
+    });
+    setDeleteImgURLs((prev) => [...prev, url]);
   };
 
   const handlePrevStep = () => {
@@ -73,11 +70,42 @@ const Write = () => {
     setStep((prev) => prev + 1);
   };
 
-  const handleCreatePost = async () => {
-    const response = await PostAxiosInstance(`/admin/post`, postData);
-    if (response.data.isSuccess) window.location.replace(`/notice/${roomId}`);
+  const handleEditPost = async () => {
+    const sendData = {
+      postData: {
+        postTitle: editData.title,
+        postContent: editData.content,
+        endDate: editData.end_date,
+        question: editData.question,
+        quizAnswer: editData.quiz_answer,
+      },
+      addImgURLs: editData.imgURLs,
+      deleteImgURLs,
+    };
+    const response = await PatchAxiosInstance(
+      `/admin/post/${postId}`,
+      sendData,
+    );
+    if (response.data.isSuccess)
+      window.location.replace(`/notice/${roomId}/${postId}`);
     else console.error(response.data.message);
   };
+
+  useEffect(() => {
+    (async () => {
+      const response = await GetAxiosInstance(`/admin/post/${postId}`);
+      setPostData({
+        type: response.data.result.type || 'QUIZ',
+        title: response.data.result.title || '',
+        content: response.data.result.content || '',
+        imgURLs: response.data.result.imgURLs || [],
+        start_date: format(response.data.result.startDate, 'yy.MM.dd') || '',
+        end_date: format(response.data.result.endDate, 'yy.MM.dd') || '',
+        quiz_answer: response.data.result.quizAnswer || '',
+        question: response.data.result.question || '',
+      });
+    })();
+  }, []);
 
   return (
     <>
@@ -90,8 +118,9 @@ const Write = () => {
       {step === 1 && (
         <FirstStep
           handleNextStep={handleNextStep}
-          postData={postData}
+          postData={editData}
           handleUpdatePostData={handleUpdatePostData}
+          editMode
         />
       )}
       {step === 2 && (
@@ -100,20 +129,22 @@ const Write = () => {
           handleNextStep={handleNextStep}
           handleImageUpload={handleImageUpload}
           handleDeleteImage={handleDeleteImage}
-          postData={postData}
+          postData={editData}
           handleUpdatePostData={handleUpdatePostData}
-          isQuiz={postData.type === 'QUIZ'}
+          isQuiz={editData.type === 'QUIZ'}
+          editMode
         />
       )}
       {step === 3 && (
         <ThirdStep
           handlePrevStep={handlePrevStep}
-          postData={postData}
-          handlePost={handleCreatePost}
+          postData={editData}
+          handlePost={handleEditPost}
+          editMode
         />
       )}
     </>
   );
 };
 
-export default Write;
+export default Edit;
