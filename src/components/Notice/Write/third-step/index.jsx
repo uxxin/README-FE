@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Chip from '../../../common/chip';
-import Button from '../../../common/button';
 
 const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
   return (
@@ -28,8 +27,6 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
         </div>
       </Container>
       <Floating>
-        {/* <Button name="수정하기" type="outline" onClick={handlePrevStep} />
-        <Button name="등록하기" onClick={handleCreatePost} /> */}
         <button className="medium-16 outline" onClick={handlePrevStep}>
           수정하기
         </button>
