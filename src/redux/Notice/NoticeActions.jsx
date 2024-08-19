@@ -1,7 +1,7 @@
 export const SET_SHOW_DIVS = 'SET_SHOW_DIVS';
 export const SET_FLIPPED = 'SET_FLIPPED';
 export const SET_ISROTATED = 'SET_ISROTATED';
-export const SET_PAGE = 'SET_PAGE';
+export const SET_ROOMTITLE = 'SET_ROOMTITLE';
 
 export const setShowDivs = (showDivs) => ({
   type: SET_SHOW_DIVS,
@@ -18,7 +18,7 @@ export const setIsRotated = (isRotated) => ({
   payload: isRotated,
 });
 
-export const setPage = (page) => ({
-  type: SET_PAGE,
-  payload: page,
+export const setRoomTitle = (roomTitle) => ({
+  type: SET_ROOMTITLE,
+  payload: roomTitle,
 });
