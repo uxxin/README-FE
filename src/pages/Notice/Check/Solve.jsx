@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from '../../../components/Header';
 import { ReactComponent as SmallCamera } from '../../../assets/svgs/small_camera.svg';
@@ -10,19 +10,29 @@ import {
   submitAll,
   submitImage,
 } from '../../../api/Notice/noticeSubmit';
+import { ReactComponent as RightAnswer } from '../../../assets/svgs/right_answer.svg';
+import { ReactComponent as WrongAnswer } from '../../../assets/svgs/wrong_answer.svg';
+import { ReactComponent as PaperPlane } from '../../../assets/svgs/paperplane.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSubmitState } from '../../../redux/Notice/NoticeActions';
 const Solve = () => {
   const headerProps = {
     title: '공지방 이름',
     isSearch: false,
   };
-  const { postId } = useParams();
+  const params = useParams();
   const [submitData, setSubmitData] = useState();
   const [sendData, setSendData] = useState([]);
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [content, setContent] = useState('');
-  const [submitState, setSubmitState] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isResult, setIsResult] = useState(false);
+  const submitState = useSelector((state) => state.notice.submitState);
+  const roomTitle = useSelector((state) => state.notice.roomTitle);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleUploadImage = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -48,27 +58,28 @@ const Solve = () => {
   };
 
   const submitImages = async () => {
-    const newImageURLs = [];
-    for (let i = 0; i < sendData.length; i++) {
-      const formData = new FormData();
-      formData.append('file', sendData[i]);
-      try {
-        const response = await submitImage(formData);
-        newImageURLs.push(response.data.result.image);
-      } catch (error) {
-        console.error(`Error uploading image ${i + 1}:`, error);
-      }
+    const formData = new FormData();
+    if (sendData.length > 0) {
+      sendData.forEach((file) => {
+        formData.append('file', file);
+      });
     }
-    const updatedImageURLs = [...imageURLs, ...newImageURLs];
-    setImageURLs(updatedImageURLs);
-    return updatedImageURLs;
+    try {
+      const response = await submitImage(formData);
+      const updatedImageURLs = [...imageURLs, ...response.data.result.images];
+      setImageURLs(updatedImageURLs);
+      return updatedImageURLs;
+    } catch (error) {
+      console.log(`Error uploading image`, error);
+    }
   };
 
   const submitAllData = async () => {
     try {
       const finalImageURLs = await submitImages();
-      const response = await submitAll(content, finalImageURLs, postId);
-      setSubmitState(response.data.result.submitState);
+      const response = await submitAll(content, finalImageURLs, params.postId);
+      dispatch(setSubmitState(response.data.result.submitState));
+      setIsResult(true);
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +90,12 @@ const Solve = () => {
     setSendData((prevSendData) => prevSendData.filter((_, i) => i !== index));
   };
 
+  const handleToMainButton = () => {
+    navigate('/home');
+  };
+  const handleToNoticeButton = () => {
+    navigate(`/notice/${params.roomId}/${params.postId}`);
+  };
   useEffect(() => {
     if (submitData && submitData.type === 'QUIZ') {
       if (content.length > 0) setIsButtonDisabled(false);
@@ -92,7 +109,7 @@ const Solve = () => {
   useEffect(() => {
     const getSubmit = async () => {
       try {
-        const response = await getSubmitInfo(postId);
+        const response = await getSubmitInfo(params.postId);
         setSubmitData(response.data.result);
       } catch (error) {
         console.log(error);
@@ -100,87 +117,136 @@ const Solve = () => {
     };
     getSubmit();
   }, []);
+
   return (
     <>
-      <Header props={headerProps} />
-      <Container>
-        {submitData && submitData.type === 'QUIZ' ? (
-          <TopContainer>
-            <Question>
-              Q.
-              <br />
-              {submitData.question}
-            </Question>
-            <Answer>
-              A.
-              <br />
-              <Input type="text" onChange={handleTextChange} maxLength={20} />
-            </Answer>
-          </TopContainer>
-        ) : (
-          <>
-            <MissionTopContainer>
-              <Question>
-                Q.
-                <br />
-                {submitData ? submitData.question : '질문이 없습니다.'}
-              </Question>
-              <SubmitPhotoContainer></SubmitPhotoContainer>
-            </MissionTopContainer>
-            <PhotoContainer>
-              <SubmitNotice>
-                인증 사진 제출 &#40;{images.length}/5&#41;
-              </SubmitNotice>
-              {images.length === 0 && (
-                <SubmitPhoto>
-                  <label>
-                    <PhotoSubmitInput
-                      type="file"
-                      accept="image/*"
-                      onChange={handleUploadImage}
-                      multiple
+      {!isResult ? (
+        <>
+          <Header props={headerProps} />
+          <Container>
+            {submitData && submitData.type === 'QUIZ' ? (
+              <TopContainer>
+                <Question>
+                  Q.
+                  <br />
+                  {submitData.question}
+                </Question>
+                <Answer>
+                  A.
+                  <br />
+                  <Input
+                    type="text"
+                    onChange={handleTextChange}
+                    maxLength={20}
+                  />
+                </Answer>
+              </TopContainer>
+            ) : (
+              <>
+                <MissionTopContainer>
+                  <Question>
+                    Q.
+                    <br />
+                    {submitData ? submitData.question : '질문이 없습니다.'}
+                  </Question>
+                  <SubmitPhotoContainer></SubmitPhotoContainer>
+                </MissionTopContainer>
+                <PhotoContainer>
+                  <SubmitNotice>
+                    인증 사진 제출 &#40;{images.length}/5&#41;
+                  </SubmitNotice>
+                  {images.length === 0 && (
+                    <SubmitPhoto>
+                      <label>
+                        <PhotoSubmitInput
+                          type="file"
+                          accept="image/*"
+                          onChange={handleUploadImage}
+                          multiple
+                        />
+                        <StyledSmallCamera />
+                      </label>
+                    </SubmitPhoto>
+                  )}
+                  {images.map((image, index) => (
+                    <PhotoFrame>
+                      <StyledDeletePhoto onClick={() => deletePhoto(index)} />
+                      <PhotoImage
+                        key={index}
+                        src={image}
+                        alt={`Uploaded ${index}`}
+                      />
+                    </PhotoFrame>
+                  ))}
+                  {images.length > 0 && images.length < 5 && (
+                    <label>
+                      <PhotoSubmitInput
+                        type="file"
+                        accept="image/*"
+                        onChange={handleUploadImage}
+                        multiple
+                      />
+                      <AddPhoto />
+                    </label>
+                  )}
+                </PhotoContainer>
+                <OthersContainer>
+                  <Others>기타 사항</Others>
+                  <OthersInputContainer>
+                    <Input
+                      type="text"
+                      onChange={handleTextChange}
+                      maxLength={50}
                     />
-                    <StyledSmallCamera />
-                  </label>
-                </SubmitPhoto>
-              )}
-              {images.map((image, index) => (
-                <PhotoFrame>
-                  <StyledDeletePhoto onClick={() => deletePhoto(index)} />
-                  <PhotoImage
-                    key={index}
-                    src={image}
-                    alt={`Uploaded ${index}`}
-                  />
-                </PhotoFrame>
-              ))}
-              {images.length > 0 && images.length < 5 && (
-                <label>
-                  <PhotoSubmitInput
-                    type="file"
-                    accept="image/*"
-                    onChange={handleUploadImage}
-                    multiple
-                  />
-                  <AddPhoto />
-                </label>
-              )}
-            </PhotoContainer>
-            <OthersContainer>
-              <Others>기타 사항</Others>
-              <OthersInputContainer>
-                <Input type="text" onChange={handleTextChange} maxLength={50} />
-                <MaxLetterCount>&#40;{content.length}/50&#41;</MaxLetterCount>
-              </OthersInputContainer>
-            </OthersContainer>
-          </>
-        )}
-        <SubmitButtonContainer>
-          <Submit onClick={submitAllData} disabled={isButtonDisabled}>
-            제출
-          </Submit>
-        </SubmitButtonContainer>
-      </Container>
+                    <MaxLetterCount>
+                      &#40;{content.length}/50&#41;
+                    </MaxLetterCount>
+                  </OthersInputContainer>
+                </OthersContainer>
+              </>
+            )}
+            <SubmitButtonContainer>
+              <Submit onClick={submitAllData} disabled={isButtonDisabled}>
+                제출
+              </Submit>
+            </SubmitButtonContainer>
+          </Container>
+        </>
+      ) : (
+        <ResultContainer>
+          <ResultHeader>{roomTitle}</ResultHeader>
+          <AnswerContainer>
+            {submitData.type === 'QUIZ' ? (
+              submitState === 'COMPLETE' ? (
+                <>
+                  <ResponseText>정답입니다.</ResponseText>
+                  <RightAnswer />
+                </>
+              ) : (
+                <>
+                  <ResponseText>오답입니다.</ResponseText>
+                  <WrongAnswer />
+                </>
+              )
+            ) : (
+              <>
+                <PaperPlane />
+                <ResponseText>
+                  운영진에게 확인요청을
+                  <br />
+                  전송했습니다.
+                </ResponseText>
+              </>
+            )}
+          </AnswerContainer>
+          <ButtonContainer>
+            <GoMainButton onClick={handleToMainButton}>메인으로</GoMainButton>
+            <ReReadNoticeButton onClick={handleToNoticeButton}>
+              공지 다시 읽기
+            </ReReadNoticeButton>
+          </ButtonContainer>
+        </ResultContainer>
+      )}
     </>
   );
 };
@@ -388,4 +454,105 @@ const MaxLetterCount = styled.div`
 
 const OthersInputContainer = styled.div`
   position: relative;
+`;
+
+const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 1.06rem, 0;
+  position: relative;
+  gap: 6.25rem;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ResultHeader = styled.div`
+  display: flex;
+  width: 100%;
+  height: 2.75rem;
+  padding: 0.8125rem 0rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-gray-7);
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0225rem;
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+`;
+
+const AnswerContainer = styled.div`
+  display: flex;
+  width: 7.9375rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+  justify-content: center;
+`;
+
+const ResponseText = styled.div`
+  display: flex;
+  width: 200%;
+  color: var(--color-gray-7);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.035rem;
+  text-align: center;
+  justify-content: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 3.75rem;
+`;
+
+const GoMainButton = styled.button`
+  display: flex;
+  width: 100%;
+  height: 3.1875rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--Primary-Normal, #509bf7);
+  color: var(--Basic-White, var(--Basic-White, #fff));
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 120%;
+  letter-spacing: -0.02rem;
+`;
+
+const ReReadNoticeButton = styled.button`
+  display: flex;
+  width: 100%;
+  height: 3.1875rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+  border-radius: 0.5rem;
+  border: 0.5px solid var(--Primary-Normal, #509bf7);
+  background: var(--Basic-White, #fff);
+  color: var(--Primary-normal, var(--Primary-Normal, #509bf7));
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 120%;
+  letter-spacing: -0.02rem;
 `;

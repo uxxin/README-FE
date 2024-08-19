@@ -108,11 +108,11 @@ const Main = () => {
         setNoticeData(response.data.result.posts);
         dispatch(setRoomTitle(response.data.result.roomName));
         if (response.data.result.notCheckedPenalty.length > 0) {
-          setPenaltyData((prevData) => ({
+          setPenaltyData({
             penaltyCount: response.data.result.penaltyCount,
             maxPenalty: response.data.result.maxPenalty,
             notCheckedPenalty: response.data.result.notCheckedPenalty,
-          }));
+          });
           setIsPenaltyModalOpen(true);
         }
         await checkPenalty(roomId);
@@ -164,7 +164,9 @@ const Main = () => {
             <PenaltyButtons>
               {isBanned ? (
                 <>
-                  <PenaltyBanned>퇴장하기</PenaltyBanned>
+                  <PenaltyBanned onClick={handleBannedButtonClick}>
+                    퇴장하기
+                  </PenaltyBanned>
                 </>
               ) : (
                 <>
