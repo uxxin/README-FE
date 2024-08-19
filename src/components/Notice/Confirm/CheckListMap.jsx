@@ -9,7 +9,7 @@ import { getSubmitRequest } from '../../../api/Member/memberListCheck';
 
 
 
-export const CheckListMap = ({nickname, profile_image, URL, submit_state, onKeysCountChange }) => {
+export const CheckListMap = ({nickname, profileImage, images, content,submitId}) => {
  
   const dispatch = useDispatch();
   const requiredList = useSelector((state) => state.check.requiredList);
@@ -19,31 +19,30 @@ export const CheckListMap = ({nickname, profile_image, URL, submit_state, onKeys
   const [totalPage, setTotalPage] = useState(1);
   const pageLimit = 1;
 
-  console.log("키어카운트:",keysCount)
 
   const roomId = 8;
 
   useEffect(() => {
-    setTotalPage(URL);
-  }, [URL]);
+    setTotalPage(images);
+  }, [images]);
 
 
   useEffect(() => {
-    // URL이 배열인지 확인하고, totalPage를 설정
-    if (Array.isArray(URL)) {
-      setTotalPage(URL.length);
+    
+    if (Array.isArray(images)) {
+      setTotalPage(images.length);
     } else {
-      setTotalPage(1); // URL이 배열이 아닌 경우 기본값 설정
+      setTotalPage(1); 
     }
-  }, [URL]);
+  }, [images]);
 
   const lastPage = () => setPage(totalPage);
   const prevPage = () => setPage(page > 1 ? page - 1 : page);
   const nextPage = () => setPage(page < totalPage ? page + 1 : page);
 
-  // URL이 배열인지 확인하고, 페이지에 해당하는 이미지를 설정
-  const currentImage = (Array.isArray(URL) && URL.length > 0) 
-    ? URL[page - 1] 
+ 
+  const currentImage = (Array.isArray(images) && images.length > 0) 
+    ? images[page - 1] 
     : '/src/assets/pngs/defaultprofileimage.png';
 
     const handleAcceptance = async () => {
@@ -75,7 +74,7 @@ export const CheckListMap = ({nickname, profile_image, URL, submit_state, onKeys
   }
 
   if (!requiredList.some((item) => item.nickname === nickname)) {
-    return null; // 수락 또는 거절된 항목은 렌더링하지 않음
+    return null; 
   }
 
 
@@ -84,19 +83,19 @@ export const CheckListMap = ({nickname, profile_image, URL, submit_state, onKeys
       <TotalContainer>
         <BorderContainer>
         <ProfileContainer>
-          {profile_image===null?(
+          {profileImage===null?(
             <>
             <ImgContainer  src='/src/assets/pngs/defaultprofileimage.png'/>
             </>
           ):(
             <>
-            <ImgContainer src={profile_image} alt="Profile" />
+            <ImgContainer src={profileImage} alt="Profile" />
             </>
           )}
     
         <TextContainer>
           <ProfileName>{nickname}</ProfileName>
-          <ProfileInfo>{/*content*/}ㅎㅇ</ProfileInfo>
+          <ProfileInfo>{content}</ProfileInfo>
         </TextContainer>
       </ProfileContainer>
       <ContentContainer>

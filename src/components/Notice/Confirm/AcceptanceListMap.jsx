@@ -7,8 +7,8 @@ import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
 
 
-export const AcceptanceListMap = ({profile_image,nickname,URL,submit_state}) => {
-  console.log('AcceptanceListMap rendered');
+export const AcceptanceListMap = ({profileImage,nickname,images,content,submitId}) => {
+
   const dispatch = useDispatch();
   const requiredList = useSelector((state) => state.check.requiredList);
 
@@ -20,21 +20,20 @@ export const AcceptanceListMap = ({profile_image,nickname,URL,submit_state}) => 
   
   
   useEffect(() => {
-    // URL이 배열인지 확인하고, totalPage를 설정
-    if (Array.isArray(URL)) {
-      setTotalPage(URL.length);
+    if (Array.isArray(images)) {
+      setTotalPage(images.length);
     } else {
-      setTotalPage(1); // URL이 배열이 아닌 경우 기본값 설정
+      setTotalPage(1);
     }
-  }, [URL]);
+  }, [images]);
 
   const lastPage = () => setPage(totalPage);
   const prevPage = () => setPage(page > 1 ? page - 1 : page);
   const nextPage = () => setPage(page < totalPage ? page + 1 : page);
 
-  // URL이 배열인지 확인하고, 페이지에 해당하는 이미지를 설정
-  const currentImage = (Array.isArray(URL) && URL.length > 0) 
-    ? URL[page - 1] 
+  
+  const currentImage = (Array.isArray(images) && images.length > 0) 
+    ? images[page - 1] 
     : '/src/assets/pngs/defaultprofileimage.png';
 
 
@@ -46,10 +45,10 @@ export const AcceptanceListMap = ({profile_image,nickname,URL,submit_state}) => 
     <TotalContainer>
     <BorderContainer>
       <ProfileContainer>
-        <ImgContainer src={profile_image} alt="Profile" />
+        <ImgContainer src={profileImage} alt="Profile" />
         <TextContainer>
           <ProfileName>{nickname}</ProfileName>
-          <ProfileInfo>{/*content*/}</ProfileInfo>
+          <ProfileInfo>{content}</ProfileInfo>
         </TextContainer>
       </ProfileContainer>
       <ContentContainer>
@@ -140,42 +139,6 @@ const NextPageBtn = styled.button`
   z-index: 10; 
 `;
 
-
-
-const SecondButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  align-self: stretch;
-  border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-Light-active, #c9e0fd);
-  margin-bottom: 1rem;
-`;
-
-const YesButton = styled.button`
-  display: flex;
-  padding: 0.5rem;
-  justify-content: center;
-  align-items: center;
-  flex: 1 0 0;
-  border-right: 0.33px solid var(--Primary-light-active, #c9e0fd);
-  background: var(--Primary-light, #f4f9ff);
-  border: 0.3px solid #c9e0fd;
-  border-radius: 0.5rem 0rem 0rem 0.5rem;
-`;
-
-const NoButton = styled.button`
-  display: flex;
-  padding: 0.5rem;
-  justify-content: center;
-  align-items: center;
-  flex: 1 0 0;
-  border-right: 0.33px solid var(--Primary-light-active, #c9e0fd);
-  background: var(--Primary-light, #f4f9ff);
-  border: 0.3px solid #c9e0fd;
-  border-radius: 0rem 0.5rem 0.5rem 0rem;
-`;
 
 
 const StyledImage = styled.img`

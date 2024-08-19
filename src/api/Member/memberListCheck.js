@@ -56,22 +56,15 @@ export const getMemberBan = async (nickname, roomId) => {
     return response.data;
   }
   export const getSubmitList = async(roomId) =>{
-    const response = await GetAxiosInstance(`/admin/submit/${roomId}`)
+    const response = await GetAxiosInstance(`/admin/posts/${roomId}`)
     console.log("확인요청내역:",response.data)
     console.log("확인요청내역:",response.data.result)
     return response.data;
   }
 
-  export const getSubmitRequest = async (type, roomId) => {
-   
-      const response = await PatchAxiosInstance(`/admin/submit/user-request`, {
-
-          type: type,
-          roomId: roomId
-        
-      });
+  export const getSubmitRequest = async (roomId,postId,type) => {
+      const response = await GetAxiosInstance(`/admin/submit/${roomId}/${postId}?state=${type}`);
       console.log("확인요청내역 수락 혹은 거절:", response.data);
       return response.data;
-    
   };
 

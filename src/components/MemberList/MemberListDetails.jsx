@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { DotsIcon } from '../../assets/svgs/icons';
 
 export const MemberListDetails = (props) => {
-  const { profile_image, nickname } = props;
 
-  console.log('MemberListDetails props:', { profile_image, nickname });
   return (
     <ButtonContainer>
       <MemberNameBtn src={props.profile_image} />

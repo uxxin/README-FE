@@ -11,8 +11,8 @@ import Penalty from '../../pages/Main/Penalty';
 export const MemberProfile = () => {
 
 
-  const {roomId} = useParams();
-  const {userId} = useParams();
+  const {roomId,userId} = useParams();
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,11 +22,6 @@ export const MemberProfile = () => {
   // const imageUrl = profile_image.startsWith('http') ? profile_image : `/images/${profile_image}`;
   const [penaltyData, setPenaltyData] = useState("")
 
-  
-
-  console.log("파라미터로 넘어오는값1:",nickname)
-  console.log("파라미터로 넘어오는값2:",roomId)
-  console.log("파라미터로 넘어오는값3:",userId)
 
   const handleClick = () => {
     navigate('/sign-up');

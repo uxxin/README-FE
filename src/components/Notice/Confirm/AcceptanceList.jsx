@@ -10,38 +10,40 @@ import { useSelector } from 'react-redux';
 import { setRequiredListCount } from '../../../redux/CheckSlice';
 import { AcceptanceListMap } from './AcceptanceListMap';
 import Main from '../../../pages/Notice/Main';
-import { getSubmitList } from '../../../api/Member/memberListCheck';
+import {  getSubmitRequest } from '../../../api/Member/memberListCheck';
 import { useParams } from 'react-router-dom';
 
 
 export const AcceptanceList = () => {
   const [checklist, setCheckList] = useState([]);
+  const [pendinglist, setPendingList] = useState([]);
   const keysCount = useSelector((state) => state.check.count);
-  const requiredList = useSelector((state) => state.check.requiredList);
-  const acceptanceList = useSelector((state) => state.check.acceptanceList);
+  const requiredList = useSelector((state) => state.check.requiredList) || []; // 기본값을 빈 배열로 설정
+  const acceptanceList = useSelector((state) => state.check.acceptanceList) || []; // 기본값을 빈 배열로 설정
 
   
 
-  const {roomId} = useParams();
+  const {roomId,postId} = useParams();
 
   const dispatch = useDispatch();
-
-  console.log("어쎕리스트의 키카운트 제발넘어와라:", keysCount)
 
   
   useEffect(() => {
     const fetchCheckList = async () => {
       try {
-        const response = await getSubmitList(roomId);  
+        const response = await getSubmitRequest(roomId,postId,"complete");  
+        const pendingResponse = await getSubmitRequest(roomId,postId,"pending");  
      
         console.log('응답 데이터:', response.result); 
-        const data = response.result.completeStates
-        console.log("이게 필요한 데이터야",data);
+        const data = response.result || []; // 응답 데이터가 없을 때를 대비
+        const pendingData = pendingResponse.result || []; // 응답 데이터가 없을 때를 대비
+        console.log("이게 필요한 승인완료된 리스트",data);
           setCheckList(data);
+          setPendingList(pendingData);
           dispatch(
             setRequiredListCount({
-              count: response.result.pendingStates.length,
-              requiredList: response.result.completeStates,
+              count: pendingResponse.result.length,
+              requiredList: response.result,
               acceptanceList: [],
             })
           )
@@ -51,7 +53,7 @@ export const AcceptanceList = () => {
     };
 
     fetchCheckList();
-  }, [dispatch, roomId]);
+  }, [dispatch, roomId,postId]);
 
 
 
@@ -64,18 +66,18 @@ export const AcceptanceList = () => {
       <Container>
         <BoxContainer>
         
-          {requiredList.length === 0 ? (
+        {Array.isArray(requiredList) && requiredList.length === 0 ? (
             <CheckContainer>승인완료된 요청이 없습니다</CheckContainer>
           ) : (
             requiredList.map((item) => (
               
               <AcceptanceListMap
-                key={item.submit_id}
-                submit_id={item.submit_id}
+                key={item.submitId}
+                submitId={item.submitId}
                 nickname={item.nickname}
-                user_info={item.user_info}
+              //  user_info={item.user_info}
                 content={item.content}
-                image_URL={item.image_URL}
+                profileImage={item.profileImage}
               />
              
             ))

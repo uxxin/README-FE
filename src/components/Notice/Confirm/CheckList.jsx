@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setRequiredListCount } from '../../../redux/CheckSlice';
-import { getSubmitList } from '../../../api/Member/memberListCheck';
+import { getSubmitRequest } from '../../../api/Member/memberListCheck';
 import { useParams } from 'react-router-dom';
 
 
@@ -16,25 +16,22 @@ export const CheckList = () => {
   const requiredList = useSelector((state) => state.check.requiredList);
   const acceptanceList = useSelector((state) => state.check.acceptanceList);
   const dispatch = useDispatch();
-  const {roomId} = useParams();
-//  const roomId = 8;
-
-
+  const {roomId,postId} = useParams();
 
 
 
   useEffect(() => {
     const fetchCheckList = async () => {
       try {
-        const response = await getSubmitList(roomId);  
+        const response = await  getSubmitRequest(roomId,postId,"pending");  
         console.log('응답 데이터:', response.result); 
-        const data = response.result.pendingStates
-        console.log("이게 필요한 데이터야",data);
+        const data = response.result
+        console.log("이게 대기중인 리스트:",response.result);
           setCheckList(data);
           dispatch(
             setRequiredListCount({
-              count: response.result.pendingStates.length,
-              requiredList: response.result.pendingStates,
+              count: response.result.length,
+              requiredList: response.result,
               acceptanceList: [],
             })
           )
@@ -44,7 +41,7 @@ export const CheckList = () => {
     };
 
     fetchCheckList();
-  }, [dispatch, roomId]);
+  }, [dispatch, roomId,postId]);
   
 
   console.log('리스트 값:', checklist);
@@ -60,11 +57,13 @@ export const CheckList = () => {
           ) : (
             requiredList.map((item) => (
               <CheckListMap
-                  key={item.nickname} 
-                  URL={item.URL}
+                  key={item.submitId}
+                  submitId = {item.submitId} 
+                  images={item.images}
+                  content = {item.content}
                   nickname={item.nickname}
-                  profile_image={item.profile_image}
-                  submit_state={item.submit_state}
+                  profileImage={item.profileImage}
+                  submitState={item.submitState}
               />
               
             ))

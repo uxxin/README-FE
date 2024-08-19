@@ -3,15 +3,14 @@ import styled from "styled-components";
 import { NoticeTitle } from "../NoticeTitle";
 import axios from "axios";
 import { PointerBtn } from "../../../assets/svgs/icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 
 
 export const ConfirmListMap = (props) =>{
-//    const props = {title,start_date,end_date,content,room_image,pending_count};
 
-    const roomId = 8;
-
+    const {roomId} = useParams();
+   
   return(
    <BoxContainer>
         <Container>
@@ -20,15 +19,15 @@ export const ConfirmListMap = (props) =>{
                     {props.title}
                 </TitleBox>
                 <DateBox>
-                {props.start_date}-{props.end_date}
+                {props.startDate} - {props.endDate}
                 </DateBox>
                 <FrameBox>
                     <ContentBox>
                 <ContentText>{props.content}</ContentText>    
                     </ContentBox>
-                    {props.room_image>0 ?(
+                    {props.image>0 ?(
                         <>
-                        <ImgBox src={props.room_image}/>
+                        <ImgBox src={props.image}/>
                         </>
                     ):(
                         <>
@@ -40,15 +39,15 @@ export const ConfirmListMap = (props) =>{
                 </FrameBox>
 
                 <BottonBox>
-                    {props.pending_count>0 ?
+                    {props.pendingCount>0 ?
                     (
-                        <StyledLink to={`/notice/${roomId}/confirm-list/approval`}>
-                    <BtnStyle><PointerBtn />{props.pending_count}</BtnStyle> 
+                        <StyledLink to={`/notice/${roomId}/confirm-list/${props.postId}/approval`}>
+                    <BtnStyle><PointerBtn />{props.pendingCount}</BtnStyle> 
                         </StyledLink>
                     ):(
-                        <>
+                        <BtnStyle>
                         <PointerBtn/>요청없음
-                        </>
+                        </BtnStyle>
                     )}
                 </BottonBox>
             </ContentContainer>

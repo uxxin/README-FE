@@ -124,10 +124,14 @@ export const MemberListMap = ({ members }) => {
       {isSecondModalOpen && (
         <ModalOverlay onClick={handleSecondModalClose}>
           <SecondModalContent onClick={(e) => e.stopPropagation()}>
-            <p>추방하시겠습니까?</p>
+            <TextContainer>
+          <ModalText>
+          추방하시겠습니까? <InfoText><br />추방한 유저는 다시 초대가능합니다.</InfoText>
+          </ModalText>
+          </TextContainer>
             <ButtonWrapper>
               <CloseButton onClick={handleSecondModalClose}>취소</CloseButton>
-              <CloseButton onClick={handleConfirmKickOut}>확인</CloseButton>
+              <CheckButton onClick={handleConfirmKickOut}>확인</CheckButton>
             </ButtonWrapper>
           </SecondModalContent>
         </ModalOverlay>
@@ -176,7 +180,7 @@ const SecondModalContent = styled.div`
   align-items: center;
   gap: 0.125rem;
   border-radius: 0.5rem;
-  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
+  border: 0.0206rem solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   backdrop-filter: blur(40px);
   z-index: 10001;
@@ -185,7 +189,7 @@ const SecondModalContent = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
-  border-top: 0.333px solid var(--Grayscale-Gray5, #888);
+//  border-top: 0.0206rem solid var(--Grayscale-Gray5, #888);
 `;
 
 const CloseButton = styled.button`
@@ -197,8 +201,24 @@ const CloseButton = styled.button`
   border: none;
   background: transparent;
   color: #509bf7;
-  border: 0.33px solid var(--Primary-light-active, #888888);
+  border-top: 0.0206rem solid var(--Primary-light-active, #888888);
+  border-right: 0.0206rem solid var(--Primary-light-active, #888888);
+ 
+  border-left: none; /* 왼쪽 테두리를 제거 */
 `;
+
+const CheckButton = styled.button`
+  display: flex;
+  flex: 1;
+  padding: 0.875rem 0;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: #509bf7;
+  border-top: 0.0206rem solid var(--Primary-light-active, #888888);
+  border-left: none; 
+`
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -240,3 +260,23 @@ const MemberAddBtn = styled.button`
 const ThirdModalContent = styled(SecondModalContent)`
   /* 색상 및 크기가 SecondModalContent와 동일하도록 유지 */
 `;
+
+const TextContainer = styled.div`
+  padding: 0px, 16px, 15px, 16px;
+`
+
+const ModalText = styled.div`
+  text-align: center;
+  margin-bottom: 16px;
+`
+
+const InfoText = styled.span`
+
+font-family: Pretendard;
+font-size: 12px;
+font-weight: 400;
+line-height: 12px;
+letter-spacing: -0.02em;
+text-align: center;
+
+`

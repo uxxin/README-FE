@@ -19,21 +19,17 @@ export const ConfirmList = () =>{
     const fetchData = async () => {
       try {
         const data = await getSubmitList(roomId);
-        console.log(data)
-        const userSubmissions = data.result.UserSubmissions;
-        setRequestNum(userSubmissions); 
-        console.log('Fetched data:', userSubmissions);
-
-        if (userSubmissions.length > 0) {
-        //console.log('첫 번째 항목의 title:', userSubmissions[0].title); 
-        } 
+        console.log('응답 데이터:', data);
+        const confirmList = data.result
+        setRequestNum(confirmList); // 상태 업데이트
+        console.log('Fetched data:',confirmList);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('데이터를 가져오는 동안 오류 발생:', error);
       }
     };
     fetchData();
   }, [roomId]);
-
+  
   return (
     <div>
       {requestNum.length === 0 ? (
@@ -42,13 +38,13 @@ export const ConfirmList = () =>{
         requestNum.map((submission, index) => (
           <ConfirmListMap
             key={index}
-            postId={submission.id}
+            postId={submission.postId}
             title={submission.title}
-            start_date={submission.start_date}
-            end_date={submission.end_date}
+            startDate={submission.startDate}
+            endDate={submission.endDate}
             content={submission.content}
-            room_image={submission.room_image}
-            pending_count={submission.pending_count}
+            image={submission.image}
+            pendingCount={submission.pendingCount}
           />
         ))
       )}
