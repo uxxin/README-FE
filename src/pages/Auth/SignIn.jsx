@@ -6,6 +6,7 @@ import { login } from '../../api/Auth/user.js';
 import logo from '../../assets/svgs/logoex.svg';
 import KakaoLoginButton from '../../components/common/kakao-login/index.jsx';
 import Input from '../../components/common/input/index.jsx';
+import FlexBox from '../../components/common/flex-box/index.jsx';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -44,21 +45,23 @@ const SignIn = () => {
     <Root>
       <StyledLogo src={logo} alt="logo" />
       <InputContainer onSubmit={handleLogin}>
-        <Input
-          id="email"
-          type="text"
-          placeholder="이메일"
-          value={user.email}
-          onChange={handleChange}
-        />
-        <Input
-          id="password"
-          type="password"
-          placeholder="비밀번호"
-          value={user.password}
-          maxLength={20}
-          onChange={handleChange}
-        />
+        <FlexBox col gap={0.75}>
+          <Input
+            id="email"
+            type="text"
+            placeholder="이메일"
+            value={user.email}
+            onChange={handleChange}
+          />
+          <Input
+            id="password"
+            type="password"
+            placeholder="비밀번호"
+            value={user.password}
+            maxLength={20}
+            onChange={handleChange}
+          />
+        </FlexBox>
         <ButtonWrapper>
           <SignInButton onClick={handleLogin}>로그인</SignInButton>
           <KakaoLoginButton full onClick={handleKakaoLogin}>
@@ -78,12 +81,15 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
+  height: 100%;
 `;
 
 const InputContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  justify-content: space-between;
+  height: 100%;
 `;
 
 const CommonButton = styled.button`
@@ -114,12 +120,11 @@ const NotAuth = styled.span`
 `;
 
 const ButtonWrapper = styled.div`
-  width: calc(100% - 2rem);
-  position: absolute;
+  width: 100%;
   max-width: 429px;
-  bottom: 3.37rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 3.37rem;
 `;
 
 const StyledLogo = styled.img`
