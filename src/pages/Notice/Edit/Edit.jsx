@@ -5,48 +5,26 @@ import FirstStep from '../../../components/Notice/Write/first-step';
 import SecondStep from '../../../components/Notice/Write/second-step';
 import ThirdStep from '../../../components/Notice/Write/third-step';
 import {
-  DeleteAxiosInstance,
+  GetAxiosInstance,
+  PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../../axios/axios.method';
-import { getNoticedetails } from '../../../api/Notice/details';
-import { getSubmitInfo } from '../../../api/Notice/noticeSubmit';
+import { format } from 'date-fns';
 
 const Edit = () => {
   const [step, setStep] = useState(1);
   const { roomId, postId } = useParams();
-  const [post, setPost] = useState();
-  const [imageURLs, setImageURLs] = useState([]);
-  const [submitData, setSubmitData] = useState();
-  const [postData, setPostData] = useState({
-    room_id: roomId,
-    type: post.postType,
-    title: post.postTitle,
-    content: post.postBody,
-    imgURLs: imageURLs,
-    start_date: post.startDate,
-    end_date: post.endDate,
-    question: submitData.question,
-    quiz_answer: submitData.type === 'QUIZ' ? submitData.answer : '',
+  const [deleteImgURLs, setDeleteImgURLs] = useState([]);
+  const [editData, setPostData] = useState({
+    type: 'QUIZ',
+    title: '',
+    content: '',
+    imgURLs: [],
+    start_date: '',
+    end_date: '',
+    question: '',
+    quiz_answer: '',
   });
-
-  const getNoticeDetailData = async () => {
-    try {
-      const response = await getNoticedetails(postId);
-      setPost(response.data.result.post[0]);
-      setImageURLs(response.data.result.imageURLs);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getSubmit = async () => {
-    try {
-      const response = await getSubmitInfo(postId);
-      setSubmitData(response.data.result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleUpdatePostData = ({ type, value }) => {
     setPostData((prev) => ({ ...prev, [type]: value }));
@@ -68,7 +46,7 @@ const Edit = () => {
 
       handleUpdatePostData({
         type: 'imgURLs',
-        value: [...postData.imgURLs, ...s3Response.data.result.images].slice(
+        value: [...editData.imgURLs, ...s3Response.data.result.images].slice(
           0,
           10,
         ),
@@ -77,16 +55,11 @@ const Edit = () => {
   };
 
   const handleDeleteImage = async (url) => {
-    try {
-      await DeleteAxiosInstance(`/user/s3`, { data: { url } });
-      handleUpdatePostData({
-        type: 'imgURLs',
-        value: postData.imgURLs.filter((img) => img !== url),
-      });
-    } catch (err) {
-      alert('이미지 삭제에 실패했습니다.');
-      console.error(err);
-    }
+    handleUpdatePostData({
+      type: 'imgURLs',
+      value: editData.imgURLs.filter((img) => img !== url),
+    });
+    setDeleteImgURLs((prev) => [...prev, url]);
   };
 
   const handlePrevStep = () => {
@@ -97,15 +70,41 @@ const Edit = () => {
     setStep((prev) => prev + 1);
   };
 
-  const handleCreatePost = async () => {
-    const response = await PostAxiosInstance(`/admin/post`, postData);
-    if (response.data.isSuccess) window.location.replace(`/notice/${roomId}`);
+  const handleEditPost = async () => {
+    const sendData = {
+      postData: {
+        postTitle: editData.title,
+        postContent: editData.content,
+        endDate: editData.end_date,
+        question: editData.question,
+        quizAnswer: editData.quiz_answer,
+      },
+      addImgURLs: editData.imgURLs,
+      deleteImgURLs,
+    };
+    const response = await PatchAxiosInstance(
+      `/admin/post/${postId}`,
+      sendData,
+    );
+    if (response.data.isSuccess)
+      window.location.replace(`/notice/${roomId}/${postId}`);
     else console.error(response.data.message);
   };
 
   useEffect(() => {
-    getNoticeDetailData();
-    getSubmit();
+    (async () => {
+      const response = await GetAxiosInstance(`/admin/post/${postId}`);
+      setPostData({
+        type: response.data.result.type || 'QUIZ',
+        title: response.data.result.title || '',
+        content: response.data.result.content || '',
+        imgURLs: response.data.result.imgURLs || [],
+        start_date: format(response.data.result.startDate, 'yy.MM.dd') || '',
+        end_date: format(response.data.result.endDate, 'yy.MM.dd') || '',
+        quiz_answer: response.data.result.quizAnswer || '',
+        question: response.data.result.question || '',
+      });
+    })();
   }, []);
 
   return (
@@ -119,8 +118,9 @@ const Edit = () => {
       {step === 1 && (
         <FirstStep
           handleNextStep={handleNextStep}
-          postData={postData}
+          postData={editData}
           handleUpdatePostData={handleUpdatePostData}
+          editMode
         />
       )}
       {step === 2 && (
@@ -129,16 +129,18 @@ const Edit = () => {
           handleNextStep={handleNextStep}
           handleImageUpload={handleImageUpload}
           handleDeleteImage={handleDeleteImage}
-          postData={postData}
+          postData={editData}
           handleUpdatePostData={handleUpdatePostData}
-          isQuiz={postData.type === 'QUIZ'}
+          isQuiz={editData.type === 'QUIZ'}
+          editMode
         />
       )}
       {step === 3 && (
         <ThirdStep
           handlePrevStep={handlePrevStep}
-          postData={postData}
-          handleCreatePost={handleCreatePost}
+          postData={editData}
+          handlePost={handleEditPost}
+          editMode
         />
       )}
     </>
