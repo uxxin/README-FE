@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { UnconfirmedNotice } from '../../components/Notice/UnconfirmedNotice';
 import { Header } from '../../components/Header';
 import styled, { keyframes } from 'styled-components';
@@ -12,8 +12,17 @@ import { ReactComponent as RequestList } from '../../assets/svgs/floating_icon3.
 import { ReactComponent as Write } from '../../assets/svgs/floating_icon4.svg';
 import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penalty_icon.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { setShowDivs, setFlipped } from '../../redux/Notice/NoticeActions';
-import { getNotices, getUnconfirmedNotices } from '../../api/Notice/noticeMain';
+import {
+  setShowDivs,
+  setFlipped,
+  setRoomTitle,
+} from '../../redux/Notice/NoticeActions';
+import {
+  bannedRoom,
+  checkPenalty,
+  getNotices,
+  getUnconfirmedNotices,
+} from '../../api/Notice/noticeMain';
 const expand = keyframes`
   from {
     opacity: 0;
@@ -40,12 +49,20 @@ const Main = () => {
   const { roomId } = useParams();
   const showDivs = useSelector((state) => state.notice.showDivs);
   const isFlipped = useSelector((state) => state.notice.isFlipped);
+  const roomTitle = useSelector((state) => state.notice.roomTitle);
   const [isManager, setIsManager] = useState(true);
   const [noticeData, setNoticeData] = useState([]);
   const [unconfirmedNoticeData, setUnconfirmedNoticeData] = useState([]);
-  const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(true);
+  const [isPenaltyModalOpen, setIsPenaltyModalOpen] = useState(false);
+  const [penaltyData, setPenaltyData] = useState({
+    penaltyCount: 0,
+    maxPenalty: 0,
+    notCheckedPenalty: [],
+  });
   const [offset, setOffset] = useState(1.25);
+  const [isBanned, setIsBanned] = useState(false);
   const isNoticeNull = noticeData.length === 0;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const updatePosition = () => {
@@ -70,12 +87,35 @@ const Main = () => {
     dispatch(setFlipped(!isFlipped));
   };
 
+  const handleCheckButtonClick = () => {
+    navigate(`/penalty/${roomId}`);
+  };
+
+  const handleBannedButtonClick = async () => {
+    try {
+      const response = await bannedRoom(roomId);
+      if (response.isSuccess) navigate('/home');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getNoticeData = async () => {
       try {
         const response = await getNotices(roomId);
         setIsManager(response.data.result.isRoomAdmin);
         setNoticeData(response.data.result.posts);
+        dispatch(setRoomTitle(response.data.result.roomName));
+        if (response.data.result.notCheckedPenalty.length > 0) {
+          setPenaltyData((prevData) => ({
+            penaltyCount: response.data.result.penaltyCount,
+            maxPenalty: response.data.result.maxPenalty,
+            notCheckedPenalty: response.data.result.notCheckedPenalty,
+          }));
+          setIsPenaltyModalOpen(true);
+        }
+        await checkPenalty(roomId);
       } catch (error) {
         console.log(error);
       }
@@ -95,6 +135,11 @@ const Main = () => {
     unconfirmedNoticeData();
   }, []);
 
+  useEffect(() => {
+    if (penaltyData.penaltyCount === penaltyData.maxPenalty) setIsBanned(true);
+    else setIsBanned(false);
+  }, [penaltyData]);
+
   return (
     <MainContainer>
       <Header title="공지방 메인" isSearch={true} />
@@ -105,19 +150,32 @@ const Main = () => {
               <PenaltyText>Penalty</PenaltyText>
               <StyledPenaltyIcon />
               <PenaltyCount>
-                <PenaltyCount1>1</PenaltyCount1>
-                <PenaltyCount2>/2</PenaltyCount2>
+                <PenaltyCount1>{penaltyData.penaltyCount}</PenaltyCount1>
+                <PenaltyCount2>/{penaltyData.maxPenalty}</PenaltyCount2>
               </PenaltyCount>
-              <PenaltyRoomTitle>공지방 이름</PenaltyRoomTitle>
+              {penaltyData.notCheckedPenalty.length > 0 &&
+                penaltyData.notCheckedPenalty.map((post) => (
+                  <PenaltyRoomTitle>{post.postTitle}</PenaltyRoomTitle>
+                ))}
               <PenaltyWarning>
                 해당 공지글을 확인하지 않아 페널티가 부여됐습니다.
               </PenaltyWarning>
             </PenaltyModalTop>
             <PenaltyButtons>
-              <PenaltyCheck>확인하러 가기</PenaltyCheck>
-              <PenaltyClose onClick={handlePenaltyModalClose}>
-                닫기
-              </PenaltyClose>
+              {isBanned ? (
+                <>
+                  <PenaltyBanned>퇴장하기</PenaltyBanned>
+                </>
+              ) : (
+                <>
+                  <PenaltyCheck onClick={handleCheckButtonClick}>
+                    확인하러 가기
+                  </PenaltyCheck>
+                  <PenaltyClose onClick={handlePenaltyModalClose}>
+                    닫기
+                  </PenaltyClose>
+                </>
+              )}
             </PenaltyButtons>
           </PenaltyModal>
         </PenaltyContainer>
@@ -450,6 +508,27 @@ const PenaltyClose = styled.button`
   border: none;
   border-top: 0.333px solid var(--Grayscale-Gray5, #888);
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
+  background-color: var(--Basic-White, var(--Basic-White, #fff));
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.02rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+`;
+
+const PenaltyBanned = styled.button`
+  width: 100%;
+  display: flex;
+  padding: 0.875rem 0rem;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  border: none;
+  border-top: 0.333px solid var(--Grayscale-Gray5, #888);
+  color: var(--system-danger, var(--System-Danger, #f5535e));
   background-color: var(--Basic-White, var(--Basic-White, #fff));
   text-align: center;
   font-size: 1rem;

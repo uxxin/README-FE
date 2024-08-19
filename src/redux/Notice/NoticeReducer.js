@@ -2,14 +2,14 @@ import {
   SET_SHOW_DIVS,
   SET_FLIPPED,
   SET_ISROTATED,
-  SET_PAGE,
+  SET_ROOMTITLE,
 } from './NoticeActions';
 
 const initialState = {
   showDivs: false,
   isFlipped: false,
   isRotated: true,
-  page: 1,
+  roomTitle: '',
 };
 
 const NoticeReducer = (state = initialState, action) => {
@@ -20,8 +20,8 @@ const NoticeReducer = (state = initialState, action) => {
       return { ...state, isFlipped: action.payload };
     case SET_ISROTATED:
       return { ...state, isRotated: action.payload };
-    case SET_PAGE:
-      return { ...state, page: action.payload };
+    case SET_ROOMTITLE:
+      return { ...state, roomTitle: action.payload };
     default:
       return state;
   }
