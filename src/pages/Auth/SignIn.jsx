@@ -19,7 +19,7 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(email, password);
+      const response = await login(user);
       const token = response.data.result.accessToken;
 
       localStorage.setItem('token', token);
