@@ -142,7 +142,7 @@ const Main = () => {
 
   return (
     <MainContainer>
-      <Header title="공지방 메인" isSearch={true} />
+      <Header title={roomTitle} isSearch={true} url="/home" />
       {isPenaltyModalOpen && (
         <PenaltyContainer>
           <PenaltyModal>
