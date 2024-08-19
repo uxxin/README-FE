@@ -16,10 +16,6 @@ import { ReactComponent as PaperPlane } from '../../../assets/svgs/paperplane.sv
 import { useDispatch, useSelector } from 'react-redux';
 import { setSubmitState } from '../../../redux/Notice/NoticeActions';
 const Solve = () => {
-  const headerProps = {
-    title: '공지방 이름',
-    isSearch: false,
-  };
   const params = useParams();
   const [submitData, setSubmitData] = useState();
   const [sendData, setSendData] = useState([]);
@@ -122,7 +118,7 @@ const Solve = () => {
     <>
       {!isResult ? (
         <>
-          <Header props={headerProps} />
+          <Header title={roomTitle} isSearch={false} />
           <Container>
             {submitData && submitData.type === 'QUIZ' ? (
               <TopContainer>
