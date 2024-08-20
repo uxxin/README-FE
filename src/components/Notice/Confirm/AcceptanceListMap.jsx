@@ -182,6 +182,7 @@ const Approval = styled.div`
   right: 0;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
+  box-sizing: border-box;
 `;
 
 const ApprovalText = styled.span`

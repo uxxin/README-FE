@@ -182,5 +182,5 @@ const BtnStyle = styled.div`
 const EmptyBox = styled.div`
   width: 3.75rem;
   height: 3.75rem;
-  background: transparent; /* 배경 투명 */
+  background: transparent;
 `;
