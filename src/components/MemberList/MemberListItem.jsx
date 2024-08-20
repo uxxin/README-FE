@@ -131,7 +131,7 @@ export const MemberListItem = () => {
         </ButtonContainer>
         <ButtonContainer>
           <MemberNameBtn src={state.adminName.profileImage} />
-          <ButtonText>{`${state.adminName.nickname}`}</ButtonText>
+          <ButtonText>{state.adminName.nickname}</ButtonText>
         </ButtonContainer>
 
         {state.results && state.results.length > 0 ? (

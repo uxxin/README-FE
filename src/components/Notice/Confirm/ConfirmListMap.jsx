@@ -23,7 +23,7 @@ export const ConfirmListMap = (props) => {
             {props.image && props.image.trim() ? (
               <ImgBox src={props.image} />
             ) : (
-              <EmptyBox /> // 빈 공간을 나타내는 컴포넌트
+              <EmptyBox />
             )}
           </FrameBox>
 

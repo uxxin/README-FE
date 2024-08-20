@@ -24,7 +24,6 @@ export const AcceptanceListMap = ({
   useEffect(() => {
     if (Array.isArray(images)) {
       setTotalPage(images.length);
-      console.log('페이지:', images);
     } else {
       setTotalPage(1);
     }

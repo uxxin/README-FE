@@ -11,7 +11,7 @@ export const MemberProfile = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { profile_image = '', nickname } = location.state;
+  const { profileImage = '', nickname } = location.state;
   const [penaltyData, setPenaltyData] = useState('');
 
   const handleClick = () => {
@@ -33,10 +33,10 @@ export const MemberProfile = () => {
   return (
     <Container>
       <ImgWrapper>
-        <ImgContainer src={profile_image} alt={`${nickname}'s profile`} />
+        <ImgContainer src={profileImage} alt={`${nickname}'s profile`} />
       </ImgWrapper>
       <PaneltyCheck>
-        패널티{' '}
+        패널티
         <PenaltyNum>
           <PenaltyColor>{penaltyData.penalty_count}</PenaltyColor>
           <MaxPenaltyColor>/</MaxPenaltyColor>
