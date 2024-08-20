@@ -36,7 +36,7 @@ export const NoticeTitle = (props) => {
     }
   };
   const modifyNotice = () => {
-    console.log('수정은 뷰 나오면 연결할게요');
+    navigate(`/notice/${props.roomId}/${props.postId}/edit`);
   };
   const deleteNotices = async () => {
     try {

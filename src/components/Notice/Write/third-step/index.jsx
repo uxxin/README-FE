@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Chip from '../../../common/chip';
 
-const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
+const ThirdStep = ({ handlePrevStep, postData, handlePost, editMode }) => {
   return (
     <>
       <Container>
@@ -27,11 +27,11 @@ const ThirdStep = ({ handlePrevStep, postData, handleCreatePost }) => {
         </div>
       </Container>
       <Floating>
-        <button className="medium-16 outline" onClick={handlePrevStep}>
-          수정하기
+        <button className="medium-16 outline left" onClick={handlePrevStep}>
+          이전
         </button>
-        <button className="medium-16" onClick={handleCreatePost}>
-          등록하기
+        <button className="medium-16 right" onClick={handlePost}>
+          {editMode ? '수정하기' : '등록하기'}
         </button>
       </Floating>
     </>
@@ -98,7 +98,7 @@ const Floating = styled.div`
   padding: 1.25rem 0 3.37rem;
 
   button {
-    border: none;
+    border: 0.0625rem solid var(--color-primary-normal);
     background-color: var(--color-primary-normal);
     color: #ffffff;
     border-radius: 0.5rem;
@@ -106,13 +106,18 @@ const Floating = styled.div`
     display: flex;
     flex: 1;
     justify-content: center;
-    margin-right: 1rem;
+
+    &.right {
+      margin-right: 1rem;
+    }
+
+    &.left {
+      margin-left: 1rem;
+    }
 
     &.outline {
       border: 0.0625rem solid var(--color-primary-normal);
       color: var(--color-primary-normal);
-      margin-right: 0;
-      margin-left: 1rem;
       background-color: #ffffff;
     }
   }

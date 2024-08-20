@@ -30,6 +30,7 @@ import NoticeRoomEntry from './pages/Auth/NoticeRoomEntry.jsx';
 import ConfirmRequestApproval from './pages/Notice/Confirm/ConfirmRequestApproval.jsx';
 import Layout from './components/layout/index.jsx';
 import Redirect from './pages/Auth/Redirect.jsx';
+import Edit from './pages/Notice/Edit/Edit.jsx';
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
               {/* Notice - 공지 */}
               <Route path="/notice/:roomId" element={<Main />} />
               <Route path="/notice/:roomId/:postId" element={<Details />} />
+              <Route path="/notice/:roomId/:postId/edit" element={<Edit />} />
 
               {/* Notice - 공지 - 일반멤버 */}
               <Route path="/notice/:roomId/:postId/solve" element={<Solve />} />
