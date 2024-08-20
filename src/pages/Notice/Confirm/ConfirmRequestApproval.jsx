@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 const ConfirmRequestApproval = () => {
-  const [state, setState] = useState();
+  const [state, setState] = useState('waiting');
 
   const keysCount = useSelector((state) => state.check.count);
 
