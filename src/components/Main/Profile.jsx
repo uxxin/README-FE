@@ -4,11 +4,10 @@ import { ReactComponent as VerificationIcon } from '../../assets/svgs/vertificat
 import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';
 import { getMyProfile } from '../../api/Main/home';
-import defaultprofileImage from '../../assets/pngs/default_profile_3.png';
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState(defaultprofileImage);
+  const [profileImage, setProfileImage] = useState();
   const [nickName, setNickname] = useState('이름');
   const [email, setEmail] = useState('이메일@gmail.com');
 
@@ -16,12 +15,11 @@ export const Profile = () => {
     (async () => {
       try {
         const response = await getMyProfile();
-        console.log(response);
 
         if (response.isSuccess) {
           setNickname(response.result.nickname);
           setEmail(response.result.email);
-          setProfileImage(response.result.profileImage || defaultprofileImage);
+          setProfileImage(response.result.profileImage);
         }
       } catch (error) {
         console.log('프로필 조회 에러', error);
@@ -131,6 +129,7 @@ const VerificationButton = styled.button`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
+  white-space: nowrap;
   cursor: pointer;
 `;
 
@@ -154,6 +153,7 @@ const PenaltyButton = styled.button`
   font-weight: 400;
   line-height: 100%;
   letter-spacing: -0.015rem;
+  white-space: nowrap;
   cursor: pointer;
 `;
 

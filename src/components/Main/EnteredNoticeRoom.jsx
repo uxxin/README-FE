@@ -19,7 +19,6 @@ export const EnteredNoticeRoom = () => {
     (async () => {
       try {
         const response = await getEnteredRoom(currentPage, ITEMS_PER_PAGE);
-        console.log(response);
 
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
@@ -42,19 +41,14 @@ export const EnteredNoticeRoom = () => {
     }
   };
 
-  const currentNotices = noticeRooms.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
-
   return (
     <EnteredNoticeRoomSection>
       <EnteredTitle>입장한 공지방</EnteredTitle>
       <NoticeRoomsInfo>
-        {currentNotices.length > 0 ? (
+        {noticeRooms.length > 0 ? (
           <>
             <NoticeRooms>
-              {currentNotices.map((room) => (
+              {noticeRooms.map((room) => (
                 <NoticeRoom
                   key={room.id}
                   room={room}
@@ -62,25 +56,23 @@ export const EnteredNoticeRoom = () => {
                 />
               ))}
             </NoticeRooms>
-            {noticeRooms.length > 0 && (
-              <Pagination>
-                <NavButton
-                  onClick={handlePrevPage}
-                  src={prevButtonSvg}
-                  alt="Previous"
-                />
-                <PageNumber>
-                  <CurrentPage>{currentPage}</CurrentPage>
-                  <Separator>/</Separator>
-                  <TotalPages>{totalPages}</TotalPages>
-                </PageNumber>
-                <NavButton
-                  onClick={handleNextPage}
-                  src={nextButtonSvg}
-                  alt="Next"
-                />
-              </Pagination>
-            )}
+            <Pagination>
+              <NavButton
+                onClick={handlePrevPage}
+                src={prevButtonSvg}
+                alt="Previous"
+              />
+              <PageNumber>
+                <CurrentPage>{currentPage}</CurrentPage>
+                <Separator>/</Separator>
+                <TotalPages>{totalPages}</TotalPages>
+              </PageNumber>
+              <NavButton
+                onClick={handleNextPage}
+                src={nextButtonSvg}
+                alt="Next"
+              />
+            </Pagination>
           </>
         ) : (
           <NoticeRooms>
@@ -137,7 +129,6 @@ const NoticeRooms = styled.div`
 
 const NoNoticesBox = styled.div`
   display: flex;
-  width: 20%;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;
@@ -154,6 +145,7 @@ const NoNoticesText = styled.div`
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
+  width: 100%;
 `;
 
 const Pagination = styled.div`

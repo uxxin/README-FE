@@ -20,7 +20,6 @@ export const OpenedNoticeRoom = () => {
     (async () => {
       try {
         const response = await getOpenedRoom(currentPage, ITEMS_PER_PAGE);
-        console.log(response);
 
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
@@ -63,29 +62,30 @@ export const OpenedNoticeRoom = () => {
             <NoticeRoom
               key={room.id}
               room={room}
-              onClick={() => navigate(`/notice/${room.id}`)}
+              onClick={() => {
+                if (room.state !== 'DELETED') {
+                  navigate(`/notice/${room.id}`);
+                } else {
+                  console.warn('This room is deleted and cannot be accessed.');
+                }
+              }}
             />
           ))}
         </NoticeRooms>
-        {noticeRooms.length > 0 && (
-          <Pagination>
-            <NavButton
-              onClick={handlePrevPage}
-              src={prevButtonSvg}
-              alt="Previous"
-            />
-            <PageNumber>
-              <CurrentPage>{currentPage}</CurrentPage>
-              <Separator>/</Separator>
-              <TotalPages>{totalPages}</TotalPages>
-            </PageNumber>
-            <NavButton
-              onClick={handleNextPage}
-              src={nextButtonSvg}
-              alt="Next"
-            />
-          </Pagination>
-        )}
+
+        <Pagination>
+          <NavButton
+            onClick={handlePrevPage}
+            src={prevButtonSvg}
+            alt="Previous"
+          />
+          <PageNumber>
+            <CurrentPage>{currentPage}</CurrentPage>
+            <Separator>/</Separator>
+            <TotalPages>{totalPages}</TotalPages>
+          </PageNumber>
+          <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
+        </Pagination>
       </NoticeRoomsInfo>
     </OpenedNoticeRoomSection>
   );
