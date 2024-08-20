@@ -5,12 +5,11 @@ import { useLocation, useParams } from 'react-router-dom';
 
 const Profile = () => {
   const location = useLocation();
-  const {nickname} = location.state;
+  const { nickname } = location.state;
 
-  
   return (
     <div>
-      <Header title={`${nickname} 프로필보기`} isSearch={true} gap="1rem" />
+      <Header title={`${nickname}님 프로필보기`} isSearch={true} gap="1rem" />
       <MemberProfile />
     </div>
   );
