@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Check from '../../../assets/images/post_type_check.svg';
+import Check from '../../../assets/svgs/post_type_check.svg';
 
-export const TypeCheck = ({ onTypeChange }) => {
-  const [selectedType, setSelectedType] = useState('quiz');
+export const TypeCheck = ({ onTypeChange, postType }) => {
+  const [selectedType, setSelectedType] = useState('QUIZ');
 
   const handleClick = (type) => {
     setSelectedType(type);
     onTypeChange(type);
   };
 
+  useEffect(() => {
+    if (postType) {
+      setSelectedType(postType);
+    }
+  }, [postType]);
+
   return (
     <Container>
       <CheckImg src={Check} alt="check" />
       <Type
-        isSelected={selectedType === 'quiz'}
-        onClick={() => handleClick('quiz')}
+        isSelected={selectedType === 'QUIZ'}
+        onClick={() => handleClick('QUIZ')}
       >
         퀴즈
       </Type>
       <Division>|</Division>
       <Type
-        isSelected={selectedType === 'mission'}
-        onClick={() => handleClick('mission')}
+        isSelected={selectedType === 'MISSION'}
+        onClick={() => handleClick('MISSION')}
       >
         미션
       </Type>

@@ -1,7 +1,14 @@
 import React from 'react';
+import { Header } from '../../components/Header';
+import RequestDatas from '../../components/Main/RequestDatas';
 
 const NoticeCheckRequests = () => {
-  return <div>확인 요청 내역</div>;
+  return (
+    <>
+      <Header title="확인요청내역" isSearch={false} url="/home" />
+      <RequestDatas />
+    </>
+  );
 };
 
 export default NoticeCheckRequests;

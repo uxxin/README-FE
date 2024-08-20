@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NoticeRoom = ({ index }) => {
+const NoticeRoom = ({ room, onClick }) => {
+  const isDeleted = room.state === 'DELETED';
+  const latestPostTime = room.latestPostTime ? room.latestPostTime : '-';
+
   return (
-    <Container>
-      <TopSection>몇분 전</TopSection>
+    <Container isDeleted={isDeleted} onClick={onClick}>
+      <TopSection isDeleted={isDeleted}>
+        {isDeleted ? '삭제된 공지방' : latestPostTime}
+      </TopSection>
       <BottomSection>
-        <ProfileImage
-          src="../../assets/images/defaultprofileimage.png"
-          alt="profile"
-        />
-        <RoomName>공지방 이름</RoomName>
-        <UserName>공지방 닉네임</UserName>
+        <ProfileImage src={room.roomImage} alt="profile" />
+        <RoomName>{room.roomName}</RoomName>
+        <UserName>{room.nickname}</UserName>
       </BottomSection>
     </Container>
   );
@@ -19,11 +21,13 @@ const NoticeRoom = ({ index }) => {
 
 const Container = styled.div`
   display: flex;
-  width: 7.75rem;
+  width: 30.5%;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;
-  border: 0.0208rem solid var(--Primary-normal, #509bf7);
+  border: 0.0208rem solid
+    ${({ isDeleted }) => (isDeleted ? '#F5535E' : '#509bf7')};
+  cursor: pointer;
 `;
 
 const TopSection = styled.div`
@@ -33,8 +37,8 @@ const TopSection = styled.div`
   align-items: center;
   border-top-left-radius: 0.375rem;
   border-top-right-radius: 0.375rem;
-  border: 1px solid var(--Primary-Normal, #509bf7);
-  background: var(--Primary-Normal, #509bf7);
+  border: 1px solid ${({ isDeleted }) => (isDeleted ? '#F5535E' : ' #509bf7')};
+  background: ${({ isDeleted }) => (isDeleted ? '#F5535E' : ' #509bf7')};
   flex-direction: column;
   flex: 1 0 0;
   align-self: stretch;
@@ -48,7 +52,7 @@ const TopSection = styled.div`
 
 const BottomSection = styled.div`
   display: flex;
-  height: 8.625rem;
+  max-height: 8.625rem;
   padding: 1rem 0.5rem;
   flex-direction: column;
   align-items: center;
@@ -64,6 +68,7 @@ const ProfileImage = styled.img`
   align-items: center;
   border-radius: 0.75rem;
   font-size: 0.625rem;
+  text-align: center;
 `;
 
 const RoomName = styled.div`
@@ -78,7 +83,7 @@ const RoomName = styled.div`
   font-weight: 400;
   line-height: 0.875rem;
   letter-spacing: -0.0175rem;
-  max-height: 1.75rem;
+  height: 1.75rem;
 `;
 
 const UserName = styled.div`
@@ -93,7 +98,7 @@ const UserName = styled.div`
   font-weight: 400;
   line-height: 0.625rem;
   letter-spacing: -0.0125rem;
-  max-height: 1.25rem;
+  height: 1.25rem;
 `;
 
 export default NoticeRoom;

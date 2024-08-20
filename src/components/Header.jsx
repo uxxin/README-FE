@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as BackButton } from '../assets/images/back_button.svg';
-import { ReactComponent as SearchButton } from '../assets/images/search_button.svg';
+import { ReactComponent as BackButton } from '../assets/svgs/back_button.svg';
+import { ReactComponent as SearchButton } from '../assets/svgs/search_button.svg';
+import CloseButton from '../assets/svgs/close_button.svg';
 
-export const Header = ({ props }) => {
+export const Header = (props) => {
   /*
   props = {
     title: '페이지 상단 노출 제목',
@@ -57,7 +58,11 @@ export const Header = ({ props }) => {
       ) : (
         <Container onClick={handleContainerClick}>
           <LeftButtonWrapper onClick={handleLeftButtonClick}>
-            <StyledBackButton fill="#222222" />
+            {props.write ? (
+              <StyledCloseButton src={CloseButton} />
+            ) : (
+              <StyledBackButton fill="#222222" />
+            )}
           </LeftButtonWrapper>
           <Title>{props.title}</Title>
           {props.isSearch ? (
@@ -73,7 +78,7 @@ export const Header = ({ props }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.header`
   display: flex;
   height: 2.75rem;
   padding: 0.625rem;
@@ -103,6 +108,11 @@ const StyledBackButton = styled(BackButton)`
   height: 1.5rem;
 `;
 
+const StyledCloseButton = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+`;
+
 const Title = styled.div`
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-align: center;
@@ -120,7 +130,6 @@ const StyledSearchButton = styled(SearchButton)`
 
 const SearchContainer = styled.div`
   display: flex;
-  width: 26.875rem;
   height: 2.75rem;
   padding: 0.75rem 0.62rem;
   justify-content: center;
@@ -137,19 +146,19 @@ const InputText = styled.input`
   display: flex;
   align-items: center;
   border: none;
-  width: 21.6rem;
+  width: 85%;
   height: 1.1875rem;
+  background: var(--Blue-light, #f4f9ff);
   ::placeholder {
     overflow: hidden;
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
     text-overflow: ellipsis;
-
     font-size: 1rem;
     font-weight: 500;
     line-height: 120%;
     letter-spacing: -0.02rem;
   }
-  :focus {
+  &:focus {
     color: var(--Text-default, var(--Grayscale-Gray7, #222));
+    outline: none;
   }
 `;

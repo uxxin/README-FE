@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-const CustomInput = ({ placeholder }) => {
-  const [inputValue, setInputValue] = useState('');
-
+const CustomInput = ({
+  placeholder,
+  value,
+  onChange,
+  onBlur,
+  charCount,
+  type = 'text',
+  readOnly = false,
+  disabled = false,
+}) => {
   return (
     <Container>
       <Input
-        type="text"
+        type={type}
         placeholder={placeholder}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        maxLength={20}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        maxLength={charCount ? 20 : undefined}
+        readOnly={readOnly}
+        disabled={disabled}
       />
-      <CharCount>({inputValue.length}/20)</CharCount>
+      {charCount ? <CharCount>({value.length}/20)</CharCount> : <></>}
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
   padding: 1.25rem 1.12rem;
   border-radius: 0.5rem;
@@ -32,14 +43,12 @@ const Input = styled.input`
   flex: 1;
   outline: none;
   background: none;
+  font-family: 'Pretendard';
   font-size: 1.125rem;
   font-weight: 700;
-  line-height: 100%; /* 1.125rem */
+  line-height: 100%;
   letter-spacing: -0.0225rem;
   color: #509bf7;
-  ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
-  }
 `;
 
 const CharCount = styled.span`
@@ -48,7 +57,6 @@ const CharCount = styled.span`
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
-  margin-left: 0.25rem;
 `;
 
 export default CustomInput;

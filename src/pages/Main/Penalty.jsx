@@ -1,7 +1,14 @@
 import React from 'react';
+import { Header } from '../../components/Header';
+import PenaltyRooms from '../../components/Main/PenaltyRooms';
 
 const Penalty = () => {
-  return <div>패널티</div>;
+  return (
+    <>
+      <Header title="페널티" isSearch={false} url="/home" />
+      <PenaltyRooms />
+    </>
+  );
 };
 
 export default Penalty;

@@ -1,46 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import pinIcon from '../../assets/images/pinicon.svg';
-import deleteIcon from '../../assets/images/deleteicon.svg';
+import pinIcon from '../../assets/svgs/pinicon.svg';
+import deleteIcon from '../../assets/svgs/deleteicon.svg';
+import { getFixedNotice, deleteFixedNotice } from '../../api/Main/home';
 
 const FixedNotice = ({ onDelete }) => {
-  const [notice, setNotice] = useState({
-    postId: 1,
-    title: '공지글 제목',
-    startDate: '시작일',
-    endDate: '마감일',
-  });
+  const [notice, setNotice] = useState(null);
 
   useEffect(() => {
-    axios
-      .get('/mock/FixedData.json')
-      .then((response) => {
-        // 응답 데이터가 JSON 파일의 내용
-        setNotice(response.data);
-      })
-      .catch((error) => {
-        console.error('공지 데이터를 가져오는 중 오류 발생:', error);
-      });
+    (async () => {
+      try {
+        const response = await getFixedNotice();
+        console.log(response);
+
+        if (response.isSuccess) {
+          setNotice(response.result);
+        }
+      } catch (error) {
+        console.log('고정 공지 데이터를 가져오는 중 오류 발생: ', error);
+      }
+    })();
   }, []);
 
+  const handleDelete = async () => {
+    try {
+      const response = await deleteFixedNotice();
+      console.log(response);
+      onDelete();
+      setNotice(null);
+    } catch (error) {
+      console.log('고정 공지 삭제 중 오류 발생: ', error);
+    }
+  };
+
   return (
-    <NoticeContainer>
-      <PinButton>
-        <img src={pinIcon} alt="Pin Icon" />
-      </PinButton>
-      <NoticeContent>
-        <NoticeTitle>{notice.title}</NoticeTitle>
-        <NoticeDate>
-          <Date>{notice.startDate}</Date>
-          <DateSeparator>-</DateSeparator>
-          <Date>{notice.endDate}</Date>
-        </NoticeDate>
-      </NoticeContent>
-      <DeleteButton onClick={onDelete}>
-        <img src={deleteIcon} alt="Delete Icon" />
-      </DeleteButton>
-    </NoticeContainer>
+    <>
+      {notice && (
+        <NoticeContainer>
+          <PinButton>
+            <img src={pinIcon} alt="Pin Icon" />
+          </PinButton>
+          <NoticeContent>
+            <NoticeTitle>{notice.title}</NoticeTitle>
+            <NoticeDate>
+              <Date>{notice.startDate}</Date>
+              <DateSeparator>-</DateSeparator>
+              <Date>{notice.endDate}</Date>
+            </NoticeDate>
+          </NoticeContent>
+          <DeleteButton onClick={handleDelete}>
+            <img src={deleteIcon} alt="Delete Icon" />
+          </DeleteButton>
+        </NoticeContainer>
+      )}
+    </>
   );
 };
 
@@ -61,7 +74,6 @@ const NoticeContainer = styled.div`
 const PinButton = styled.button`
   background: none;
   border: none;
-  margin-right: 1rem; /* No change */
   cursor: pointer;
 `;
 

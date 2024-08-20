@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { ReactComponent as VerificationIcon } from '../../assets/images/vertificationicon.svg';
-import { ReactComponent as PenaltyIcon } from '../../assets/images/penaltyicon.svg';
+import { ReactComponent as VerificationIcon } from '../../assets/svgs/vertificationicon.svg';
+import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';
+import { getMyProfile } from '../../api/Main/home';
+import defaultprofileImage from '../../assets/pngs/default_profile_3.png';
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState(
-    '/assets/images/defaultprofileimage.png',
-  );
-  const [name, setName] = useState('이름');
+  const [profileImage, setProfileImage] = useState(defaultprofileImage);
+  const [nickName, setNickname] = useState('이름');
   const [email, setEmail] = useState('이메일@gmail.com');
 
   useEffect(() => {
-    axios
-      .get('/mock/ProfileData.json')
-      .then((response) => {
-        const data = response.data;
-        setName(data.nickname);
-        setEmail(data.email);
-        setProfileImage(data.profile_image);
-      })
-      .catch((error) => console.error('Error fetching profile data:', error));
+    (async () => {
+      try {
+        const response = await getMyProfile();
+        console.log(response);
+
+        if (response.isSuccess) {
+          setNickname(response.result.nickname);
+          setEmail(response.result.email);
+          setProfileImage(response.result.profileImage || defaultprofileImage);
+        }
+      } catch (error) {
+        console.log('프로필 조회 에러', error);
+      }
+    })();
   }, []);
 
   const handleVerificationClick = () => {
@@ -33,12 +37,16 @@ export const Profile = () => {
     navigate('/penalty');
   };
 
+  const handleProfileClick = () => {
+    navigate('/my-page');
+  };
+
   return (
     <ProfileContainer>
-      <InfoContainer>
+      <InfoContainer onClick={handleProfileClick}>
         <ProfileImage src={profileImage} alt="Profile" />
         <PersonalInfo>
-          <Name>{name}</Name>
+          <Name>{nickName}</Name>
           <Email>{email}</Email>
         </PersonalInfo>
       </InfoContainer>
@@ -68,6 +76,7 @@ const InfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
 `;
 
 const ProfileImage = styled.img`

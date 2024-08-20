@@ -1,53 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import camera from '../../../assets/images/img_upload.svg';
-import imgDelete from '../../../assets/images/img_delete.svg';
+import camera from '../../../assets/svgs/img_upload.svg';
+import imgDelete from '../../../assets/svgs/img_delete.svg';
 
-export const ImgUpload = () => {
-  const [images, setImages] = useState([]);
-
-  const handleImageChange = (event) => {
-    const files = Array.from(event.target.files);
-    const newImages = files.map((file) => URL.createObjectURL(file));
-    setImages((prevImages) => [...prevImages, ...newImages].slice(0, 10));
-  };
-
+export const ImgUpload = ({
+  handleImageUpload,
+  handleDeleteImage,
+  imgURLs,
+}) => {
   const handleClick = () => {
     document.getElementById('fileInput').click();
   };
 
-  const handleDelete = (imageToDelete) => {
-    setImages(images.filter((image) => image !== imageToDelete));
-  };
-  useEffect(() => {
-    const screenWidth = window.innerWidth;
-    console.log(screenWidth);
-  }, []);
   return (
     <UploadContainer>
-      <Label>사진 ({images.length}/10)</Label>
+      <Label>사진 ({imgURLs.length}/10)</Label>
       <ImagesContainer>
-        {images.length < 10 && (
+        {imgURLs.length < 10 && (
           <>
             <HiddenInput
               type="file"
               accept="image/*"
               multiple
-              onChange={handleImageChange}
+              onChange={handleImageUpload}
               id="fileInput"
             />
-            <CameraIcon onClick={handleClick} isFull={images.length >= 10}>
+            <CameraIcon onClick={handleClick}>
               <img src={camera} alt="Upload" />
             </CameraIcon>
           </>
         )}
-        {images.slice(0, 9).map((image, index) => (
+        {imgURLs.slice(0, 9).map((image, index) => (
           <ImagePreview key={index}>
             <Image src={image} alt={`Preview ${index + 1}`} />
             <ImageDelete
               src={imgDelete}
               alt="delete"
-              onClick={() => handleDelete(image)}
+              onClick={() => handleDeleteImage(image)}
             />
           </ImagePreview>
         ))}
@@ -62,7 +51,7 @@ const UploadContainer = styled.div`
   gap: 0.625rem;
   max-width: 430px;
   overflow-x: scroll;
-  padding: 0 1rem;
+  scrollbar-width: none;
 `;
 
 const Label = styled.label`
@@ -99,11 +88,7 @@ const CameraIcon = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
-  border: 0.33px solid
-    ${({ isFull }) =>
-      isFull
-        ? '#var(--GrayScale-gray4, #BDBDBD)'
-        : 'var(--Primary-light-active, #c9e0fd)'};
+  border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
   img {
