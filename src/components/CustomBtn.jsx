@@ -22,7 +22,13 @@ const StyledCustomBtn = styled.button`
   align-items: center;
   gap: 0.625rem;
   border-radius: 0.5rem;
+  letter-spacing: -0.02rem;
   border: ${(props) => props.border};
   background: ${(props) => props.background};
-  color: ${(props) => (props.background === '#FFFFFF' ? '#509BF7' : '#FFFFFF')};
+  color: ${(props) =>
+    props.background === '#FFFFFF'
+      ? '#509BF7'
+      : props.background === '#FDD8DB'
+        ? '#F5535E'
+        : '#FFFFFF'};
 `;

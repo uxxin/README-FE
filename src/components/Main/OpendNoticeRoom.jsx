@@ -25,7 +25,7 @@ export const OpenedNoticeRoom = () => {
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
-          setTotalPages(response.result.totalPages); // Update total pages from respone
+          setTotalPages(response.result.totalPages);
         }
       } catch (error) {
         console.error('Error fetching opened rooms:', error);
@@ -47,11 +47,6 @@ export const OpenedNoticeRoom = () => {
     }
   };
 
-  const currentNotices = noticeRooms.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
-
   return (
     <OpenedNoticeRoomSection>
       <TitleContainer>
@@ -64,7 +59,7 @@ export const OpenedNoticeRoom = () => {
       </TitleContainer>
       <NoticeRoomsInfo>
         <NoticeRooms>
-          {currentNotices.map((room) => (
+          {noticeRooms.map((room) => (
             <NoticeRoom
               key={room.id}
               room={room}

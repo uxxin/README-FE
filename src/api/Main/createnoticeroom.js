@@ -17,7 +17,7 @@ export const postNoticeRoomImage = async (file) => {
     },
   };
 
-  const response = await PostAxiosInstance(`/user/s3/upload`, formData, config);
+  const response = await PostAxiosInstance(`/user/s3`, formData, config);
   console.log(response.data);
   return response.data;
 };

@@ -1,232 +1,263 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import CustomInput from '../../components/CustomInput';
-import { EditRoomCustomBtn } from '../../components/Main/EditRoomCustomBtn';
-import toAlbumBtnIcon from '../../assets/svgs/albumbutton.svg';
 import { Header } from '../../components/Header';
-import CustomModal from '../../components/CustomModal';
+import CreateNoticeRoomForm from '../../components/Main/CreateNoticeRoomForm';
+import styled from 'styled-components';
+import {
+  deleteNoticeRoom,
+  editNoticeRoom,
+  getNoticeRoomInfo,
+} from '../../api/Notice/roomedit';
+import {
+  ModalOverlay,
+  ModalContent,
+  ModalTextGroup,
+  ModalTitle,
+  ModalText,
+  ModalButton,
+  ModalButtonsHorizontal,
+  ModalButtonsVertical,
+  SuccessModalDivider,
+} from '../../components/Notice/RoomEditModal';
 
-const RoomEdit = () => {
-  const [leaderName, setLeaderName] = useState('');
-  const [roomName, setRoomName] = useState('');
-  const [password, setPassword] = useState('');
-  const [penaltyCount, setPenaltyCount] = useState('');
-  const [image, setImage] = useState('');
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-
-  const { id } = useParams();
+export const RoomEdit = () => {
+  const { roomId } = useParams();
+  const [roomData, setRoomData] = useState({
+    admin_nickname: '',
+    room_name: '',
+    room_password: '',
+    max_penalty: '',
+    room_image: null,
+  });
+  const [initialRoomData, setInitialRoomData] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isFailureModalOpen, setIsFailureModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRoomData = async () => {
+    (async () => {
       try {
-        const response = await axios.get(`/api/admin/room/${id}`);
-        const data = response.data;
-        setLeaderName(data.admin_nickname);
-        setRoomName(data.room_name);
-        setPassword(data.room_password);
-        setPenaltyCount(data.max_penalty);
-        setImage(data.room_image);
+        const response = await getNoticeRoomInfo(roomId);
+        const BeforeRoomData = response.result;
+        if (response.isSuccess) {
+          const initialData = {
+            admin_nickname: BeforeRoomData.adminNickname,
+            room_name: BeforeRoomData.roomName,
+            room_password: BeforeRoomData.roomPassword,
+            max_penalty: BeforeRoomData.maxPenalty,
+            room_image: BeforeRoomData.roomImage,
+          };
+          setRoomData(initialData);
+          setInitialRoomData(initialData);
+        }
       } catch (error) {
-        console.error('Error fetching room data:', error);
+        console.error('공지방 데이터 가져오기 실패:', error);
       }
-    };
-
-    fetchRoomData();
-  }, [id]);
-
-  const handleAlbumClick = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (event) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    };
-    input.click();
-  };
+    })();
+  }, [roomId]);
 
   const handleUpdateClick = async () => {
-    const requestData = {
-      room_image: image,
-      admin_nickname: leaderName,
-      room_name: roomName,
-      room_password: password,
-      max_penalty: penaltyCount,
-    };
+    if (!isFormValid) {
+      console.error('폼이 유효하지 않음. ');
+      return;
+    }
 
     try {
-      const response = await axios.patch(`/api/admin/room/${id}`, requestData);
-      console.log('Room updated:', response.data);
-      navigate('/update-notice-room/success', {
-        state: requestData,
-      });
+      await editNoticeRoom(roomId, roomData);
+      navigate(`/home`);
     } catch (error) {
-      console.error('Error updating notice room:', error);
+      console.error('공지방 수정 중 에러:', error);
     }
   };
 
-  const handleDeleteClick = async () => {
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`/api/admin/room/${id}`);
-      console.log('Room deleted');
-      navigate('/delete-notice-room/success');
+      const response = await deleteNoticeRoom(roomId);
+      if (response.isSuccess) {
+        setIsDeleteModalOpen(false);
+        setIsSuccessModalOpen(true);
+      }
     } catch (error) {
-      console.error('Error deleting notice room:', error);
+      console.error('공지방 삭제 중 에러:', error);
+      setIsDeleteModalOpen(false);
+      setIsFailureModalOpen(true);
     }
   };
 
-  const handleConfirmDelete = () => {
-    setModalOpen(false);
-    handleDeleteClick();
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false);
   };
 
-  const modalButtons = [
-    {
-      label: '취소',
-      onClick: () => setModalOpen(false),
-      color: '#509BF7',
-      backgroundColor: '#888',
-    },
-    {
-      label: '삭제',
-      onClick: handleConfirmDelete,
-      color: '#509BF7',
-      backgroundColor: '#888',
-    },
-  ];
+  const handleRetryDelete = () => {
+    setIsFailureModalOpen(false);
+    handleConfirmDelete();
+  };
+
+  const handleFailureModalClose = () => {
+    setIsFailureModalOpen(false);
+  };
+
+  const handleSuccessModalClose = () => {
+    navigate('/home');
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRoomData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleImageChange = (img) => {
+    setRoomData((prevData) => ({
+      ...prevData,
+      room_image: img || null,
+    }));
+  };
+
+  const isFormValid =
+    roomData.room_image &&
+    roomData.room_name &&
+    roomData.admin_nickname &&
+    roomData.room_password &&
+    roomData.max_penalty &&
+    JSON.stringify(roomData) !== JSON.stringify(initialRoomData);
 
   return (
-    <>
-      <Header title="공지방 수정" isSearch={false} url="/notice" />
-      <Container>
-        <ImageContainer>
-          <RoomImage src={image || '<path-to-image>'} alt="RoomImage" />
-          <ToAlbumBtn onClick={handleAlbumClick}>
-            <img src={toAlbumBtnIcon} alt="Album Button" />
-          </ToAlbumBtn>
-        </ImageContainer>
-        <FormContainer>
-          <Section>
-            <SectionTitle>단체 정보</SectionTitle>
-            <CustomInput
-              placeholder="단체 대표자 이름"
-              value={leaderName}
-              onChange={(e) => setLeaderName(e.target.value)}
-            />
-          </Section>
-          <Section>
-            <SectionTitle>공지방 설정</SectionTitle>
-            <CustomInput
-              placeholder="공지방 이름"
-              value={roomName}
-              onChange={(e) => setRoomName(e.target.value)}
-            />
-            <CustomInput
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <CustomInput
-              placeholder="패널티 개수"
-              value={penaltyCount}
-              onChange={(e) => setPenaltyCount(e.target.value)}
-            />
-          </Section>
-        </FormContainer>
-        <ButtonContainer>
-          <EditRoomCustomBtn
-            text="공지방 삭제하기"
-            background="#FDD8DB"
-            border="none"
-            color=" #F5535E"
-            onClick={openModal}
-          />
-          <EditRoomCustomBtn
-            text="공지방 수정하기"
-            background="#509BF7"
-            border="none"
-            color="#FFFFFF"
-            onClick={handleUpdateClick}
-          />
-        </ButtonContainer>
-        <CustomModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          buttons={modalButtons}
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100vh',
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Header title="공지방 정보 설정" isSearch={false} url="/home" />
+        <CreateNoticeRoomForm
+          leaderName={roomData.admin_nickname}
+          roomName={roomData.room_name}
+          password={roomData.room_password}
+          penaltyCount={roomData.max_penalty}
+          image={roomData.room_image}
+          onImageChange={handleImageChange}
+          onLeaderNameChange={(e) =>
+            handleInputChange({
+              ...e,
+              target: { ...e.target, name: 'admin_nickname' },
+            })
+          }
+          onRoomNameChange={(e) =>
+            handleInputChange({
+              ...e,
+              target: { ...e.target, name: 'room_name' },
+            })
+          }
+          onPasswordChange={(e) =>
+            handleInputChange({
+              ...e,
+              target: { ...e.target, name: 'room_password' },
+            })
+          }
+          onPenaltyCountChange={(e) =>
+            handleInputChange({
+              ...e,
+              target: { ...e.target, name: 'max_penalty' },
+            })
+          }
+        />
+      </div>
+      <ButtonContainer>
+        <CustomButton
+          background="#FDD8DB"
+          color="#F5535E"
+          onClick={handleDeleteClick}
         >
-          공지방을 삭제하시겠습니까?
-        </CustomModal>
-      </Container>
-    </>
+          공지방 삭제하기
+        </CustomButton>
+        <CustomButton
+          background={isFormValid ? '#509BF7' : '#BDBDBD'}
+          color="#FFF"
+          onClick={handleUpdateClick}
+          disabled={!isFormValid}
+        >
+          수정하기
+        </CustomButton>
+      </ButtonContainer>
+
+      {isDeleteModalOpen && (
+        <ModalOverlay>
+          <ModalContent>
+            <ModalTextGroup>
+              <ModalTitle>공지방을 삭제하시겠습니까?</ModalTitle>
+              <ModalText>삭제된 공지방은 복구가 불가능합니다.</ModalText>
+            </ModalTextGroup>
+            <ModalButtonsHorizontal>
+              <ModalButton onClick={handleCancelDelete}>취소</ModalButton>
+              <ModalButton onClick={handleConfirmDelete}>확인</ModalButton>
+            </ModalButtonsHorizontal>
+          </ModalContent>
+        </ModalOverlay>
+      )}
+
+      {isSuccessModalOpen && (
+        <ModalOverlay>
+          <ModalContent>
+            <ModalTitle>공지방 삭제 성공!</ModalTitle>
+            <SuccessModalDivider />
+            <ModalButton onClick={handleSuccessModalClose}>
+              메인으로 이동
+            </ModalButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
+      {isFailureModalOpen && (
+        <ModalOverlay>
+          <ModalContent>
+            <ModalTextGroup>
+              <ModalTitle>공지방 삭제 실패</ModalTitle>
+            </ModalTextGroup>
+            <ModalButtonsVertical>
+              <ModalButton isFailureModal onClick={handleFailureModalClose}>
+                확인
+              </ModalButton>
+              <ModalButton isFailureModal onClick={handleRetryDelete}>
+                재시도
+              </ModalButton>
+            </ModalButtonsVertical>
+          </ModalContent>
+        </ModalOverlay>
+      )}
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0.625rem 1rem;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 2rem;
-`;
-
-const RoomImage = styled.div`
-  width: 8.75rem;
-  height: 8.75rem;
-  border-radius: 1.125rem;
-  background: ${({ src }) => `url(${src}) lightgray 50% / cover no-repeat`};
-  flex-shrink: 0;
-`;
-
-const ToAlbumBtn = styled.button`
-  position: absolute;
-  right: 8rem;
-  bottom: 0rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const FormContainer = styled.div`
-  display: flex;
-  width: 24.875rem;
-  flex-direction: column;
-  gap: 1.875rem;
-  margin-bottom: 4rem;
-`;
-
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-`;
-
-const SectionTitle = styled.div`
-  color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 100%;
-  letter-spacing: -0.0225rem;
-`;
 
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+  padding: 0.625rem 1rem;
+`;
+
+const CustomButton = styled.button`
+  background: ${(props) => props.background};
+  color: ${(props) => props.color};
+  border: none;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export default RoomEdit;

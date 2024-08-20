@@ -28,7 +28,7 @@ const CreateNoticeRoomForm = ({
       try {
         const response = await postNoticeRoomImage(file);
         console.log('서버 응답: ', response);
-        const imageUrl = response.result.image;
+        const imageUrl = response.result.images;
         if (imageUrl) {
           console.log('이미지 업로드 성공:', imageUrl);
           onImageChange(imageUrl);
