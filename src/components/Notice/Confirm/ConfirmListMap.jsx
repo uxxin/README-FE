@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { NoticeTitle } from '../NoticeTitle';
-import axios from 'axios';
 import { PointerBtn } from '../../../assets/svgs/icons';
 import { Link, useParams } from 'react-router-dom';
 

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { HumanIcon, PlusIcon } from '../../assets/svgs/icons';
-import CustomInput from '../CustomInput';
 import { Link } from 'react-router-dom';
 import { MemberListMap } from './MemberListMap';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { Debounce } from '../Debounce';
 import { useDispatch } from 'react-redux';
 import { setKeysCount } from '../../redux/KeySlice';

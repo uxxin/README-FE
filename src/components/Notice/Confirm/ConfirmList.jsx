@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
-import { NoticePreview } from '../NoticePreview';
+import { useParams } from 'react-router-dom';
 import { ConfirmListMap } from './ConfirmListMap';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { getSubmitList } from '../../../api/Member/memberListCheck';
 
 export const ConfirmList = () => {

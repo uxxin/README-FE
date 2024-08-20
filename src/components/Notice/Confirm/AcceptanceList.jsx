@@ -1,15 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
-import { CheckListMap } from './CheckListMap';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { check } from 'prettier';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setRequiredListCount } from '../../../redux/CheckSlice';
 import { AcceptanceListMap } from './AcceptanceListMap';
-import Main from '../../../pages/Notice/Main';
 import { getSubmitRequest } from '../../../api/Member/memberListCheck';
 import { useParams } from 'react-router-dom';
 
