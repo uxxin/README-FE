@@ -17,7 +17,6 @@ export const Header = (props) => {
   const [isSearchMode, setIsSearchMode] = useState(false);
   const navigate = useNavigate();
   const bodyWidth = document.body.clientWidth;
-  console.log(bodyWidth);
   const handleLeftButtonClick = (event) => {
     event.stopPropagation();
     {
