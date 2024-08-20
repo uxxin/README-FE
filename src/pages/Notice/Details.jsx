@@ -18,7 +18,7 @@ const NoticeDetails = () => {
   const [res, setRes] = useState({
     roomName: '',
     isRoomAdmin: true,
-    joinedRoomAt: '',
+    isJoinedBeforeStartDate: true,
     post: [],
     imageURLs: [],
   });
@@ -88,6 +88,7 @@ const NoticeDetails = () => {
           props={res.post[0]}
           imgs={res.imageURLs}
           isManager={res.isRoomAdmin}
+          chkActive={res.isJoinedBeforeStartDate}
         />
 
         <CommentList>
