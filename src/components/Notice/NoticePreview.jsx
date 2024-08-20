@@ -23,9 +23,7 @@ export const NoticePreview = ({
       <StyledLink to={`/notice/${roomId}/${props.postId}`}>
         <BottomContainer>
           <NoticeContent>{props.postBody}</NoticeContent>
-          {props.postImage && (
-            <Thumbnail src="/src/assets/pngs/defaultprofileimage.png" />
-          )}
+          {props.postImage && <Thumbnail src={props.postImage} />}
         </BottomContainer>
       </StyledLink>
       {btnText && (
