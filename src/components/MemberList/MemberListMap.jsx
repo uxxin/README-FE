@@ -33,11 +33,12 @@ export const MemberListMap = ({ members }) => {
       const userId = encodeURIComponent(selectedProfile.userId);
       navigate(`/notice/${roomId}/member/${userId}`, {
         state: {
-          profile_image: selectedProfile.profile_image,
+          profileImage: selectedProfile.profileImage,
           nickname: selectedProfile.nickname,
           userId: selectedProfile.userId,
         },
       });
+      console.log(selectedProfile.profileImage);
     } else {
       console.error('Selected profile is not defined');
     }
@@ -77,8 +78,6 @@ export const MemberListMap = ({ members }) => {
     { label: '추방하기', onClick: handleKickOutClick, color: 'red' },
   ];
 
-  console.log('필터링된 멤버:', members);
-
   return (
     <div>
       {members && members.length > 0 ? (
@@ -87,7 +86,7 @@ export const MemberListMap = ({ members }) => {
             <div key={index}>
               <MemberListDetails
                 nickname={item.nickname}
-                profile_image={item.profile_image}
+                profileImage={item.profileImage}
                 onOpenModal={() => handleOpenModal(item)}
               />
               {selectedProfile?.nickname === item.nickname && (

@@ -161,6 +161,7 @@ const Container = styled.section`
         button {
           border: none;
           background-color: transparent;
+          margin-left: auto;
         }
       }
     }
