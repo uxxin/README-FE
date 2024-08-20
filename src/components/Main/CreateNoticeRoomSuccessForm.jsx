@@ -9,8 +9,9 @@ const CreateNoticeRoomSuccessForm = ({
   password,
   nickName,
 }) => {
+  const baseURL = 'https://read-me-official.kro.kr';
   const handleCopyClick = () => {
-    const fullUrl = `https://read-me-official.kro.kr/notice/entry/${url}`;
+    const fullUrl = `${baseURL}/notice/entry/${url}`;
     navigator.clipboard
       .writeText(fullUrl)
       .then(() => {
@@ -32,7 +33,7 @@ const CreateNoticeRoomSuccessForm = ({
               <InfoLabel>초대 URL</InfoLabel>
               <UrlContainer>
                 <InfoValue>
-                  https://read-me-official.kro.kr/notice/entry/{url}
+                  {baseURL}/notice/entry/{url}
                 </InfoValue>
                 <CopyButton onClick={handleCopyClick}>
                   <img src={copyIcon} alt="Copy Icon" />

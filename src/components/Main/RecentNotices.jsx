@@ -74,7 +74,7 @@ export const RecentNotices = () => {
             <NoticeContent>
               <NoticeName>{notice.roomName}</NoticeName>
               <NoticeText
-                onClick={() => handleNoticeClick(notice.roomId, notice.postId)} // 클릭 핸들러 추가
+                onClick={() => handleNoticeClick(notice.roomId, notice.postId)}
               >
                 {notice.title}
               </NoticeText>
@@ -119,8 +119,8 @@ const RecentTitle = styled.div`
 const NoticesList = styled.div`
   display: flex;
   flex-direction: column;
-  border-top: 0.0208rem solid var(--Primary-normal, #509bf7); /* 0.33px */
-  border-bottom: 0.0208rem solid var(--Primary-normal, #509bf7); /* 0.33px */
+  border-top: 0.0208rem solid var(--Primary-normal, #509bf7);
+  border-bottom: 0.0208rem solid var(--Primary-normal, #509bf7);
 `;
 
 const NoticeItem = styled.div`
@@ -128,31 +128,31 @@ const NoticeItem = styled.div`
   padding: 0.75rem 0; /* 12px */
   align-items: center;
   align-self: stretch;
-  border-bottom: 0.0208rem solid var(--Text-caption, #888); /* 0.33px */
-  height: ${(props) => (props.isEmpty ? '0.875rem' : 'auto')}; /* 14px */
+  border-bottom: 0.0208rem solid var(--Text-caption, #888);
+  height: ${(props) => (props.isEmpty ? '0.875rem' : 'auto')};
 `;
 
 const NoticeContent = styled.div`
   display: flex;
-  padding-right: 0.25rem; /* 4px */
+  padding-right: 0.25rem;
   align-items: center;
-  gap: 0.25rem; /* 4px */
+  gap: 0.25rem;
   flex: 1 0 0;
 `;
 
 const NoticeName = styled.div`
   display: -webkit-box;
-  width: 5.125rem; /* 82px */
+  width: 5.125rem;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
 
-  font-size: 0.75rem; /* 12px */
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 0.75rem; /* 12px */
-  letter-spacing: -0.015rem; /* -0.24px */
+  line-height: 0.75rem;
+  letter-spacing: -0.015rem;
 `;
 
 const NoticeText = styled.div`
@@ -163,36 +163,36 @@ const NoticeText = styled.div`
   overflow: hidden;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
-  cursor: pointer; /* 클릭 가능한 포인터 커서 추가 */
+  cursor: pointer;
 
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   font-weight: 400;
-  line-height: 0.875rem; /* 14px */
-  letter-spacing: -0.0175rem; /* -0.28px */
+  line-height: 0.875rem;
+  letter-spacing: -0.0175rem;
 `;
 
 const NoticeTime = styled.div`
-  margin-left: 0.25rem; /* 4px */
+  margin-left: 0.25rem;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
 
-  font-size: 0.625rem; /* 10px */
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 0.625rem; /* 10px */
-  letter-spacing: -0.0125rem; /* -0.2px */
+  line-height: 0.625rem;
+  letter-spacing: -0.0125rem;
 `;
 
 const Pagination = styled.div`
   display: flex;
-  padding: 0.5rem 0; /* 8px */
+  padding: 0.5rem 0;
   justify-content: center;
   align-items: center;
-  gap: 1.375rem; /* 22px */
+  gap: 1.375rem;
 `;
 
 const PageNumber = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.125rem; /* 2px */
+  gap: 0.125rem;
   font-weight: 600;
 `;
 
@@ -215,7 +215,7 @@ const NavButton = styled.img`
   justify-content: center;
   align-items: center;
   border-radius: 999px;
-  border: 0.0208rem solid var(--Primary-light-active, #c9e0fd); /* 0.33px */
+  border: 0.0208rem solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
   cursor: pointer;
 `;
