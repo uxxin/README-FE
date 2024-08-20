@@ -130,6 +130,7 @@ const ContentText = styled.span`
   line-height: 1.2rem;
   letter-spacing: -0.02em;
   text-align: left;
+  font-family: Pretendard;
 `;
 
 const ImgBox = styled.img`
