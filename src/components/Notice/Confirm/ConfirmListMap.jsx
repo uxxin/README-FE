@@ -171,6 +171,12 @@ const BtnStyle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 1rem */
+  letter-spacing: -0.02rem;
   gap: 0.25rem;
   svg {
     vertical-align: middle;
