@@ -20,14 +20,10 @@ export const ConfirmListMap = (props) => {
             <ContentBox>
               <ContentText>{props.content}</ContentText>
             </ContentBox>
-            {props.image > 0 ? (
-              <>
-                <ImgBox src={props.image} />
-              </>
+            {props.image && props.image.trim() ? (
+              <ImgBox src={props.image} />
             ) : (
-              <>
-                <ImgBox src="/src/assets/pngs/defaultprofileimage.png" />
-              </>
+              <EmptyBox /> // 빈 공간을 나타내는 컴포넌트
             )}
           </FrameBox>
 
@@ -172,4 +168,10 @@ const BtnStyle = styled.div`
   svg {
     vertical-align: middle;
   }
+`;
+
+const EmptyBox = styled.div`
+  width: 3.75rem;
+  height: 3.75rem;
+  background: transparent; /* 배경 투명 */
 `;
