@@ -86,7 +86,7 @@ export const NoticeTitle = (props) => {
           {props.postType && (
             <QuizFormatLabel postType={props.postType}></QuizFormatLabel>
           )}
-          {props.submitState && (
+          {props.submitState && !props.isManager && (
             <RequestStatusLabel
               requestStatus={props.submitState}
             ></RequestStatusLabel>
