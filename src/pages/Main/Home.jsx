@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Profile } from '../../components/Main/Profile';
 import { RecentNotices } from '../../components/Main/RecentNotices';
 import { OpenedNoticeRoom } from '../../components/Main/OpendNoticeRoom';
@@ -17,6 +17,14 @@ const Home = () => {
   const handleLogoClick = () => {
     window.location.reload();
   };
+
+  useEffect(() => {
+    document.body.style.marginTop = '0';
+
+    return () => {
+      document.body.style.marginTop = '2.75rem';
+    };
+  }, []);
 
   return (
     <Container>

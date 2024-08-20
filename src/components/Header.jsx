@@ -16,7 +16,8 @@ export const Header = (props) => {
 
   const [isSearchMode, setIsSearchMode] = useState(false);
   const navigate = useNavigate();
-
+  const bodyWidth = document.body.clientWidth;
+  console.log(bodyWidth);
   const handleLeftButtonClick = (event) => {
     event.stopPropagation();
     {
@@ -56,7 +57,7 @@ export const Header = (props) => {
           <StyledSearchButton src={SearchButton} fill="#509BF7" />
         </SearchContainer>
       ) : (
-        <Container onClick={handleContainerClick}>
+        <Container bodyWidth={bodyWidth} onClick={handleContainerClick}>
           <LeftButtonWrapper onClick={handleLeftButtonClick}>
             {props.write ? (
               <StyledCloseButton src={CloseButton} />
@@ -79,14 +80,17 @@ export const Header = (props) => {
 };
 
 const Container = styled.header`
+  width: ${(props) => props.bodyWidth + 'px'};
   display: flex;
   height: 2.75rem;
   padding: 0.625rem;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: fixed;
+  top: 0;
   background: var(--Basic-White, #fff);
   box-sizing: border-box;
+  z-index: 1000;
 `;
 
 const LeftButtonWrapper = styled.div`
