@@ -3,42 +3,37 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NoticePreview } from '../NoticePreview';
 import { ConfirmListMap } from './ConfirmListMap';
-import { useEffect,useState } from 'react';
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { getSubmitList } from '../../../api/Member/memberListCheck';
 
-
-
-export const ConfirmList = () =>{
+export const ConfirmList = () => {
   const [requestNum, setRequestNum] = useState([]);
 
-  const {roomId} = useParams();
+  const { roomId } = useParams();
 
-    
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getSubmitList({roomId});
-        console.log('응답 데이터:', data);
-        const confirmList = data.result
-        setRequestNum(confirmList); // 상태 업데이트
-        console.log('Fetched data:',confirmList);
+        const data = await getSubmitList({ roomId });
+        const confirmList = data.result;
+        setRequestNum(confirmList);
       } catch (error) {
         console.error('데이터를 가져오는 동안 오류 발생:', error);
       }
     };
     fetchData();
   }, [roomId]);
-  
+
   return (
     <div>
       {requestNum.length === 0 ? (
-      <BoxContainer><CheckContainer>확인요청내역이 없습니다.</CheckContainer></BoxContainer>  
+        <BoxContainer>
+          <CheckContainer>확인요청내역이 없습니다.</CheckContainer>
+        </BoxContainer>
       ) : (
         requestNum.map((item, index) => (
-          <ConfirmListMap
-          {...item}
-          />
+          <ConfirmListMap key={index} {...item} />
         ))
       )}
     </div>
@@ -62,8 +57,7 @@ const CheckContainer = styled.div`
   border-radius: 0.5rem;
   border: 0.33px solid var(--Primary-light-active, #c9e0fd);
   background: var(--Primary-light, #f4f9ff);
-  flex-grow: 1; 
-  flex-shrink: 1; 
+  flex-grow: 1;
+  flex-shrink: 1;
   height: 4.188rem;
 `;
-

@@ -10,9 +10,7 @@ import { useSelector } from 'react-redux';
 const ConfirmRequestApproval = () => {
   const [state, setState] = useState();
 
-  const keysCount = useSelector((state) => state.check.count); 
-
-
+  const keysCount = useSelector((state) => state.check.count);
 
   const handleStateChange = (seletedState) => {
     setState(seletedState);
@@ -22,14 +20,12 @@ const ConfirmRequestApproval = () => {
   return (
     <div>
       <Header title="확인 요청 내역" isSearch={true} gap="1rem" />
-    
+
       <ConfirmStatusSwitch onStateChange={handleStateChange} />
-        {state === 'waiting' ? <CheckList /> : <AcceptanceList />}
-   
-  
+      {state === 'waiting' && <CheckList />}
+      {state === 'approved' && <AcceptanceList />}
     </div>
   );
 };
-
 
 export default ConfirmRequestApproval;

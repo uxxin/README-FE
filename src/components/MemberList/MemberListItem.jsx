@@ -13,17 +13,14 @@ import { useParams } from 'react-router-dom';
 import { getMyInfo } from '../../api/Member/memberListCheck';
 import { getMemberList } from '../../api/Member/memberListCheck';
 
-
-
-
 export const MemberListItem = () => {
-  const keysCount = useSelector((state) => state.keys.count); 
+  const keysCount = useSelector((state) => state.keys.count);
   const { members } = useSelector((state) => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { roomId } = useParams();
 
-  const [searchInput,setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
 
   const [state, setState] = useState({
     search: '',
@@ -44,31 +41,37 @@ export const MemberListItem = () => {
     }
   }, [members]);
 
-  
   useEffect(() => {
     const fetchMemberList = async () => {
       try {
         const memberData = await getMemberList('', roomId);
         const adminData = await getMyInfo();
-   
-        
+
         setState((prevState) => ({
           ...prevState,
           results: memberData.result,
           allMembers: memberData.result,
           adminName: adminData.result,
         }));
-        dispatch(setKeysCount({ count: memberData.result.length, members: memberData.result }));
+        dispatch(
+          setKeysCount({
+            count: memberData.result.length,
+            members: memberData.result,
+          }),
+        );
       } catch (error) {
         console.error('Error fetching member list:', error);
       }
     };
     fetchMemberList();
-  }, [dispatch,roomId]); 
+  }, [dispatch, roomId]);
 
   useEffect(() => {
-    console.log('클릭버튼 누르면 이름 검색댐:', debouncedSearch);
-    if (debouncedSearch && debouncedSearch.trim() !== '' && Array.isArray(state.allMembers)) {
+    if (
+      debouncedSearch &&
+      debouncedSearch.trim() !== '' &&
+      Array.isArray(state.allMembers)
+    ) {
       const filteredResults = state.allMembers.filter((member) =>
         member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase()),
       );
@@ -79,17 +82,14 @@ export const MemberListItem = () => {
     }
   }, [debouncedSearch, state.allMembers]);
 
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  
 
-  
   const handleSearch = (e) => {
     setSearchInput((prevState) => ({ ...prevState, search: e.target.value }));
   };
-  
+
   /*
 
   const handleSearch = async () => {
@@ -108,18 +108,12 @@ export const MemberListItem = () => {
 
   const handleInput = (e) => {
     setState((prevState) => ({ ...prevState, search: e.target.value }));
-
-  console.log('필터링된 사람:ListItem', state.results);
-}
+  };
 
   return (
     <Container>
-        <InputContainer>
-        <SearchInput
-          placeholder={'입력하세요'}
-          onChange={handleInput}
-        />
-       
+      <InputContainer>
+        <SearchInput placeholder={'입력하세요'} onChange={handleInput} />
       </InputContainer>
       <MemberIcon>
         <HumanIcon />
@@ -135,7 +129,7 @@ export const MemberListItem = () => {
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
         <ButtonContainer>
-        <MemberNameBtn src={state.adminName.profileImage}/>
+          <MemberNameBtn src={state.adminName.profileImage} />
           <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
         </ButtonContainer>
 
@@ -155,8 +149,6 @@ export const MemberListItem = () => {
   );
 };
 
-
-// 컨테이너 스타일
 const Container = styled.div`
   max-width: 26.875rem;
   min-height: 15.625rem;
@@ -278,9 +270,9 @@ const SearchInput = styled.input`
   letter-spacing: -0.02rem;
   color: #509bf7;
   ::placeholder {
-    color: var(--Text-emtpy, var(--Grayscale-Gray4, #BDBDBD));
+    color: var(--Text-emtpy, var(--Grayscale-Gray4, #bdbdbd));
   }
-`
+`;
 const MemberNameBtn = styled.img`
   width: 2.75rem;
   height: 2.75rem;
@@ -292,12 +284,11 @@ const MemberNameBtn = styled.img`
   margin-right: 0.8rem;
 `;
 
-
 const SearchButton = styled.button`
-width: 1.5rem;
-height: 1.5rem;
-background: var(--Primary-Light, #f4f9ff);
-color: #509bf7;
-border: none;
-cursor: pointer;
-`
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--Primary-Light, #f4f9ff);
+  color: #509bf7;
+  border: none;
+  cursor: pointer;
+`;
