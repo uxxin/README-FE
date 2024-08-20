@@ -25,6 +25,7 @@ export const MemberInvite = () => {
       await navigator.clipboard.writeText(
         `${roomBaseUrl}/notice/entry/${invite.room_invite_url}`,
       );
+      alert('공지방 url 복사 완료');
     } catch (err) {
       console.error(err);
     }
