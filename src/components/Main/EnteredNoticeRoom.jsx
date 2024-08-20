@@ -56,25 +56,23 @@ export const EnteredNoticeRoom = () => {
                 />
               ))}
             </NoticeRooms>
-            {noticeRooms.length > 0 && (
-              <Pagination>
-                <NavButton
-                  onClick={handlePrevPage}
-                  src={prevButtonSvg}
-                  alt="Previous"
-                />
-                <PageNumber>
-                  <CurrentPage>{currentPage}</CurrentPage>
-                  <Separator>/</Separator>
-                  <TotalPages>{totalPages}</TotalPages>
-                </PageNumber>
-                <NavButton
-                  onClick={handleNextPage}
-                  src={nextButtonSvg}
-                  alt="Next"
-                />
-              </Pagination>
-            )}
+            <Pagination>
+              <NavButton
+                onClick={handlePrevPage}
+                src={prevButtonSvg}
+                alt="Previous"
+              />
+              <PageNumber>
+                <CurrentPage>{currentPage}</CurrentPage>
+                <Separator>/</Separator>
+                <TotalPages>{totalPages}</TotalPages>
+              </PageNumber>
+              <NavButton
+                onClick={handleNextPage}
+                src={nextButtonSvg}
+                alt="Next"
+              />
+            </Pagination>
           </>
         ) : (
           <NoticeRooms>
