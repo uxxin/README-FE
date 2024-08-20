@@ -2,8 +2,12 @@ import React from 'react';
 import { NoticeTitle } from './NoticeTitle';
 import styled from 'styled-components';
 import NoticeCheck from '../../assets/svgs/notice_check.svg';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const NoticeItem = ({ props, imgs, preview }) => {
+  const navigate = useNavigate();
+  const { roomId, postId } = useParams();
+
   return (
     <Container>
       <NoticeTitle {...props} preview={preview} />
@@ -12,7 +16,9 @@ export const NoticeItem = ({ props, imgs, preview }) => {
       {preview ? (
         <></>
       ) : (
-        <NoticeCheckButton>
+        <NoticeCheckButton
+          onClick={() => navigate(`/notice/${roomId}/${postId}/solve`)}
+        >
           <NoticeCheckIcon src={NoticeCheck} /> 공지 확인
         </NoticeCheckButton>
       )}
@@ -46,7 +52,7 @@ const Thumbnail = styled.img`
   align-self: stretch;
 `;
 
-const NoticeCheckButton = styled.div`
+const NoticeCheckButton = styled.button`
   display: flex;
   width: 6.1875rem;
   height: 1.75rem;
@@ -54,6 +60,7 @@ const NoticeCheckButton = styled.div`
   align-items: center;
   gap: 0.5rem;
   align-self: stretch;
+  border: none;
   border-radius: 0.5rem;
   background: var(--Primary-Normal, #509bf7);
   color: var(--Basic-White, var(--Basic-White, #fff));
