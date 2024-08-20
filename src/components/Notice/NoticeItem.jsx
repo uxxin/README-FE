@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import NoticeCheck from '../../assets/svgs/notice_check.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export const NoticeItem = ({ props, imgs, preview }) => {
+export const NoticeItem = ({ props, imgs, preview, isManager }) => {
   const navigate = useNavigate();
   const { roomId, postId } = useParams();
 
   return (
     <Container>
-      <NoticeTitle {...props} preview={preview} />
+      <NoticeTitle {...props} preview={preview} isManager={isManager} />
       <NoticeContent>{props?.postBody}</NoticeContent>
       {imgs && imgs.map((img) => <Thumbnail key={img} src={img} />)}
       {preview ? (
