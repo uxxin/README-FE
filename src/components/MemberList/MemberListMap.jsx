@@ -56,7 +56,7 @@ export const MemberListMap = ({ members }) => {
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
       try{
-        const bannedMember = await getMemberBan(selectedProfile.nickname, roomId)
+        const bannedMember = await getMemberBan({userId:selectedProfile.userId, roomId: roomId})
         console.log("추방당한 멤버",bannedMember)
       }catch(err){
         console.log("추방실패")

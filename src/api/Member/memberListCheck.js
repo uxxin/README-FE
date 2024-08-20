@@ -1,7 +1,7 @@
 import { DeleteAxiosInstance, GetAxiosInstance } from '../../axios/axios.method.js';
 import { nicknameCheck, roomInfo } from '../Auth/authEnter.js';
 
-//멤버리스트 가져오기(전체, 개인)
+
 export const getMemberList = async (searchInput, roomId) => {
     try {
       const response = await GetAxiosInstance(`/admin/users`, {
@@ -29,12 +29,12 @@ export const getMyInfo = async () => {
   return response.data;
 };
 
-export const getMemberBan = async (nickname, roomId) => {
+export const getMemberBan = async ({userId, roomId}) => {
   try {
     const response = await DeleteAxiosInstance(`/admin/user-ban`, {
       data: {
-        nickname: nickname,
-        room_id: roomId,
+        userId: userId,
+        roomId: roomId,
       },
     });
     console.log(response.data.result);
