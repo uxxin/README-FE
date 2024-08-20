@@ -49,7 +49,7 @@ export const NoticeTitle = (props) => {
   };
   const deleteNotices = async () => {
     try {
-      const response = await deleteNotice(props.postId);
+      await deleteNotice(props.postId);
       location.reload();
     } catch (error) {
       console.log(error);
