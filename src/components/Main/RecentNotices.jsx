@@ -19,7 +19,6 @@ export const RecentNotices = () => {
     (async () => {
       try {
         const response = await getRecentNotice(currentPage, ITEMS_PER_PAGE);
-        console.log(response);
 
         if (response.isSuccess) {
           setNotices(response.result.recentPostList);
@@ -53,18 +52,10 @@ export const RecentNotices = () => {
     navigate(`/notice/${roomId}/${postId}`);
   };
 
-  const currentNotices = notices.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
-
-  // 마지막 페이지 빈 부분 개수
-  const emptyRows = ITEMS_PER_PAGE - currentNotices.length;
-
-  // 빈 부분도 추가해놓기
+  // API 결과에 따라 공지사항 리스트를 설정
   const displayedNotices = [
-    ...currentNotices,
-    ...Array.from({ length: emptyRows }, () => ({
+    ...notices,
+    ...Array.from({ length: ITEMS_PER_PAGE - notices.length }, () => ({
       roomName: '',
       title: '',
       createdAt: '',
@@ -83,7 +74,7 @@ export const RecentNotices = () => {
             <NoticeContent>
               <NoticeName>{notice.roomName}</NoticeName>
               <NoticeText
-                onClick={() => handleNoticeClick(notice.roomId, notice.postId)} // Add onClick handler
+                onClick={() => handleNoticeClick(notice.roomId, notice.postId)} // 클릭 핸들러 추가
               >
                 {notice.title}
               </NoticeText>
@@ -172,7 +163,7 @@ const NoticeText = styled.div`
   overflow: hidden;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
-  cursor: pointer; /* Add pointer cursor to indicate it's clickable */
+  cursor: pointer; /* 클릭 가능한 포인터 커서 추가 */
 
   font-size: 0.875rem; /* 14px */
   font-weight: 400;
@@ -218,9 +209,9 @@ const TotalPages = styled.span`
 `;
 
 const NavButton = styled.img`
-  width: 1.5rem; /* 24px */
-  height: 1.5rem; /* 24px */
-  padding: 0.5rem; /* 8px */
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
   border-radius: 999px;

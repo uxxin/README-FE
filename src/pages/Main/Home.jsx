@@ -14,10 +14,14 @@ const Home = () => {
     setIsFixedNoticeVisible(false);
   };
 
+  const handleLogoClick = () => {
+    window.location.reload();
+  };
+
   return (
     <Container>
       <Navbar>
-        <Logo src={logoImage} alt="Logo" />
+        <Logo src={logoImage} alt="Logo" onClick={handleLogoClick} />
       </Navbar>
 
       <Scroll>
@@ -36,10 +40,11 @@ export default Home;
 const Logo = styled.img`
   width: 6.9375rem;
   height: 2.25rem;
+  cursor: pointer;
 `;
 
 const Container = styled.div`
-  //display: flex;
+  display: flex;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
@@ -54,7 +59,6 @@ const Navbar = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  //border: 0.0625rem solid red;
 `;
 
 const Scroll = styled.div`

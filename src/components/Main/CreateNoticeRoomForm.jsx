@@ -30,7 +30,6 @@ const CreateNoticeRoomForm = ({
         console.log('서버 응답: ', response);
         const imageUrl = response.result.images;
         if (imageUrl) {
-          console.log('이미지 업로드 성공:', imageUrl);
           onImageChange(imageUrl);
         } else {
           console.error('이미지 URL이 응답에 포함되어 있지 않음');
@@ -93,6 +92,7 @@ const ImageContainer = styled.div`
   justify-content: center;
   position: relative;
   margin-bottom: 2rem;
+  object-fit: cover;
 `;
 
 const RoomImage = styled.div`
