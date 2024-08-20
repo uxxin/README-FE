@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { useDispatch } from 'react-redux';
-import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
 import { PrevPageBtn } from '../../../assets/svgs/icons';
 
@@ -53,12 +52,16 @@ export const AcceptanceListMap = ({
           <Approval>
             <ApprovalText>승인</ApprovalText>
           </Approval>
-          <PrevPageContainer onClick={prevPage}>
-            <PrevPageBtn />
-          </PrevPageContainer>
-          <NextPageBtn onClick={nextPage}>
-            <SlideButton />
-          </NextPageBtn>
+          {page > 1 && (
+            <PrevPageContainer onClick={prevPage}>
+              <PrevPageBtn />
+            </PrevPageContainer>
+          )}
+          {page < totalPage && (
+            <NextPageBtn onClick={nextPage}>
+              <SlideButton />
+            </NextPageBtn>
+          )}
         </ContentContainer>
       </BorderContainer>
     </TotalContainer>
@@ -161,6 +164,8 @@ const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   border: 0.33px;
+  border-radius: 0.5rem;
+  background: var(--Primary-Light, #f4f9ff);
   bottom: 0.625rem;
 `;
 
@@ -182,6 +187,7 @@ const Approval = styled.div`
   right: 0;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
+  box-sizing: border-box;
 `;
 
 const ApprovalText = styled.span`

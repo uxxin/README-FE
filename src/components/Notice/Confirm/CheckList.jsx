@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { CheckListMap } from './CheckListMap';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setRequiredListCount } from '../../../redux/CheckSlice';

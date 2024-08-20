@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { NoticeTitle } from '../NoticeTitle';
-import axios from 'axios';
 import { PointerBtn } from '../../../assets/svgs/icons';
 import { Link, useParams } from 'react-router-dom';
 
@@ -105,17 +103,24 @@ const DateBox = styled.div`
 `;
 
 const FrameBox = styled.div`
-  width: 100%;
-  height: 3.75rem;
   display: flex;
   gap: 0.625rem;
   align-items: center;
+  width: 100%;
 `;
 
 const ContentBox = styled.div`
+  display: block;
   width: 100%;
   height: 3.75rem;
   gap: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  color: #888888;
 `;
 
 const ContentText = styled.span`
@@ -125,13 +130,16 @@ const ContentText = styled.span`
   line-height: 1.2rem;
   letter-spacing: -0.02em;
   text-align: left;
+  font-family: Pretendard;
 `;
 
 const ImgBox = styled.img`
+  flex-shrink: 0;
   width: 3.75rem;
   height: 3.75rem;
   gap: 0;
   border-radius: 0.5rem;
+  object-fit: cover;
 `;
 
 const BottonBox = styled.button`
@@ -164,6 +172,12 @@ const BtnStyle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 1rem */
+  letter-spacing: -0.02rem;
   gap: 0.25rem;
   svg {
     vertical-align: middle;
@@ -173,5 +187,5 @@ const BtnStyle = styled.div`
 const EmptyBox = styled.div`
   width: 3.75rem;
   height: 3.75rem;
-  background: transparent; /* 배경 투명 */
+  background: transparent;
 `;
