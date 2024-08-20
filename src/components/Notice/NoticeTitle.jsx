@@ -25,7 +25,16 @@ export const NoticeTitle = (props) => {
   };
 
   const shareAddress = () => {
-    console.log('주소 공유');
+    const baseUrl = 'https://read-me-official.kro.kr/';
+    const urlToCopy = `${baseUrl}notice/${props.roomId}/${props.postId}`;
+    navigator.clipboard
+      .writeText(urlToCopy)
+      .then(() => {
+        alert('URL이 클립보드에 복사되었습니다!');
+      })
+      .catch((err) => {
+        console.error('클립보드 복사 실패:', err);
+      });
   };
 
   const fixNotice = async () => {
