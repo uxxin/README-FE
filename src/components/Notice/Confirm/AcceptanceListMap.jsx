@@ -52,12 +52,16 @@ export const AcceptanceListMap = ({
           <Approval>
             <ApprovalText>승인</ApprovalText>
           </Approval>
-          <PrevPageContainer onClick={prevPage}>
-            <PrevPageBtn />
-          </PrevPageContainer>
-          <NextPageBtn onClick={nextPage}>
-            <SlideButton />
-          </NextPageBtn>
+          {page > 1 && (
+            <PrevPageContainer onClick={prevPage}>
+              <PrevPageBtn />
+            </PrevPageContainer>
+          )}
+          {page < totalPage && (
+            <NextPageBtn onClick={nextPage}>
+              <SlideButton />
+            </NextPageBtn>
+          )}
         </ContentContainer>
       </BorderContainer>
     </TotalContainer>

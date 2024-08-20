@@ -94,12 +94,16 @@ export const CheckListMap = ({
         </ProfileContainer>
         <ContentContainer>
           <StyledImage src={currentImage} alt="Content" />
-          <PrevPageContainer onClick={prevPage}>
-            <PrevPageBtn />
-          </PrevPageContainer>
-          <NextPageBtn onClick={nextPage}>
-            <SlideButton />
-          </NextPageBtn>
+          {page > 1 && (
+            <PrevPageContainer onClick={prevPage}>
+              <PrevPageBtn />
+            </PrevPageContainer>
+          )}
+          {page < totalPage && (
+            <NextPageBtn onClick={nextPage}>
+              <SlideButton />
+            </NextPageBtn>
+          )}
         </ContentContainer>
         <SecondButtonContainer>
           <YesButton onClick={handleAcceptance}>
