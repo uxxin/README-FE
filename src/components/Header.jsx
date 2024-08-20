@@ -64,7 +64,7 @@ export const Header = (props) => {
               <StyledBackButton fill="#222222" />
             )}
           </LeftButtonWrapper>
-          <Title>{props.title}</Title>
+          <Title onClick={props.onClick}>{props.title}</Title>
           {props.isSearch ? (
             <RightButtonWrapper onClick={handleSearchButtonClick}>
               <StyledSearchButton fill="#222222" />
