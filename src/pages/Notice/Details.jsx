@@ -44,6 +44,10 @@ const NoticeDetails = () => {
   };
 
   const handleComment = async () => {
+    if (comment.trim() === '') {
+      return;
+    }
+
     try {
       await createNoticeComment(postId, comment);
       setComment('');
@@ -80,7 +84,11 @@ const NoticeDetails = () => {
     <div className="container">
       <Header title={res.roomName} isSearch={false} onClick={handleClick} />
       <Container>
-        <NoticeItem props={res.post[0]} imgs={res.imageURLs} />
+        <NoticeItem
+          props={res.post[0]}
+          imgs={res.imageURLs}
+          isManager={res.isRoomAdmin}
+        />
 
         <CommentList>
           {comments.length > 0 ? (
