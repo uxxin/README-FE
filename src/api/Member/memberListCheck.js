@@ -1,4 +1,4 @@
-import { DeleteAxiosInstance, GetAxiosInstance } from '../../axios/axios.method.js';
+import { DeleteAxiosInstance, GetAxiosInstance, PatchAxiosInstance } from '../../axios/axios.method.js';
 import { nicknameCheck, roomInfo } from '../Auth/authEnter.js';
 
 
@@ -67,5 +67,13 @@ export const getMemberBan = async ({userId, roomId}) => {
       const response = await GetAxiosInstance(`/admin/submit/${roomId}/${postId}?state=${status}`);
       console.log("확인요청내역 수락 혹은 거절:", response.data);
       return response.data;
+  };
+
+  export const patchSubmitRequest = async({submitId,type})=>{
+      const response = await PatchAxiosInstance(`/admin/submit/${submitId}`,{
+        type:type
+      })
+      console.log("거절할지 수락할지 정하기:",response.data)
+      return response.data
   };
 

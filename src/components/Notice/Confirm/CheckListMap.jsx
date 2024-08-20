@@ -5,7 +5,7 @@ import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { useDispatch } from 'react-redux';
 import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
-import { getSubmitRequest } from '../../../api/Member/memberListCheck';
+import { getSubmitRequest, patchSubmitRequest } from '../../../api/Member/memberListCheck';
 import { useParams } from 'react-router-dom';
 
 
@@ -43,8 +43,8 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
 
     const handleAcceptance = async () => {
       try {
-        const acceptedMember = await getSubmitRequest("accept", roomId);
-        dispatch(acceptance(nickname));
+        const acceptedMember = await patchSubmitRequest({type:"accept", submitId: submitId});
+        dispatch(acceptance(submitId));
         console.log("수락된 멤버",acceptedMember)
       } catch (error) {
         console.error('Error handling acceptance:', error);
@@ -53,9 +53,9 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
 
   const handleRejection = async () => {
     try{
-      const deniedMember = await getSubmitRequest("reject", roomId);
+      const deniedMember = await patchSubmitRequest({type:"reject", submitId:submitId});
       console.log("거절된 멤버",deniedMember)
-      dispatch(rejection(nickname));
+      dispatch(rejection(submitId));
 
     }catch (error) {
       console.error('Error handling acceptance:', error);
