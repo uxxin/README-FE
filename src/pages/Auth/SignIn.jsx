@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,6 +40,14 @@ const SignIn = () => {
     const { value, id } = e.target;
     setUser({ ...user, [id]: value });
   };
+
+  useEffect(() => {
+    document.body.style.marginTop = '0';
+
+    return () => {
+      document.body.style.marginTop = '2.75rem';
+    };
+  }, []);
 
   return (
     <Root>

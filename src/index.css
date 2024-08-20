@@ -130,7 +130,10 @@ body {
   min-height: 100vh;
   font-family: 'Pretendard';
   font-style: normal;
-  margin: 0 auto;
+  margin-top: 2.75rem;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: auto;
 }
 
 @font-face {
