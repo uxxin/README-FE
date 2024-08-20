@@ -182,10 +182,11 @@ const NoticeRoomEntry = () => {
                 {isPasswordChecked ? '인증완료' : '인증'}
               </ConfirmButton>
             </InputWrapper>
-            {isPasswordValid && (
+            {isPasswordValid ? (
               <SuccessMessage>{message.pwSuccess}</SuccessMessage>
+            ) : (
+              <ErrorMessage>{message.pwError}</ErrorMessage>
             )}
-            {!isPasswordValid && <ErrorMessage>{message.pwError}</ErrorMessage>}
           </PasswordWrapper>
 
           {isPasswordValid && (
@@ -201,13 +202,12 @@ const NoticeRoomEntry = () => {
                   확인
                 </ConfirmButton>
               </InputWrapper>
-              {!isNicknameValid && (
-                <NicknameErrorMessage>{message.nnError}</NicknameErrorMessage>
-              )}
-              {isNicknameValid && (
+              {isNicknameValid ? (
                 <NicknameSuccessMessage>
                   {message.nnSuccess}
                 </NicknameSuccessMessage>
+              ) : (
+                <NicknameErrorMessage>{message.nnError}</NicknameErrorMessage>
               )}
             </NicknameWrapper>
           )}
@@ -406,7 +406,7 @@ const Button = styled.button`
   background: var(--color-primary-normal);
   color: var(--color-white);
   height: 100%;
-  width: 24.875rem;
+  width: 100%;
 
   &:disabled {
     background: var(--color-empty);
@@ -415,10 +415,11 @@ const Button = styled.button`
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%;
-  height: 3.1875rem;
+  padding: 0 1rem 0 1rem;
+  min-height: 3.1875rem;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 3.37rem;
 `;
 
