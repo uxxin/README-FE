@@ -34,7 +34,8 @@ export const CreateNoticeRoom = () => {
     }
   };
 
-  const isFormValid = leaderName && roomName && password && penaltyCount;
+  const isFormValid =
+    image && leaderName && roomName && password && penaltyCount;
 
   return (
     <div

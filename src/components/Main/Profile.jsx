@@ -4,12 +4,11 @@ import { ReactComponent as VerificationIcon } from '../../assets/svgs/vertificat
 import { ReactComponent as PenaltyIcon } from '../../assets/svgs/penaltyicon.svg';
 import { useNavigate } from 'react-router-dom';
 import { getMyProfile } from '../../api/Main/home';
+import defaultprofileImage from '../../assets/pngs/default_profile_3.png';
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState(
-    '/assets/pngs/defaultprofileimage.png',
-  );
+  const [profileImage, setProfileImage] = useState(defaultprofileImage);
   const [nickName, setNickname] = useState('이름');
   const [email, setEmail] = useState('이메일@gmail.com');
 
@@ -22,7 +21,7 @@ export const Profile = () => {
         if (response.isSuccess) {
           setNickname(response.result.nickname);
           setEmail(response.result.email);
-          setProfileImage(response.result.profileImage);
+          setProfileImage(response.result.profileImage || defaultprofileImage);
         }
       } catch (error) {
         console.log('프로필 조회 에러', error);
@@ -77,7 +76,7 @@ const InfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  cursor: pointer; /* 클릭 가능한 영역으로 보이도록 설정 */
+  cursor: pointer;
 `;
 
 const ProfileImage = styled.img`
