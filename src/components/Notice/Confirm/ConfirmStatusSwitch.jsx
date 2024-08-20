@@ -8,8 +8,6 @@ export const ConfirmStatusSwitch = ({ onStateChange}) => {
   const keysCount = useSelector((state) => state.check.count);
   const [state, setState] = useState('waiting');
 
-  console.log("키카운트는 이거임:",keysCount)
-
 
   const handleClick = (newState) => {
     setState(newState);

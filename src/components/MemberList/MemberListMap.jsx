@@ -10,18 +10,14 @@ import { PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
 import { getMemberBan } from '../../api/Member/memberListCheck';
 
-
 export const MemberListMap = ({ members }) => {
-  const {roomId} = useParams();
+  const { roomId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { members } = useSelector(state => state.keys);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState(null);
-
-  console.log('넘어오는 프롭스:', members); // 확인용(여기 지금 userId나옴)
 
   const handleOpenModal = (profile) => {
     setSelectedProfile(profile);
@@ -39,10 +35,9 @@ export const MemberListMap = ({ members }) => {
         state: {
           profile_image: selectedProfile.profile_image,
           nickname: selectedProfile.nickname,
-          userId: selectedProfile.userId
+          userId: selectedProfile.userId,
         },
-      });console.log("state로 덤길 셀렉티드 nickname",selectedProfile.nickname)
-        console.log("state로 덤길 셀렉티드 nickname",selectedProfile.userId)
+      });
     } else {
       console.error('Selected profile is not defined');
     }
@@ -58,14 +53,15 @@ export const MemberListMap = ({ members }) => {
 
   const handleConfirmKickOut = async () => {
     if (selectedProfile) {
-      try{
-        const bannedMember = await getMemberBan(selectedProfile.nickname, roomId)
-        console.log("추방당한 멤버",bannedMember)
-      }catch(err){
-        console.log("추방실패")
-      };
-      console.log('추방할 리스트:', selectedProfile.nickname);
-      dispatch(removeMember(selectedProfile.nickname));
+      try {
+        const bannedMember = await getMemberBan({
+          userId: selectedProfile.userId,
+          roomId: roomId,
+        });
+      } catch (err) {
+        console.log('추방실패');
+      }
+      dispatch(removeMember(selectedProfile.userId));
       setIsSecondModalOpen(false);
       setIsModalOpen(false);
       setIsThirdModalOpen(true);
@@ -123,35 +119,37 @@ export const MemberListMap = ({ members }) => {
 
       {isSecondModalOpen && (
         <ModalOverlay onClick={handleSecondModalClose}>
-          <SecondModalContent onClick={(e) => e.stopPropagation()}>
+          <CommonModalContent onClick={(e) => e.stopPropagation()}>
             <TextContainer>
-          <ModalText>
-          추방하시겠습니까? <InfoText><br />추방한 유저는 다시 초대가능합니다.</InfoText>
-          </ModalText>
-          </TextContainer>
+              <ModalText>
+                추방하시겠습니까?{' '}
+                <InfoText>
+                  <br />
+                  추방한 유저는 다시 초대가능합니다.
+                </InfoText>
+              </ModalText>
+            </TextContainer>
             <ButtonWrapper>
               <CloseButton onClick={handleSecondModalClose}>취소</CloseButton>
               <CheckButton onClick={handleConfirmKickOut}>확인</CheckButton>
             </ButtonWrapper>
-          </SecondModalContent>
+          </CommonModalContent>
         </ModalOverlay>
       )}
 
       {isThirdModalOpen && (
         <ModalOverlay onClick={handleThirdModalClose}>
-          <ThirdModalContent onClick={(e) => e.stopPropagation()}>
+          <CommonModalContent onClick={(e) => e.stopPropagation()}>
             <p>{selectedProfile?.nickname}님이 추방되었습니다.</p>
             <ButtonWrapper>
               <CloseButton onClick={handleThirdModalClose}>확인</CloseButton>
             </ButtonWrapper>
-          </ThirdModalContent>
+          </CommonModalContent>
         </ModalOverlay>
       )}
     </div>
   );
 };
-
-
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -171,7 +169,7 @@ const ShowMoreIconContainer = styled.div`
   z-index: 9999;
 `;
 
-const SecondModalContent = styled.div`
+const CommonModalContent = styled.div`
   display: flex;
   width: 16.875rem;
   padding-top: 1.1875rem;
@@ -189,7 +187,6 @@ const SecondModalContent = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   width: 100%;
-//  border-top: 0.0206rem solid var(--Grayscale-Gray5, #888);
 `;
 
 const CloseButton = styled.button`
@@ -203,8 +200,7 @@ const CloseButton = styled.button`
   color: #509bf7;
   border-top: 0.0206rem solid var(--Primary-light-active, #888888);
   border-right: 0.0206rem solid var(--Primary-light-active, #888888);
- 
-  border-left: none; /* 왼쪽 테두리를 제거 */
+  border-left: none;
 `;
 
 const CheckButton = styled.button`
@@ -217,8 +213,8 @@ const CheckButton = styled.button`
   background: transparent;
   color: #509bf7;
   border-top: 0.0206rem solid var(--Primary-light-active, #888888);
-  border-left: none; 
-`
+  border-left: none;
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -246,7 +242,7 @@ const ButtonText = styled.span`
 const MemberAddBtn = styled.button`
   width: 2.75rem;
   height: 2.75rem;
-  margin-right: 0.8rem; //이거 어떻게 할지 정하기
+  margin-right: 0.8rem;
   padding: 0.625rem;
   border-radius: 0.5rem;
   box-sizing: border-box;
@@ -257,26 +253,20 @@ const MemberAddBtn = styled.button`
   align-items: center;
 `;
 
-const ThirdModalContent = styled(SecondModalContent)`
-  /* 색상 및 크기가 SecondModalContent와 동일하도록 유지 */
-`;
-
 const TextContainer = styled.div`
   padding: 0px, 16px, 15px, 16px;
-`
+`;
 
 const ModalText = styled.div`
   text-align: center;
   margin-bottom: 16px;
-`
+`;
 
 const InfoText = styled.span`
-
-font-family: Pretendard;
-font-size: 12px;
-font-weight: 400;
-line-height: 12px;
-letter-spacing: -0.02em;
-text-align: center;
-
-`
+  font-family: Pretendard;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.02em;
+  text-align: center;
+`;
