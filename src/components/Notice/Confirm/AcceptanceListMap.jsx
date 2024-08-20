@@ -24,6 +24,7 @@ export const AcceptanceListMap = ({
   useEffect(() => {
     if (Array.isArray(images)) {
       setTotalPage(images.length);
+      console.log('페이지:', images);
     } else {
       setTotalPage(1);
     }
@@ -37,8 +38,6 @@ export const AcceptanceListMap = ({
     Array.isArray(images) && images.length > 0
       ? images[page - 1]
       : '/src/assets/pngs/defaultprofileimage.png';
-
-  useEffect(() => {}, [requiredList]);
 
   return (
     <TotalContainer>

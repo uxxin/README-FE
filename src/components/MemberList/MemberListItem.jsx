@@ -130,7 +130,7 @@ export const MemberListItem = () => {
         </ButtonContainer>
         <ButtonContainer>
           <MemberNameBtn src={state.adminName.profileImage} />
-          <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
+          <ButtonText>{`${state.adminName.nickname}`}</ButtonText>
         </ButtonContainer>
 
         {state.results && state.results.length > 0 ? (

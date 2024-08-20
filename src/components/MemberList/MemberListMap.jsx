@@ -77,8 +77,6 @@ export const MemberListMap = ({ members }) => {
     { label: '추방하기', onClick: handleKickOutClick, color: 'red' },
   ];
 
-  console.log('필터링된 멤버:', members);
-
   return (
     <div>
       {members && members.length > 0 ? (
