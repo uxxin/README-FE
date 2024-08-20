@@ -105,17 +105,24 @@ const DateBox = styled.div`
 `;
 
 const FrameBox = styled.div`
-  width: 100%;
-  height: 3.75rem;
   display: flex;
   gap: 0.625rem;
   align-items: center;
+  width: 100%;
 `;
 
 const ContentBox = styled.div`
+  display: block;
   width: 100%;
   height: 3.75rem;
   gap: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  color: #888888;
 `;
 
 const ContentText = styled.span`
@@ -128,10 +135,12 @@ const ContentText = styled.span`
 `;
 
 const ImgBox = styled.img`
+  flex-shrink: 0;
   width: 3.75rem;
   height: 3.75rem;
   gap: 0;
   border-radius: 0.5rem;
+  object-fit: cover;
 `;
 
 const BottonBox = styled.button`
