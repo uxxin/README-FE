@@ -6,11 +6,16 @@ import { ReactComponent as CheckSvg } from '../../../../assets/svgs/post_type_ch
 const DEFAULT_HEIGHT = 300;
 const CHANGE_HEIGHT = 320;
 
-const FirstStep = ({ handleNextStep, postData, handleUpdatePostData }) => {
+const FirstStep = ({
+  handleNextStep,
+  postData,
+  handleUpdatePostData,
+  editMode,
+}) => {
   const textareaRef = useRef(DEFAULT_HEIGHT);
   const disabled = postData.title === '' || postData.content === '';
   const handleTypeCheck = (selectedType) => {
-    handleUpdatePostData({ type: 'type', value: selectedType });
+    !editMode && handleUpdatePostData({ type: 'type', value: selectedType });
   };
 
   const handleInputChange = (e) => {
