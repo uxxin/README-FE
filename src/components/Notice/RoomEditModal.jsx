@@ -1,47 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const ModalOverlay = ({ children }) => {
-  return <Overlay>{children}</Overlay>;
-};
-
-export const ModalContent = ({ children }) => {
-  return <Content>{children}</Content>;
-};
-
-export const ModalTitle = ({ children }) => {
-  return <Title>{children}</Title>;
-};
-
-export const ModalText = ({ children }) => {
-  return <Text>{children}</Text>;
-};
-
-export const ModalButton = ({ children, onClick, isFailureModal }) => {
-  return (
-    <Button isFailureModal={isFailureModal} onClick={onClick}>
-      {children}
-    </Button>
-  );
-};
-
-export const ModalTextGroup = ({ children }) => {
-  return <TextGroup>{children}</TextGroup>;
-};
-
-export const ModalButtonsHorizontal = ({ children }) => {
-  return <ButtonsHorizontal>{children}</ButtonsHorizontal>;
-};
-
-export const ModalButtonsVertical = ({ children }) => {
-  return <ButtonsVertical>{children}</ButtonsVertical>;
-};
-
-export const SuccessModalDivider = () => {
-  return <Divider />;
-};
-
-const Overlay = styled.div`
+export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -53,7 +12,7 @@ const Overlay = styled.div`
   align-items: center;
 `;
 
-const Content = styled.div`
+export const ModalContent = styled.div`
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -67,21 +26,21 @@ const Content = styled.div`
   width: 16.875rem;
 `;
 
-const Title = styled.div`
+export const ModalTitle = styled.div`
   color: #222;
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
 `;
 
-const Text = styled.div`
+export const ModalText = styled.div`
   color: #222;
   font-size: 0.75rem;
   font-weight: 400;
   text-align: center;
 `;
 
-const Button = styled.button`
+export const ModalButton = styled.button`
   color: #509bf7;
   text-align: center;
   font-size: 1rem;
@@ -92,19 +51,15 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   flex: 1;
+  padding: 0.875rem 0;
 
   &:first-child {
     ${({ isFailureModal }) =>
       !isFailureModal && 'border-right: 0.0208125rem solid #888;'}
-    padding: 0.875rem 0;
-  }
-
-  &:last-child {
-    padding: 0.875rem 0;
   }
 `;
 
-const TextGroup = styled.div`
+export const ModalTextGroup = styled.div`
   display: flex;
   width: 16.875rem;
   padding: 0rem 1rem 0.9375rem 1rem;
@@ -113,7 +68,7 @@ const TextGroup = styled.div`
   gap: 0.125rem;
 `;
 
-const ButtonsHorizontal = styled.div`
+export const ModalButtonsHorizontal = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -121,7 +76,7 @@ const ButtonsHorizontal = styled.div`
   border-top: 0.0208125rem solid #888;
 `;
 
-const ButtonsVertical = styled.div`
+export const ModalButtonsVertical = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -136,7 +91,7 @@ const ButtonsVertical = styled.div`
   }
 `;
 
-const Divider = styled.div`
+export const SuccessModalDivider = styled.div`
   width: 100%;
   border-top: 0.333px solid #888;
   margin-top: 0.5rem;
