@@ -44,6 +44,10 @@ const NoticeDetails = () => {
   };
 
   const handleComment = async () => {
+    if (comment.trim() === '') {
+      return;
+    }
+
     try {
       await createNoticeComment(postId, comment);
       setComment('');
