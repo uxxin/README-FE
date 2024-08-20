@@ -86,6 +86,15 @@ const NoticeRoomEntry = () => {
   };
 
   const handleNicknameCheck = async () => {
+    if (nickname.trim() === '') {
+      setIsNicknameValid(false);
+      setMessage((prev) => ({
+        ...prev,
+        nnError: '닉네임을 입력해주세요!',
+        nnSuccess: '',
+      }));
+      return;
+    }
     try {
       const response = await nicknameCheck(nickname, roomData.roomId);
       if (!response.data.result.isDuplicate) {
