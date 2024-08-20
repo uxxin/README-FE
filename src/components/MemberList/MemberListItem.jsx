@@ -47,6 +47,7 @@ export const MemberListItem = () => {
         const memberData = await getMemberList('', roomId);
         const adminData = await getMyInfo();
 
+        console.log(memberData);
         setState((prevState) => ({
           ...prevState,
           results: memberData.result,

@@ -51,6 +51,9 @@ export const AcceptanceListMap = ({
         </ProfileContainer>
         <ContentContainer>
           <StyledImage src={currentImage} alt="Content" />
+          <Approval>
+            <ApprovalText>승인</ApprovalText>
+          </Approval>
           <PrevPageContainer onClick={prevPage}>
             <PrevPageBtn />
           </PrevPageContainer>
@@ -164,4 +167,30 @@ const StyledImage = styled.img`
 
 const BorderContainer = styled.div`
   border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
+`;
+
+const Approval = styled.div`
+  position: absolute;
+  display: flex;
+  width: 3.6875rem;
+  padding: 0.375rem 0.625rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 62.4375rem;
+  background: var(--system-success-light, #e3f2ef);
+  top: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+`;
+
+const ApprovalText = styled.span`
+  color: var(--system-success, var(--System-Success, #00a881));
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: -0.0175rem;
 `;
