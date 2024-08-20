@@ -17,6 +17,7 @@ export const ConfirmList = () => {
       try {
         const data = await getSubmitList({ roomId });
         const confirmList = data.result;
+        console.log('이미지데이터 불러와', confirmList);
         setRequestNum(confirmList);
       } catch (error) {
         console.error('데이터를 가져오는 동안 오류 발생:', error);

@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { DotsIcon } from '../../assets/svgs/icons';
 
 export const MemberListDetails = (props) => {
-
   return (
     <ButtonContainer>
-      <MemberNameBtn src={props.profile_image} />
+      <MemberNameBtn src={props.profileImage} />
       <ButtonText>{props.nickname}</ButtonText>
       <SearchButton onClick={props.onOpenModal}>
         <DotsIcon />
@@ -14,7 +13,6 @@ export const MemberListDetails = (props) => {
     </ButtonContainer>
   );
 };
-
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -63,4 +61,3 @@ const SearchButton = styled.button`
   border: none;
   margin-left: auto;
 `;
-

@@ -2,13 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const UnconfirmedPeopleItem = ({ props }) => {
+  console.log(props);
   return (
     <Container>
-      {props.profile_image !== null ? (
-        <Thumbnail src="/src/assets/pngs/defaultprofileimage.png" />
-      ) : (
-        <Thumbnail src={props.profile_image} />
-      )}
+      {props.profile_image && <Thumbnail src={props.profile_image} />}
       <UserName>{props.nickname}</UserName>
     </Container>
   );
@@ -43,11 +40,8 @@ const UserName = styled.div`
   overflow: hidden;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   text-overflow: ellipsis;
-  /* Pretendard/regular/16 */
-  font-family: Pretendard;
   font-size: 1rem;
-  font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 1rem */
+  line-height: 100%;
   letter-spacing: -0.02rem;
 `;

@@ -10,6 +10,7 @@ import {
   patchSubmitRequest,
 } from '../../../api/Member/memberListCheck';
 import { useParams } from 'react-router-dom';
+import { PrevPageBtn } from '../../../assets/svgs/icons';
 
 export const CheckListMap = ({
   nickname,
@@ -93,6 +94,9 @@ export const CheckListMap = ({
         </ProfileContainer>
         <ContentContainer>
           <StyledImage src={currentImage} alt="Content" />
+          <PrevPageContainer onClick={prevPage}>
+            <PrevPageBtn />
+          </PrevPageContainer>
           <NextPageBtn onClick={nextPage}>
             <SlideButton />
           </NextPageBtn>
@@ -231,4 +235,21 @@ const StyledImage = styled.img`
 
 const BorderContainer = styled.div`
   border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
+`;
+
+const PrevPageContainer = styled.button`
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 0.625rem;
+  transform: translateY(-50%);
+  padding: 0;
+  gap: 0;
+  border-radius: 50%;
+  opacity: 0.8;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 10;
 `;

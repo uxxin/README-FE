@@ -47,6 +47,7 @@ export const MemberListItem = () => {
         const memberData = await getMemberList('', roomId);
         const adminData = await getMyInfo();
 
+        console.log(memberData);
         setState((prevState) => ({
           ...prevState,
           results: memberData.result,
@@ -130,7 +131,7 @@ export const MemberListItem = () => {
         </ButtonContainer>
         <ButtonContainer>
           <MemberNameBtn src={state.adminName.profileImage} />
-          <ButtonText>{`공지방 주인: ${state.adminName.nickname}`}</ButtonText>
+          <ButtonText>{state.adminName.nickname}</ButtonText>
         </ButtonContainer>
 
         {state.results && state.results.length > 0 ? (
