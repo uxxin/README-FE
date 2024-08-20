@@ -129,13 +129,10 @@ const EnteredNoticeRoomSection = styled.section`
 `;
 
 const NoticeRooms = styled.div`
-  display: flex;
-  align-items: flex-start;
-  align-content: flex-start;
-  gap: 0.8125rem;
-  align-self: stretch;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.8125rem;
 `;
 
 const NoNoticesBox = styled.div`

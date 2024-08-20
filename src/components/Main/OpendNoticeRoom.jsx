@@ -101,6 +101,7 @@ const TitleContainer = styled.div`
 `;
 
 const NoticeRoomsInfo = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,13 +131,10 @@ const OpenedNoticeRoomSection = styled.section`
 `;
 
 const NoticeRooms = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.8125rem;
-  align-items: flex-start;
-  align-content: flex-start;
-  align-self: stretch;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.8125rem;
 `;
 
 const AddButtonImage = styled.img`
@@ -146,6 +144,7 @@ const AddButtonImage = styled.img`
 `;
 
 const Pagination = styled.div`
+  width: 100%;
   display: flex;
   padding: 0.5rem 0; /* 8px */
   justify-content: center;
