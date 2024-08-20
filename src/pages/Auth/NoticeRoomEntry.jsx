@@ -145,78 +145,73 @@ const NoticeRoomEntry = () => {
 
   return (
     <>
+      <Header title="입장하기" isSearch={false} url="" />
       <FirstContainer>
-        <SecondContainer>
-          <Header title="입장하기" isSearch={false} url="" />
-          <InputPlusContainer>
-            <ContextContainer>
-              <ContainerHead>리드미</ContainerHead>
-              <InfoContainer>
-                <ImgContainer>
-                  <RoomImg src={roomData.roomImage} />
-                </ImgContainer>
-                <TextContainer>
-                  <TextTitle>공지방 이름</TextTitle>
-                  <TextContent>{roomData.roomName}</TextContent>
-                </TextContainer>
-                <TextContainer>
-                  <TextTitle>공지방 대표</TextTitle>
-                  <TextContent>{roomData.adminNickname}</TextContent>
-                </TextContainer>
-              </InfoContainer>
-            </ContextContainer>
-            <PasswordWrapper>
-              <Label>비밀번호 확인</Label>
+        <InputPlusContainer>
+          <ContextContainer>
+            <ContainerHead>리드미</ContainerHead>
+            <InfoContainer>
+              <ImgContainer>
+                <RoomImg src={roomData.roomImage} />
+              </ImgContainer>
+              <TextContainer>
+                <TextTitle>공지방 이름</TextTitle>
+                <TextContent>{roomData.roomName}</TextContent>
+              </TextContainer>
+              <TextContainer>
+                <TextTitle>공지방 대표</TextTitle>
+                <TextContent>{roomData.adminNickname}</TextContent>
+              </TextContainer>
+            </InfoContainer>
+          </ContextContainer>
+          <PasswordWrapper>
+            <Label>비밀번호 확인</Label>
+            <InputWrapper>
+              <CustomInput
+                placeholder="입력하세요."
+                value={password}
+                onChange={(e) => setPassword(e.currentTarget.value)}
+                type="password"
+                disabled={isPasswordChecked}
+              />
+              <ConfirmButton
+                onClick={handlePasswordCheck}
+                disabled={isPasswordChecked}
+                className={`${isPasswordChecked ? 'long-text' : ''}`}
+              >
+                {isPasswordChecked ? '인증완료' : '인증'}
+              </ConfirmButton>
+            </InputWrapper>
+            {isPasswordValid && (
+              <SuccessMessage>{message.pwSuccess}</SuccessMessage>
+            )}
+            {!isPasswordValid && <ErrorMessage>{message.pwError}</ErrorMessage>}
+          </PasswordWrapper>
+
+          {isPasswordValid && (
+            <NicknameWrapper>
+              <Label>닉네임 설정</Label>
               <InputWrapper>
                 <CustomInput
                   placeholder="입력하세요."
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
-                  type="password"
-                  disabled={isPasswordChecked}
+                  value={nickname}
+                  onChange={(e) => setNickname(e.currentTarget.value)}
                 />
-                <ConfirmButton
-                  onClick={handlePasswordCheck}
-                  disabled={isPasswordChecked}
-                  className={`${isPasswordChecked ? 'long-text' : ''}`}
-                >
-                  {isPasswordChecked ? '인증완료' : '인증'}
+                <ConfirmButton onClick={handleNicknameCheck}>
+                  확인
                 </ConfirmButton>
               </InputWrapper>
-              {isPasswordValid && (
-                <SuccessMessage>{message.pwSuccess}</SuccessMessage>
+              {!isNicknameValid && (
+                <NicknameErrorMessage>{message.nnError}</NicknameErrorMessage>
               )}
-              {!isPasswordValid && (
-                <ErrorMessage>{message.pwError}</ErrorMessage>
+              {isNicknameValid && (
+                <NicknameSuccessMessage>
+                  {message.nnSuccess}
+                </NicknameSuccessMessage>
               )}
-            </PasswordWrapper>
-
-            {isPasswordValid && (
-              <NicknameWrapper>
-                <Label>닉네임 설정</Label>
-                <InputWrapper>
-                  <CustomInput
-                    placeholder="입력하세요."
-                    value={nickname}
-                    onChange={(e) => setNickname(e.currentTarget.value)}
-                  />
-                  <ConfirmButton onClick={handleNicknameCheck}>
-                    확인
-                  </ConfirmButton>
-                </InputWrapper>
-                {!isNicknameValid && (
-                  <NicknameErrorMessage>{message.nnError}</NicknameErrorMessage>
-                )}
-                {isNicknameValid && (
-                  <NicknameSuccessMessage>
-                    {message.nnSuccess}
-                  </NicknameSuccessMessage>
-                )}
-              </NicknameWrapper>
-            )}
-          </InputPlusContainer>
-        </SecondContainer>
-
+            </NicknameWrapper>
+          )}
+        </InputPlusContainer>
         <ButtonContainer>
           <Button onClick={handleEntry} disabled={!isEntryEnabled}>
             입장하기
@@ -231,12 +226,7 @@ const FirstContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
-`;
-
-const SecondContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  height: 95vh;
 `;
 
 const ErrorMessage = styled.div`
