@@ -52,11 +52,13 @@ const Logo = styled.img`
 `;
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
   padding: 0.625rem 1rem;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  box-sizing: border-box;
 `;
 
 const Navbar = styled.div`
@@ -70,6 +72,7 @@ const Navbar = styled.div`
 `;
 
 const Scroll = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
