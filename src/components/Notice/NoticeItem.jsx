@@ -11,7 +11,7 @@ export const NoticeItem = ({ props, imgs, preview, isManager, chkActive }) => {
 
   useEffect(() => {
     if (
-      chkActive ||
+      !chkActive ||
       props?.submitState === 'COMPLETE' ||
       props?.submitState === 'PENDING'
     ) {
