@@ -114,6 +114,15 @@ const Solve = () => {
     getSubmit();
   }, []);
 
+  useEffect(() => {
+    if (isResult === true) document.body.style.marginTop = '0';
+    else document.body.style.marginTop = '2.75rem';
+
+    return () => {
+      document.body.style.marginTop = '2.75rem';
+    };
+  }, [isResult]);
+
   return (
     <>
       {!isResult ? (

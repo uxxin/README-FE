@@ -61,6 +61,7 @@ const Main = () => {
   });
   const [offset, setOffset] = useState(1.25);
   const [isBanned, setIsBanned] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const isNoticeNull = noticeData.length === 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -142,7 +143,12 @@ const Main = () => {
 
   return (
     <MainContainer>
-      <Header title={roomTitle} isSearch={true} url="/home" />
+      <Header
+        title={roomTitle}
+        isSearch={true}
+        url="/home"
+        setSearchValue={setSearchValue}
+      />
       {isPenaltyModalOpen && (
         <PenaltyContainer>
           <PenaltyModal>
@@ -198,9 +204,21 @@ const Main = () => {
               )}
             </>
           )}
-          {noticeData.map((post) => (
-            <NoticePreview props={post} isManager={isManager} roomId={roomId} />
-          ))}
+          {noticeData
+            .filter((post) => {
+              if (searchValue.length > 0) {
+                return post.postTitle.includes(searchValue);
+              }
+              return true;
+            })
+            .map((post) => (
+              <NoticePreview
+                key={post.id}
+                props={post}
+                isManager={isManager}
+                roomId={roomId}
+              />
+            ))}
         </Notice>
       )}
 
