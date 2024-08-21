@@ -54,11 +54,6 @@ export default function Signup() {
 
   const navigate = useNavigate();
 
-  const handlePrev = () => {
-    if (page === 1) return navigate(-1);
-    setPage((prev) => (prev = prev - 1));
-  };
-
   const handleSendCode = async () => {
     try {
       await axios.post(`${baseUrl}/user/create-code`, { email: user.email });
