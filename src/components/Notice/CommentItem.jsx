@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 import CustomModal from '../CustomModal';
 import { deleteNoticeComment } from '../../api/Notice/details';
 
 export const CommentItem = ({ props, onDelete }) => {
+  const [nickname, setNickname] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const modalClose = () => {
     setIsOpen(false);
@@ -29,11 +30,19 @@ export const CommentItem = ({ props, onDelete }) => {
     ],
   };
 
+  useEffect(() => {
+    if (props.commentAuthorNickname === null) {
+      setNickname('(알 수 없음)');
+    } else {
+      setNickname(props.commentAuthorNickname);
+    }
+  }, [props.commentAuthorNickname]);
+
   return (
     <Container>
       <Profile src={props.commentAuthorProfileImage} alt="profile" />
       <Comment>
-        <Nickname>{props.commentAuthorNickname}</Nickname>
+        <Nickname>{nickname}</Nickname>
         <Content>{props.commentBody}</Content>
         <Date>{props.createdAt}</Date>
       </Comment>
