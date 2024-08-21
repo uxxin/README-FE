@@ -11,7 +11,7 @@ export const NoticeItem = ({ props, imgs, preview, isManager, chkActive }) => {
 
   useEffect(() => {
     if (
-      chkActive ||
+      !chkActive ||
       props?.submitState === 'COMPLETE' ||
       props?.submitState === 'PENDING'
     ) {
@@ -86,6 +86,7 @@ const NoticeCheckButton = styled.button`
   line-height: 100%; /* 1rem */
   letter-spacing: -0.02rem;
   margin-left: auto;
+  white-space: nowrap;
 
   &:disabled {
     background: #bdbdbd;
