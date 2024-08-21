@@ -120,9 +120,11 @@ export const MemberListItem = () => {
       <MemberListBox>
         <ButtonContainer>
           <Link to={`/notice/${roomId}/invite`}>
-            <MemberAddBtn>
-              <PlusIcon />
-            </MemberAddBtn>
+            <BtnWrapper>
+              <MemberAddBtn>
+                <PlusIcon />
+              </MemberAddBtn>
+            </BtnWrapper>
           </Link>
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
@@ -146,6 +148,11 @@ export const MemberListItem = () => {
     </Container>
   );
 };
+
+const BtnWrapper = styled.div`
+  width: 2.75rem;
+  height: 2.75rem;
+`;
 
 const ClickBtn = styled.button`
   width: 1.5rem;
@@ -205,22 +212,8 @@ const ButtonText = styled.span`
 `;
 
 const MemberAddBtn = styled.button`
-  width: 2.75rem;
-  height: 2.75rem;
-  margin-right: 0.8rem;
-  padding: 0.625rem;
-  border-radius: 0.5rem;
-  box-sizing: border-box;
-  background: #f4f9ff;
-  border: 0.02rem solid #c9e0fd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MemberAddImgBtn = styled.img`
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 100%;
+  height: 100%;
   margin-right: 0.8rem;
   padding: 0.625rem;
   border-radius: 0.5rem;
@@ -233,7 +226,7 @@ const MemberAddImgBtn = styled.img`
 `;
 
 const TextColor = styled.p`
-  //styleName: Pretendard/bold/20;
+  font-family: 'Pretendard';
   font-size: 20px;
   font-weight: 700;
   line-height: 20px;
@@ -262,7 +255,6 @@ const InputContainer = styled.div`
   background: var(--Primary-Light, #f4f9ff);
 `;
 
-//inputBox
 const SearchInput = styled.input`
   border: none;
   flex: 1;
@@ -272,7 +264,7 @@ const SearchInput = styled.input`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 100%; /* 1.125rem */
+  line-height: 100%;
   letter-spacing: -0.02rem;
   color: #509bf7;
   ::placeholder {
@@ -288,13 +280,4 @@ const MemberNameBtn = styled.img`
   box-sizing: border-box;
   border: 0.02rem solid #dddddd;
   margin-right: 0.8rem;
-`;
-
-const SearchButton = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
-  background: var(--Primary-Light, #f4f9ff);
-  color: #509bf7;
-  border: none;
-  cursor: pointer;
 `;

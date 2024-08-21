@@ -109,9 +109,11 @@ export const MemberListMap = ({ members }) => {
 
       <ButtonContainer>
         <Link to={`/notice/${roomId}/invite`}>
-          <MemberAddBtn>
-            <PlusIcon />
-          </MemberAddBtn>
+          <BtnWrapper>
+            <MemberAddBtn>
+              <PlusIcon />
+            </MemberAddBtn>
+          </BtnWrapper>
         </Link>
         <ButtonText>멤버초대하기</ButtonText>
       </ButtonContainer>
@@ -121,7 +123,7 @@ export const MemberListMap = ({ members }) => {
           <CommonModalContent onClick={(e) => e.stopPropagation()}>
             <TextContainer>
               <ModalText>
-                추방하시겠습니까?{' '}
+                추방하시겠습니까?
                 <InfoText>
                   <br />
                   추방한 유저는 다시 초대가능합니다.
@@ -238,8 +240,13 @@ const ButtonText = styled.span`
   text-align: start;
 `;
 
-const MemberAddBtn = styled.button`
+const BtnWrapper = styled.div`
   width: 2.75rem;
+  height: 2.75rem;
+`;
+
+const MemberAddBtn = styled.button`
+  width: 100%;
   height: 2.75rem;
   margin-right: 0.8rem;
   padding: 0.625rem;
