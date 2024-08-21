@@ -24,7 +24,7 @@ export const NoticeItem = ({ props, imgs, preview, isManager, chkActive }) => {
       <NoticeTitle {...props} preview={preview} isManager={isManager} />
       <NoticeContent>{props?.postBody}</NoticeContent>
       {imgs && imgs.map((img) => <Thumbnail key={img} src={img} />)}
-      {preview && (
+      {!preview && !isManager && (
         <NoticeCheckButton
           disabled={disabled}
           onClick={() => navigate(`/notice/${roomId}/${postId}/solve`)}
