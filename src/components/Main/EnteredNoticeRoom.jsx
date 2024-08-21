@@ -66,7 +66,6 @@ export const EnteredNoticeRoom = () => {
                 <PageNumber>
                   <CurrentPage>{currentPage}</CurrentPage>
                   <Separator>/</Separator>
-                  <TotalPages>{totalPages}</TotalPages>
                   <TotalPages>{totalPages === 0 ? 1 : totalPages}</TotalPages>
                 </PageNumber>
                 <NavButton
