@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { HumanIcon, PlusIcon } from '../../assets/svgs/icons';
+import { GlassBtn, HumanIcon, PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
 import { MemberListMap } from './MemberListMap';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { setKeysCount } from '../../redux/KeySlice';
 import { useParams } from 'react-router-dom';
 import { getMyInfo } from '../../api/Member/memberListCheck';
 import { getMemberList } from '../../api/Member/memberListCheck';
+import { getAdminProfile } from '../../api/Member/memberListCheck';
 
 export const MemberListItem = () => {
   const keysCount = useSelector((state) => state.keys.count);
@@ -43,9 +44,9 @@ export const MemberListItem = () => {
     const fetchMemberList = async () => {
       try {
         const memberData = await getMemberList('', roomId);
-        const adminData = await getMyInfo();
+        const adminData = await getAdminProfile(roomId);
+        console.log('admin의 유저아이디는:', adminData);
 
-        console.log(memberData);
         setState((prevState) => ({
           ...prevState,
           results: memberData.result,
@@ -65,54 +66,52 @@ export const MemberListItem = () => {
     fetchMemberList();
   }, [dispatch, roomId]);
 
-  useEffect(() => {
-    if (
-      debouncedSearch &&
-      debouncedSearch.trim() !== '' &&
-      Array.isArray(state.allMembers)
-    ) {
-      const filteredResults = state.allMembers.filter((member) =>
-        member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase()),
-      );
-      console.log('Filtered results:', filteredResults);
-      setState((prevState) => ({ ...prevState, results: filteredResults }));
-    } else {
-      setState((prevState) => ({ ...prevState, results: state.allMembers }));
-    }
-  }, [debouncedSearch, state.allMembers]);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleSearch = (e) => {
-    setSearchInput((prevState) => ({ ...prevState, search: e.target.value }));
-  };
-
-  /*
-
   const handleSearch = async () => {
     try {
-      const memberData = await getMemberList(searchInput, roomId);
-      const filteredResults = memberData.result;
-      setState((prevState) => ({ ...prevState, results: filteredResults }));
+      if (debouncedSearch && debouncedSearch.trim()) {
+        const filteredResults = state.allMembers.filter((member) =>
+          member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase()),
+        );
+        setState((prevState) => ({
+          ...prevState,
+          results: filteredResults,
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          results: prevState.allMembers,
+        }));
+      }
     } catch (error) {
       console.error('Error searching for members:', error);
     }
-  };
-*/
-  const handleInputChange = (e) => {
-    setSearchInput(e.target.value);
   };
 
   const handleInput = (e) => {
     setState((prevState) => ({ ...prevState, search: e.target.value }));
   };
 
+  const handleKeyUp = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <Container>
       <InputContainer>
-        <SearchInput placeholder={'입력하세요'} onChange={handleInput} />
+        <SearchInput
+          placeholder={'입력하세요'}
+          onChange={handleInput}
+          onKeyUp={handleKeyUp}
+        />
+        <ClickBtn onClick={handleSearch}>
+          <GlassBtn />
+        </ClickBtn>
       </InputContainer>
       <MemberIcon>
         <HumanIcon />
@@ -147,6 +146,14 @@ export const MemberListItem = () => {
     </Container>
   );
 };
+
+const ClickBtn = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
 
 const Container = styled.div`
   max-width: 26.875rem;
