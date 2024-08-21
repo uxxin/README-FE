@@ -24,7 +24,6 @@ export const RecentNotices = () => {
           setNotices(response.result.recentPostList);
           setIsNext(response.result.isNext);
           setTotalPages(response.result.totalPages);
-          console.log(response);
         }
       } catch (error) {
         console.error('Error fetching recent notices:', error);

@@ -24,6 +24,7 @@ export const EnteredNoticeRoom = () => {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
           setTotalPages(response.result.totalPages);
+          console.log(response.result);
         }
       } catch (error) {
         console.error('Error fetching entered rooms:', error);
@@ -66,7 +67,6 @@ export const EnteredNoticeRoom = () => {
                 <PageNumber>
                   <CurrentPage>{currentPage}</CurrentPage>
                   <Separator>/</Separator>
-                  <TotalPages>{totalPages}</TotalPages>
                   <TotalPages>{totalPages === 0 ? 1 : totalPages}</TotalPages>
                 </PageNumber>
                 <NavButton
