@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from 'react';
-import Header from '../../components/common/header';
 import { NoticeRoomProfileEditContainer } from '../../styles/MyPage/style';
 import Image from '../../components/MyPage/image';
 import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
@@ -11,6 +10,7 @@ import {
   PostAxiosInstance,
 } from '../../axios/axios.method';
 import defaultProfileSrc from '../../assets/pngs/default_profile_8.png';
+import { Header } from '../../components/Header';
 
 const NoticeRoomProfileEdit = () => {
   const { state } = useLocation();
@@ -110,7 +110,7 @@ const NoticeRoomProfileEdit = () => {
 
   return (
     <>
-      <Header title="마이페이지" back />
+      <Header title="마이페이지" isNotHome />
       <NoticeRoomProfileEditContainer>
         <section className="image-email">
           <div className="image">
