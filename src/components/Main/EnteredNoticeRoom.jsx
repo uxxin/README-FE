@@ -24,7 +24,6 @@ export const EnteredNoticeRoom = () => {
           setNoticeRooms(response.result.rooms);
           setIsNext(response.result.isNext);
           setTotalPages(response.result.totalPages);
-          console.log(response.result);
         }
       } catch (error) {
         console.error('Error fetching entered rooms:', error);
