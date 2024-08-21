@@ -101,6 +101,10 @@ const Main = () => {
     }
   };
 
+  const handleClick = () => {
+    location.reload();
+  };
+
   useEffect(() => {
     const getNoticeData = async () => {
       try {
@@ -148,6 +152,7 @@ const Main = () => {
         isSearch={true}
         url="/home"
         setSearchValue={setSearchValue}
+        onClick={handleClick}
       />
       {isPenaltyModalOpen && (
         <PenaltyContainer>
