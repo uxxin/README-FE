@@ -42,11 +42,11 @@ const FixedNotice = ({ onDelete }) => {
   return (
     <>
       {notice && (
-        <NoticeContainer onClick={handleNoticeClick}>
+        <NoticeContainer>
           <PinButton>
             <img src={pinIcon} alt="Pin Icon" />
           </PinButton>
-          <NoticeContent>
+          <NoticeContent onClick={handleNoticeClick}>
             <NoticeTitle>{notice.title}</NoticeTitle>
             <NoticeDate>
               <Date>{notice.startDate}</Date>

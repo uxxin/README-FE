@@ -66,26 +66,31 @@ export const OpenedNoticeRoom = () => {
                 if (room.state !== 'DELETED') {
                   navigate(`/notice/${room.id}`);
                 } else {
-                  console.warn('This room is deleted and cannot be accessed.');
+                  console.warn('삭제된 공지방이라 입장이 불가합니다.');
                 }
               }}
             />
           ))}
         </NoticeRooms>
-
-        <Pagination>
-          <NavButton
-            onClick={handlePrevPage}
-            src={prevButtonSvg}
-            alt="Previous"
-          />
-          <PageNumber>
-            <CurrentPage>{currentPage}</CurrentPage>
-            <Separator>/</Separator>
-            <TotalPages>{totalPages}</TotalPages>
-          </PageNumber>
-          <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
-        </Pagination>
+        {noticeRooms.length > 0 && (
+          <Pagination>
+            <NavButton
+              onClick={handlePrevPage}
+              src={prevButtonSvg}
+              alt="Previous"
+            />
+            <PageNumber>
+              <CurrentPage>{currentPage}</CurrentPage>
+              <Separator>/</Separator>
+              <TotalPages>{totalPages === 0 ? 1 : totalPages}</TotalPages>
+            </PageNumber>
+            <NavButton
+              onClick={handleNextPage}
+              src={nextButtonSvg}
+              alt="Next"
+            />
+          </Pagination>
+        )}
       </NoticeRoomsInfo>
     </OpenedNoticeRoomSection>
   );

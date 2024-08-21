@@ -5,7 +5,7 @@ import { getRecentNotice } from '../../api/Main/home';
 import prevButtonSvg from '../../assets/svgs/prev_button.svg';
 import nextButtonSvg from '../../assets/svgs/next_button.svg';
 
-const ITEMS_PER_PAGE = 5; // 한 페이지에 5개씩 표시
+const ITEMS_PER_PAGE = 5;
 
 export const RecentNotices = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +24,7 @@ export const RecentNotices = () => {
           setNotices(response.result.recentPostList);
           setIsNext(response.result.isNext);
           setTotalPages(response.result.totalPages);
+          console.log(response);
         }
       } catch (error) {
         console.error('Error fetching recent notices:', error);
@@ -52,7 +53,6 @@ export const RecentNotices = () => {
     navigate(`/notice/${roomId}/${postId}`);
   };
 
-  // API 결과에 따라 공지사항 리스트를 설정
   const displayedNotices = [
     ...notices,
     ...Array.from({ length: ITEMS_PER_PAGE - notices.length }, () => ({
@@ -91,7 +91,7 @@ export const RecentNotices = () => {
           <PageNumber>
             <CurrentPage>{currentPage}</CurrentPage>
             <Separator>/</Separator>
-            <TotalPages>{totalPages}</TotalPages>
+            <TotalPages>{totalPages === 0 ? 1 : totalPages}</TotalPages>
           </PageNumber>
           <NavButton onClick={handleNextPage} src={nextButtonSvg} alt="Next" />
         </Pagination>
@@ -107,13 +107,13 @@ const RecentNoticesSection = styled.section`
 const RecentTitle = styled.div`
   align-self: stretch;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: 700;
-  line-height: 1.25rem; /* 20px */
-  letter-spacing: -0.025rem; /* -0.4px */
+  line-height: 1.25rem;
+  letter-spacing: -0.025rem;
   margin: 0;
   padding: 0;
-  margin-bottom: 0.625rem; /* 10px */
+  margin-bottom: 0.625rem;
 `;
 
 const NoticesList = styled.div`
@@ -125,7 +125,7 @@ const NoticesList = styled.div`
 
 const NoticeItem = styled.div`
   display: flex;
-  padding: 0.75rem 0; /* 12px */
+  padding: 0.75rem 0;
   align-items: center;
   align-self: stretch;
   border-bottom: 0.0208rem solid var(--Text-caption, #888);
