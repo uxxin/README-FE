@@ -72,6 +72,7 @@ const ImgWrapper = styled.div`
 `;
 
 const ImgContainer = styled.img`
+  width: 100%;
   height: 18.75rem;
   object-fit: cover;
   border-radius: 0.9375rem;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { HumanIcon, PlusIcon } from '../../assets/svgs/icons';
+import { GlassBtn, HumanIcon, PlusIcon } from '../../assets/svgs/icons';
 import { Link } from 'react-router-dom';
 import { MemberListMap } from './MemberListMap';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { setKeysCount } from '../../redux/KeySlice';
 import { useParams } from 'react-router-dom';
 import { getMyInfo } from '../../api/Member/memberListCheck';
 import { getMemberList } from '../../api/Member/memberListCheck';
+import { getAdminProfile } from '../../api/Member/memberListCheck';
 
 export const MemberListItem = () => {
   const keysCount = useSelector((state) => state.keys.count);
@@ -43,9 +44,9 @@ export const MemberListItem = () => {
     const fetchMemberList = async () => {
       try {
         const memberData = await getMemberList('', roomId);
-        const adminData = await getMyInfo();
+        const adminData = await getAdminProfile(roomId);
+        console.log('admin의 유저아이디는:', adminData);
 
-        console.log(memberData);
         setState((prevState) => ({
           ...prevState,
           results: memberData.result,
@@ -65,54 +66,52 @@ export const MemberListItem = () => {
     fetchMemberList();
   }, [dispatch, roomId]);
 
-  useEffect(() => {
-    if (
-      debouncedSearch &&
-      debouncedSearch.trim() !== '' &&
-      Array.isArray(state.allMembers)
-    ) {
-      const filteredResults = state.allMembers.filter((member) =>
-        member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase()),
-      );
-      console.log('Filtered results:', filteredResults);
-      setState((prevState) => ({ ...prevState, results: filteredResults }));
-    } else {
-      setState((prevState) => ({ ...prevState, results: state.allMembers }));
-    }
-  }, [debouncedSearch, state.allMembers]);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleSearch = (e) => {
-    setSearchInput((prevState) => ({ ...prevState, search: e.target.value }));
-  };
-
-  /*
-
   const handleSearch = async () => {
     try {
-      const memberData = await getMemberList(searchInput, roomId);
-      const filteredResults = memberData.result;
-      setState((prevState) => ({ ...prevState, results: filteredResults }));
+      if (debouncedSearch && debouncedSearch.trim()) {
+        const filteredResults = state.allMembers.filter((member) =>
+          member.nickname.toLowerCase().includes(debouncedSearch.toLowerCase()),
+        );
+        setState((prevState) => ({
+          ...prevState,
+          results: filteredResults,
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          results: prevState.allMembers,
+        }));
+      }
     } catch (error) {
       console.error('Error searching for members:', error);
     }
-  };
-*/
-  const handleInputChange = (e) => {
-    setSearchInput(e.target.value);
   };
 
   const handleInput = (e) => {
     setState((prevState) => ({ ...prevState, search: e.target.value }));
   };
 
+  const handleKeyUp = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <Container>
       <InputContainer>
-        <SearchInput placeholder={'입력하세요'} onChange={handleInput} />
+        <SearchInput
+          placeholder={'입력하세요'}
+          onChange={handleInput}
+          onKeyUp={handleKeyUp}
+        />
+        <ClickBtn onClick={handleSearch}>
+          <GlassBtn />
+        </ClickBtn>
       </InputContainer>
       <MemberIcon>
         <HumanIcon />
@@ -121,9 +120,11 @@ export const MemberListItem = () => {
       <MemberListBox>
         <ButtonContainer>
           <Link to={`/notice/${roomId}/invite`}>
-            <MemberAddBtn>
-              <PlusIcon />
-            </MemberAddBtn>
+            <BtnWrapper>
+              <MemberAddBtn>
+                <PlusIcon />
+              </MemberAddBtn>
+            </BtnWrapper>
           </Link>
           <ButtonText>멤버초대하기</ButtonText>
         </ButtonContainer>
@@ -147,6 +148,19 @@ export const MemberListItem = () => {
     </Container>
   );
 };
+
+const BtnWrapper = styled.div`
+  width: 2.75rem;
+  height: 2.75rem;
+`;
+
+const ClickBtn = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
 
 const Container = styled.div`
   max-width: 26.875rem;
@@ -198,22 +212,8 @@ const ButtonText = styled.span`
 `;
 
 const MemberAddBtn = styled.button`
-  width: 2.75rem;
-  height: 2.75rem;
-  margin-right: 0.8rem;
-  padding: 0.625rem;
-  border-radius: 0.5rem;
-  box-sizing: border-box;
-  background: #f4f9ff;
-  border: 0.02rem solid #c9e0fd;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MemberAddImgBtn = styled.img`
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 100%;
+  height: 100%;
   margin-right: 0.8rem;
   padding: 0.625rem;
   border-radius: 0.5rem;
@@ -226,7 +226,7 @@ const MemberAddImgBtn = styled.img`
 `;
 
 const TextColor = styled.p`
-  //styleName: Pretendard/bold/20;
+  font-family: 'Pretendard';
   font-size: 20px;
   font-weight: 700;
   line-height: 20px;
@@ -255,7 +255,6 @@ const InputContainer = styled.div`
   background: var(--Primary-Light, #f4f9ff);
 `;
 
-//inputBox
 const SearchInput = styled.input`
   border: none;
   flex: 1;
@@ -265,7 +264,7 @@ const SearchInput = styled.input`
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 100%; /* 1.125rem */
+  line-height: 100%;
   letter-spacing: -0.02rem;
   color: #509bf7;
   ::placeholder {
@@ -281,13 +280,4 @@ const MemberNameBtn = styled.img`
   box-sizing: border-box;
   border: 0.02rem solid #dddddd;
   margin-right: 0.8rem;
-`;
-
-const SearchButton = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
-  background: var(--Primary-Light, #f4f9ff);
-  color: #509bf7;
-  border: none;
-  cursor: pointer;
 `;

@@ -74,3 +74,13 @@ export const patchSubmitRequest = async ({ submitId, type }) => {
   console.log('거절할지 수락할지 정하기:', response.data);
   return response.data;
 };
+
+export const getAdminProfile = async ({ roomId, userId }) => {
+  const response = await GetAxiosInstance(`/admin/profile`, {
+    params: {
+      roomId: roomId,
+      userId: userId,
+    },
+  });
+  return response.data;
+};
