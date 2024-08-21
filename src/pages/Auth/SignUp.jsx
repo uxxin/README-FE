@@ -130,7 +130,7 @@ export default function Signup() {
               transition: 'all 0.5s',
               height: '0.25rem',
               backgroundColor: 'var(--color-primary-normal)',
-              marginTop: '2.75rem',
+              marginBottom: '3.75rem',
             }}
           />
         </>
