@@ -24,9 +24,7 @@ export const NoticeItem = ({ props, imgs, preview, isManager, chkActive }) => {
       <NoticeTitle {...props} preview={preview} isManager={isManager} />
       <NoticeContent>{props?.postBody}</NoticeContent>
       {imgs && imgs.map((img) => <Thumbnail key={img} src={img} />)}
-      {preview ? (
-        <></>
-      ) : (
+      {preview && (
         <NoticeCheckButton
           disabled={disabled}
           onClick={() => navigate(`/notice/${roomId}/${postId}/solve`)}
@@ -55,8 +53,10 @@ const NoticeContent = styled.div`
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   font-size: 1rem;
   font-weight: 500;
-  line-height: 120%; /* 1.2rem */
+  line-height: 120%;
   letter-spacing: -0.02rem;
+  white-space: normal;
+  overflow-wrap: break-word;
 `;
 
 const Thumbnail = styled.img`
