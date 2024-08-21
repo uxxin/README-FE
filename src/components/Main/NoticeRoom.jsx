@@ -21,7 +21,7 @@ const NoticeRoom = ({ room, onClick }) => {
 
 const Container = styled.div`
   display: flex;
-  width: 30.5%;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;

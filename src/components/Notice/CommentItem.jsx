@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ShowmoreIcon from '../../assets/svgs/show_more_icon.svg';
 import CustomModal from '../CustomModal';
 import { deleteNoticeComment } from '../../api/Notice/details';
 
 export const CommentItem = ({ props, onDelete }) => {
+  const [profileImg, setProfileImg] = useState('');
+  const [nickname, setNickname] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const modalClose = () => {
     setIsOpen(false);
@@ -29,11 +31,29 @@ export const CommentItem = ({ props, onDelete }) => {
     ],
   };
 
+  useEffect(() => {
+    if (props.commentAuthorProfileImage === null) {
+      setProfileImg(
+        'https://s3.ap-northeast-2.amazonaws.com/read.me-bucket/readme_default.png',
+      );
+    } else {
+      setProfileImg(props.commentAuthorProfileImage);
+    }
+  });
+
+  useEffect(() => {
+    if (props.commentAuthorNickname === null) {
+      setNickname('(알 수 없음)');
+    } else {
+      setNickname(props.commentAuthorNickname);
+    }
+  }, [props.commentAuthorNickname]);
+
   return (
     <Container>
-      <Profile src={props.commentAuthorProfileImage} alt="profile" />
+      <Profile src={profileImg} alt="profileImg" />
       <Comment>
-        <Nickname>{props.commentAuthorNickname}</Nickname>
+        <Nickname>{nickname}</Nickname>
         <Content>{props.commentBody}</Content>
         <Date>{props.createdAt}</Date>
       </Comment>

@@ -5,34 +5,34 @@ import { SlideButton, CheckButton, XButton } from '../../../assets/svgs/icons';
 import { useDispatch } from 'react-redux';
 import { acceptance, rejection } from '../../../redux/CheckSlice';
 import { useSelector } from 'react-redux';
-import { getSubmitRequest } from '../../../api/Member/memberListCheck';
+import {
+  getSubmitRequest,
+  patchSubmitRequest,
+} from '../../../api/Member/memberListCheck';
+import { useParams } from 'react-router-dom';
+import { PrevPageBtn } from '../../../assets/svgs/icons';
 
-
-
-export const CheckListMap = ({nickname, profileImage, images, content,submitId}) => {
- 
+export const CheckListMap = ({
+  nickname,
+  profileImage,
+  images,
+  content,
+  submitId,
+}) => {
   const dispatch = useDispatch();
   const requiredList = useSelector((state) => state.check.requiredList);
   const keysCount = useSelector((state) => state.check.count);
- 
+
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const pageLimit = 1;
-
-
-  const roomId = 8;
+  const { roomId } = useParams();
 
   useEffect(() => {
-    setTotalPage(images);
-  }, [images]);
-
-
-  useEffect(() => {
-    
     if (Array.isArray(images)) {
       setTotalPage(images.length);
     } else {
-      setTotalPage(1); 
+      setTotalPage(1);
     }
   }, [images]);
 
@@ -40,98 +40,96 @@ export const CheckListMap = ({nickname, profileImage, images, content,submitId})
   const prevPage = () => setPage(page > 1 ? page - 1 : page);
   const nextPage = () => setPage(page < totalPage ? page + 1 : page);
 
- 
-  const currentImage = (Array.isArray(images) && images.length > 0) 
-    ? images[page - 1] 
-    : '/src/assets/pngs/defaultprofileimage.png';
+  const currentImage =
+    Array.isArray(images) && images.length > 0
+      ? images[page - 1]
+      : '/src/assets/pngs/defaultprofileimage.png';
 
-    const handleAcceptance = async () => {
-      try {
-        console.log('수락한 게시글 id', nickname);
-        const acceptedMember = await getSubmitRequest("accept", roomId);
-        dispatch(acceptance(nickname));
-        console.log("수락된 멤버",acceptedMember)
-      } catch (error) {
-        console.error('Error handling acceptance:', error);
-      }
-    };
-
-  const handleRejection = async () => {
-    try{
-      console.log('거절할 게시글', nickname);
-      const deniedMember = await getSubmitRequest("reject", roomId);
-      console.log("거절된 멤버",deniedMember)
-      dispatch(rejection(nickname));
-
-    }catch (error) {
+  const handleAcceptance = async () => {
+    try {
+      const acceptedMember = await patchSubmitRequest({
+        type: 'accept',
+        submitId: submitId,
+      });
+      dispatch(acceptance(submitId));
+    } catch (error) {
       console.error('Error handling acceptance:', error);
     }
- 
   };
 
-  const handlePagination = () => {
-    currentPage = currentPage+1;
-  }
+  const handleRejection = async () => {
+    try {
+      const deniedMember = await patchSubmitRequest({
+        type: 'reject',
+        submitId: submitId,
+      });
+      dispatch(rejection(submitId));
+    } catch (error) {
+      console.error('Error handling acceptance:', error);
+    }
+  };
 
   if (!requiredList.some((item) => item.nickname === nickname)) {
-    return null; 
+    return null;
   }
 
-
   return (
- 
-      <TotalContainer>
-        <BorderContainer>
+    <TotalContainer>
+      <BorderContainer>
         <ProfileContainer>
-          {profileImage===null?(
+          {profileImage === null ? (
             <>
-            <ImgContainer  src='/src/assets/pngs/defaultprofileimage.png'/>
+              <ImgContainer src="/src/assets/pngs/defaultprofileimage.png" />
             </>
-          ):(
+          ) : (
             <>
-            <ImgContainer src={profileImage} alt="Profile" />
+              <ImgContainer src={profileImage} alt="Profile" />
             </>
           )}
-    
-        <TextContainer>
-          <ProfileName>{nickname}</ProfileName>
-          <ProfileInfo>{content}</ProfileInfo>
-        </TextContainer>
-      </ProfileContainer>
-      <ContentContainer>
-      <StyledImage src={currentImage} alt="Content" />
-        <NextPageBtn onClick={nextPage}>
-          <SlideButton />
-        </NextPageBtn>
-      </ContentContainer>
-      <SecondButtonContainer>
-        <YesButton onClick={handleAcceptance}>
-          <CheckButton />
-          수락
-        </YesButton>
-        <NoButton onClick={handleRejection}>
-          <XButton />
-          거절
-        </NoButton>
-      </SecondButtonContainer>
+
+          <TextContainer>
+            <ProfileName>{nickname}</ProfileName>
+            <ProfileInfo>{content}</ProfileInfo>
+          </TextContainer>
+        </ProfileContainer>
+        <ContentContainer>
+          <StyledImage src={currentImage} alt="Content" />
+          {page > 1 && (
+            <PrevPageContainer onClick={prevPage}>
+              <PrevPageBtn />
+            </PrevPageContainer>
+          )}
+          {page < totalPage && (
+            <NextPageBtn onClick={nextPage}>
+              <SlideButton />
+            </NextPageBtn>
+          )}
+        </ContentContainer>
+        <SecondButtonContainer>
+          <YesButton onClick={handleAcceptance}>
+            <CheckButton />
+            수락
+          </YesButton>
+          <NoButton onClick={handleRejection}>
+            <XButton />
+            거절
+          </NoButton>
+        </SecondButtonContainer>
       </BorderContainer>
-      </TotalContainer>
+    </TotalContainer>
   );
 };
-
-
 
 const TotalContainer = styled.div`
   width: 100%;
   margin-bottom: 0.625rem;
-`
+`;
 
 const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex: 1 0 0;
-  
 `;
 
 const TextContainer = styled.div`
@@ -170,34 +168,32 @@ const ImgContainer = styled.img`
 
 const ContentContainer = styled.div`
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   height: 12.5rem;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   display: flex;
-  position: relative; 
+  position: relative;
   margin-bottom: 0.625rem;
   margin-top: 0.625rem;
 `;
 
 const NextPageBtn = styled.button`
-  width: 2rem; 
-  height: 2rem; 
-  position: absolute; 
-  top: 50%; 
-  right: 0.625rem; 
-  transform: translateY(-50%); 
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  right: 0.625rem;
+  transform: translateY(-50%);
   padding: 0;
   gap: 0;
-  border-radius: 50%; 
-  opacity: 0.8; 
+  border-radius: 50%;
+  opacity: 0.8;
   border: none;
   background-color: transparent;
   cursor: pointer;
-  z-index: 10; 
+  z-index: 10;
 `;
-
-
 
 const SecondButtonContainer = styled.div`
   display: flex;
@@ -234,7 +230,6 @@ const NoButton = styled.button`
   border-radius: 0rem 0.5rem 0.5rem 0rem;
 `;
 
-
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
@@ -243,5 +238,22 @@ const StyledImage = styled.img`
 `;
 
 const BorderContainer = styled.div`
-    border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
-`
+  border-bottom: 0.33px solid var(--Primary-light-active, #c9e0fd);
+`;
+
+const PrevPageContainer = styled.button`
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 0.625rem;
+  transform: translateY(-50%);
+  padding: 0;
+  gap: 0;
+  border-radius: 50%;
+  opacity: 0.8;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 10;
+`;

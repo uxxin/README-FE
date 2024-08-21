@@ -9,21 +9,26 @@ import {
   getNoticeComments,
   getNoticedetails,
 } from '../../api/Notice/details';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const NoticeDetails = () => {
-  const { postId } = useParams();
+  const navigate = useNavigate();
+  const { roomId, postId } = useParams();
   const [width, setWidth] = useState(0);
-  const [post, setPost] = useState();
-  const [imageURLs, setImageURLs] = useState([]);
+  const [res, setRes] = useState({
+    roomName: '',
+    isRoomAdmin: true,
+    isJoinedBeforeStartDate: true,
+    post: [],
+    imageURLs: [],
+  });
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
 
   const getNoticeDetailData = async () => {
     try {
       const response = await getNoticedetails(postId);
-      setPost(response.data.result.post[0]);
-      setImageURLs(response.data.result.imageURLs);
+      setRes(response.data.result);
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +44,10 @@ const NoticeDetails = () => {
   };
 
   const handleComment = async () => {
+    if (comment.trim() === '') {
+      return;
+    }
+
     try {
       await createNoticeComment(postId, comment);
       setComment('');
@@ -59,6 +68,10 @@ const NoticeDetails = () => {
     await Promise.all([getNoticeDetailData(), getNoticeCommentData()]);
   };
 
+  const handleClick = () => {
+    navigate(`/notice/${roomId}`);
+  };
+
   useEffect(() => {
     setWidth(document.querySelector('.container')?.clientWidth);
   }, []);
@@ -69,9 +82,14 @@ const NoticeDetails = () => {
 
   return (
     <div className="container">
-      <Header title="공지방 이름" isSearch={false} />
+      <Header title={res.roomName} isSearch={false} onClick={handleClick} />
       <Container>
-        <NoticeItem props={post} imgs={imageURLs} />
+        <NoticeItem
+          props={res.post[0]}
+          imgs={res.imageURLs}
+          isManager={res.isRoomAdmin}
+          chkActive={res.isJoinedBeforeStartDate}
+        />
 
         <CommentList>
           {comments.length > 0 ? (

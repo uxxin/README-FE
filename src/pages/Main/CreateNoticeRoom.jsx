@@ -15,7 +15,6 @@ export const CreateNoticeRoom = () => {
   const navigate = useNavigate();
 
   const handleCreateClick = async () => {
-    navigate('/create-notice-room/success');
     if (isFormValid) {
       const RoomData = {
         room_image: image,
@@ -36,6 +35,15 @@ export const CreateNoticeRoom = () => {
 
   const isFormValid =
     image && leaderName && roomName && password && penaltyCount;
+
+  const handlePenaltyCountChange = (e) => {
+    const value = e.target.value;
+    if (value <= 10) {
+      setPenaltyCount(value);
+    } else {
+      alert('페널티 개수는 최대 10개까지 설정 가능합니다.');
+    }
+  };
 
   return (
     <div
@@ -58,7 +66,7 @@ export const CreateNoticeRoom = () => {
           onLeaderNameChange={(e) => setLeaderName(e.target.value)}
           onRoomNameChange={(e) => setRoomName(e.target.value)}
           onPasswordChange={(e) => setPassword(e.target.value)}
-          onPenaltyCountChange={(e) => setPenaltyCount(e.target.value)}
+          onPenaltyCountChange={handlePenaltyCountChange} // 변경된 부분
         />
       </div>
       <ButtonContainer>

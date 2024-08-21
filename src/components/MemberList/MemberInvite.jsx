@@ -25,6 +25,7 @@ export const MemberInvite = () => {
       await navigator.clipboard.writeText(
         `${roomBaseUrl}/notice/entry/${invite.room_invite_url}`,
       );
+      alert('공지방 url 복사 완료');
     } catch (err) {
       console.error(err);
     }
@@ -68,7 +69,7 @@ export const MemberInvite = () => {
             <div className="infos">
               <span className="bold-16 url">초대 URL</span>
               <span className="regular-12 invite-url">
-                {roomBaseUrl}/{invite.room_invite_url}
+                {roomBaseUrl}/notice/entry/{invite.room_invite_url}
               </span>
               <button onClick={handleCopyClipBoard}>
                 <CopyIcon />
@@ -161,6 +162,7 @@ const Container = styled.section`
         button {
           border: none;
           background-color: transparent;
+          margin-left: auto;
         }
       }
     }

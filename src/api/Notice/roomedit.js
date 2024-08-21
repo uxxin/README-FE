@@ -1,8 +1,12 @@
-import { PatchAxiosInstance, GetAxiosInstance } from '../../axios/axios.method';
+import {
+  PatchAxiosInstance,
+  GetAxiosInstance,
+  DeleteAxiosInstance,
+} from '../../axios/axios.method';
 
 //공지방 삭제
 export const deleteNoticeRoom = async (roomId) => {
-  const response = await PatchAxiosInstance(`/admin/rooms/${roomId}`, {
+  const response = await DeleteAxiosInstance(`/admin/rooms/${roomId}`, {
     roomId,
   });
 

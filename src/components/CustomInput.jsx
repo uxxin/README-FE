@@ -43,12 +43,12 @@ const Input = styled.input`
   flex: 1;
   outline: none;
   background: none;
-  font-family: 'Pretendard';
   font-size: 1.125rem;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
   color: #509bf7;
+  width: 100%;
 `;
 
 const CharCount = styled.span`

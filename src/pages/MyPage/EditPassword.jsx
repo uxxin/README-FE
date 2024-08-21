@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/common/header';
 import { EditPasswordContainer } from '../../styles/MyPage/style';
 import Input from '../../components/common/input';
 import useDebounce from '../../hooks/use-debounce';
@@ -9,6 +8,7 @@ import {
   PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../axios/axios.method';
+import { Header } from '../../components/Header';
 
 const EditPassword = () => {
   const [password, setPassword] = useState({
@@ -36,7 +36,6 @@ const EditPassword = () => {
 
   const handleUpdatePassword = async () => {
     try {
-      // 비밀번호 변경 API 호출
       await PatchAxiosInstance('/user/password', { password: password.new });
       navigate(-1);
     } catch (err) {
@@ -48,8 +47,6 @@ const EditPassword = () => {
     debouncedCurrentPassword.length > 0 &&
       (async () => {
         try {
-          // 비밀번호 확인 API 호출
-          // /user/password
           await PostAxiosInstance('/user/password', {
             password: debouncedCurrentPassword,
           });
@@ -62,7 +59,7 @@ const EditPassword = () => {
   }, [debouncedCurrentPassword]);
   return (
     <>
-      <Header title="마이페이지" back />
+      <Header title="마이페이지" isNotHome />
       <EditPasswordContainer>
         <section className="input-container">
           <Input

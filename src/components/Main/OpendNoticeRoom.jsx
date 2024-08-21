@@ -20,7 +20,6 @@ export const OpenedNoticeRoom = () => {
     (async () => {
       try {
         const response = await getOpenedRoom(currentPage, ITEMS_PER_PAGE);
-        console.log(response);
 
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
@@ -63,7 +62,13 @@ export const OpenedNoticeRoom = () => {
             <NoticeRoom
               key={room.id}
               room={room}
-              onClick={() => navigate(`/notice/${room.id}`)}
+              onClick={() => {
+                if (room.state !== 'DELETED') {
+                  navigate(`/notice/${room.id}`);
+                } else {
+                  console.warn('삭제된 공지방이라 입장이 불가합니다.');
+                }
+              }}
             />
           ))}
         </NoticeRooms>
@@ -77,7 +82,7 @@ export const OpenedNoticeRoom = () => {
             <PageNumber>
               <CurrentPage>{currentPage}</CurrentPage>
               <Separator>/</Separator>
-              <TotalPages>{totalPages}</TotalPages>
+              <TotalPages>{totalPages === 0 ? 1 : totalPages}</TotalPages>
             </PageNumber>
             <NavButton
               onClick={handleNextPage}
@@ -101,6 +106,7 @@ const TitleContainer = styled.div`
 `;
 
 const NoticeRoomsInfo = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,13 +136,10 @@ const OpenedNoticeRoomSection = styled.section`
 `;
 
 const NoticeRooms = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.8125rem;
-  align-items: flex-start;
-  align-content: flex-start;
-  align-self: stretch;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.8125rem;
 `;
 
 const AddButtonImage = styled.img`
@@ -146,6 +149,7 @@ const AddButtonImage = styled.img`
 `;
 
 const Pagination = styled.div`
+  width: 100%;
   display: flex;
   padding: 0.5rem 0; /* 8px */
   justify-content: center;

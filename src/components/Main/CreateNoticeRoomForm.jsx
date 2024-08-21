@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import CustomInput from '../../components/CustomInput';
 import toAlbumBtnIcon from '../../assets/svgs/albumbutton.svg';
 import { postNoticeRoomImage } from '../../api/Main/createnoticeroom';
+import questionIcon from '../../assets/svgs/question_icon.svg';
 
 const CreateNoticeRoomForm = ({
   leaderName,
@@ -16,6 +17,8 @@ const CreateNoticeRoomForm = ({
   onPenaltyCountChange,
   onImageChange,
 }) => {
+  const [isTooltipVisible, setTooltipVisible] = useState(false);
+
   const handleAlbumClick = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -30,7 +33,6 @@ const CreateNoticeRoomForm = ({
         console.log('서버 응답: ', response);
         const imageUrl = response.result.images;
         if (imageUrl) {
-          console.log('이미지 업로드 성공:', imageUrl);
           onImageChange(imageUrl);
         } else {
           console.error('이미지 URL이 응답에 포함되어 있지 않음');
@@ -40,6 +42,14 @@ const CreateNoticeRoomForm = ({
       }
     };
     input.click();
+  };
+
+  const toggleTooltip = () => {
+    setTooltipVisible(!isTooltipVisible);
+  };
+
+  const closeTooltip = () => {
+    setTooltipVisible(false);
   };
 
   return (
@@ -52,7 +62,12 @@ const CreateNoticeRoomForm = ({
       </ImageContainer>
       <FormContainer>
         <Section>
-          <SectionTitle>단체 정보</SectionTitle>
+          <SectionTitle>
+            단체 정보
+            <QuestionIcon onClick={toggleTooltip}>
+              <img src={questionIcon} alt="Question Icon" />
+            </QuestionIcon>
+          </SectionTitle>
           <CustomInput
             placeholder="단체 대표자 이름"
             value={leaderName}
@@ -78,6 +93,20 @@ const CreateNoticeRoomForm = ({
           />
         </Section>
       </FormContainer>
+
+      {isTooltipVisible && (
+        <TooltipOverlay onClick={closeTooltip}>
+          <Tooltip>
+            <div>
+              패널티 개수는 최대 <strong>10개</strong>까지 설정 가능합니다.
+            </div>
+            <div>
+              설정한 개수 이상으로 페널티를 받으면, 해당 팀원은{' '}
+              <strong>퇴장</strong> 처리됩니다.
+            </div>
+          </Tooltip>
+        </TooltipOverlay>
+      )}
     </Container>
   );
 };
@@ -93,6 +122,7 @@ const ImageContainer = styled.div`
   justify-content: center;
   position: relative;
   margin-bottom: 2rem;
+  object-fit: cover;
 `;
 
 const RoomImage = styled.div`
@@ -129,11 +159,47 @@ const Section = styled.div`
 `;
 
 const SectionTitle = styled.div`
+  display: flex;
   color: var(--Text-default, var(--Grayscale-Gray7, #222));
   font-size: 1.125rem;
   font-weight: 700;
   line-height: 100%;
   letter-spacing: -0.0225rem;
+`;
+
+const QuestionIcon = styled.div`
+  margin-left: 0.5rem;
+  cursor: pointer;
+`;
+
+const TooltipOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+`;
+
+const Tooltip = styled.div`
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: #f3f3f3;
+  color: v #222;
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 90%; /* 0.5625rem */
+  letter-spacing: -0.0125rem;
+  strong {
+    font-weight: 700;
+  }
+  flex-direction: column;
 `;
 
 export default CreateNoticeRoomForm;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as BackButton } from '../assets/svgs/back_button.svg';
 import { ReactComponent as SearchButton } from '../assets/svgs/search_button.svg';
+import { ReactComponent as HomeIcon } from '../assets/svgs/homeicon.svg';
 import CloseButton from '../assets/svgs/close_button.svg';
 
 export const Header = (props) => {
@@ -16,7 +17,7 @@ export const Header = (props) => {
 
   const [isSearchMode, setIsSearchMode] = useState(false);
   const navigate = useNavigate();
-
+  const bodyWidth = document.body.clientWidth;
   const handleLeftButtonClick = (event) => {
     event.stopPropagation();
     {
@@ -36,6 +37,14 @@ export const Header = (props) => {
     event.stopPropagation();
   };
 
+  const handleSearchInput = (event) => {
+    props.setSearchValue(event.target.value);
+  };
+
+  const handleHomeButton = () => {
+    navigate('/home');
+  };
+
   useEffect(() => {
     document.body.addEventListener('click', handleBodyClick);
     return () => {
@@ -46,17 +55,20 @@ export const Header = (props) => {
   return (
     <>
       {isSearchMode ? (
-        <SearchContainer onClick={handleContainerClick}>
+        <SearchContainer bodyWidth={bodyWidth} onClick={handleContainerClick}>
           <StyledBackButton
             src={BackButton}
             onClick={() => setIsSearchMode(false)}
             fill="#509BF7"
-          ></StyledBackButton>
-          <InputText placeholder="검색어를 입력하세요" />
+          />
+          <InputText
+            placeholder="검색어를 입력하세요"
+            onChange={handleSearchInput}
+          />
           <StyledSearchButton src={SearchButton} fill="#509BF7" />
         </SearchContainer>
       ) : (
-        <Container onClick={handleContainerClick}>
+        <Container bodyWidth={bodyWidth} onClick={handleContainerClick}>
           <LeftButtonWrapper onClick={handleLeftButtonClick}>
             {props.write ? (
               <StyledCloseButton src={CloseButton} />
@@ -64,13 +76,19 @@ export const Header = (props) => {
               <StyledBackButton fill="#222222" />
             )}
           </LeftButtonWrapper>
-          <Title>{props.title}</Title>
+          <Title onClick={props.onClick}>{props.title}</Title>
           {props.isSearch ? (
             <RightButtonWrapper onClick={handleSearchButtonClick}>
               <StyledSearchButton fill="#222222" />
             </RightButtonWrapper>
-          ) : (
+          ) : props.isNotHome ? (
             <RightButtonWrapper />
+          ) : (
+            <RightButtonWrapper>
+              <HomeButton onClick={handleHomeButton}>
+                <HomeIcon />
+              </HomeButton>
+            </RightButtonWrapper>
           )}
         </Container>
       )}
@@ -79,14 +97,17 @@ export const Header = (props) => {
 };
 
 const Container = styled.header`
+  width: ${(props) => props.bodyWidth + 'px'};
   display: flex;
   height: 2.75rem;
   padding: 0.625rem;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: fixed;
+  top: 0;
   background: var(--Basic-White, #fff);
   box-sizing: border-box;
+  z-index: 1000;
 `;
 
 const LeftButtonWrapper = styled.div`
@@ -129,6 +150,9 @@ const StyledSearchButton = styled(SearchButton)`
 `;
 
 const SearchContainer = styled.div`
+  width: ${(props) => props.bodyWidth + 'px'};
+  position: fixed;
+  top: 0;
   display: flex;
   height: 2.75rem;
   padding: 0.75rem 0.62rem;
@@ -140,6 +164,7 @@ const SearchContainer = styled.div`
   border: 0.33px solid var(--Blue-light-active, #c9e0fd);
   background: var(--Blue-light, #f4f9ff);
   box-sizing: border-box;
+  z-index: 1000;
 `;
 
 const InputText = styled.input`
@@ -161,4 +186,12 @@ const InputText = styled.input`
     color: var(--Text-default, var(--Grayscale-Gray7, #222));
     outline: none;
   }
+`;
+
+const HomeButton = styled.button`
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
 `;

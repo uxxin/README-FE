@@ -19,7 +19,6 @@ export const EnteredNoticeRoom = () => {
     (async () => {
       try {
         const response = await getEnteredRoom(currentPage, ITEMS_PER_PAGE);
-        console.log(response);
 
         if (response.isSuccess) {
           setNoticeRooms(response.result.rooms);
@@ -42,19 +41,14 @@ export const EnteredNoticeRoom = () => {
     }
   };
 
-  const currentNotices = noticeRooms.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
-
   return (
     <EnteredNoticeRoomSection>
       <EnteredTitle>입장한 공지방</EnteredTitle>
       <NoticeRoomsInfo>
-        {currentNotices.length > 0 ? (
+        {noticeRooms.length > 0 ? (
           <>
             <NoticeRooms>
-              {currentNotices.map((room) => (
+              {noticeRooms.map((room) => (
                 <NoticeRoom
                   key={room.id}
                   room={room}
@@ -72,7 +66,7 @@ export const EnteredNoticeRoom = () => {
                 <PageNumber>
                   <CurrentPage>{currentPage}</CurrentPage>
                   <Separator>/</Separator>
-                  <TotalPages>{totalPages}</TotalPages>
+                  <TotalPages>{totalPages === 0 ? 1 : totalPages}</TotalPages>
                 </PageNumber>
                 <NavButton
                   onClick={handleNextPage}
@@ -129,18 +123,14 @@ const EnteredNoticeRoomSection = styled.section`
 `;
 
 const NoticeRooms = styled.div`
-  display: flex;
-  align-items: flex-start;
-  align-content: flex-start;
-  gap: 0.8125rem;
-  align-self: stretch;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.8125rem;
 `;
 
 const NoNoticesBox = styled.div`
   display: flex;
-  width: 20%;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 0.5rem;
@@ -157,6 +147,7 @@ const NoNoticesText = styled.div`
   font-weight: 400;
   line-height: 100%; /* 0.75rem */
   letter-spacing: -0.015rem;
+  width: 100%;
 `;
 
 const Pagination = styled.div`

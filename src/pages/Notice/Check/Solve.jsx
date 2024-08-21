@@ -114,6 +114,15 @@ const Solve = () => {
     getSubmit();
   }, []);
 
+  useEffect(() => {
+    if (isResult === true) document.body.style.marginTop = '0';
+    else document.body.style.marginTop = '2.75rem';
+
+    return () => {
+      document.body.style.marginTop = '2.75rem';
+    };
+  }, [isResult]);
+
   return (
     <>
       {!isResult ? (
@@ -438,9 +447,6 @@ const OthersContainer = styled.div`
 `;
 
 const MaxLetterCount = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   font-size: 0.75rem;
   font-weight: 400;
@@ -449,7 +455,9 @@ const MaxLetterCount = styled.div`
 `;
 
 const OthersInputContainer = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 const ResultContainer = styled.div`

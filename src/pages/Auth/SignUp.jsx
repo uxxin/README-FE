@@ -1,4 +1,3 @@
-import Header from '../../components/common/header';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -9,6 +8,7 @@ import {
   CompleteStep,
 } from '../../components/Auth/signup';
 import axios from 'axios';
+import { Header } from '../../components/Header';
 
 export default function Signup() {
   const [width, setWidth] = useState(0);
@@ -53,11 +53,6 @@ export default function Signup() {
   };
 
   const navigate = useNavigate();
-
-  const handlePrev = () => {
-    if (page === 1) return navigate(-1);
-    setPage((prev) => (prev = prev - 1));
-  };
 
   const handleSendCode = async () => {
     try {
@@ -123,14 +118,14 @@ export default function Signup() {
     <>
       {page < 5 && (
         <>
-          <Header title="회원가입" back backFun={handlePrev} />
+          <Header title="회원가입" isNotHome />
           <div
             style={{
               width: `${(width * page) / 4 / 16}rem`,
               transition: 'all 0.5s',
               height: '0.25rem',
               backgroundColor: 'var(--color-primary-normal)',
-              marginTop: '2.75rem',
+              marginBottom: '3.75rem',
             }}
           />
         </>

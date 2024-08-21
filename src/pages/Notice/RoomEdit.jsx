@@ -108,6 +108,12 @@ export const RoomEdit = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'max_penalty' && value > 10) {
+      alert('페널티 개수는 최대 10개까지 설정 가능합니다.');
+      return;
+    }
+
     setRoomData((prevData) => ({
       ...prevData,
       [name]: value,
