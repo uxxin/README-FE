@@ -1,4 +1,3 @@
-import Header from '../../components/common/header';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -9,6 +8,7 @@ import {
   CompleteStep,
 } from '../../components/Auth/signup';
 import axios from 'axios';
+import { Header } from '../../components/Header';
 
 export default function Signup() {
   const [width, setWidth] = useState(0);
@@ -123,7 +123,7 @@ export default function Signup() {
     <>
       {page < 5 && (
         <>
-          <Header title="회원가입" back backFun={handlePrev} isNotHome={true} />
+          <Header title="회원가입" isNotHome />
           <div
             style={{
               width: `${(width * page) / 4 / 16}rem`,

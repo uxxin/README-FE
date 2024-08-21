@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/common/header';
 import { MypageContainer } from '../../styles/MyPage/style';
 import Profile from '../../components/MyPage/profile';
 import { GetAxiosInstance } from '../../axios/axios.method';
+import { Header } from '../../components/Header';
 
 const MyPage = () => {
   const [user, setUser] = useState({
@@ -23,7 +23,7 @@ const MyPage = () => {
   }, []);
   return (
     <>
-      <Header title="마이페이지" back />
+      <Header title="마이페이지" isNotHome />
       <MypageContainer>
         <Profile
           nickname={user.nickname}

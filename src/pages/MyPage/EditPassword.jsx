@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/common/header';
 import { EditPasswordContainer } from '../../styles/MyPage/style';
 import Input from '../../components/common/input';
 import useDebounce from '../../hooks/use-debounce';
@@ -9,6 +8,7 @@ import {
   PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../axios/axios.method';
+import { Header } from '../../components/Header';
 
 const EditPassword = () => {
   const [password, setPassword] = useState({
@@ -62,7 +62,7 @@ const EditPassword = () => {
   }, [debouncedCurrentPassword]);
   return (
     <>
-      <Header title="마이페이지" back />
+      <Header title="마이페이지" isNotHome />
       <EditPasswordContainer>
         <section className="input-container">
           <Input

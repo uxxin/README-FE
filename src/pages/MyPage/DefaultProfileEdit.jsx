@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Header from '../../components/common/header';
 import { DefaultProfileEditContainer } from '../../styles/MyPage/style';
 import Image from '../../components/MyPage/image';
 import { ReactComponent as Camera } from '../../assets/svgs/camera_fill.svg';
@@ -12,6 +11,7 @@ import {
   PatchAxiosInstance,
   PostAxiosInstance,
 } from '../../axios/axios.method';
+import { Header } from '../../components/Header';
 
 const DefaultProfileEdit = () => {
   const [user, setUser] = useState({
@@ -101,7 +101,7 @@ const DefaultProfileEdit = () => {
   }, [isLoading]);
   return (
     <>
-      <Header title="마이페이지" back />
+      <Header title="마이페이지" isNotHome />
       <DefaultProfileEditContainer>
         <section className="image-email">
           <div className="image">
