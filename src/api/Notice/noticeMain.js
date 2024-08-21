@@ -31,9 +31,7 @@ export const getUnconfirmedPeople = async (postId) => {
 };
 
 export const deleteNotice = async (postId) => {
-  const response = await PatchAxiosInstance('/admin/post', {
-    id: postId,
-  });
+  const response = await DeleteAxiosInstance(`/admin/post/${postId}`);
   return response;
 };
 
