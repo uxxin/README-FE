@@ -21,7 +21,12 @@ export const NoticeItem = ({ props, imgs, preview, isManager, chkActive }) => {
 
   return (
     <Container>
-      <NoticeTitle {...props} preview={preview} isManager={isManager} />
+      <NoticeTitle
+        {...props}
+        preview={preview}
+        isManager={isManager}
+        roomId={roomId}
+      />
       <NoticeContent>{props?.postBody}</NoticeContent>
       {imgs && imgs.map((img) => <Thumbnail key={img} src={img} />)}
       {!preview && !isManager && (
