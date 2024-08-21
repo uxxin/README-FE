@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as BackButton } from '../assets/svgs/back_button.svg';
 import { ReactComponent as SearchButton } from '../assets/svgs/search_button.svg';
+import { ReactComponent as HomeIcon } from '../assets/svgs/homeicon.svg';
 import CloseButton from '../assets/svgs/close_button.svg';
 
 export const Header = (props) => {
@@ -40,6 +41,10 @@ export const Header = (props) => {
     props.setSearchValue(event.target.value);
   };
 
+  const handleHomeButton = () => {
+    navigate('/home');
+  };
+
   useEffect(() => {
     document.body.addEventListener('click', handleBodyClick);
     return () => {
@@ -55,7 +60,7 @@ export const Header = (props) => {
             src={BackButton}
             onClick={() => setIsSearchMode(false)}
             fill="#509BF7"
-          ></StyledBackButton>
+          />
           <InputText
             placeholder="검색어를 입력하세요"
             onChange={handleSearchInput}
@@ -76,8 +81,14 @@ export const Header = (props) => {
             <RightButtonWrapper onClick={handleSearchButtonClick}>
               <StyledSearchButton fill="#222222" />
             </RightButtonWrapper>
-          ) : (
+          ) : props.isNotHome ? (
             <RightButtonWrapper />
+          ) : (
+            <RightButtonWrapper>
+              <HomeButton onClick={handleHomeButton}>
+                <HomeIcon />
+              </HomeButton>
+            </RightButtonWrapper>
           )}
         </Container>
       )}
@@ -175,4 +186,12 @@ const InputText = styled.input`
     color: var(--Text-default, var(--Grayscale-Gray7, #222));
     outline: none;
   }
+`;
+
+const HomeButton = styled.button`
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
 `;
