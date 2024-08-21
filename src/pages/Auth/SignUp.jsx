@@ -123,7 +123,7 @@ export default function Signup() {
     <>
       {page < 5 && (
         <>
-          <Header title="회원가입" back backFun={handlePrev} />
+          <Header title="회원가입" back backFun={handlePrev} isNotHome={true} />
           <div
             style={{
               width: `${(width * page) / 4 / 16}rem`,

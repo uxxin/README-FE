@@ -5,7 +5,7 @@ import { ConfirmList } from '../../../components/Notice/Confirm/ConfirmList';
 const Confirm = () => {
   return (
     <div>
-      <Header title="요청 내역" isSearch={true} gap="1rem" />
+      <Header title="확인 요청 내역" isSearch={true} gap="1rem" />
       <ConfirmList />
     </div>
   );
