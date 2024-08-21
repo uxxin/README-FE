@@ -53,23 +53,26 @@ const Container = styled.div`
 
 const BottomContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 0.625rem;
   align-self: stretch;
   margin-top: 0.5rem;
 `;
 const NoticeContent = styled.div`
-  height: 3.75rem;
-  flex: 1 0 0;
+  height: calc(1.2rem * 3);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   overflow: hidden;
   color: var(--Text-caption, var(--Grayscale-Gray5, #888));
   text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 120%;
+  line-height: 1.2;
   letter-spacing: -0.02rem;
+  white-space: normal;
+  word-break: break-all;
 `;
 
 const Thumbnail = styled.img`
