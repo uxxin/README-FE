@@ -36,6 +36,10 @@ export const Header = (props) => {
     event.stopPropagation();
   };
 
+  const handleSearchInput = (event) => {
+    props.setSearchValue(event.target.value);
+  };
+
   useEffect(() => {
     document.body.addEventListener('click', handleBodyClick);
     return () => {
@@ -46,13 +50,16 @@ export const Header = (props) => {
   return (
     <>
       {isSearchMode ? (
-        <SearchContainer onClick={handleContainerClick}>
+        <SearchContainer bodyWidth={bodyWidth} onClick={handleContainerClick}>
           <StyledBackButton
             src={BackButton}
             onClick={() => setIsSearchMode(false)}
             fill="#509BF7"
           ></StyledBackButton>
-          <InputText placeholder="검색어를 입력하세요" />
+          <InputText
+            placeholder="검색어를 입력하세요"
+            onChange={handleSearchInput}
+          />
           <StyledSearchButton src={SearchButton} fill="#509BF7" />
         </SearchContainer>
       ) : (
@@ -132,6 +139,9 @@ const StyledSearchButton = styled(SearchButton)`
 `;
 
 const SearchContainer = styled.div`
+  width: ${(props) => props.bodyWidth + 'px'};
+  position: fixed;
+  top: 0;
   display: flex;
   height: 2.75rem;
   padding: 0.75rem 0.62rem;
@@ -143,6 +153,7 @@ const SearchContainer = styled.div`
   border: 0.33px solid var(--Blue-light-active, #c9e0fd);
   background: var(--Blue-light, #f4f9ff);
   box-sizing: border-box;
+  z-index: 1000;
 `;
 
 const InputText = styled.input`
