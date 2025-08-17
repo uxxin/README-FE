@@ -1,4 +1,4 @@
-<div align="center">
+<div>
 
 <h2>README-FE</h2>
 <p>바쁜 운영진의 부담을 덜어주는 공지 확인 도구, <strong>READ ME!</strong><br/>
