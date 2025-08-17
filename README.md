@@ -1,7 +1,5 @@
 <div align="center">
 
-![README-FE](https://github.com/uxxin/README-FE/assets/112371013/10cfd83e-7517-4c8a-a991-4c940ffc2cb5)
-
 # 📄 README-FE
 
 **바쁜 운영진의 부담을 덜어주는 공지 확인 도구, READ ME!**
