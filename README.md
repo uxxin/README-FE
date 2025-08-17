@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="https://github.com/seungboshim/seungboshim/assets/112371013/10cfd83e-7517-4c8a-a991-4c940ffc2cb5" width="200"/>
-
 <h2>README-FE</h2>
 <p>바쁜 운영진의 부담을 덜어주는 공지 확인 도구, READ ME!<br/>
 팀 운영 효율성을 높이기 위해 공지사항 관리와 확인을 편리하게 지원하는 프론트엔드 프로젝트입니다.</p>
