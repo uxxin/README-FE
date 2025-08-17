@@ -1,6 +1,6 @@
 <div>
 
-<h2>README-FE</h2>
+<h1>README-FE</h1>
 <p>바쁜 운영진의 부담을 덜어주는 공지 확인 도구, <strong>READ ME!</strong><br/>
 팀 운영 효율성을 높이기 위해 공지사항 관리와 확인을 편리하게 지원하는 프론트엔드 프로젝트입니다.</p>
 
@@ -8,9 +8,7 @@
 
 ## 🛠 기술 스택
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/>
-<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/>
 <img src="https://img.shields.io/badge/React-087EA4?style=flat-square&logo=React&logoColor=white"/>
-<img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=Next.js&logoColor=white"/>
 <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=TailwindCSS&logoColor=white"/>
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=Axios&logoColor=white"/>
 <img src="https://img.shields.io/badge/Recoil-3F7CAC?style=flat-square&logo=Recoil&logoColor=white"/>
