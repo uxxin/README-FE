@@ -1,25 +1,20 @@
-로컬 실행 방법: `npm run dev`
+<div align="center">
 
-# Commit Type
+<h2>README-FE</h2>
+<p>바쁜 운영진의 부담을 덜어주는 공지 확인 도구, READ ME!<br/>
+팀 운영 효율성을 높이기 위해 공지사항 관리와 확인을 편리하게 지원하는 프론트엔드 프로젝트입니다.</p>
 
-## `태그: 제목`의 형태이며, :뒤에만 space가 있음에 유의한다.
+## 🛠 기술 스택
+JavaScript, TypeScript, React, Next.js, Tailwind CSS, Axios, Recoil  
 
-- `Feat` : 새로운 기능 추가
-- `Fix` : 버그 수정
-- `Docs` : 문서 수정
-- `Style` : 스타일 변경, 세미콜론 누락, 코드 변경이 없는 경우
-- `Refactor` : 코드 리펙토링
-- `Test` : 테스트 코드, 리펙토링 테스트 코드 추가
-- `Chore` : 빌드 업무 수정, 패키지 매니저 수정, 기타 등
+## 💡 주요 기능
+공지사항 작성 및 관리  
+공지사항 확인 및 응답  
+공지사항 알림 기능  
 
-# 명명 규칙
 
-- 폴더명
-  - 직접적으로 컴포넌트들이 들어있지 않은 디렉토리 폴더명: `camelCase`
-  - 직접적으로 컴포넌트들이 들어있는 디렉토리 폴더명: `PascalCase`
-- 컴포넌트 명: `PascalCase`
-  - 컴포넌트 명과 파일명은 일치시킨다.
-  - 컴포넌트를 제외한 모든 태그들은 소문자
-- className: `camelCase`
-- js 함수, 변수, hook: `camelCase`
-- asset 파일: 소문자
+## 🤝 역할 
+채우기 !!!!!!!!
+
+
+</div>
